@@ -1,0 +1,28 @@
+---
+name: config-ci
+
+"on":
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install shellcheck
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install lint tools
+        run: pip install pre-commit yamllint
+      - name: Config syntax + personal-data guard
+        run: scripts/validate.sh
+      - name: Materialization into temp HOME
+        run: tests/test_materialize.sh
+      - name: YAML lint
+        run: "yamllint -d '{extends: default, rules: {line-length: {max: 120}}}' ."
+      - name: pre-commit (whitespace, yaml/json/toml/xml, validate)
+        run: pre-commit run --all-files --show-diff-on-failure

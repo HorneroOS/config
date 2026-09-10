@@ -1,0 +1,11 @@
+# handlr configuration
+# See: https://github.com/Anomalocaridid/handlr-regex
+
+# Enable interactive selector when multiple handlers available
+enable_selector = false
+
+# Terminal execution arguments
+term_exec_args = '-e'
+
+# Expand wildcards in file paths
+expand_wildcards = false
