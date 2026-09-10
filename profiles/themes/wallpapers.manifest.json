@@ -1,0 +1,66 @@
+{
+  "provenance": "ulises-jeremias/dotfiles@b26db04 home/dot_local/share/dots/themes/*/theme.json",
+  "note": "theme.json packs only; binary wallpapers (~45M upstream) are NOT vendored. Fetch wallpaper packs separately into ~/.local/share/dots/wallpapers/<wallpaperDir>/ or ~/Pictures/Wallpapers/<id>/; resolution order is documented in lib/dots/wallpaper-resolver.sh.",
+  "themes": [
+    {
+      "id": "catppuccin-latte",
+      "defaultWallpaper": "catppuccin-latte-01.png",
+      "wallpaperDir": "catppuccin-latte"
+    },
+    {
+      "id": "catppuccin-mocha",
+      "defaultWallpaper": "catppuccin-mauve-02.png",
+      "wallpaperDir": "catppuccin-mocha"
+    },
+    {
+      "id": "everforest",
+      "defaultWallpaper": "everforest-deep-01.png",
+      "wallpaperDir": "everforest"
+    },
+    {
+      "id": "gruvbox",
+      "defaultWallpaper": "gruvbox-anime-01.jpg",
+      "wallpaperDir": "gruvbox"
+    },
+    {
+      "id": "landscape",
+      "defaultWallpaper": "landscape-01.jpg",
+      "wallpaperDir": "landscape"
+    },
+    {
+      "id": "monochrome",
+      "defaultWallpaper": "mono-curated-1.jpg",
+      "wallpaperDir": "monochrome"
+    },
+    {
+      "id": "neon-city",
+      "defaultWallpaper": "neon-city-01.jpg",
+      "wallpaperDir": "neon-city"
+    },
+    {
+      "id": "nord-dreams",
+      "defaultWallpaper": "nord-aurora-01.png",
+      "wallpaperDir": "nord-dreams"
+    },
+    {
+      "id": "rose-pine",
+      "defaultWallpaper": "rose-pine-dawn-01.png",
+      "wallpaperDir": "rose-pine"
+    },
+    {
+      "id": "soft-morning",
+      "defaultWallpaper": "morning-lake-2.jpg",
+      "wallpaperDir": "soft-morning"
+    },
+    {
+      "id": "vapor-dreams",
+      "defaultWallpaper": "vapor-dreams-01.jpg",
+      "wallpaperDir": "vapor-dreams"
+    },
+    {
+      "id": "warm-sunset",
+      "defaultWallpaper": "warm-sunset-05.jpg",
+      "wallpaperDir": "warm-sunset"
+    }
+  ]
+}

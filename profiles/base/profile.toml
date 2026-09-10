@@ -1,0 +1,71 @@
+# HorneroOS base profile: the curated default desktop composition.
+# This manifest declares which modules materialize.sh installs and the
+# themes available apply-once via bin/dots-gtk-theme and lib/dots/.
+
+[profile]
+name = "base"
+description = "HorneroOS curated desktop defaults (Hyprland + GTK + terminal + XDG)."
+provenance = "ulises-jeremias/dotfiles@b26db04 (curated subset, see docs/DECISIONS.md)"
+
+[modules.hypr]
+source = "desktop/hypr"
+target = "{config}/hypr"
+description = "Hyprland compositor defaults (generic monitor fallback included)."
+
+[modules.kitty]
+source = "desktop/kitty"
+target = "{config}/kitty"
+
+[modules.gtk]
+source = "desktop/gtk/settings.ini"
+target = "{config}/gtk-3.0/settings.ini"
+extra = [{ source = "desktop/gtk/gtkrc-2.0", target = "{home}/.gtkrc-2.0" }]
+
+[modules.fontconfig]
+source = "desktop/fontconfig"
+target = "{config}/fontconfig"
+
+[modules.fastfetch]
+source = "desktop/fastfetch"
+target = "{config}/fastfetch"
+
+[modules.btop]
+source = "desktop/btop"
+target = "{config}/btop"
+
+[modules.cava]
+source = "desktop/cava"
+target = "{config}/cava"
+
+[modules.thunar]
+source = "desktop/thunar"
+target = "{config}/Thunar"
+
+[modules.copyq]
+source = "desktop/copyq/copyq.conf"
+target = "{config}/copyq/copyq.conf"
+
+[modules.handlr]
+source = "xdg/handlr"
+target = "{config}/handlr"
+description = "XDG default-application handler."
+
+[modules.git]
+source = "xdg/git"
+target = "{config}/git"
+description = "Git defaults WITHOUT identity (config.user is never shipped)."
+
+[modules.lib]
+source = "lib/dots"
+target = "{home}/.local/lib/dots"
+description = "dots implementation libraries (appearance, GTK, wallpaper)."
+
+[modules.bin]
+source = "bin"
+target = "{home}/.local/bin"
+description = "dots-gtk-theme-family CLI adapters."
+
+[modules.themes]
+source = "profiles/themes"
+target = "{data}/dots/themes"
+description = "12 apply-once theme packs (theme.json + wallpaper refs, no binaries)."
