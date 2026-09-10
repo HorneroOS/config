@@ -1,0 +1,4 @@
+# makepkg byproducts (never commit built packages or build trees).
+*.pkg.tar.*
+src/
+pkg/
