@@ -1,0 +1,19 @@
+# OS / editor artifacts
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Test / lint byproducts
+*.log
+.shellcheck_cache/
+
+# Python bytecode from validation helpers
+__pycache__/
+*.py[cod]
+
+# pre-commit caches (never commit the cache)
+.pre-commit-cache/
