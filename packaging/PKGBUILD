@@ -105,11 +105,12 @@ package() {
   install -Dm644 "$stage/.gtkrc-2.0" "$pkgdir/etc/xdg/gtkrc-2.0"
 
   # Implementation libraries, CLI adapters, and theme recipes.
+  # Staged canonical hornero/* is the source; dots/* are back-compat symlinks.
   mkdir -p "$pkgdir/usr/share/hornero/lib"
   cp -a "$stage/.local/lib/dots" "$pkgdir/usr/share/hornero/lib/dots"
   cp -a "$stage/.local/bin"/dots-* "$pkgdir/usr/share/hornero/bin/"
   mkdir -p "$pkgdir/usr/share/hornero/themes"
-  cp -a "$stage/.local/share/dots/themes/." "$pkgdir/usr/share/hornero/themes/"
+  cp -a "$stage/.local/share/hornero/themes/." "$pkgdir/usr/share/hornero/themes/"
 
   # Profile manifests plus the resolved selection record.
   install -Dm644 "$repo_root/$profile_src" \
