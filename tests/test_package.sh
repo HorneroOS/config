@@ -41,7 +41,10 @@ for entry in "$STAGE"/.config/*; do
   base="$(basename "$entry")"
   [[ -e "$ROOT/etc/xdg/$base" ]] || fail "installed tree missing /etc/xdg/$base"
 done
-diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 >/dev/null 2>&1 \
+# /etc/xdg/hornero/shell.json is sourced from shell/shell.default.json (not
+# the staged HOME) and asserted separately below, so the hornero dir is
+# excluded here; materialize.sh never stages .config/hornero/*.
+diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero >/dev/null 2>&1 \
   && pass "staged .config matches /etc/xdg" \
   || fail "staged .config differs from /etc/xdg"
 cmp -s "$STAGE/.gtkrc-2.0" "$ROOT/etc/xdg/gtkrc-2.0" \
