@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+## Provenance: COPY (never moved) from ulises-jeremias/dotfiles@b26db04
+## home/dot_local/bin/executable_dots-launcher via read-only reference clone.
+## Local changes vs upstream: `executable_` chezmoi deploy prefix stripped.
+
+## dots-launcher: Unified application launcher wrapper
+## Copyright (C) 2019-2025 Ulises Jeremias Cornejo Fandos
+## Licensed under MIT.
+## Preference order (auto): quickshell > minimal prompt
+## Usage:
+##   @script.name [OPTIONS]
+## Options:
+##   -h, --help            Show help (auto by EasyOptions)
+##       --backend=NAME    Force backend: quickshell|minimal
+##       --list            Print detected backends (in priority order) then exit
+## Examples:
+##   @script.name                  # auto chain
+##   @script.name --list           # list available backends
+
+set -euo pipefail
+
+source ~/.local/lib/dots/easy-options/easyoptions.sh || exit
+
+BACKEND=${backend:-auto}
+LIST=${list:-no}
+
+launch_quickshell() {
+  pgrep -x quickshell >/dev/null 2>&1 || return 1
+  dots-quickshell ipc launcher toggle
+  return 0
+}
+
+minimal_fallback() {
+  echo "[dots-launcher] minimal fallback (no GUI launchers found)" >&2
+  read -r -p "command> " cmd || exit 1
+  [[ -z $cmd ]] && exit 0
+  exec $cmd
+}
+
+if [[ $LIST == yes ]]; then
+  order=(quickshell minimal)
+  avail=()
+  for t in "${order[@]}"; do
+    if [[ $t == minimal ]]; then
+      avail+=(minimal)
+    elif command -v "$t" >/dev/null 2>&1; then
+      avail+=("$t")
+    fi
+  done
+  printf '%s\n' "${avail[@]}"
+  exit 0
+fi
+
+case "$BACKEND" in
+  quickshell) launch_quickshell || {
+    echo "quickshell is not running" >&2
+    exit 1
+  } ;;
+  minimal) minimal_fallback ;;
+  auto | *)
+    launch_quickshell || minimal_fallback
+    ;;
+esac
