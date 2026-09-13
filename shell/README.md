@@ -20,12 +20,13 @@ no machine specifics, XDG-aware, `set -euo pipefail`, materialized through
 `/etc/xdg/hornero/shell.json` (path-contract row 6). Content is owned by
 `HorneroOS/shell` (`config/shell.default.json`); this repo only packages it.
 
-Gap (verified 2026-09-13 via read-only `gh api` against
-`HorneroOS/shell@b0a864cd` on `main`): that file does not exist upstream —
-the recursive tree contains zero `shell*.json` blobs and `config/` holds
-only QML (`Appearance.qml`, `Config.qml`, …). The vendored file here is
-therefore a minimal `{}` placeholder until the shell pin ships the real
-factory default, at which point this copy must be replaced byte-exact.
+Sync status (2026-09-13): byte-exact copy of
+`HorneroOS/shell@aeb26460` (`config/shell.default.json`, shell PR #17).
+Refresh rule: when the shell pin ships a new factory default, replace
+this file byte-exact and record the new source SHA here. `PKGBUILD`
+fails the build if the file is missing; `tests/test_package.sh`
+asserts the installed `/etc/xdg/hornero/shell.json` is byte-identical
+to this copy.
 
 `scripts/materialize.sh` deliberately does **not** install a user-root
 `~/.config/hornero/shell.json`: the user file is created by the shell
