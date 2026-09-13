@@ -34,7 +34,7 @@ only in `scripts/materialize.sh`; the PKGBUILD loop over the staged
 | --------------------------------------- | ------------------------------------- |
 | `.config/*`                             | `/etc/xdg/*`                          |
 | `.gtkrc-2.0`                            | `/etc/xdg/gtkrc-2.0` (skeleton; copy to `~/.gtkrc-2.0` to use) |
-| `shell/shell.default.json` (repo file, **not** staged HOME) | `/etc/xdg/hornero/shell.json` (factory default; content owned by `HorneroOS/shell`, currently a `{}` placeholder — see `shell/README.md`) |
+| `shell/shell.default.json` (repo file, **not** staged HOME) | `/etc/xdg/hornero/shell.json` (factory default; content owned by `HorneroOS/shell`, synced byte-exact — see `shell/README.md`) |
 | `.local/lib/dots`                       | `/usr/share/hornero/lib/dots`         |
 | `.local/bin/dots-*`                     | `/usr/share/hornero/bin/dots-*`       |
 | `.local/share/dots/themes`              | `/usr/share/hornero/themes`           |
