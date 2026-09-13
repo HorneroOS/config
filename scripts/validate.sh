@@ -144,6 +144,13 @@ while IFS= read -r src; do
 done < <(grep -rhoE "source *= *[^ ]*hypr/[^ ]+" "$REPO_ROOT/desktop/hypr/hyprland.conf" | sed -E 's/.*hypr\///')
 [[ $HYPR_FAIL -eq 0 ]] && pass "hypr sanity (no templates, balanced, sources resolve)"
 
+# --- appearance contrast (WCAG AA, fails the build on violation) ------------------
+if python3 "$REPO_ROOT/scripts/check-contrast.py" --themes-dir "$REPO_ROOT/profiles/themes"; then
+  pass "appearance contrast (WCAG AA)"
+else
+  fail "appearance contrast (WCAG AA)"
+fi
+
 # --- personal-data guard ------------------------------------------------------------
 if "$REPO_ROOT/scripts/guard-personal-data.sh"; then
   pass "personal-data guard"

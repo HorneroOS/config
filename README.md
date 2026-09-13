@@ -31,8 +31,9 @@ that in CI.
 ## Status
 
 First extraction (this branch): Hyprland, kitty, GTK 2/3, fontconfig,
-fastfetch, btop, cava, Thunar, CopyQ, handlr, git-minus-identity, 12 theme
-packs (recipes only), `lib/dots` implementation libraries and the
+fastfetch, btop, cava, Thunar, CopyQ, handlr, git-minus-identity, 14 theme
+packs (12 recipes + 2 flagship semantic-token themes `hornero-dark` /
+`hornero-light`), `lib/dots` implementation libraries and the
 `dots-gtk-theme`-family CLI adapters. See `docs/DECISIONS.md` for the full
 copied / excluded-as-personal / deferred accounting.
 
@@ -41,7 +42,7 @@ copied / excluded-as-personal / deferred accounting.
 ```text
 desktop/    per-application defaults      -> ~/.config/<app>, ~/.gtkrc-2.0
 xdg/        git (no identity) + handlr    -> ~/.config/git, ~/.config/handlr
-profiles/   base profile manifest + 12 theme packs -> ~/.local/share/dots/…
+profiles/   base profile manifest + 14 theme packs -> ~/.local/share/dots/…
 shell/      stub note (interactive shell deferred)
 lib/dots/   appearance/GTK/wallpaper implementation libs -> ~/.local/lib/dots
 bin/        dots-gtk-theme-family CLIs    -> ~/.local/bin
