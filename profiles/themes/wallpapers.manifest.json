@@ -61,6 +61,16 @@
       "id": "warm-sunset",
       "defaultWallpaper": "warm-sunset-05.jpg",
       "wallpaperDir": "warm-sunset"
+    },
+    {
+      "id": "hornero-dark",
+      "defaultWallpaper": "hornero-dark-01.jpg",
+      "wallpaperDir": "hornero-dark"
+    },
+    {
+      "id": "hornero-light",
+      "defaultWallpaper": "hornero-light-01.jpg",
+      "wallpaperDir": "hornero-light"
     }
   ]
 }
