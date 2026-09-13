@@ -43,6 +43,12 @@ check ".local/bin/dots-gtk-theme"
 check ".local/bin/dots-hyprlock-theme"
 check ".local/bin/dots-theme-selector"
 check ".local/bin/dots-appearance"
+check ".local/bin/dots-launcher"
+check ".local/bin/dots-power-menu"
+check ".local/bin/dots-clipboard"
+check ".local/bin/dots-night-mode"
+check ".local/bin/dots-wallpaper-set"
+check ".local/bin/dots-wallpaper-current"
 
 # theme packs: exactly the 12 curated packs
 count=$(find "$TMP_HOME/.local/share/dots/themes" -maxdepth 2 -name theme.json | wc -l)
@@ -69,6 +75,9 @@ echo "TEST-PASS: no identity in installed git config"
 # executables survived with +x
 for f in "$TMP_HOME/.local/bin/dots-gtk-theme" "$TMP_HOME/.local/bin/dots-hyprlock-theme" \
          "$TMP_HOME/.local/bin/dots-theme-selector" "$TMP_HOME/.local/bin/dots-appearance" \
+         "$TMP_HOME/.local/bin/dots-launcher" "$TMP_HOME/.local/bin/dots-power-menu" \
+         "$TMP_HOME/.local/bin/dots-clipboard" "$TMP_HOME/.local/bin/dots-night-mode" \
+         "$TMP_HOME/.local/bin/dots-wallpaper-set" "$TMP_HOME/.local/bin/dots-wallpaper-current" \
          "$TMP_HOME/.config/hypr/scripts/gaps-interactive.sh"; do
   if [[ -x $f ]]; then
     echo "TEST-PASS: executable $f"
