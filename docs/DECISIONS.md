@@ -98,3 +98,20 @@ REAPER, bookmarks, config.user, private_credentials, wallpaper-binaries)
 Notes: `sss/`, `wpg/`, and `xfce4/` keep their existing deferred status
 unchanged (outside this pass's row list). Existing tables above are
 untouched; this section only adds verdicts.
+
+## Flagship appearance tokens (new authorship, not extraction)
+
+`profiles/themes/hornero-dark/` + `hornero-light/` are original HorneroOS
+flagship themes (terracotta/clay/sunset-warm family), not copies from
+`ulises-jeremias/dotfiles`. Each `theme.json` keeps the recipe fields the
+apply pipeline already consumes (`schemaVersion`, `id`, `name`,
+`darkMode`, `schemeType`, `gtkTheme`, `iconTheme`, `gtkPreferDark`,
+`defaultWallpaper`, `wallpaperDir`) and adds the versioned semantic token
+model (`family: hornero`, `mode`, `version`, `tokensVersion`,
+`palette`, `components`) described by `profiles/themes/tokens.schema.json`
+v1.0.0. Dark and light are first-class distinct ramps (deep terracotta
+`#B24827`/white for light, ember `#E07856`/espresso for dark), never an
+inversion. `scripts/check-contrast.py` (stdlib-only, MIT) gates every
+text-on-surface pair at WCAG AA (>= 4.5:1) and runs in `scripts/validate.sh`,
+`tests/test_contrast.sh`, and CI; wallpaper binaries stay refs-only in
+`wallpapers.manifest.json`. All new code is MIT-only (no GPL).

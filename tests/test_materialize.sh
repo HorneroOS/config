@@ -50,12 +50,12 @@ check ".local/bin/dots-night-mode"
 check ".local/bin/dots-wallpaper-set"
 check ".local/bin/dots-wallpaper-current"
 
-# theme packs: exactly the 12 curated packs in canonical hornero/* (rows 1+8)
+# theme packs: exactly the 14 curated packs (12 recipes + 2 flagship token themes) in canonical hornero/* (rows 1+8)
 count=$(find "$TMP_HOME/.local/share/hornero/themes" -maxdepth 2 -name theme.json | wc -l)
-if [[ $count -eq 12 ]]; then
-  echo "TEST-PASS: 12 theme packs materialized to hornero/themes"
+if [[ $count -eq 14 ]]; then
+  echo "TEST-PASS: 14 theme packs materialized to hornero/themes"
 else
-  echo "TEST-FAIL: expected 12 theme packs in hornero/themes, found $count" >&2
+  echo "TEST-FAIL: expected 14 theme packs in hornero/themes, found $count" >&2
   exit 1
 fi
 if [[ -f "$TMP_HOME/.local/share/hornero/themes/wallpapers.manifest.json" ]]; then
@@ -102,12 +102,12 @@ for pair in "dots/themes:hornero/themes" "dots/shell-presets:hornero/shell-prese
     exit 1
   fi
 done
-# dots fallback still resolves the 12 packs through the symlink
+# dots fallback still resolves the 14 packs through the symlink
 compat_count=$(find -L "$TMP_HOME/.local/share/dots/themes" -maxdepth 2 -name theme.json | wc -l)
-if [[ $compat_count -eq 12 ]]; then
-  echo "TEST-PASS: dots/themes fallback resolves 12 packs"
+if [[ $compat_count -eq 14 ]]; then
+  echo "TEST-PASS: dots/themes fallback resolves 14 packs"
 else
-  echo "TEST-FAIL: dots fallback resolves $compat_count packs, want 12" >&2
+  echo "TEST-FAIL: dots fallback resolves $compat_count packs, want 14" >&2
   exit 1
 fi
 # --dest hermeticity: a temp dest distinct from HOME must not leak into ambient XDG

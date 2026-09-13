@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hornero.os/config/tokens.schema.json",
+  "title": "HorneroOS semantic appearance tokens",
+  "description": "Versioned semantic token model for HorneroOS theme packs. Backwards compatible with the schemaVersion-1 recipe fields (id, name, darkMode, schemeType, gtkTheme, iconTheme, gtkPreferDark, defaultWallpaper, wallpaperDir); adds family/mode/version plus a WCAG-AA-checked palette/components token ramp.",
+  "version": "1.0.0",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "family",
+    "mode",
+    "version",
+    "tokensVersion",
+    "darkMode",
+    "schemeType",
+    "gtkTheme",
+    "iconTheme",
+    "gtkPreferDark",
+    "defaultWallpaper",
+    "wallpaperDir",
+    "palette",
+    "components"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "name": { "type": "string", "minLength": 1 },
+    "family": { "type": "string", "minLength": 1 },
+    "mode": { "enum": ["dark", "light"] },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "tokensVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "darkMode": { "type": "boolean" },
+    "schemeType": {
+      "enum": [
+        "tonal-spot",
+        "vibrant",
+        "expressive",
+        "fidelity",
+        "content",
+        "neutral",
+        "monochrome"
+      ]
+    },
+    "gtkTheme": { "type": "string", "minLength": 1 },
+    "iconTheme": { "type": "string", "minLength": 1 },
+    "gtkPreferDark": { "type": "boolean" },
+    "defaultWallpaper": { "type": "string", "minLength": 1 },
+    "wallpaperDir": { "type": "string", "minLength": 1 },
+    "palette": {
+      "type": "object",
+      "required": [
+        "background",
+        "surface",
+        "surfaceVariant",
+        "onSurfaceVariant",
+        "text",
+        "textMuted",
+        "primary",
+        "onPrimary",
+        "secondary",
+        "onSecondary",
+        "accent",
+        "onAccent"
+      ],
+      "additionalProperties": { "$ref": "#/$defs/hexColor" }
+    },
+    "components": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/textPair" }
+    }
+  },
+  "$defs": {
+    "hexColor": {
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{6}$"
+    },
+    "textPair": {
+      "type": "object",
+      "required": ["background", "foreground"],
+      "properties": {
+        "description": { "type": "string" },
+        "background": { "$ref": "#/$defs/hexColor" },
+        "foreground": { "$ref": "#/$defs/hexColor" }
+      }
+    }
+  }
+}

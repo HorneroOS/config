@@ -20,6 +20,8 @@ jobs:
         run: pip install pre-commit yamllint
       - name: Config syntax + personal-data guard
         run: scripts/validate.sh
+      - name: Appearance contrast (WCAG AA)
+        run: tests/test_contrast.sh
       - name: Materialization into temp HOME
         run: tests/test_materialize.sh
       - name: YAML lint
