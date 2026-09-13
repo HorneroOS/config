@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+## Provenance: COPY (never moved) from ulises-jeremias/dotfiles@b26db04
+## home/dot_local/bin/executable_dots-clipboard via read-only reference clone.
+## Local changes vs upstream: `executable_` chezmoi deploy prefix stripped.
+
+## dots-clipboard: Clipboard manager wrapper
+## Copyright (C) 2019-2025 Ulises Jeremias Cornejo Fandos
+## Licensed under MIT.
+## Wayland order (auto): copyq > cliphist > minimal
+## X11 order (auto): copyq > minimal
+## Usage:
+##   @script.name [OPTIONS]
+## Options:
+##   -h, --help            Show help
+##       --backend=NAME    Force backend: copyq|cliphist|minimal
+## Examples:
+##   @script.name --backend=copyq   # force copyq GUI
+##   @script.name --backend=cliphist # force cliphist picker
+
+set -euo pipefail
+
+source ~/.local/lib/dots/easy-options/easyoptions.sh || exit
+
+BACKEND=${backend:-auto}
+
+is_wayland() { [[ ${XDG_SESSION_TYPE:-} == wayland ]]; }
+
+do_copyq() {
+  command -v copyq >/dev/null 2>&1 || return 1
+  exec copyq show
+}
+do_cliphist() {
+  command -v cliphist >/dev/null 2>&1 || return 1
+  local max=25
+  mapfile -t entries < <(cliphist list | awk -v m="$max" 'NR<=m')
+  [[ ${#entries[@]} -eq 0 ]] && return 1
+
+  local i=1
+  echo "Clipboard history:"
+  for line in "${entries[@]}"; do
+    printf "%2d) %s\n" "$i" "$line"
+    i=$((i + 1))
+  done
+  printf "Select entry [1-%d, empty to cancel]: " "${#entries[@]}"
+  read -r idx || return 1
+  [[ -z ${idx:-} ]] && return 0
+  [[ $idx =~ ^[0-9]+$ ]] || return 1
+  ((idx >= 1 && idx <= ${#entries[@]})) || return 1
+  local selection="${entries[$((idx - 1))]}"
+  cliphist decode <<<"$selection" | wl-copy
+  return 0
+}
+
+minimal_fallback() {
+  echo "[dots-clipboard] minimal fallback" >&2
+  if command -v wl-paste >/dev/null 2>&1; then
+    wl-paste | head -c 500
+  else
+    echo "(no data)"
+  fi
+}
+
+case "$BACKEND" in
+  copyq) do_copyq || {
+    echo "copyq not available" >&2
+    exit 1
+  } ;;
+  cliphist)
+    is_wayland || {
+      echo "cliphist is Wayland-only" >&2
+      exit 1
+    }
+    do_cliphist || {
+      echo "cliphist not available" >&2
+      exit 1
+    }
+    ;;
+  minimal) minimal_fallback ;;
+  auto | *)
+    if is_wayland; then
+      do_copyq || do_cliphist || minimal_fallback
+    else
+      do_copyq || minimal_fallback
+    fi
+    ;;
+esac
