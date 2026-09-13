@@ -41,11 +41,22 @@ for entry in "$STAGE"/.config/*; do
   base="$(basename "$entry")"
   [[ -e "$ROOT/etc/xdg/$base" ]] || fail "installed tree missing /etc/xdg/$base"
 done
-diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 >/dev/null 2>&1 \
+# /etc/xdg/hornero/shell.json is sourced from shell/shell.default.json (not
+# the staged HOME) and asserted separately below, so the hornero dir is
+# excluded here; materialize.sh never stages .config/hornero/*.
+diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero >/dev/null 2>&1 \
   && pass "staged .config matches /etc/xdg" \
   || fail "staged .config differs from /etc/xdg"
 cmp -s "$STAGE/.gtkrc-2.0" "$ROOT/etc/xdg/gtkrc-2.0" \
   && pass "gtkrc-2.0 skeleton" || fail "gtkrc-2.0 skeleton"
+# Factory shell default (path-contract row 6): system location only, byte-
+# identical to the vendored shell/shell.default.json, valid JSON.
+[[ -f "$ROOT/etc/xdg/hornero/shell.json" ]] \
+  && pass "factory shell.json installed" || fail "factory shell.json missing"
+cmp -s "$REPO_ROOT/shell/shell.default.json" "$ROOT/etc/xdg/hornero/shell.json" \
+  && pass "factory shell.json matches vendored default" || fail "factory shell.json differs"
+python3 -c "import json; json.load(open('$ROOT/etc/xdg/hornero/shell.json'))" \
+  && pass "factory shell.json parses" || fail "factory shell.json parses"
 diff -r "$STAGE/.local/lib/dots" "$ROOT/usr/share/hornero/lib/dots" >/dev/null 2>&1 \
   && pass "lib/dots payload" || fail "lib/dots payload"
 diff -r "$STAGE/.local/share/hornero/themes" "$ROOT/usr/share/hornero/themes" >/dev/null 2>&1 \

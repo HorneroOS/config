@@ -104,6 +104,17 @@ package() {
   # GTK 2 skeleton (per-user ~/.gtkrc-2.0 upstream, system default here).
   install -Dm644 "$stage/.gtkrc-2.0" "$pkgdir/etc/xdg/gtkrc-2.0"
 
+  # Factory shell default (path-contract row 6): content owned by
+  # HorneroOS/shell, packaged here to the system location. The user-root
+  # ~/.config/hornero/shell.json is owned by the shell runtime and is
+  # never materialized (see shell/README.md).
+  if [[ ! -f "$repo_root/shell/shell.default.json" ]]; then
+    echo "error: factory shell default missing: shell/shell.default.json" >&2
+    return 1
+  fi
+  install -Dm644 "$repo_root/shell/shell.default.json" \
+    "$pkgdir/etc/xdg/hornero/shell.json"
+
   # Implementation libraries, CLI adapters, and theme recipes.
   # Staged canonical hornero/* is the source; dots/* are back-compat symlinks.
   mkdir -p "$pkgdir/usr/share/hornero/lib"

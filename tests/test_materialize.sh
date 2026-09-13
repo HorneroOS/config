@@ -70,6 +70,20 @@ else
   echo "TEST-FAIL: missing hornero/shell-presets" >&2
   exit 1
 fi
+# factory default parses, but materialize never writes a user-root shell.json
+# (path-contract row 6: user file owned by the shell runtime; packaging is
+# the only writer of the system default /etc/xdg/hornero/shell.json)
+if python3 -c "import json; json.load(open('$REPO_ROOT/shell/shell.default.json'))" 2>/dev/null; then
+  echo "TEST-PASS: shell factory default parses"
+else
+  echo "TEST-FAIL: shell/shell.default.json does not parse" >&2
+  exit 1
+fi
+if [[ -e "$TMP_HOME/.config/hornero/shell.json" ]]; then
+  echo "TEST-FAIL: materialize wrote user-root hornero/shell.json (must not)" >&2
+  exit 1
+fi
+echo "TEST-PASS: no user-root hornero/shell.json materialized"
 # back-compat dots/* symlinks -> hornero/* (reversible, relative for hermeticity)
 for pair in "dots/themes:hornero/themes" "dots/shell-presets:hornero/shell-presets"; do
   link_name="${pair%%:*}"
