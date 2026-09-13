@@ -52,6 +52,31 @@ install_file() {
   chmod 644 "$dest"
 }
 
+# Back-compat symlink dots/* -> hornero/* (reversible: rm the symlink).
+# Idempotent: existing correct symlink is kept; stale file/dir is replaced.
+# Target is relative (../hornero/<name>) so --dest stays hermetic.
+compat_link() {
+  local target="$1" link="$2"
+  local name
+  name="$(basename "$target")"
+  if [[ $DRY_RUN -eq 1 ]]; then
+    echo "would link $link -> ../hornero/$name"
+    return
+  fi
+  if [[ -L $link ]]; then
+    local cur
+    cur="$(readlink "$link" || true)"
+    if [[ $cur == "$target" || $cur == "../hornero/$name" ]]; then
+      return
+    fi
+    rm -f "$link"
+  elif [[ -e $link ]]; then
+    rm -rf "$link"
+  fi
+  mkdir -p "$(dirname "$link")" "$(dirname "$target")"
+  ln -sfn "../hornero/$name" "$link"
+}
+
 # --- desktop defaults -> ~/.config -------------------------------------------
 install_dir "desktop/hypr" "$CONFIG_HOME/hypr"
 install_dir "desktop/kitty" "$CONFIG_HOME/kitty"
@@ -80,8 +105,25 @@ else
   done
 fi
 
-# --- theme packs (recipes only, no binaries) -----------------------------------
-install_dir "profiles/themes" "$DATA_HOME/dots/themes"
+# --- theme packs (recipes only, no binaries) -> canonical hornero/* -----------
+# Rows 1+8: installed theme.json recipes + wallpapers.manifest.json.
+install_dir "profiles/themes" "$DATA_HOME/hornero/themes"
+# --- shell layout presets catalogue -> canonical hornero/* --------------------
+# Row 2: no curated source in this repo yet (owner HorneroOS/shell per
+# docs/DECISIONS.md); ensure the canonical dir exists for future packs.
+if [[ -d "$REPO_ROOT/profiles/shell-presets" ]]; then
+  install_dir "profiles/shell-presets" "$DATA_HOME/hornero/shell-presets"
+else
+  if [[ $DRY_RUN -eq 1 ]]; then
+    echo "would ensure dir $DATA_HOME/hornero/shell-presets"
+  else
+    mkdir -p "$DATA_HOME/hornero/shell-presets"
+    chmod 755 "$DATA_HOME/hornero/shell-presets"
+  fi
+fi
+# --- back-compat dots/* symlinks -> hornero/* (symlink strategy) -------------
+compat_link "$DATA_HOME/hornero/themes" "$DATA_HOME/dots/themes"
+compat_link "$DATA_HOME/hornero/shell-presets" "$DATA_HOME/dots/shell-presets"
 
 # hypr helper scripts must stay executable after the 644 normalization above
 if [[ $DRY_RUN -eq 0 ]]; then

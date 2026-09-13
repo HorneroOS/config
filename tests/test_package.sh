@@ -48,8 +48,8 @@ cmp -s "$STAGE/.gtkrc-2.0" "$ROOT/etc/xdg/gtkrc-2.0" \
   && pass "gtkrc-2.0 skeleton" || fail "gtkrc-2.0 skeleton"
 diff -r "$STAGE/.local/lib/dots" "$ROOT/usr/share/hornero/lib/dots" >/dev/null 2>&1 \
   && pass "lib/dots payload" || fail "lib/dots payload"
-diff -r "$STAGE/.local/share/dots/themes" "$ROOT/usr/share/hornero/themes" >/dev/null 2>&1 \
-  && pass "themes payload" || fail "themes payload"
+diff -r "$STAGE/.local/share/hornero/themes" "$ROOT/usr/share/hornero/themes" >/dev/null 2>&1 \
+  && pass "themes payload (canonical hornero source)" || fail "themes payload"
 for cli in "$STAGE"/.local/bin/dots-*; do
   cmp -s "$cli" "$ROOT/usr/share/hornero/bin/$(basename "$cli")" \
     || fail "bin adapter $(basename "$cli") differs"
