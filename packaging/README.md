@@ -34,6 +34,7 @@ only in `scripts/materialize.sh`; the PKGBUILD loop over the staged
 | --------------------------------------- | ------------------------------------- |
 | `.config/*`                             | `/etc/xdg/*`                          |
 | `.gtkrc-2.0`                            | `/etc/xdg/gtkrc-2.0` (skeleton; copy to `~/.gtkrc-2.0` to use) |
+| `shell/shell.default.json` (repo file, **not** staged HOME) | `/etc/xdg/hornero/shell.json` (factory default; content owned by `HorneroOS/shell`, currently a `{}` placeholder — see `shell/README.md`) |
 | `.local/lib/dots`                       | `/usr/share/hornero/lib/dots`         |
 | `.local/bin/dots-*`                     | `/usr/share/hornero/bin/dots-*`       |
 | `.local/share/dots/themes`              | `/usr/share/hornero/themes`           |
@@ -43,6 +44,11 @@ only in `scripts/materialize.sh`; the PKGBUILD loop over the staged
 
 Only `/etc/xdg` and `/usr/share/hornero` (plus the standard license dir)
 are written.
+
+`scripts/materialize.sh` user-root behavior is unchanged: it never writes
+`~/.config/hornero/shell.json`. That user file is created by the shell
+runtime on first launch; packaging is the only writer of the system
+default `/etc/xdg/hornero/shell.json`.
 
 ## Personal-data guarantee
 
