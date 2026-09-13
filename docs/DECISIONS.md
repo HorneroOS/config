@@ -65,3 +65,36 @@ materialized into final config; no raw personal template variable ships here.
   developer's real `~/.config`; the affected files were restored byte-exact
   from `dotfiles@b26db04`-rendered content and the hermeticity regression
   test is `tests/test_materialize.sh`.)
+
+## Deferred triage (Track 3c)
+
+Method: read-only reference clone of `ulises-jeremias/dotfiles@b26db04`
+(inspected via `cp`-free reads; nothing copied into this repo and nothing
+deleted or moved upstream). Each row re-examines one deferred or excluded
+item against `AGENTS.md`: renders identically for two users, no machine
+specifics, identity only via overlay hooks. No implementation file was
+added, moved, or removed in this pass.
+
+| Item | Upstream | Verdict | Reason / owner |
+|---|---|---|---|
+| autostart | `home/dot_config/autostart/` (3 `.desktop`: safeeyes, thunar-daemon, wal-restore) | KEEP-DEFERRED | Session composition; owner `HorneroOS/installer`. The Hyprland session already starts via `desktop/hypr/hyprland.conf.d/autostart.conf` (`dex --autostart`); thunar-daemon duplicates it, and wal-restore targets the smart-colors runtime (excluded from Hyprland via `NotShowIn`). |
+| lxqt | `home/dot_config/lxqt/` (`lxqt.conf`, `lxqt-config-input.conf`) | EXCLUDE | Both files are geometry stubs only (`[General]` plus `__userfile__`); no reusable defaults. LXQt is not the HorneroOS session (Hyprland-first). |
+| guitarix | `home/dot_config/guitarix/banks/silentz0r.gx` | EXCLUDE | Single-user amp preset bank; personal artistic tuning, not reusable defaults. Audio-tool presets are out of scope for curated desktop defaults. |
+| REAPER | `home/dot_config/REAPER/` (`reaper-fxtags.ini`, one Scarlett-targeted vocal-tracking project template) | EXCLUDE | The session template hardcodes one username home tree and personal media paths and targets one audio interface, so it fails the renders-identically-for-two-users rule (same precedent as the excluded `monitors.conf`). `fxtags` alone is plugin-install-specific taxonomy, not desktop defaults. |
+| tmux | `home/dot_config/tmux/` (`tmux.conf`, `tmux.reset.conf`) | ADOPT-COPY | Static, no template vars, no identity or machine paths; generic TPM-based defaults (vi keys, 1-based indexing, clipboard). Recommended for a future extraction pass with materialize/validate wiring; not copied in this pass. |
+| yazi | `home/dot_config/yazi/` (`yazi.toml`, `theme.toml`, `keymap.toml`, `init.lua`) | ADOPT-COPY | Static, no identity; curated HorneroConfig headers; flavor refs match shipped theme packs; aligns with the shipped Thunar open-in-yazi actions. Recommended for a future extraction pass; not copied in this pass. |
+| bookmarks | `home/dot_config/gtk-3.0/bookmarks.tmpl` | EXCLUDE | Embodies username plus personal directory layout via template; hosts generate GTK bookmarks from XDG dirs at install. Confirms the existing excluded row. |
+| config.user | `home/dot_config/git/config.user.tmpl` | EXCLUDE | Identity (`user.name`/`user.email`) by definition; lives only in `~/.config/git/config.user` via the kept `[include]` overlay hook. Confirms the existing excluded row. |
+| private_credentials | `home/dot_config/private_credentials/` (2 password-manager-backed key templates) | EXCLUDE | API-key templates resolved from a password manager; never curated, never shipped. Confirms the existing excluded row. |
+| wallpaper-binaries | `home/dot_local/share/dots/wallpapers/` (~45M upstream) | EXCLUDE | Binaries are never vendored; `profiles/themes/wallpapers.manifest.json` records refs plus fetch locations and is the distribution contract. Packs ship via the release pipeline, separately. |
+| shell-presets | `home/dot_local/share/dots/shell-presets/` (11 layout JSON files) | KEEP-DEFERRED | Quickshell-owned layout presets; owner `HorneroOS/shell`. Moves with `shell/`, same as `quickshell/`. |
+| shell-stub | `dot_zshrc`, `dot_p10k.zsh`, aliases, profile, xinitrc, xprofile, `dot_zsh/`, `dot_Xresources` | KEEP-DEFERRED | Owner `HorneroOS/config` shell design pass (see `shell/README.md`): prompt choice, plugin surface, and POSIX-vs-zsh scope are undecided. No generic default invented here. |
+| profiles | `profiles/base`, `HORNERO_PROFILE=desktop` / `developer` (packaging matrix) | KEEP-DEFERRED | Owner `HorneroOS/config`. `desktop` and `developer` stay aliases of `base` (the packaging test asserts byte-identical trees) until a real divergence is wanted; no profile invented in this pass. |
+
+Triage counts: ADOPT-COPY 2 (tmux, yazi) / EXCLUDE 7 (lxqt, guitarix,
+REAPER, bookmarks, config.user, private_credentials, wallpaper-binaries)
+/ KEEP-DEFERRED 4 (autostart, shell-presets, shell-stub, profiles).
+
+Notes: `sss/`, `wpg/`, and `xfce4/` keep their existing deferred status
+unchanged (outside this pass's row list). Existing tables above are
+untouched; this section only adds verdicts.
