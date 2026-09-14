@@ -91,6 +91,30 @@ for tid, tname in pairs:
             f"(only-in-3.0={[s for s in sel3 if s not in sel4][:3]}, "
             f"only-in-4.0={[s for s in sel4 if s not in sel3][:3]})")
 
+# Libadwaita recolor files track theme.json (or stock Adwaita blue returns).
+for tid, tname in pairs:
+    theme = json.loads((root / "profiles/themes" / tid / "theme.json").read_text())
+    pal = {k: v.lower() for k, v in theme["palette"].items()}
+    rpath = root / "desktop/gtk-theme" / tname / "gtk-4.0" / "recolor.css"
+    if not rpath.is_file():
+        err(f"{tname}: gtk-4.0/recolor.css missing (libadwaita fallback unthemed)")
+        continue
+    rtext = rpath.read_text()
+    got = dict(re.findall(r"@define-color\s+([\w-]+)\s+(#[0-9a-fA-F]{6})\s*;",
+                          re.sub(r"/\*.*?\*/", "", rtext, flags=re.S)))
+    for name, val in got.items():
+        if not re.fullmatch(r"[a-z][\w-]*", name):
+            err(f"{tname}/recolor.css bad color name: {name!r}")
+    for want_name, want_key in (("accent_bg_color", "primary"),
+                                ("accent_fg_color", "onPrimary"),
+                                ("window_bg_color", "background"),
+                                ("window_fg_color", "text"),
+                                ("error_bg_color", "error"),
+                                ("error_fg_color", "onError")):
+        if got.get(want_name, "").lower() != pal[want_key]:
+            err(f"{tname}/recolor.css {want_name}={got.get(want_name)!r}, "
+                f"want palette {want_key}={pal[want_key]!r}")
+
 # Gallery fixture covers the styled widget set (or skips cleanly headless).
 gal = (root / "desktop/gtk-theme/gallery.py").read_text()
 classes = re.search(r"WIDGET_CLASSES = \(\s*\"([^\"]+)\"", gal)

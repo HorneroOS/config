@@ -172,6 +172,41 @@ _dots_aa_sync_gtk_color_scheme() {
 	fi
 }
 
+# Switch the installed kitty.conf include to the theme variant so the
+# terminal re-themes atomically with the rest (Preview 2 QA: light shell
+# with a dark terminal is a half-applied desktop). Best-effort reload via
+# SIGUSR1; a missing variant file or kitty.conf skips silently.
+_dots_aa_sync_kitty() {
+	local theme_id="${1:-}"
+	local kitty_dir="${XDG_CONFIG_HOME:-$HOME/.config}/kitty"
+	local variant="$kitty_dir/${theme_id}.conf"
+	[[ -f $kitty_dir/kitty.conf && -f $variant ]] || return 0
+	if grep -qE '^include hornero-(dark|light)\.conf$' "$kitty_dir/kitty.conf"; then
+		sed -i -E "s#^include hornero-(dark|light)[.]conf\$#include ${theme_id}.conf#" "$kitty_dir/kitty.conf"
+	fi
+	pkill -SIGUSR1 -x kitty > /dev/null 2>&1 || true
+}
+
+# Swap the libadwaita recoloring to the theme variant. libadwaita apps
+# ignore gtk.css theme trees (stock Adwaita blue accents) unless
+# ~/.config/gtk-4.0/gtk.css redefines the public palette; the per-variant
+# recolor.css files ship in the installed theme trees and are test-gated
+# against theme.json (tests/test_gtk_theme.sh).
+_dots_aa_sync_recolor() {
+	local theme_id="${1:-}"
+	local tree=""
+	case "$theme_id" in
+		hornero-dark) tree="Hornero-Dark" ;;
+		hornero-light) tree="Hornero-Light" ;;
+		*) return 0 ;;
+	esac
+	local src="${XDG_DATA_HOME:-$HOME/.local/share}/themes/$tree/gtk-4.0/recolor.css"
+	local dest="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-4.0/gtk.css"
+	[[ -f $src ]] || return 0
+	mkdir -p "$(dirname "$dest")"
+	cp -f "$src" "$dest"
+}
+
 # Pack recipe → canonical gtkColorScheme policy.
 _dots_aa_resolve_gtk_color_scheme() {
 	local config_json="${1:-}"
@@ -335,6 +370,9 @@ dots_apply_theme() {
 	else
 		_dots_aa_sync_gtk_color_scheme
 	fi
+
+	_dots_aa_sync_kitty "$theme_id"
+	_dots_aa_sync_recolor "$theme_id"
 
 	if [[ -f $HOME/.local/lib/dots/snappy-switcher-manager.sh ]]; then
 		# shellcheck source=/dev/null
