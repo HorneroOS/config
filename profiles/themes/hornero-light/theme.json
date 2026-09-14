@@ -12,9 +12,9 @@
   "darkMode": false,
   "schemeType": "vibrant",
   "gtkTheme": "Hornero-Light",
-  "iconTheme": "Numix-Circle",
+  "iconTheme": "Papirus",
   "gtkPreferDark": false,
-  "defaultWallpaper": "hornero-light-01.jpg",
+  "defaultWallpaper": "hornero-light-01.png",
   "wallpaperDir": "hornero-light",
   "palette": {
     "background": "#FAF1E3",

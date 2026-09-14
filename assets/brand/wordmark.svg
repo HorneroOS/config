@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 170" role="img" aria-label="HorneroOS wordmark">
+  <title>HorneroOS wordmark</title>
+  <desc>Wordmark set in the system sans at weight 800 with wide tracking. Rendered with local fonts; "HORNERO" follows currentColor, "OS" is ember terracotta.</desc>
+  <text x="20" y="105" font-family="Inter, 'DejaVu Sans', 'Noto Sans', sans-serif" font-size="76" font-weight="800" letter-spacing="8" fill="currentColor">HORNERO<tspan dx="22" fill="#E07856">OS</tspan></text>
+  <rect x="24" y="122" width="120" height="8" rx="4" fill="#F2B749"/>
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="HorneroOS default dark wallpaper">
+  <title>Hornero dark wallpaper (procedural source)</title>
+  <desc>Toasted-adobe night gradient, setting-sun disc and oven-arch contour lines. Render to PNG with scripts/render-brand-assets.sh; never vendor binaries.</desc>
+  <defs>
+    <linearGradient id="hornero-wp-night" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0F0B08"/>
+      <stop offset="0.55" stop-color="#1D1410"/>
+      <stop offset="1" stop-color="#3C2C21"/>
+    </linearGradient>
+    <radialGradient id="hornero-wp-sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#F2B749"/>
+      <stop offset="0.6" stop-color="#E07856"/>
+      <stop offset="1" stop-color="#B24827"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#hornero-wp-night)"/>
+  <g fill="none" stroke="#E9D3BC" opacity="0.07">
+    <circle cx="960" cy="620" r="420" stroke-width="3"/>
+    <circle cx="960" cy="620" r="520" stroke-width="2"/>
+    <circle cx="960" cy="620" r="620" stroke-width="2"/>
+    <circle cx="960" cy="620" r="720" stroke-width="1.5"/>
+    <circle cx="960" cy="620" r="820" stroke-width="1.5"/>
+  </g>
+  <circle cx="960" cy="620" r="300" fill="url(#hornero-wp-sun)"/>
+  <rect y="880" width="1920" height="200" fill="#0F0B08" opacity="0.55"/>
+  <path d="M0,880 C480,850 1440,850 1920,880 L1920,900 C1440,870 480,870 0,900 Z" fill="#2B1A11" opacity="0.8"/>
+</svg>

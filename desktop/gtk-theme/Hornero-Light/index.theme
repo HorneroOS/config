@@ -7,6 +7,6 @@ Encoding=UTF-8
 [X-GNOME-Metatheme]
 GtkTheme=Hornero-Light
 MetacityTheme=Hornero-Light
-IconTheme=Numix-Circle
+IconTheme=Papirus
 CursorTheme=elementary
 ButtonLayout=close,minimize,maximize:

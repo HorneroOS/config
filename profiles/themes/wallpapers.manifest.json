@@ -64,12 +64,12 @@
     },
     {
       "id": "hornero-dark",
-      "defaultWallpaper": "hornero-dark-01.jpg",
+      "defaultWallpaper": "hornero-dark-01.png",
       "wallpaperDir": "hornero-dark"
     },
     {
       "id": "hornero-light",
-      "defaultWallpaper": "hornero-light-01.jpg",
+      "defaultWallpaper": "hornero-light-01.png",
       "wallpaperDir": "hornero-light"
     }
   ]

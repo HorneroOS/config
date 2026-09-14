@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="HorneroOS default light wallpaper">
+  <title>Hornero light wallpaper (procedural source)</title>
+  <desc>Warm morning-paper gradient, terracotta sun disc and oven-arch contour lines. Render to PNG with scripts/render-brand-assets.sh; never vendor binaries.</desc>
+  <defs>
+    <linearGradient id="hornero-wp-day" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFDF7"/>
+      <stop offset="0.55" stop-color="#FAF1E3"/>
+      <stop offset="1" stop-color="#F1E3CE"/>
+    </linearGradient>
+    <radialGradient id="hornero-wp-daysun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#F2B749"/>
+      <stop offset="0.6" stop-color="#E07856"/>
+      <stop offset="1" stop-color="#B24827"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#hornero-wp-day)"/>
+  <g fill="none" stroke="#7C4A2C" opacity="0.10">
+    <circle cx="960" cy="460" r="380" stroke-width="3"/>
+    <circle cx="960" cy="460" r="480" stroke-width="2"/>
+    <circle cx="960" cy="460" r="580" stroke-width="2"/>
+    <circle cx="960" cy="460" r="680" stroke-width="1.5"/>
+    <circle cx="960" cy="460" r="780" stroke-width="1.5"/>
+  </g>
+  <circle cx="960" cy="460" r="270" fill="url(#hornero-wp-daysun)"/>
+  <rect y="880" width="1920" height="200" fill="#7C4A2C" opacity="0.12"/>
+  <path d="M0,880 C480,852 1440,852 1920,880 L1920,900 C1440,872 480,872 0,900 Z" fill="#B24827" opacity="0.25"/>
+</svg>

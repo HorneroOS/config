@@ -14,7 +14,7 @@
   "gtkTheme": "Hornero-Dark",
   "iconTheme": "Papirus-Dark",
   "gtkPreferDark": true,
-  "defaultWallpaper": "hornero-dark-01.jpg",
+  "defaultWallpaper": "hornero-dark-01.png",
   "wallpaperDir": "hornero-dark",
   "palette": {
     "background": "#1D1410",

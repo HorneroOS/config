@@ -38,7 +38,7 @@
     "package": "extra/papirus-icon-theme"
   },
   "wallpaper": {
-    "defaultWallpaper": "hornero-dark-01.jpg",
+    "defaultWallpaper": "hornero-dark-01.png",
     "wallpaperDir": "hornero-dark",
     "note": "Ref-only; binaries ship via the release pipeline (see profiles/themes/wallpapers.manifest.json)."
   }
