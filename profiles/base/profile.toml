@@ -16,6 +16,11 @@ description = "Hyprland compositor defaults (generic monitor fallback included).
 source = "desktop/kitty"
 target = "{config}/kitty"
 
+[modules.qt6ct]
+source = "desktop/qt6ct"
+target = "{config}/qt6ct"
+description = "Qt6 platform-theme defaults (qt6ct: Fusion + Hornero fonts/icons)."
+
 [modules.gtk]
 source = "desktop/gtk/settings.ini"
 target = "{config}/gtk-3.0/settings.ini"
@@ -69,3 +74,13 @@ description = "dots-gtk-theme-family CLI adapters."
 source = "profiles/themes"
 target = "{data}/dots/themes"
 description = "12 apply-once theme packs (theme.json + wallpaper refs, no binaries)."
+
+[modules.gtk-theme]
+source = "desktop/gtk-theme"
+target = "{data}/themes"
+description = "Real Hornero-Dark/Hornero-Light GTK 3+4 themes (theme trees only; src/ and tooling are dev-only)."
+
+[modules.factory]
+source = "profiles/factory.json"
+target = "{data}/hornero/factory.json"
+description = "Fresh-boot default record (Hornero Dark + font/icon pointers)."

@@ -144,6 +144,49 @@ while IFS= read -r src; do
 done < <(grep -rhoE "source *= *[^ ]*hypr/[^ ]+" "$REPO_ROOT/desktop/hypr/hyprland.conf" | sed -E 's/.*hypr\///')
 [[ $HYPR_FAIL -eq 0 ]] && pass "hypr sanity (no templates, balanced, sources resolve)"
 
+# --- Hornero GTK theme (parser errors + index.theme + src sync) -----------------
+if ! python3 - "$REPO_ROOT" <<'PY'
+import configparser, re, sys
+from pathlib import Path
+root = Path(sys.argv[1])
+errors = []
+def err(msg): errors.append(msg)
+for variant in ("Hornero-Dark", "Hornero-Light"):
+    tdir = root / "desktop/gtk-theme" / variant
+    try:
+        idx = configparser.ConfigParser(strict=True)
+        idx.read_string((tdir / "index.theme").read_text())
+        if idx.get("X-GNOME-Metatheme", "GtkTheme", fallback=None) != variant:
+            err(f"{variant}/index.theme GtkTheme mismatch")
+    except Exception as e:
+        err(f"{variant}/index.theme: {e}")
+    for ver in ("gtk-3.0", "gtk-4.0"):
+        try:
+            bare = re.sub(r"/\*.*?\*/", "", (tdir / ver / "gtk.css").read_text(), flags=re.S)
+        except Exception as e:
+            err(f"{variant}/{ver}/gtk.css unreadable: {e}")
+            continue
+        if bare.count("{") != bare.count("}"):
+            err(f"{variant}/{ver}/gtk.css unbalanced braces (parser error)")
+        for m in re.finditer(r"@define-color\s+\S+\s+([^;]+);", bare):
+            if not re.fullmatch(r"#[0-9a-fA-F]{6}", m.group(1).strip()):
+                err(f"{variant}/{ver}/gtk.css bad @define-color value")
+if errors:
+    print("VALIDATE-FAIL: GTK theme", file=sys.stderr)
+    for e in errors: print("  -", e, file=sys.stderr)
+    sys.exit(1)
+PY
+then
+  fail "GTK theme (gtk.css parse + index.theme)"
+else
+  pass "GTK theme (gtk.css parse + index.theme)"
+fi
+if bash "$REPO_ROOT/desktop/gtk-theme/build.sh" --check >/dev/null 2>&1; then
+  pass "GTK theme outputs in sync with src/"
+else
+  fail "GTK theme outputs drifted from src/ (run desktop/gtk-theme/build.sh)"
+fi
+
 # --- appearance contrast (WCAG AA, fails the build on violation) ------------------
 if python3 "$REPO_ROOT/scripts/check-contrast.py" --themes-dir "$REPO_ROOT/profiles/themes"; then
   pass "appearance contrast (WCAG AA)"

@@ -80,6 +80,7 @@ compat_link() {
 # --- desktop defaults -> ~/.config -------------------------------------------
 install_dir "desktop/hypr" "$CONFIG_HOME/hypr"
 install_dir "desktop/kitty" "$CONFIG_HOME/kitty"
+install_dir "desktop/qt6ct" "$CONFIG_HOME/qt6ct"
 install_file "desktop/gtk/settings.ini" "$CONFIG_HOME/gtk-3.0/settings.ini"
 install_file "desktop/gtk/gtkrc-2.0" "$DEST/.gtkrc-2.0"
 install_dir "desktop/fontconfig" "$CONFIG_HOME/fontconfig"
@@ -115,6 +116,32 @@ install_dir "profiles/themes" "$DATA_HOME/hornero/themes"
 # PNG wallpapers/icons are rendered on the target machine via
 # scripts/render-brand-assets.sh and never enter the stage.
 install_dir "assets/brand" "$DATA_HOME/hornero/brand"
+
+# --- Hornero GTK theme (real theme trees, standard lookup path) ----------------
+# desktop/gtk-theme/Hornero-{Dark,Light} -> ~/.local/share/themes/ so GTK 3
+# and GTK 4 discover them without extra env. Dev-only sources (src/,
+# build.sh, gallery.py, README.md) are excluded: only the two theme trees
+# plus nothing else may flow through here (no file owned twice — the recipe
+# JSONs above stay the sole owners of .../hornero/themes).
+if [[ $DRY_RUN -eq 1 ]]; then
+  echo "would install desktop/gtk-theme/Hornero-{Dark,Light} -> $DATA_HOME/themes/"
+else
+  mkdir -p "$DATA_HOME/themes"
+  for variant in Dark Light; do
+    rm -rf "$DATA_HOME/themes/Hornero-$variant"
+    mkdir -p "$DATA_HOME/themes/Hornero-$variant"
+    cp -r "$REPO_ROOT/desktop/gtk-theme/Hornero-$variant/." \
+      "$DATA_HOME/themes/Hornero-$variant/"
+  done
+  find "$DATA_HOME/themes/Hornero-Dark" "$DATA_HOME/themes/Hornero-Light" \
+    -type d -exec chmod 755 {} +
+  find "$DATA_HOME/themes/Hornero-Dark" "$DATA_HOME/themes/Hornero-Light" \
+    -type f -exec chmod 644 {} +
+fi
+# --- factory default record -> canonical hornero/* -----------------------------
+# profiles/factory.json declares the fresh-boot default (Hornero Dark);
+# static data, no runtime fetch (see docs/FACTORY_DEFAULTS.md).
+install_file "profiles/factory.json" "$DATA_HOME/hornero/factory.json"
 # --- shell layout presets catalogue -> canonical hornero/* --------------------
 # Row 2: no curated source in this repo yet (owner HorneroOS/shell per
 # docs/DECISIONS.md); ensure the canonical dir exists for future packs.

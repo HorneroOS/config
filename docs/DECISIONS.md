@@ -116,6 +116,7 @@ text-on-surface pair at WCAG AA (>= 4.5:1) and runs in `scripts/validate.sh`,
 `tests/test_contrast.sh`, and CI; wallpaper binaries stay refs-only in
 `wallpapers.manifest.json`. All new code is MIT-only (no GPL).
 
+
 ## Brand identity P2 (new authorship, not extraction)
 
 `assets/brand/` is the canonical vector identity (warm clay/sunset/earth,
@@ -144,3 +145,55 @@ verified for `hornero-dark`; `hornero-light` overturned
 `Numix-Circle` (chaotic-aur `-git` only, no official package) to
 `Papirus` — one family, one official `extra/papirus-icon-theme`
 package; see `docs/ICON-BASE.md`. Full spec: `docs/BRAND.md`.
+
+## Real Hornero GTK theme, GTK 3 + GTK 4 (no GTK 2)
+
+`desktop/gtk-theme/` ships real `Hornero-Dark` / `Hornero-Light` theme trees
+(`index.theme` + `gtk-3.0/gtk.css` + `gtk-4.0/gtk.css`), built from the
+flagship token palettes and wired through the `gtkTheme` fields of
+`profiles/themes/hornero-dark|light/theme.json` (replacing the external
+`Orchis-*-Compact` references). No GTK 2 is shipped and none is claimed:
+there is no `gtk-2.0/` engine dir anywhere in the deliverable.
+
+- **Source architecture: hand-structured CSS, no SCSS, no vendored trees.**
+  Colloid/Orchis/Graphite generate from large copyleft-licensed SCSS
+  forests that cannot enter this MIT-only repo, and an SCSS pipeline would
+  add a toolchain dependency to CI/`makepkg` for zero styling gain at this
+  fidelity. The theme is an original implementation informed by their
+  architecture (token `@define-color` block first, one section per widget
+  family after). One source per variant (`src/hornero-{dark,light}.css`);
+  `build.sh` (plain `cp`, no toolchain) stamps the four shipped `gtk.css`
+  copies, and `build.sh --check` fails CI on drift. v1 uses only the
+  portable property subset valid in both parsers (flat-hex interaction
+  shades, no `shade()`/`mix()`/`alpha()`, no engine properties), so the
+  GTK 3 and GTK 4 outputs are byte-exact copies with an identical selector
+  set — asserted by `tests/test_gtk_theme.sh`.
+- **Libadwaita decision: palette-level integration, no restyle.**
+  Libadwaita apps ignore GTK themes by design and recolor through
+  `org.gnome.desktop.interface color-scheme` /
+  `gtk-application-prefer-dark-theme`, which
+  `lib/dots/gtk-theme-manager.sh` already drives. Forcing the theme via
+  `GTK_THEME=` or `~/.config/gtk-4.0/gtk.css` widget overrides reaches into
+  Libadwaita's private CSS nodes (renamed freely upstream: every GNOME
+  upgrade risks breakage) and fights Flatpak portal expectations — so the
+  restyle option was rejected. The shipped `gtk-4.0/gtk.css` styles plain
+  GTK 4 widgets; an opt-in `@import` snippet for Libadwaita windows is
+  documented in `desktop/gtk-theme/README.md` and never installed.
+- **Widget-gallery fixture instead of gtk-demo/gtk4-demo (evidence).**
+  Neither demo ships on HorneroOS, neither is installed on the dev host
+  (`which gtk-demo gtk4-demo` empty), and the Ubuntu CI image has no GTK
+  demos — so the demos cannot be the review path. `gallery.py` renders the
+  styled widget set under GTK 4 (GTK 3 fallback), skips with exit 2 when no
+  bindings/display exist, and auto-quits after ~3 s so suites never block.
+  `tests/test_gtk_theme.sh` cross-checks every gallery widget class against
+  the shipped selectors. Verified on the dev host: rendered via Gtk4,
+  exit 0.
+- **Package ownership (no file owned twice).** `materialize.sh` installs
+  only the two theme trees to `~/.local/share/themes/` (dev-only `src/`,
+  `build.sh`, `gallery.py`, `README.md` never stage); `package()` copies
+  them to `/usr/share/themes/` and fails the build when any of the six
+  files is missing. The recipe JSONs keep sole ownership of
+  `/usr/share/hornero/themes`. Declared in `packaging/README.md` (layout
+  table + written-prefixes), new module row in `profiles/base/profile.toml`,
+  gated by `tests/test_gtk_theme.sh` (byte-exact stage check, leak checks)
+  and the existing `test_package.sh` prefix audit (allows `/usr/share`).

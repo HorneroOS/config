@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-Dark
+Comment=HorneroOS flagship dark theme: ember terracotta on toasted-adobe night
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-Dark
+MetacityTheme=Hornero-Dark
+IconTheme=Papirus-Dark
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:

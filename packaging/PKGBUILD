@@ -26,6 +26,10 @@ optdepends=(
   'thunar: file manager defaults under /etc/xdg/Thunar'
   'copyq: clipboard defaults under /etc/xdg/copyq'
   'handlr: default-application handler under /etc/xdg/handlr'
+  'qt6ct: Qt6 platform-theme defaults under /etc/xdg/qt6ct'
+  'papirus-icon-theme: Papirus-Dark factory icons'
+  'orchis-theme: Orchis factory GTK themes'
+  'ttf-material-symbols-variable: Material Symbols shell icon font'
 )
 source=()
 sha256sums=()
@@ -128,6 +132,24 @@ package() {
   # desktop/gtk-theme* + /usr/share/themes — this block touches neither.
   mkdir -p "$pkgdir/usr/share/hornero/brand"
   cp -a "$stage/.local/share/hornero/brand/." "$pkgdir/usr/share/hornero/brand/"
+  # Real Hornero GTK themes (standard lookup path, discoverable by GTK 3+4
+  # with no extra env). Ownership: these two trees own /usr/share/themes
+  # exclusively — the recipe JSONs above own /usr/share/hornero/themes and
+  # no file is shipped twice. Dev-only sources (src/, build.sh, gallery.py)
+  # never enter the stage, so they cannot leak into the package.
+  for variant in Dark Light; do
+    if [[ ! -f "$stage/.local/share/themes/Hornero-$variant/gtk-3.0/gtk.css" ]] \
+        || [[ ! -f "$stage/.local/share/themes/Hornero-$variant/gtk-4.0/gtk.css" ]] \
+        || [[ ! -f "$stage/.local/share/themes/Hornero-$variant/index.theme" ]]; then
+      echo "error: staged Hornero-$variant theme tree incomplete" >&2
+      return 1
+    fi
+  done
+  mkdir -p "$pkgdir/usr/share/themes"
+  cp -a "$stage/.local/share/themes/Hornero-Dark" \
+        "$stage/.local/share/themes/Hornero-Light" \
+        "$pkgdir/usr/share/themes/"
+
 
   # Profile manifests plus the resolved selection record.
   install -Dm644 "$repo_root/$profile_src" \
@@ -138,8 +160,10 @@ package() {
 
   # Permissions mirror scripts/materialize.sh: dirs 755, files 644,
   # with executables restored for CLI adapters and hypr helpers.
-  find "$pkgdir/etc/xdg" "$pkgdir/usr/share/hornero" -type d -exec chmod 755 {} +
-  find "$pkgdir/etc/xdg" "$pkgdir/usr/share/hornero" -type f -exec chmod 644 {} +
+  find "$pkgdir/etc/xdg" "$pkgdir/usr/share/hornero" "$pkgdir/usr/share/themes" \
+    -type d -exec chmod 755 {} +
+  find "$pkgdir/etc/xdg" "$pkgdir/usr/share/hornero" "$pkgdir/usr/share/themes" \
+    -type f -exec chmod 644 {} +
   chmod 755 "$pkgdir"/usr/share/hornero/bin/dots-*
   chmod 755 "$pkgdir"/etc/xdg/hypr/scripts/*.sh
 

@@ -1,0 +1,45 @@
+{
+  "$comment": "HorneroOS factory defaults: a fresh boot (or a fresh --dest materialize) lands on Hornero Dark with no user setup and no network fetch. All values here are static files in this repo; nothing is cloned from ulises-jeremias/dotfiles at runtime (that repo is a read-only extraction source, see docs/DECISIONS.md).",
+  "defaultTheme": "hornero-dark",
+  "availableThemes": ["hornero-dark", "hornero-light"],
+  "themeRecipes": "{data}/hornero/themes",
+  "compositor": {
+    "config": "{config}/hypr/hyprland.conf.d/colors.conf",
+    "note": "Curated Hornero Dark borders/groups; shadow tint in hyprland.conf decoration block."
+  },
+  "terminal": {
+    "config": "{config}/kitty/hornero-dark.conf",
+    "note": "16 ANSI + fg/bg/cursor/selection/URL/tab; light variant hornero-light.conf."
+  },
+  "qt": {
+    "platformTheme": "qt6ct",
+    "config": "{config}/qt6ct/qt6ct.conf",
+    "note": "Fusion + Hornero fonts; see docs/QT_DECISION.md."
+  },
+  "gtk": {
+    "theme": "Orchis-Dark-Compact",
+    "package": "extra/orchis-theme",
+    "iconTheme": "Papirus-Dark",
+    "preferDark": true,
+    "note": "Applied by the config-gtk worker via desktop/gtk/settings.ini; recorded here so fresh-boot-dark is one contract."
+  },
+  "fonts": {
+    "sans": "Rubik",
+    "mono": "CaskaydiaCove NF",
+    "material": "Material Symbols Rounded",
+    "packages": [
+      "extra/ttf-material-symbols-variable",
+      "extra/papirus-icon-theme"
+    ],
+    "note": "Material Symbols ships the shell icon font declared in shell/shell.default.json (appearance.font.family.material). Sans/mono families are recorded from shell/shell.default.json; their Arch packaging is AUR-side and documented in docs/FACTORY_DEFAULTS.md."
+  },
+  "icons": {
+    "theme": "Papirus-Dark",
+    "package": "extra/papirus-icon-theme"
+  },
+  "wallpaper": {
+    "defaultWallpaper": "hornero-dark-01.png",
+    "wallpaperDir": "hornero-dark",
+    "note": "Ref-only; binaries ship via the release pipeline (see profiles/themes/wallpapers.manifest.json)."
+  }
+}
