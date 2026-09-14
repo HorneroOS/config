@@ -69,3 +69,8 @@ description = "dots-gtk-theme-family CLI adapters."
 source = "profiles/themes"
 target = "{data}/dots/themes"
 description = "12 apply-once theme packs (theme.json + wallpaper refs, no binaries)."
+
+[modules.gtk-theme]
+source = "desktop/gtk-theme"
+target = "{data}/themes"
+description = "Real Hornero-Dark/Hornero-Light GTK 3+4 themes (theme trees only; src/ and tooling are dev-only)."

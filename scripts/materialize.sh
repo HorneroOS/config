@@ -108,6 +108,28 @@ fi
 # --- theme packs (recipes only, no binaries) -> canonical hornero/* -----------
 # Rows 1+8: installed theme.json recipes + wallpapers.manifest.json.
 install_dir "profiles/themes" "$DATA_HOME/hornero/themes"
+
+# --- Hornero GTK theme (real theme trees, standard lookup path) ----------------
+# desktop/gtk-theme/Hornero-{Dark,Light} -> ~/.local/share/themes/ so GTK 3
+# and GTK 4 discover them without extra env. Dev-only sources (src/,
+# build.sh, gallery.py, README.md) are excluded: only the two theme trees
+# plus nothing else may flow through here (no file owned twice — the recipe
+# JSONs above stay the sole owners of .../hornero/themes).
+if [[ $DRY_RUN -eq 1 ]]; then
+  echo "would install desktop/gtk-theme/Hornero-{Dark,Light} -> $DATA_HOME/themes/"
+else
+  mkdir -p "$DATA_HOME/themes"
+  for variant in Dark Light; do
+    rm -rf "$DATA_HOME/themes/Hornero-$variant"
+    mkdir -p "$DATA_HOME/themes/Hornero-$variant"
+    cp -r "$REPO_ROOT/desktop/gtk-theme/Hornero-$variant/." \
+      "$DATA_HOME/themes/Hornero-$variant/"
+  done
+  find "$DATA_HOME/themes/Hornero-Dark" "$DATA_HOME/themes/Hornero-Light" \
+    -type d -exec chmod 755 {} +
+  find "$DATA_HOME/themes/Hornero-Dark" "$DATA_HOME/themes/Hornero-Light" \
+    -type f -exec chmod 644 {} +
+fi
 # --- shell layout presets catalogue -> canonical hornero/* --------------------
 # Row 2: no curated source in this repo yet (owner HorneroOS/shell per
 # docs/DECISIONS.md); ensure the canonical dir exists for future packs.
