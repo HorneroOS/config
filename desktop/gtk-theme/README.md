@@ -1,8 +1,10 @@
 # Hornero GTK theme (GTK 3 + GTK 4, MIT-native)
 
-Real `Hornero-Dark` / `Hornero-Light` GTK themes built from the flagship
-token palettes (`profiles/themes/hornero-dark|light/theme.json`,
-terracotta/clay/sunset family). No GTK 2 is shipped and none is claimed:
+Real `Hornero-Dark` / `Hornero-Light` / `Hornero-Pampa` GTK themes built
+from the flagship token palettes
+(`profiles/themes/hornero-dark|light|pampa/theme.json`; dark/light are the
+terracotta/clay/sunset family, pampa is the grassland-night green third
+flagship). No GTK 2 is shipped and none is claimed:
 there is no `gtk-2.0/` engine dir; the legacy `desktop/gtk/gtkrc-2.0`
 settings skeleton is untouched and out of scope.
 
@@ -12,9 +14,11 @@ settings skeleton is untouched and out of scope.
 desktop/gtk-theme/
   src/hornero-dark.css    # source of truth (dark)
   src/hornero-light.css   # source of truth (light, first-class ramp)
-  build.sh                # copies src/ -> 4 shipped gtk.css outputs
+  src/pampa.css           # source of truth (pampa, grassland-night green)
+  build.sh                # copies src/ -> 6 shipped gtk.css outputs
   Hornero-Dark/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
   Hornero-Light/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
+  Hornero-Pampa/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
   gallery.py              # widget-gallery fixture (GTK 4 preferred, GTK 3 fallback)
 ```
 

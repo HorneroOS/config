@@ -38,7 +38,7 @@ only in `scripts/materialize.sh`; the PKGBUILD loop over the staged
 | `.local/lib/dots`                       | `/usr/share/hornero/lib/dots`         |
 | `.local/bin/dots-*`                     | `/usr/share/hornero/bin/dots-*`       |
 | `.local/share/dots/themes`              | `/usr/share/hornero/themes`           |
-| `.local/share/themes/Hornero-{Dark,Light}` (theme trees only; `src/`, `build.sh`, `gallery.py` are dev-only and never staged) | `/usr/share/themes/Hornero-{Dark,Light}` (real GTK 3+4 themes; sole owner of `/usr/share/themes`, no file shipped twice) |
+| `.local/share/themes/Hornero-{Dark,Light,Pampa}` (theme trees only; `src/`, `build.sh`, `gallery.py` are dev-only and never staged) | `/usr/share/themes/Hornero-{Dark,Light,Pampa}` (real GTK 3+4 themes; sole owner of `/usr/share/themes`, no file shipped twice) |
 | `profiles/base/profile.toml`            | `/usr/share/hornero/profiles/base/profile.toml` and `/usr/share/hornero/profile.toml` |
 | Selection name                          | `/usr/share/hornero/HORNERO_PROFILE`  |
 | `LICENSE`                               | `/usr/share/licenses/hornero-config/LICENSE` |

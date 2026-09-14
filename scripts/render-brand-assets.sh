@@ -67,15 +67,31 @@ rsvg-convert -w 512 "$BRAND"/wordmark.svg -o "$OUT/wordmark-512.png"
 echo "BRAND-PASS: recognizability PNGs in $OUT"
 
 # --- 3. wallpaper PNGs (procedural SVG -> local raster, never vendored) ------------
+# Official themes (family==hornero) are discovered from the recipe tree so
+# adding a theme pack never requires touching this script.
 if [[ -n $WALLPAPERS_DIR ]]; then
-  mkdir -p "$WALLPAPERS_DIR/hornero-dark" "$WALLPAPERS_DIR/hornero-light"
-  rsvg-convert -w 1920 -h 1080 "$BRAND/wallpaper/hornero-dark.svg" \
-    -o "$WALLPAPERS_DIR/hornero-dark/hornero-dark-01.png"
-  rsvg-convert -w 2560 -h 1440 "$BRAND"/wallpaper/hornero-dark.svg \
-    -o "$WALLPAPERS_DIR/hornero-dark/hornero-dark-02-hidpi.png"
-  rsvg-convert -w 1920 -h 1080 "$BRAND/wallpaper/hornero-light.svg" \
-    -o "$WALLPAPERS_DIR/hornero-light/hornero-light-01.png"
-  rsvg-convert -w 2560 -h 1440 "$BRAND"/wallpaper/hornero-light.svg \
-    -o "$WALLPAPERS_DIR/hornero-light/hornero-light-02-hidpi.png"
-  echo "BRAND-PASS: wallpaper PNGs in $WALLPAPERS_DIR"
+  python3 - "$REPO_ROOT/profiles/themes" "$BRAND/wallpaper" "$WALLPAPERS_DIR" <<'PY'
+import json, subprocess, sys
+from pathlib import Path
+themes_dir, svg_dir, out_dir = (Path(a) for a in sys.argv[1:4])
+rendered = []
+for recipe in sorted(themes_dir.glob("*/theme.json")):
+    doc = json.loads(recipe.read_text(encoding="utf-8"))
+    if doc.get("family") != "hornero":
+        continue
+    svg = svg_dir / f"{doc['id']}.svg"
+    if not svg.is_file():
+        print(f"BRAND-SKIP: no flagship SVG for {doc['id']}", file=sys.stderr)
+        continue
+    target_dir = out_dir / doc["wallpaperDir"]
+    target_dir.mkdir(parents=True, exist_ok=True)
+    default = target_dir / doc["defaultWallpaper"]
+    hidpi = target_dir / f"{doc['id']}-02-hidpi.png"
+    subprocess.run(["rsvg-convert", "-w", "1920", "-h", "1080", str(svg),
+                    "-o", str(default)], check=True)
+    subprocess.run(["rsvg-convert", "-w", "2560", "-h", "1440", str(svg),
+                    "-o", str(hidpi)], check=True)
+    rendered.append(str(default.relative_to(out_dir)))
+print(f"BRAND-PASS: wallpaper PNGs in {out_dir}: {', '.join(rendered)}")
+PY
 fi

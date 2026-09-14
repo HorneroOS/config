@@ -2,6 +2,10 @@
   <title>Hornero dark wallpaper (procedural source)</title>
   <desc>Toasted-adobe night gradient, setting-sun disc and oven-arch contour lines. Render to PNG with scripts/render-brand-assets.sh; never vendor binaries.</desc>
   <defs>
+  <filter id="hornero-wp-grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.035 0.045" numOctaves="2" stitchTiles="stitch" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0"/>
+  </filter>
     <linearGradient id="hornero-wp-night" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#0F0B08"/>
       <stop offset="0.55" stop-color="#1D1410"/>
@@ -24,4 +28,5 @@
   <circle cx="960" cy="620" r="300" fill="url(#hornero-wp-sun)"/>
   <rect y="880" width="1920" height="200" fill="#0F0B08" opacity="0.55"/>
   <path d="M0,880 C480,850 1440,850 1920,880 L1920,900 C1440,870 480,870 0,900 Z" fill="#2B1A11" opacity="0.8"/>
+  <rect width="1920" height="1080" filter="url(#hornero-wp-grain)" opacity="0.09"/>
 </svg>

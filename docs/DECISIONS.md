@@ -103,7 +103,11 @@ untouched; this section only adds verdicts.
 
 `profiles/themes/hornero-dark/` + `hornero-light/` are original HorneroOS
 flagship themes (terracotta/clay/sunset-warm family), not copies from
-`ulises-jeremias/dotfiles`. Each `theme.json` keeps the recipe fields the
+`ulises-jeremias/dotfiles`. `profiles/themes/pampa/` is the third flagship:
+same contract (`tokensVersion` 1.0.0, `family: hornero`), a distinct
+grassland-night green ramp with a golden sun (`schemeType: tonal-spot`,
+`gtkTheme: Hornero-Pampa`, `iconTheme: Papirus-Dark`, kitty `pampa.conf`,
+`wallpaper/pampa.svg` procedurally rendered to `pampa-01.png`). Each `theme.json` keeps the recipe fields the
 apply pipeline already consumes (`schemaVersion`, `id`, `name`,
 `darkMode`, `schemeType`, `gtkTheme`, `iconTheme`, `gtkPreferDark`,
 `defaultWallpaper`, `wallpaperDir`) and adds the versioned semantic token
@@ -127,7 +131,7 @@ cyberpunk): `logo.svg`, `logo-symbolic.svg` (`currentColor` knockout),
 `currentColor` + terracotta `OS`), `icons/hornero-app.svg` (squircle),
 `icons/hornero-system.svg` (roundel), `favicon.svg` (small-size optical
 variant, enlarged bird, use at 16-48 px), `wallpaper/hornero-{dark,light}.svg`
-(procedural 16:9 sources). All hand-authored, vector-only and
++ `wallpaper/pampa.svg` (procedural 16:9 sources). All hand-authored, vector-only and
 self-contained; `scripts/validate.sh` and `tests/test_brand.sh` enforce
 it, `scripts/render-brand-assets.sh` renders the 16-512 px
 recognizability sweep plus install-time wallpaper PNGs (binaries never
@@ -138,7 +142,7 @@ exclusively (config-gtk owns `desktop/gtk-theme*` + `/usr/share/themes`;
 this branch touches neither). `desktop/fastfetch/hornero.txt` is the
 ASCII mark and flows through the existing fastfetch install mapping.
 Wallpapers: flagship `defaultWallpaper` refs are now
-`hornero-{dark,light}-01.png`, produced on-device by
+`hornero-{dark,light}-01.png` + `pampa-01.png`, produced on-device by
 `render-brand-assets.sh --wallpapers`; the missing-file empty state
 (`dots-wallpaper-set` exits 1) is unchanged. Icon base: `Papirus-Dark`
 verified for `hornero-dark`; `hornero-light` overturned
@@ -148,10 +152,11 @@ package; see `docs/ICON-BASE.md`. Full spec: `docs/BRAND.md`.
 
 ## Real Hornero GTK theme, GTK 3 + GTK 4 (no GTK 2)
 
-`desktop/gtk-theme/` ships real `Hornero-Dark` / `Hornero-Light` theme trees
+`desktop/gtk-theme/` ships real `Hornero-Dark` / `Hornero-Light` /
+`Hornero-Pampa` theme trees
 (`index.theme` + `gtk-3.0/gtk.css` + `gtk-4.0/gtk.css`), built from the
 flagship token palettes and wired through the `gtkTheme` fields of
-`profiles/themes/hornero-dark|light/theme.json` (replacing the external
+`profiles/themes/hornero-dark|light|pampa/theme.json` (replacing the external
 `Orchis-*-Compact` references). No GTK 2 is shipped and none is claimed:
 there is no `gtk-2.0/` engine dir anywhere in the deliverable.
 
@@ -161,7 +166,8 @@ there is no `gtk-2.0/` engine dir anywhere in the deliverable.
   add a toolchain dependency to CI/`makepkg` for zero styling gain at this
   fidelity. The theme is an original implementation informed by their
   architecture (token `@define-color` block first, one section per widget
-  family after). One source per variant (`src/hornero-{dark,light}.css`);
+  family after). One source per variant
+  (`src/hornero-dark.css`, `src/hornero-light.css`, `src/pampa.css`);
   `build.sh` (plain `cp`, no toolchain) stamps the four shipped `gtk.css`
   copies, and `build.sh --check` fails CI on drift. v1 uses only the
   portable property subset valid in both parsers (flat-hex interaction
@@ -189,9 +195,10 @@ there is no `gtk-2.0/` engine dir anywhere in the deliverable.
   the shipped selectors. Verified on the dev host: rendered via Gtk4,
   exit 0.
 - **Package ownership (no file owned twice).** `materialize.sh` installs
-  only the two theme trees to `~/.local/share/themes/` (dev-only `src/`,
+  only the three theme trees (`Hornero-Dark`, `Hornero-Light`,
+  `Hornero-Pampa`) to `~/.local/share/themes/` (dev-only `src/`,
   `build.sh`, `gallery.py`, `README.md` never stage); `package()` copies
-  them to `/usr/share/themes/` and fails the build when any of the six
+  them to `/usr/share/themes/` and fails the build when any of the nine
   files is missing. The recipe JSONs keep sole ownership of
   `/usr/share/hornero/themes`. Declared in `packaging/README.md` (layout
   table + written-prefixes), new module row in `profiles/base/profile.toml`,
