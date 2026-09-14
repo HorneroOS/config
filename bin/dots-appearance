@@ -26,6 +26,8 @@ HORNERO_SCHEME_FILE="${HORNERO_SCHEME_FILE:-$HORNERO_CACHE_DIR/smart-colors/sche
 DOTS_SCHEME_FALLBACK="${DOTS_SCHEME_FALLBACK:-$DOTS_CACHE_DIR_FALLBACK/smart-colors/scheme.json}"
 HORNERO_WALLPAPER_POINTER="${HORNERO_WALLPAPER_POINTER:-$HORNERO_STATE_DIR/wallpaper/path}"
 DOTS_WALLPAPER_POINTER_FALLBACK="${DOTS_WALLPAPER_POINTER_FALLBACK:-$DOTS_STATE_DIR_FALLBACK/wallpaper/path}"
+HORNERO_HYPRLOCK_COLORS="${HORNERO_HYPRLOCK_COLORS:-$HORNERO_CACHE_DIR/smart-colors/colors-hyprlock.conf}"
+DOTS_HYPRLOCK_COLORS_FALLBACK="${DOTS_HYPRLOCK_COLORS_FALLBACK:-$DOTS_CACHE_DIR_FALLBACK/smart-colors/colors-hyprlock.conf}"
 
 # Canonical-first resolvers; canonical path when neither exists.
 _appearance_resolve_state_file() {
@@ -44,6 +46,15 @@ _appearance_resolve_scheme_file() {
 		printf '%s\n' "$DOTS_SCHEME_FALLBACK"
 	else
 		printf '%s\n' "$HORNERO_SCHEME_FILE"
+	fi
+}
+_appearance_resolve_hyprlock_colors() {
+	if [[ -f $HORNERO_HYPRLOCK_COLORS ]]; then
+		printf '%s\n' "$HORNERO_HYPRLOCK_COLORS"
+	elif [[ -f $DOTS_HYPRLOCK_COLORS_FALLBACK ]]; then
+		printf '%s\n' "$DOTS_HYPRLOCK_COLORS_FALLBACK"
+	else
+		printf '%s\n' "$HORNERO_HYPRLOCK_COLORS"
 	fi
 }
 _appearance_resolve_pointer() {
@@ -361,7 +372,7 @@ cmd_doctor() {
 	echo "state.flavour  : ${state_flavour:-"(missing)"}"
 	echo "scheme.mode    : ${scheme_mode:-"(missing)"}"
 	echo "state.mode     : ${state_mode:-"(missing)"}"
-	local hyprlock_conf="${HOME}/.cache/dots/smart-colors/colors-hyprlock.conf"
+	local hyprlock_conf="$(_appearance_resolve_hyprlock_colors)"
 	local hyprlock_bytes=0
 	[[ -f $hyprlock_conf ]] && hyprlock_bytes="$(wc -c <"$hyprlock_conf" | tr -d ' ')"
 	local gtk_theme_ini="" gtk_prefer_dark="" gtk_color_scheme="" gtk_color_policy=""

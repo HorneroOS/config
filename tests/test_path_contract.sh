@@ -34,6 +34,14 @@ grep -q "ffb0ca" "$XDG_CACHE_HOME/hornero/smart-colors/colors-hyprlock.conf" \
 [[ ! -e $XDG_CACHE_HOME/dots/smart-colors/colors-hyprlock.conf ]] \
   || fail "hyprlock-theme wrote to the dots fallback"
 pass "hyprlock-theme reads dots fallback, writes canonical hornero"
+# dots-appearance doctor reports the canonical output (it used to read the
+# never-written dots/* path and always reported 0 bytes). Only the
+# hyprlock line is asserted: whole-doctor health depends on unrelated
+# host state (wallpaper pointer, materialyoucolor python).
+doctor_out="$("$REPO_ROOT/bin/dots-appearance" doctor 2>/dev/null || true)"
+echo "$doctor_out" | grep -q "^hyprlock.conf  : [1-9][0-9]* bytes" \
+  || fail "doctor misses the canonical colors-hyprlock.conf: $(echo "$doctor_out" | grep '^hyprlock.conf' || echo '(no line)')"
+pass "doctor reads canonical colors-hyprlock.conf"
 rm -f /tmp/hx-probe-wallpaper.png
 
 # --- dots-night-mode: dots-only state is honoured -----------------------------
