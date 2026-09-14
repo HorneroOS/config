@@ -11,7 +11,8 @@ set against a setting-sun disc. The mark references the bird the project
 is named after and the mud-oven nest it builds (the arch/contour motif
 reused in the wallpapers). Palette is taken from the flagship
 `hornero-dark` / `hornero-light` token ramps so the identity always matches
-the default desktop.
+the default desktop (`pampa`, the grassland-night third flagship, reuses
+the same bird mark and arch/contour motif in its own green-and-gold ramp).
 
 Canonical palette:
 
@@ -38,7 +39,7 @@ Canonical palette:
 | `icons/hornero-app.svg` | Squircle app icon (launchers, docks, app grids) |
 | `icons/hornero-system.svg` | Roundel system icon (settings, about dialogs) |
 | `favicon.svg` | Small-size optical variant: enlarged bird, no eye detail, heavier branch — use at 16–48 px |
-| `wallpaper/hornero-{dark,light}.svg` | Procedural wallpaper sources (16:9) |
+| `wallpaper/hornero-{dark,light}.svg` + `wallpaper/pampa.svg` | Procedural wallpaper sources (16:9) |
 
 All SVGs are hand-authored, well-formed XML, vector-only (no `<image>`,
 no `data:` URIs) and self-contained (no external references).
@@ -62,11 +63,12 @@ fastfetch --logo-type file \
 Wallpaper binaries are never vendored (see `docs/DECISIONS.md`). Fresh
 boot shows intentional Hornero visuals through this chain:
 
-1. Source: `assets/brand/wallpaper/hornero-{dark,light}.svg` (procedural,
-   on-palette, 16:9).
+1. Source: `assets/brand/wallpaper/hornero-{dark,light}.svg` +
+   `assets/brand/wallpaper/pampa.svg` (procedural, on-palette, 16:9).
 2. Render on the target machine:
    `scripts/render-brand-assets.sh --wallpapers ~/.local/share/hornero/wallpapers`
-   produces `hornero-{dark,light}/hornero-{dark,light}-01.png` (1920x1080)
+   produces `<id>/<id>-01.png` (1920x1080) per flagship theme
+   (`hornero-dark`, `hornero-light`, `pampa`)
    plus HiDPI `...-02-hidpi.png` (2560x1440).
 3. The flagship `theme.json` packs and `wallpapers.manifest.json` point
    `defaultWallpaper` at those PNG names, so the normal resolver picks

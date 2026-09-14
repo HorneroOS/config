@@ -39,7 +39,9 @@ bash "$REPO_ROOT/scripts/materialize.sh" --dest "$STAGE" >/dev/null
   && pass "staged fastfetch mark" || fail "fastfetch mark not staged"
 
 # --- 4. flagship recipes point at rendered PNG names ------------------------------
-for tid in hornero-dark hornero-light; do
+# Official themes (family==hornero) are discovered so new packs join automatically.
+OFFICIAL_IDS="$(python3 -c "import json,glob;print(' '.join(sorted(json.load(open(p))['id'] for p in glob.glob('$REPO_ROOT/profiles/themes/*/theme.json') if json.load(open(p)).get('family')=='hornero')))")"
+for tid in $OFFICIAL_IDS; do
   wall="$(python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/$tid/theme.json'))['defaultWallpaper'])")"
   case "$wall" in
     "$tid-01.png") pass "$tid defaultWallpaper=$wall" ;;
@@ -53,9 +55,11 @@ python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/hornero
 # --- 5. wallpaper render produces the referenced PNGs ------------------------------
 WALLS="$(mktemp -d)"
 bash "$REPO_ROOT/scripts/render-brand-assets.sh" --wallpapers "$WALLS" >/dev/null
-for f in hornero-dark/hornero-dark-01.png hornero-light/hornero-light-01.png; do
-  [[ -f "$WALLS/$f" ]] \
-    && pass "rendered $f" || fail "render missing: $f"
+for tid in $OFFICIAL_IDS; do
+  wall="$(python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/$tid/theme.json'))['defaultWallpaper'])")"
+  wdir="$(python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/$tid/theme.json'))['wallpaperDir'])")"
+  [[ -f "$WALLS/$wdir/$wall" ]] \
+    && pass "rendered $wdir/$wall" || fail "render missing: $wdir/$wall"
 done
 rm -rf "$WALLS"
 

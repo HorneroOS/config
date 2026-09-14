@@ -121,6 +121,20 @@ install_dir "profiles/themes" "$DATA_HOME/hornero/themes"
 # scripts/render-brand-assets.sh and never enter the stage.
 install_dir "assets/brand" "$DATA_HOME/hornero/brand"
 
+# --- flagship wallpaper rasters (rendered, never vendored) -----------------------
+# The apply chain resolves wallpaperDir/defaultWallpaper rasters, so fresh
+# systems must be able to apply official themes with no user photos yet.
+# Best-effort: without rsvg-convert the SVGs still ship and apply fails
+# later with a clear error naming the missing file.
+if [[ $DRY_RUN -eq 1 ]]; then
+  echo "would render flagship wallpapers -> $DATA_HOME/hornero/wallpapers"
+elif command -v rsvg-convert >/dev/null 2>&1; then
+  bash "$REPO_ROOT/scripts/render-brand-assets.sh" --wallpapers \
+    "$DATA_HOME/hornero/wallpapers" >/dev/null
+else
+  echo "warn: rsvg-convert missing, skipping flagship wallpaper render" >&2
+fi
+
 # --- Hornero GTK theme (real theme trees, standard lookup path) ----------------
 # desktop/gtk-theme/Hornero-{Dark,Light,Pampa} -> ~/.local/share/themes/ so
 # GTK 3 and GTK 4 discover them without extra env. Dev-only sources (src/,
