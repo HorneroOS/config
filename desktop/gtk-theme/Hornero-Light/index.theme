@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-Light
+Comment=HorneroOS flagship light theme: deep terracotta on warm morning paper
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-Light
+MetacityTheme=Hornero-Light
+IconTheme=Numix-Circle
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:

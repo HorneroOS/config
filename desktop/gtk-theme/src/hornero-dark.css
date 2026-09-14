@@ -1,0 +1,449 @@
+/* Hornero Dark — GTK 3 + GTK 4 theme (MIT, HorneroOS).
+ *
+ * SOURCE OF TRUTH: desktop/gtk-theme/src/hornero-dark.css in HorneroOS/config.
+ * The shipped Hornero-Dark/gtk-{3.0,4.0}/gtk.css files are byte-exact copies
+ * with a generated header (see desktop/gtk-theme/build.sh; tests/test_gtk_theme.sh
+ * gates that the copies stay in sync via `build.sh --check`).
+ *
+ * Token provenance: profiles/themes/hornero-dark/theme.json (flagship
+ * terracotta/clay/sunset ramp). Every @define-color below maps to a palette
+ * or components token; derived interaction shades (*_hover/_active/_insensitive)
+ * are precomputed flat hex so the file parses in both the GTK 3 and GTK 4
+ * CSS parsers with no color functions.
+ *
+ * Architecture note: hand-structured CSS (palette block + one section per
+ * widget family). No SCSS toolchain and no vendored upstream theme trees:
+ * Colloid/Orchis/Graphite generate their themes from large copyleft-licensed
+ * SCSS trees that cannot be vendored into this MIT-only repo; this file is an original implementation
+ * informed by their architecture (token variables first, widget sections
+ * after), not a copy.
+ *
+ * Libadwaita: this stylesheet styles plain GTK 3 / GTK 4 widgets. Libadwaita
+ * apps ship their own stylesheet and are integrated at the palette level
+ * (prefer-dark + color-scheme policy in lib/dots/gtk-theme-manager.sh), not
+ * restyled here — see desktop/gtk-theme/README.md ("Libadwaita decision").
+ */
+
+/* ---- Palette: profiles/themes/hornero-dark/theme.json ------------------- */
+@define-color theme_bg_color #1D1410;
+@define-color theme_base_color #1D1410;
+@define-color theme_fg_color #F6E9DB;
+@define-color theme_text_color #F6E9DB;
+@define-color theme_selected_bg_color #E07856;
+@define-color theme_selected_fg_color #211310;
+@define-color theme_tooltip_bg_color #0F0B08;
+@define-color theme_tooltip_fg_color #F6E9DB;
+@define-color insensitive_bg_color #241A14;
+@define-color insensitive_fg_color #7A6A5C;
+@define-color insensitive_base_color #1D1410;
+@define-color theme_unfocused_fg_color #C8AE97;
+@define-color theme_unfocused_text_color #C8AE97;
+@define-color theme_unfocused_bg_color #1D1410;
+@define-color theme_unfocused_base_color #2B1F18;
+@define-color theme_unfocused_selected_bg_color #6B4E3B;
+@define-color theme_unfocused_selected_fg_color #F6E9DB;
+@define-color borders #6B4E3B;
+@define-color unfocused_borders #4A3729;
+@define-color warning_color #F2B749;
+@define-color error_color #F28B82;
+@define-color success_color #9CC184;
+@define-color hornero_surface #2B1F18;
+@define-color hornero_surface_variant #3C2C21;
+@define-color hornero_card_fg #E9D3BC;
+@define-color hornero_on_success #1D1410;
+@define-color hornero_muted #C8AE97;
+@define-color hornero_primary #E07856;
+@define-color hornero_primary_hover #E8876A;
+@define-color hornero_primary_active #C8684A;
+@define-color hornero_on_primary #211310;
+@define-color hornero_secondary #D9A05F;
+@define-color hornero_accent #F2B749;
+@define-color hornero_button_bg #3C2C21;
+@define-color hornero_button_hover #4A3729;
+@define-color hornero_button_active #33241B;
+@define-color hornero_entry_bg #1D1410;
+@define-color hornero_headerbar_bg #2B1F18;
+@define-color hornero_trough #3C2C21;
+@define-color hornero_link #F2B749;
+@define-color hornero_link_visited #D9A05F;
+@define-color hornero_destructive #F28B82;
+@define-color hornero_destructive_hover #F5A49D;
+
+/* ---- Base --------------------------------------------------------------- */
+.background,
+window,
+window.background {
+    background-color: @theme_bg_color;
+    color: @theme_fg_color;
+}
+
+view,
+textview,
+textview text,
+iconview {
+    background-color: @theme_base_color;
+    color: @theme_text_color;
+}
+
+label,
+label.dim-label,
+.dim-label {
+    color: @theme_fg_color;
+}
+
+label.dim-label,
+.dim-label {
+    color: @hornero_muted;
+}
+
+*:selected,
+selection,
+:selected {
+    background-color: @theme_selected_bg_color;
+    color: @theme_selected_fg_color;
+}
+
+*:disabled {
+    color: @insensitive_fg_color;
+}
+
+*:focus {
+    outline-color: @theme_selected_bg_color;
+    outline-style: solid;
+    outline-offset: -2px;
+    outline-width: 2px;
+}
+
+/* ---- Buttons ------------------------------------------------------------ */
+button {
+    background-color: @hornero_button_bg;
+    color: @theme_fg_color;
+    border: 1px solid @borders;
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+button:hover {
+    background-color: @hornero_button_hover;
+}
+
+button:active,
+button:checked {
+    background-color: @hornero_button_active;
+}
+
+button:checked {
+    border-color: @hornero_primary;
+}
+
+button:disabled {
+    background-color: @insensitive_bg_color;
+    color: @insensitive_fg_color;
+    border-color: @unfocused_borders;
+}
+
+button.suggested-action {
+    background-color: @hornero_primary;
+    color: @hornero_on_primary;
+    border-color: @hornero_primary_active;
+}
+
+button.suggested-action:hover {
+    background-color: @hornero_primary_hover;
+}
+
+button.suggested-action:active {
+    background-color: @hornero_primary_active;
+}
+
+button.destructive-action {
+    background-color: @hornero_destructive;
+    color: @hornero_on_primary;
+    border-color: @hornero_destructive;
+}
+
+button.destructive-action:hover {
+    background-color: @hornero_destructive_hover;
+}
+
+button.flat {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+button.flat:hover {
+    background-color: @hornero_button_bg;
+}
+
+button.link,
+link {
+    color: @hornero_link;
+}
+
+button.link:visited,
+link:visited {
+    color: @hornero_link_visited;
+}
+
+/* ---- Entries ------------------------------------------------------------ */
+entry {
+    background-color: @hornero_entry_bg;
+    color: @theme_text_color;
+    border: 1px solid @borders;
+    border-radius: 8px;
+    padding: 6px 8px;
+}
+
+entry:focus {
+    border-color: @hornero_primary;
+}
+
+entry:disabled {
+    background-color: @insensitive_bg_color;
+    color: @insensitive_fg_color;
+}
+
+entry placeholder,
+entry selection {
+    color: @hornero_muted;
+}
+
+entry selection:focus {
+    background-color: @theme_selected_bg_color;
+    color: @theme_selected_fg_color;
+}
+
+/* ---- Header bars -------------------------------------------------------- */
+headerbar,
+.titlebar {
+    background-color: @hornero_headerbar_bg;
+    color: @theme_fg_color;
+    border-bottom: 1px solid @borders;
+    padding: 6px;
+}
+
+headerbar button.titlebutton {
+    padding: 4px;
+    border-radius: 100%;
+}
+
+/* ---- Notebook / tabs ---------------------------------------------------- */
+notebook > header {
+    background-color: @hornero_surface;
+    border-bottom: 1px solid @borders;
+}
+
+notebook > header > tabs > tab {
+    background-color: transparent;
+    color: @hornero_muted;
+    padding: 6px 12px;
+    border-bottom: 2px solid transparent;
+}
+
+notebook > header > tabs > tab:hover {
+    color: @hornero_secondary;
+}
+
+notebook > header > tabs > tab:checked {
+    color: @theme_fg_color;
+    border-bottom-color: @hornero_primary;
+}
+
+notebook > stack {
+    background-color: @theme_bg_color;
+}
+
+/* ---- Sidebars ----------------------------------------------------------- */
+.sidebar,
+placessidebar,
+stacksidebar {
+    background-color: @hornero_surface;
+    color: @theme_fg_color;
+}
+
+.sidebar row:selected,
+placessidebar row:selected {
+    background-color: @theme_selected_bg_color;
+    color: @theme_selected_fg_color;
+    border-radius: 8px;
+}
+
+/* ---- Menus and popovers ------------------------------------------------- */
+menu,
+.menu,
+context-menu,
+popover,
+popover.background {
+    background-color: @hornero_surface_variant;
+    color: @theme_fg_color;
+    border: 1px solid @borders;
+    border-radius: 12px;
+    padding: 6px;
+}
+
+menuitem,
+menuitem:hover,
+popover modelbutton {
+    color: @theme_fg_color;
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+
+menuitem:hover,
+popover modelbutton:hover {
+    background-color: @hornero_button_hover;
+}
+
+menu separator,
+separator {
+    background-color: @borders;
+}
+
+/* ---- Tooltips ----------------------------------------------------------- */
+tooltip,
+tooltip.background {
+    background-color: @theme_tooltip_bg_color;
+    color: @theme_tooltip_fg_color;
+    border: 1px solid @borders;
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
+/* ---- Scrollbars --------------------------------------------------------- */
+scrollbar {
+    background-color: transparent;
+}
+
+scrollbar slider {
+    background-color: @borders;
+    border-radius: 8px;
+    min-width: 8px;
+    min-height: 8px;
+}
+
+scrollbar slider:hover {
+    background-color: @hornero_muted;
+}
+
+/* ---- Scales and progress ------------------------------------------------ */
+scale trough,
+progressbar trough {
+    background-color: @hornero_trough;
+    border-radius: 8px;
+    min-height: 6px;
+}
+
+scale highlight,
+progressbar progress {
+    background-color: @hornero_primary;
+    border-radius: 8px;
+}
+
+scale slider {
+    background-color: @theme_fg_color;
+    border: 1px solid @borders;
+    border-radius: 100%;
+    min-width: 16px;
+    min-height: 16px;
+}
+
+levelbar block.filled {
+    background-color: @success_color;
+}
+
+levelbar block.empty {
+    background-color: @hornero_trough;
+}
+
+/* ---- Switches, checks, radios ------------------------------------------- */
+switch {
+    background-color: @hornero_trough;
+    border: 1px solid @borders;
+    border-radius: 16px;
+    padding: 2px;
+}
+
+switch:checked {
+    background-color: @hornero_primary;
+    border-color: @hornero_primary_active;
+}
+
+switch slider {
+    background-color: @theme_fg_color;
+    border-radius: 100%;
+    min-width: 20px;
+    min-height: 20px;
+}
+
+check,
+radio {
+    background-color: @hornero_entry_bg;
+    border: 1px solid @borders;
+    min-width: 16px;
+    min-height: 16px;
+}
+
+check {
+    border-radius: 4px;
+}
+
+radio {
+    border-radius: 100%;
+}
+
+check:checked,
+radio:checked {
+    background-color: @hornero_primary;
+    border-color: @hornero_primary_active;
+    color: @hornero_on_primary;
+}
+
+/* ---- Banners ------------------------------------------------------------ */
+infobar.info {
+    background-color: @hornero_surface_variant;
+    color: @hornero_card_fg;
+}
+
+infobar.warning {
+    background-color: @warning_color;
+    color: @hornero_on_primary;
+}
+
+infobar.question {
+    background-color: @success_color;
+    color: @hornero_on_success;
+}
+
+infobar.error {
+    background-color: @error_color;
+    color: @hornero_on_primary;
+}
+
+/* ---- Miscellaneous ------------------------------------------------------ */
+toolbar,
+.toolbar {
+    background-color: @hornero_surface;
+    color: @theme_fg_color;
+    padding: 4px;
+}
+
+frame,
+.frame {
+    border: 1px solid @borders;
+    border-radius: 8px;
+}
+
+treeview.view:selected {
+    background-color: @theme_selected_bg_color;
+    color: @theme_selected_fg_color;
+}
+
+spinner {
+    color: @hornero_primary;
+}
+
+statusbar,
+.statusbar {
+    background-color: @hornero_surface;
+    color: @hornero_muted;
+}
