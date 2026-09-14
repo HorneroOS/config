@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="HorneroOS favicon">
+  <title>HorneroOS favicon</title>
+  <desc>Small-size optical variant: enlarged bird, no eye detail, heavier branch. Use at 16-48 px.</desc>
+  <defs>
+    <linearGradient id="hornero-fav-sun" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F2B749"/>
+      <stop offset="0.55" stop-color="#E07856"/>
+      <stop offset="1" stop-color="#B24827"/>
+    </linearGradient>
+  </defs>
+  <circle cx="128" cy="126" r="92" fill="url(#hornero-fav-sun)"/>
+  <g transform="translate(128,132) scale(1.16) translate(-128,-132)">
+    <g fill="#2B1A11">
+      <path d="M100,168 L52,206 L70,212 L114,180 Z"/>
+      <ellipse cx="124" cy="140" rx="34" ry="42" transform="rotate(-12 124 140)"/>
+      <circle cx="140" cy="92" r="24"/>
+      <path d="M160,85 C169,88 180,93 189,100 L160,105 Z"/>
+    </g>
+  </g>
+  <path d="M32,202 C90,190 168,190 224,202" fill="none" stroke="#2B1A11" stroke-width="18" stroke-linecap="round"/>
+</svg>
