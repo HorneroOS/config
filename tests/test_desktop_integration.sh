@@ -42,6 +42,18 @@ pass "hyprland colors.conf carries active/inactive/group/groupbar set"
 grep -qi "b24827" "$TMP_HOME/.config/hypr/hyprland.conf.d/hornero-light.conf" \
   || fail "hornero-light.conf missing flagship light primary"
 pass "hyprland light fragment materialized with flagship light tokens"
+# hyprlock Smart Colors override must source the canonical hornero/* path:
+# dots-hyprlock-theme writes $XDG_CACHE_HOME/hornero/smart-colors/ (path
+# contract), so the old dots/* source globbed nothing and hyprlock fell
+# back to its static colors on every start (proven in VM logs).
+grep -q "source = ~/.cache/hornero/smart-colors/colors-hyprlock.conf" \
+  "$TMP_HOME/.config/hypr/hyprlock.conf" \
+  || fail "hyprlock.conf does not source the canonical Smart Colors override"
+if grep -q "source = ~/.cache/dots/smart-colors/colors-hyprlock.conf" \
+  "$TMP_HOME/.config/hypr/hyprlock.conf"; then
+  fail "hyprlock.conf still sources the unwritten dots/* Smart Colors path"
+fi
+pass "hyprlock sources canonical Smart Colors override"
 
 # --- (2) Kitty palettes --------------------------------------------------------
 [[ -f "$TMP_HOME/.config/kitty/hornero-dark.conf" ]] \
