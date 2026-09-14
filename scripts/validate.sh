@@ -151,6 +151,42 @@ else
   fail "appearance contrast (WCAG AA)"
 fi
 
+# --- brand SVGs: well-formed XML, vector-only, self-contained ----------------------
+if python3 - "$REPO_ROOT/assets/brand" <<'PY'
+import re, sys, xml.etree.ElementTree as ET
+from pathlib import Path
+brand = Path(sys.argv[1])
+errors = []
+required = ["logo.svg", "logo-symbolic.svg", "logo-mono.svg", "logo-dark.svg",
+            "logo-light.svg", "wordmark.svg", "favicon.svg",
+            "icons/hornero-app.svg", "icons/hornero-system.svg",
+            "wallpaper/hornero-dark.svg", "wallpaper/hornero-light.svg"]
+for rel in required:
+    if not (brand / rel).is_file():
+        errors.append(f"missing required brand asset: {rel}")
+for f in sorted(brand.rglob("*.svg")):
+    try:
+        ET.parse(f)
+    except Exception as e:
+        errors.append(f"{f}: not well-formed: {e}")
+    text = f.read_text()
+    if "<image" in text or "data:image" in text:
+        errors.append(f"{f}: embedded raster (binaries are never vendored)")
+    body = re.sub(r'xmlns(?::\w+)?="[^"]*"', "", text)
+    if re.search(r"https?://", body):
+        errors.append(f"{f}: external reference (must be self-contained)")
+if errors:
+    for e in errors:
+        print(f"VALIDATE-FAIL: brand {e}", file=sys.stderr)
+    sys.exit(1)
+print(f"VALIDATE-PASS: brand SVGs ({len(required)} required present)")
+PY
+then
+  pass "brand SVGs (well-formed, vector-only, self-contained)"
+else
+  fail "brand SVGs"
+fi
+
 # --- personal-data guard ------------------------------------------------------------
 if "$REPO_ROOT/scripts/guard-personal-data.sh"; then
   pass "personal-data guard"

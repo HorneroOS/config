@@ -108,6 +108,13 @@ fi
 # --- theme packs (recipes only, no binaries) -> canonical hornero/* -----------
 # Rows 1+8: installed theme.json recipes + wallpapers.manifest.json.
 install_dir "profiles/themes" "$DATA_HOME/hornero/themes"
+
+# --- brand identity (vector sources only, no binaries) -> canonical hornero/ --
+# assets/brand owns .../hornero/brand exclusively: logos, wordmark, app and
+# system icons, favicon, fastfetch art source and procedural wallpaper SVG.
+# PNG wallpapers/icons are rendered on the target machine via
+# scripts/render-brand-assets.sh and never enter the stage.
+install_dir "assets/brand" "$DATA_HOME/hornero/brand"
 # --- shell layout presets catalogue -> canonical hornero/* --------------------
 # Row 2: no curated source in this repo yet (owner HorneroOS/shell per
 # docs/DECISIONS.md); ensure the canonical dir exists for future packs.

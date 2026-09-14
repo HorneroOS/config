@@ -115,3 +115,32 @@ inversion. `scripts/check-contrast.py` (stdlib-only, MIT) gates every
 text-on-surface pair at WCAG AA (>= 4.5:1) and runs in `scripts/validate.sh`,
 `tests/test_contrast.sh`, and CI; wallpaper binaries stay refs-only in
 `wallpapers.manifest.json`. All new code is MIT-only (no GPL).
+
+## Brand identity P2 (new authorship, not extraction)
+
+`assets/brand/` is the canonical vector identity (warm clay/sunset/earth,
+hornero-bird direction — not a Garuda-style dragon, not generic
+cyberpunk): `logo.svg`, `logo-symbolic.svg` (`currentColor` knockout),
+`logo-mono.svg` (pure black), `logo-dark.svg` (cream bird),
+`logo-light.svg` (adobe bird), `wordmark.svg` (system sans 800,
+`currentColor` + terracotta `OS`), `icons/hornero-app.svg` (squircle),
+`icons/hornero-system.svg` (roundel), `favicon.svg` (small-size optical
+variant, enlarged bird, use at 16-48 px), `wallpaper/hornero-{dark,light}.svg`
+(procedural 16:9 sources). All hand-authored, vector-only and
+self-contained; `scripts/validate.sh` and `tests/test_brand.sh` enforce
+it, `scripts/render-brand-assets.sh` renders the 16-512 px
+recognizability sweep plus install-time wallpaper PNGs (binaries never
+vendored). Install: `scripts/materialize.sh` stages `assets/brand` to
+`.../hornero/brand`, `packaging/PKGBUILD` ships that tree to
+`/usr/share/hornero/brand` in one fenced block that owns that path
+exclusively (config-gtk owns `desktop/gtk-theme*` + `/usr/share/themes`;
+this branch touches neither). `desktop/fastfetch/hornero.txt` is the
+ASCII mark and flows through the existing fastfetch install mapping.
+Wallpapers: flagship `defaultWallpaper` refs are now
+`hornero-{dark,light}-01.png`, produced on-device by
+`render-brand-assets.sh --wallpapers`; the missing-file empty state
+(`dots-wallpaper-set` exits 1) is unchanged. Icon base: `Papirus-Dark`
+verified for `hornero-dark`; `hornero-light` overturned
+`Numix-Circle` (chaotic-aur `-git` only, no official package) to
+`Papirus` — one family, one official `extra/papirus-icon-theme`
+package; see `docs/ICON-BASE.md`. Full spec: `docs/BRAND.md`.

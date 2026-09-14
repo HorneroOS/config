@@ -123,6 +123,12 @@ package() {
   mkdir -p "$pkgdir/usr/share/hornero/themes"
   cp -a "$stage/.local/share/hornero/themes/." "$pkgdir/usr/share/hornero/themes/"
 
+  # Brand identity (vector sources only, never binaries). This block owns
+  # /usr/share/hornero/brand exclusively. Coordination: config-gtk work owns
+  # desktop/gtk-theme* + /usr/share/themes — this block touches neither.
+  mkdir -p "$pkgdir/usr/share/hornero/brand"
+  cp -a "$stage/.local/share/hornero/brand/." "$pkgdir/usr/share/hornero/brand/"
+
   # Profile manifests plus the resolved selection record.
   install -Dm644 "$repo_root/$profile_src" \
     "$pkgdir/usr/share/hornero/profiles/base/profile.toml"
