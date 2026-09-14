@@ -325,7 +325,9 @@ data["gtkColorScheme"] = policy
 data.setdefault("name", "dynamic")
 data.setdefault("flavour", "tonal-spot")
 data.setdefault("variant", "tonalspot")
-data.setdefault("mode", "dark")
+# No setdefault for "mode": shell mode is owned by the shell pipeline
+# (`dots-color-scheme sync-state`). A defaulted dark went stale on first
+# write and broke later light applies (see tests/test_gtk_state.sh).
 path.parent.mkdir(parents=True, exist_ok=True)
 path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
 PY
