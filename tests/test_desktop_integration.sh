@@ -118,4 +118,24 @@ if grep -rn "git clone.*dotfiles\|curl.*dotfiles\|wget.*dotfiles\|github.com/uli
 fi
 pass "no dotfiles runtime dependency in desktop-integration files"
 
+# Theme switch re-themes kitty + libadwaita atomically (Preview 2 QA: light
+# shell with a dark terminal, or Adwaita-blue GTK4 under dark, is a
+# half-applied desktop). Exercises the installed lib against the TMP stage.
+export XDG_CONFIG_HOME="$TMP_HOME/.config" XDG_DATA_HOME="$TMP_HOME/.local/share"
+export HOME="$TMP_HOME" REPO_ROOT="$REPO_ROOT"
+bash -c '
+    source "$REPO_ROOT/lib/dots/apply-appearance.sh"
+    _dots_aa_sync_kitty hornero-light
+    grep -qx "include hornero-light.conf" "$XDG_CONFIG_HOME/kitty/kitty.conf" || exit 11
+    _dots_aa_sync_recolor hornero-light
+    cmp -s "$XDG_DATA_HOME/themes/Hornero-Light/gtk-4.0/recolor.css" \
+           "$XDG_CONFIG_HOME/gtk-4.0/gtk.css" || exit 12
+    _dots_aa_sync_kitty hornero-dark
+    grep -qx "include hornero-dark.conf" "$XDG_CONFIG_HOME/kitty/kitty.conf" || exit 13
+    _dots_aa_sync_recolor hornero-dark
+    cmp -s "$XDG_DATA_HOME/themes/Hornero-Dark/gtk-4.0/recolor.css" \
+           "$XDG_CONFIG_HOME/gtk-4.0/gtk.css" || exit 14
+  ' || fail "theme switch does not re-theme kitty + recolor atomically ($?)"
+pass "theme switch re-themes kitty + libadwaita recolor"
+
 echo "test_desktop_integration.sh: ALL GREEN"

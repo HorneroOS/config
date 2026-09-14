@@ -1,0 +1,38 @@
+/* Hornero-Light libadwaita recoloring.
+ *
+ * Libadwaita apps ignore gtk.css theme trees and render stock Adwaita
+ * (blue accents) unless the user config redefines the public palette.
+ * This file is installed as ~/.config/gtk-4.0/gtk.css so GTK4/libadwaita
+ * apps pick up the flagship accents. Values are wired to
+ * profiles/themes/hornero-light/theme.json and gated by
+ * tests/test_gtk_theme.sh (accent_bg_color == palette.primary, etc.).
+ * Hand-owned alongside the src/ theme; see desktop/gtk-theme/README.md. */
+@define-color accent_bg_color #B24827;
+@define-color accent_fg_color #FFFFFF;
+@define-color accent_color #96590A;
+@define-color destructive_bg_color #B3261E;
+@define-color destructive_fg_color #FFFFFF;
+@define-color destructive_color #B3261E;
+@define-color success_bg_color #3E6B2F;
+@define-color success_fg_color #FFFFFF;
+@define-color success_color #3E6B2F;
+@define-color warning_bg_color #96590A;
+@define-color warning_fg_color #FFFFFF;
+@define-color warning_color #96590A;
+@define-color error_bg_color #B3261E;
+@define-color error_fg_color #FFFFFF;
+@define-color error_color #B3261E;
+@define-color window_bg_color #FAF1E3;
+@define-color window_fg_color #2B1A11;
+@define-color view_bg_color #FFFDF7;
+@define-color view_fg_color #2B1A11;
+@define-color headerbar_bg_color #FFFDF7;
+@define-color headerbar_fg_color #2B1A11;
+@define-color card_bg_color #F1E3CE;
+@define-color card_fg_color #4E3423;
+@define-color dialog_bg_color #FFFDF7;
+@define-color dialog_fg_color #2B1A11;
+@define-color popover_bg_color #F1E3CE;
+@define-color popover_fg_color #4E3423;
+@define-color sidebar_bg_color #FFFDF7;
+@define-color sidebar_fg_color #2B1A11;

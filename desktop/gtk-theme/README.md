@@ -38,32 +38,23 @@ properties, no `-gtk-gradient`, no `shade()`/`mix()`/`alpha()` calls), which
 `tests/test_gtk_theme.sh` asserts by checking both files parse and carry the
 same selector set.
 
-## Libadwaita decision: palette-level integration, no restyle
+## Libadwaita decision: public-palette redefinition, no restyle
 
-Libadwaita applications ignore GTK themes by design — they ship their own
-stylesheet and expose recoloring through `org.gnome.desktop.interface
-color-scheme` / `gtk-application-prefer-dark-theme`, both of which
-`lib/dots/gtk-theme-manager.sh` already drives (`apply_gtk_color_scheme`,
-persisted policy, `sync_gtk_color_scheme` on login). Two options were
-considered:
+Libadwaita applications ignore GTK theme trees by design — Preview 2 VM QA
+proved it on pixels: with only prefer-dark/color-scheme policy, GTK4 apps
+render stock Adwaita blue accents. The supported fix is Libadwaita's public
+recoloring API: `~/.config/gtk-4.0/gtk.css` redefining documented named
+colors (`accent_bg_color`, `window_bg_color`, ...), the same mechanism
+Gradience uses. That file carries NO widget rules and touches no private
+CSS nodes, so GNOME point releases cannot break it the way a restyle would.
 
-1. **Palette-level (chosen).** The Hornero themes style plain GTK 3/GTK 4
-   widgets; Libadwaita apps follow via the existing prefer-dark /
-   color-scheme policy. Nothing pins Libadwaita internals, so GNOME point
-   releases cannot break the desktop.
-2. **Restyle (rejected).** Forcing the theme with `GTK_THEME=` or overriding
-   `~/.config/gtk-4.0/gtk.css` with widget rules reaches into Libadwaita's
-   private CSS nodes, which upstream renames freely — every GNOME upgrade
-   risks visual breakage, and `GTK_THEME` additionally breaks Flatpak
-   portals' expectations.
-
-Users who still want Hornero colors inside Libadwaita windows can opt in
-without touching this repo:
-
-```css
-/* ~/.config/gtk-4.0/gtk.css — opt-in only, never installed by materialize */
-@import url("../../.local/share/themes/Hornero-Dark/gtk-4.0/gtk.css");
-```
+Concretely: each variant ships `gtk-4.0/recolor.css` (values wired to
+`theme.json`, gated by `tests/test_gtk_theme.sh`). `materialize.sh`
+installs the factory-default (dark) copy as `~/.config/gtk-4.0/gtk.css`,
+and `lib/dots/apply-appearance.sh` swaps it on theme set
+(`_dots_aa_sync_recolor`). Still rejected: `GTK_THEME=` overrides and any
+`gtk.css` with widget selectors (private-node coupling + Flatpak portal
+risk).
 
 ## Install paths and package ownership
 

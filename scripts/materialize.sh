@@ -82,6 +82,10 @@ install_dir "desktop/hypr" "$CONFIG_HOME/hypr"
 install_dir "desktop/kitty" "$CONFIG_HOME/kitty"
 install_dir "desktop/qt6ct" "$CONFIG_HOME/qt6ct"
 install_file "desktop/gtk/settings.ini" "$CONFIG_HOME/gtk-3.0/settings.ini"
+install_file "desktop/gtk/settings.ini" "$CONFIG_HOME/gtk-4.0/settings.ini"
+# Factory default is hornero-dark (see profiles/factory.json): pre-place its
+# libadwaita recoloring so GTK4 apps render flagship accents with no apply run.
+install_file "desktop/gtk-theme/Hornero-Dark/gtk-4.0/recolor.css" "$CONFIG_HOME/gtk-4.0/gtk.css"
 install_file "desktop/gtk/gtkrc-2.0" "$DEST/.gtkrc-2.0"
 install_dir "desktop/fontconfig" "$CONFIG_HOME/fontconfig"
 install_dir "desktop/fastfetch" "$CONFIG_HOME/fastfetch"
