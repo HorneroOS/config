@@ -71,6 +71,11 @@
       "id": "hornero-light",
       "defaultWallpaper": "hornero-light-01.png",
       "wallpaperDir": "hornero-light"
+    },
+    {
+      "id": "pampa",
+      "defaultWallpaper": "pampa-01.png",
+      "wallpaperDir": "pampa"
     }
   ]
 }

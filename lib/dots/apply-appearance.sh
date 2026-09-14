@@ -181,8 +181,8 @@ _dots_aa_sync_kitty() {
 	local kitty_dir="${XDG_CONFIG_HOME:-$HOME/.config}/kitty"
 	local variant="$kitty_dir/${theme_id}.conf"
 	[[ -f $kitty_dir/kitty.conf && -f $variant ]] || return 0
-	if grep -qE '^include hornero-(dark|light)\.conf$' "$kitty_dir/kitty.conf"; then
-		sed -i -E "s#^include hornero-(dark|light)[.]conf\$#include ${theme_id}.conf#" "$kitty_dir/kitty.conf"
+	if grep -qE '^include (hornero-(dark|light)|pampa)\.conf$' "$kitty_dir/kitty.conf"; then
+		sed -i -E "s#^include (hornero-(dark|light)|pampa)[.]conf\$#include ${theme_id}.conf#" "$kitty_dir/kitty.conf"
 	fi
 	pkill -SIGUSR1 -x kitty > /dev/null 2>&1 || true
 }
@@ -198,6 +198,7 @@ _dots_aa_sync_recolor() {
 	case "$theme_id" in
 		hornero-dark) tree="Hornero-Dark" ;;
 		hornero-light) tree="Hornero-Light" ;;
+		pampa) tree="Hornero-Pampa" ;;
 		*) return 0 ;;
 	esac
 	local src="${XDG_DATA_HOME:-$HOME/.local/share}/themes/$tree/gtk-4.0/recolor.css"
