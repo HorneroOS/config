@@ -122,24 +122,26 @@ install_dir "profiles/themes" "$DATA_HOME/hornero/themes"
 install_dir "assets/brand" "$DATA_HOME/hornero/brand"
 
 # --- Hornero GTK theme (real theme trees, standard lookup path) ----------------
-# desktop/gtk-theme/Hornero-{Dark,Light} -> ~/.local/share/themes/ so GTK 3
-# and GTK 4 discover them without extra env. Dev-only sources (src/,
-# build.sh, gallery.py, README.md) are excluded: only the two theme trees
+# desktop/gtk-theme/Hornero-{Dark,Light,Pampa} -> ~/.local/share/themes/ so
+# GTK 3 and GTK 4 discover them without extra env. Dev-only sources (src/,
+# build.sh, gallery.py, README.md) are excluded: only the three theme trees
 # plus nothing else may flow through here (no file owned twice — the recipe
 # JSONs above stay the sole owners of .../hornero/themes).
 if [[ $DRY_RUN -eq 1 ]]; then
-  echo "would install desktop/gtk-theme/Hornero-{Dark,Light} -> $DATA_HOME/themes/"
+  echo "would install desktop/gtk-theme/Hornero-{Dark,Light,Pampa} -> $DATA_HOME/themes/"
 else
   mkdir -p "$DATA_HOME/themes"
-  for variant in Dark Light; do
+  for variant in Dark Light Pampa; do
     rm -rf "$DATA_HOME/themes/Hornero-$variant"
     mkdir -p "$DATA_HOME/themes/Hornero-$variant"
     cp -r "$REPO_ROOT/desktop/gtk-theme/Hornero-$variant/." \
       "$DATA_HOME/themes/Hornero-$variant/"
   done
   find "$DATA_HOME/themes/Hornero-Dark" "$DATA_HOME/themes/Hornero-Light" \
+    "$DATA_HOME/themes/Hornero-Pampa" \
     -type d -exec chmod 755 {} +
   find "$DATA_HOME/themes/Hornero-Dark" "$DATA_HOME/themes/Hornero-Light" \
+    "$DATA_HOME/themes/Hornero-Pampa" \
     -type f -exec chmod 644 {} +
 fi
 # --- factory default record -> canonical hornero/* -----------------------------

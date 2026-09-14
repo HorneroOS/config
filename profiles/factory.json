@@ -1,7 +1,7 @@
 {
   "$comment": "HorneroOS factory defaults: a fresh boot (or a fresh --dest materialize) lands on Hornero Dark with no user setup and no network fetch. All values here are static files in this repo; nothing is cloned from ulises-jeremias/dotfiles at runtime (that repo is a read-only extraction source, see docs/DECISIONS.md).",
   "defaultTheme": "hornero-dark",
-  "availableThemes": ["hornero-dark", "hornero-light"],
+  "availableThemes": ["hornero-dark", "hornero-light", "pampa"],
   "themeRecipes": "{data}/hornero/themes",
   "compositor": {
     "config": "{config}/hypr/hyprland.conf.d/colors.conf",
