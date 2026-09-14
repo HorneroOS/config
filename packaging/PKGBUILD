@@ -26,6 +26,10 @@ optdepends=(
   'thunar: file manager defaults under /etc/xdg/Thunar'
   'copyq: clipboard defaults under /etc/xdg/copyq'
   'handlr: default-application handler under /etc/xdg/handlr'
+  'qt6ct: Qt6 platform-theme defaults under /etc/xdg/qt6ct'
+  'papirus-icon-theme: Papirus-Dark factory icons'
+  'orchis-theme: Orchis factory GTK themes'
+  'ttf-material-symbols-variable: Material Symbols shell icon font'
 )
 source=()
 sha256sums=()

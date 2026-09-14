@@ -80,6 +80,7 @@ compat_link() {
 # --- desktop defaults -> ~/.config -------------------------------------------
 install_dir "desktop/hypr" "$CONFIG_HOME/hypr"
 install_dir "desktop/kitty" "$CONFIG_HOME/kitty"
+install_dir "desktop/qt6ct" "$CONFIG_HOME/qt6ct"
 install_file "desktop/gtk/settings.ini" "$CONFIG_HOME/gtk-3.0/settings.ini"
 install_file "desktop/gtk/gtkrc-2.0" "$DEST/.gtkrc-2.0"
 install_dir "desktop/fontconfig" "$CONFIG_HOME/fontconfig"
@@ -130,6 +131,10 @@ else
   find "$DATA_HOME/themes/Hornero-Dark" "$DATA_HOME/themes/Hornero-Light" \
     -type f -exec chmod 644 {} +
 fi
+# --- factory default record -> canonical hornero/* -----------------------------
+# profiles/factory.json declares the fresh-boot default (Hornero Dark);
+# static data, no runtime fetch (see docs/FACTORY_DEFAULTS.md).
+install_file "profiles/factory.json" "$DATA_HOME/hornero/factory.json"
 # --- shell layout presets catalogue -> canonical hornero/* --------------------
 # Row 2: no curated source in this repo yet (owner HorneroOS/shell per
 # docs/DECISIONS.md); ensure the canonical dir exists for future packs.
