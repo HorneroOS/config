@@ -15,19 +15,18 @@ trap 'rm -rf "$TMP_HOME"' EXIT
 # Curated ids referenced by the Welcome Center (shell modules/welcome).
 # Format: one id per line; the check requires a global (submap="") entry.
 CURATED_IDS="exec-launcher
-app-terminalemulator
-app-filemanager
-app-webbrowser
 ipc-dashboard-toggle
-ipc-layoutpicker-toggle
-ipc-lock-lock
-movefocus:l
-movewindow:l
+scrolloverview-overview:toggle
+app-terminalemulator
+exec-kitty
 workspace:1
-togglefloating:unnamed
-fullscreen:1
+movetoworkspace:1
+togglespecialworkspace:magic
 exec-screenshooter
-exec-clipboard"
+exec-clipboard
+exec-power-menu
+ipc-lock-lock
+exec-keyboard-help"
 
 OUT="$TMP_HOME/shortcuts.json"
 "$REPO_ROOT/scripts/generate-shortcuts.py" --root "$REPO_ROOT" --out "$OUT" >/dev/null
@@ -50,19 +49,18 @@ for e in entries:
     assert not any("$" in m for m in e["mods"]), f"unexpanded var in {e}"
 
 curated = """exec-launcher
-app-terminalemulator
-app-filemanager
-app-webbrowser
 ipc-dashboard-toggle
-ipc-layoutpicker-toggle
-ipc-lock-lock
-movefocus:l
-movewindow:l
+scrolloverview-overview:toggle
+app-terminalemulator
+exec-kitty
 workspace:1
-togglefloating:unnamed
-fullscreen:1
+movetoworkspace:1
+togglespecialworkspace:magic
 exec-screenshooter
-exec-clipboard""".splitlines()
+exec-clipboard
+exec-power-menu
+ipc-lock-lock
+exec-keyboard-help""".splitlines()
 by_id = {}
 for e in entries:
     if e["submap"] == "":
