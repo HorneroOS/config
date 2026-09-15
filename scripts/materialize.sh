@@ -114,6 +114,17 @@ fi
 # Rows 1+8: installed theme.json recipes + wallpapers.manifest.json.
 install_dir "profiles/themes" "$DATA_HOME/hornero/themes"
 
+# --- machine-readable shortcut manifest -> canonical hornero/* --------------
+# Generated from the authoritative keybindings.conf (never hand-edited):
+# the Welcome Center resolves curated shortcut ids against this file.
+if [[ $DRY_RUN -eq 1 ]]; then
+  echo "would generate shortcuts -> $DATA_HOME/hornero/shortcuts.json"
+else
+  mkdir -p "$DATA_HOME/hornero"
+  python3 "$REPO_ROOT/scripts/generate-shortcuts.py" --root "$REPO_ROOT" \
+    --out "$DATA_HOME/hornero/shortcuts.json"
+fi
+
 # --- brand identity (vector sources only, no binaries) -> canonical hornero/ --
 # assets/brand owns .../hornero/brand exclusively: logos, wordmark, app and
 # system icons, favicon, fastfetch art source and procedural wallpaper SVG.
