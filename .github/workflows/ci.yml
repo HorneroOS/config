@@ -30,6 +30,8 @@ jobs:
         run: tests/test_gtk_state.sh
       - name: Materialization into temp HOME
         run: tests/test_materialize.sh
+      - name: Shortcut manifest contract
+        run: tests/test_shortcuts.sh
       - name: Desktop integration (hypr/kitty/qt/factory)
         run: tests/test_desktop_integration.sh
       - name: YAML lint
