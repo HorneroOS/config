@@ -32,8 +32,11 @@ optdepends=(
   'orchis-theme: Orchis factory GTK themes'
   'ttf-material-symbols-variable: Material Symbols shell icon font'
 )
-source=()
-sha256sums=()
+# Named "config" (not "$pkgname") so the checkout lands at
+# "${srcdir}/config", matching _hornero_repo_root() below and keeping
+# AUR chroot builds identical to local packaging/ builds.
+source=("config::git+https://github.com/HorneroOS/config.git")
+sha256sums=('SKIP')
 
 # Locate the checkout root both when building from a local clone
 # (makepkg run inside packaging/) and when built from an exported source.
