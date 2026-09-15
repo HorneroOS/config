@@ -1,0 +1,34 @@
+# Repo policy for the HorneroOS deterministic PR-governance engine.
+# Merged over safe defaults; see HorneroOS/.github governance/danger.
+#
+# The qt6ct color schemes are GENERATED from the theme sources below
+# (scripts/generate-qt-schemes.py; regenerate must diff clean).
+
+version: 1
+kind: config
+visual_paths:
+  - "assets/**"
+  - "desktop/**"
+  - "**/*.svg"
+generated_paths:
+  - source: "profiles/themes/hornero-dark/theme.json"
+    derivative: "desktop/qt6ct/colors/hornero-dark.conf"
+  - source: "profiles/themes/hornero-light/theme.json"
+    derivative: "desktop/qt6ct/colors/hornero-light.conf"
+  - source: "profiles/themes/pampa/theme.json"
+    derivative: "desktop/qt6ct/colors/pampa.conf"
+policies:
+  large_threshold: 800
+  forbidden_paths:
+    - "**/.env"
+    - "**/.env.*"
+    - "**/*.pem"
+    - "**/*.key"
+    - "**/id_rsa*"
+    - "**/credentials*"
+    - "**/*secret*"
+  risky_paths:
+    - ".github/workflows/**"
+    - "profiles/themes/**"
+    - "bin/**"
+    - "lib/**"
