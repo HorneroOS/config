@@ -2,3 +2,6 @@
 *.pkg.tar.*
 src/
 pkg/
+# Named git-source checkout dir ($srcdir/config for "config::git+...").
+# Building the PKGBUILD clones here; it must never be committed.
+/config/
