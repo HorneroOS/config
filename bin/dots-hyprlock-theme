@@ -191,18 +191,6 @@ label {
 
 label {
     monitor =
-    text = cmd[update:1000, date +%A-%F]
-    text_align = center
-    color = rgba(${on_surface_variant_rgba})
-    font_size = 14
-    font_family = Rubik
-    position = 0, 80
-    halign = center
-    valign = center
-}
-
-label {
-    monitor =
     text =  \$USER
     text_align = center
     color = rgba(${secondary_rgba})
