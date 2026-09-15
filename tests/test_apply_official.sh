@@ -44,7 +44,12 @@ for tid in $OFFICIAL_IDS; do
     || fail "no wallpaper pointer after applying $tid"
   grep -qx "include $tid.conf" "$XDG_CONFIG_HOME/kitty/kitty.conf" \
     || fail "kitty not re-themed for $tid"
-  pass "applied official theme $tid (wallpaper + kitty)"
+  grep -qx "custom_palette=true" "$XDG_CONFIG_HOME/qt6ct/qt6ct.conf" \
+    || fail "qt6ct custom palette not enabled for $tid"
+  grep -qx "color_scheme_path=$XDG_CONFIG_HOME/qt6ct/colors/$tid.conf" \
+    "$XDG_CONFIG_HOME/qt6ct/qt6ct.conf" \
+    || fail "qt6ct not pointed at the $tid palette"
+  pass "applied official theme $tid (wallpaper + kitty + qt6ct)"
 done
 
 echo "test_apply_official.sh: ALL GREEN ($OFFICIAL_IDS)"

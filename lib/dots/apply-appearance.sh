@@ -208,6 +208,55 @@ _dots_aa_sync_recolor() {
 	cp -f "$src" "$dest"
 }
 
+# Point qt6ct at the theme's generated palette. Qt6 Widgets apps read
+# ~/.config/qt6ct/qt6ct.conf through QT_QPA_PLATFORMTHEME=qt6ct; the
+# per-theme colors/<id>.conf files are generated from canonical tokens
+# (scripts/generate-qt-schemes.py) and materialized with the rest of
+# desktop/qt6ct. Line-edit preserves the file's comments (no INI
+# rewrite). Graceful no-op when the scheme is absent (uncurated theme).
+_dots_aa_sync_qt() {
+	local theme_id="${1:-}"
+	local qt_dir="${XDG_CONFIG_HOME:-$HOME/.config}/qt6ct"
+	local scheme="$qt_dir/colors/${theme_id}.conf"
+	local conf="$qt_dir/qt6ct.conf"
+	[[ -f $scheme && -f $conf ]] || return 0
+	python3 - "$conf" "$scheme" <<'PY' || return 0
+import sys
+conf_path, scheme_path = sys.argv[1], sys.argv[2]
+lines = open(conf_path, encoding="utf-8").read().splitlines(keepends=True)
+out, in_appearance = [], False
+seen_palette, seen_path = False, False
+for line in lines:
+    stripped = line.strip()
+    if stripped.startswith("["):
+        in_appearance = stripped == "[Appearance]"
+    elif in_appearance:
+        if stripped.startswith("custom_palette"):
+            line = "custom_palette=true\n"
+            seen_palette = True
+        elif stripped.startswith("color_scheme_path"):
+            line = f"color_scheme_path={scheme_path}\n"
+            seen_path = True
+    out.append(line)
+# Ensure both keys exist even if the group had neither: insert right
+# after the [Appearance] header (or append the group).
+text = "".join(out)
+if not seen_palette or not seen_path:
+    header = "[Appearance]\n"
+    extra = ""
+    if not seen_palette:
+        extra += "custom_palette=true\n"
+    if not seen_path:
+        extra += f"color_scheme_path={scheme_path}\n"
+    if header in text:
+        text = text.replace(header, header + extra, 1)
+    else:
+        text = text.rstrip("\n") + "\n" + header + extra
+    out = text.splitlines(keepends=True)
+open(conf_path, "w", encoding="utf-8").writelines(out)
+PY
+}
+
 # Pack recipe → canonical gtkColorScheme policy.
 _dots_aa_resolve_gtk_color_scheme() {
 	local config_json="${1:-}"
@@ -374,6 +423,7 @@ dots_apply_theme() {
 
 	_dots_aa_sync_kitty "$theme_id"
 	_dots_aa_sync_recolor "$theme_id"
+	_dots_aa_sync_qt "$theme_id"
 
 	if [[ -f $HOME/.local/lib/dots/snappy-switcher-manager.sh ]]; then
 		# shellcheck source=/dev/null
