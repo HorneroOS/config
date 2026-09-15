@@ -97,6 +97,27 @@ if find "$TMP_HOME" -iname "*kvantum*" | grep -q .; then
   fail "kvantum artifacts materialized despite deferral"
 fi
 pass "qt6ct factory default + platformtheme pin, kvantum deferred"
+# Generated per-theme palettes ship with the factory defaults and match
+# the generator (drift gate: regenerate must diff clean).
+for _qt in hornero-dark hornero-light pampa; do
+  [[ -f "$TMP_HOME/.config/qt6ct/colors/$_qt.conf" ]] \
+    || fail "qt6ct colors/$_qt.conf not materialized"
+  grep -q "^\[ColorScheme\]" "$TMP_HOME/.config/qt6ct/colors/$_qt.conf" \
+    || fail "qt6ct colors/$_qt.conf missing [ColorScheme]"
+  for _key in active_colors inactive_colors disabled_colors; do
+    grep -q "^$_key=" "$TMP_HOME/.config/qt6ct/colors/$_qt.conf" \
+      || fail "qt6ct colors/$_qt.conf missing $_key"
+  done
+done
+_QTDRIFT="$(mktemp -d)"
+python3 "$REPO_ROOT/scripts/generate-qt-schemes.py" --out "$_QTDRIFT" >/dev/null \
+  || fail "qt scheme generator exits 0"
+for _qt in hornero-dark hornero-light pampa; do
+  cmp -s "$_QTDRIFT/$_qt.conf" "$TMP_HOME/.config/qt6ct/colors/$_qt.conf" \
+    || fail "qt6ct colors/$_qt.conf drifts from the generator"
+done
+rm -rf "$_QTDRIFT"
+pass "qt6ct per-theme palettes materialized and drift-free"
 
 # --- (4) Factory defaults: fresh boot = Hornero Dark ---------------------------
 [[ -f "$TMP_HOME/.local/share/hornero/factory.json" ]] \

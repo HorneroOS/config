@@ -38,19 +38,33 @@ Plasma/KDE component.
   SVG theme engine plus a theme-authoring burden for zero curated
   consumers. Revisit only if a KDE/Plasma session or a Kvantum-native Qt
   app set is ever curated here.
-- **No hand-authored custom palette blob.** qt6ct persists custom palettes
-  as QPalette binary variants, not hand-curatable values; fabricating one
-  would be unverifiable bytes. `custom_palette=false` stays until the
-  dots-appearance pipeline can export a generated palette from the
-  flagship tokens.
+- **Generated custom palette (correction 2026-09-15).** The earlier
+  claim that qt6ct palettes are binary-only was wrong: verified against
+  upstream qt6ct source (`Qt6CT::loadColorScheme`), the platform theme
+  reads plain-text INI schemes (`[ColorScheme]` with `active_colors`,
+  `inactive_colors`, `disabled_colors` — 22 `#AARRGGBB` entries in
+  `QPalette::ColorRole` order) selected via `color_scheme_path` +
+  `custom_palette=true` in `qt6ct.conf`. So each official theme ships a
+  generated scheme (`desktop/qt6ct/colors/<id>.conf`, produced by
+  `scripts/generate-qt-schemes.py` from the canonical theme tokens),
+  and applying a theme points qt6ct at it (`_dots_aa_sync_qt`). The
+  factory default stays `custom_palette=false` (stock Fusion until a
+  theme is applied). Inactive mirrors active; disabled dims text roles
+  toward Window; Highlight/HighlightedText carry the theme primary pair
+  (contrast-gated ≥ 4.5:1 by the generator).
 - **No `qt5ct` file.** The shipped Qt app is Qt6; Qt5 theming is out of
   scope until a Qt5 app is curated.
 
 ## Implemented
 
-- `desktop/qt6ct/qt6ct.conf` (new, installed to `{config}/qt6ct` via the
+- `desktop/qt6ct/qt6ct.conf` (installed to `{config}/qt6ct` via the
   `[modules.qt6ct]` row — flows into `/etc/xdg/qt6ct` through the generic
   PKGBUILD loop).
+- `desktop/qt6ct/colors/{hornero-dark,hornero-light,pampa}.conf`
+  (generated, drift-tested).
+- `scripts/generate-qt-schemes.py` (canonical tokens → QPalette roles).
+- `_dots_aa_sync_qt` in `lib/dots/apply-appearance.sh` (per-theme
+  `color_scheme_path` + `custom_palette=true`, comment-preserving).
 - `QT_QPA_PLATFORMTHEME=qt6ct` pin left untouched (pre-existing evidence,
   not new authorship).
 - `packaging/PKGBUILD` optdepends gains `qt6ct` so the factory default has
