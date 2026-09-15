@@ -31,17 +31,15 @@ EOF
   || fail "hyprlock-theme writes canonical hornero output"
 grep -q "ffb0ca" "$XDG_CACHE_HOME/hornero/smart-colors/colors-hyprlock.conf" \
   || fail "hyprlock-theme output carries scheme colours"
-# The generated override IS the effective lock-screen content (it shadows
-# the static hyprlock.conf labels), so its date label must be dynamic:
-# a bare $DATE rendered literally in VM pixels.
-grep -q 'text = cmd\[update:[0-9]*, date ' \
-  "$XDG_CACHE_HOME/hornero/smart-colors/colors-hyprlock.conf" \
-  || fail "generated hyprlock override date label is not dynamic"
-if grep -q 'text = \$DATE' \
+# The generated override IS the effective lock-screen content, and it
+# carries no date label by design: hyprlock renders $TIME12/$USER but
+# neither $DATE (literal) nor cmd[] output (empty across four VM-proven
+# formats), so a date label would be dead UI.
+if grep -q 'text = \$DATE\|text = cmd' \
   "$XDG_CACHE_HOME/hornero/smart-colors/colors-hyprlock.conf"; then
-  fail "generated hyprlock override renders a bare \$DATE literally"
+  fail "generated hyprlock override carries a dead date label"
 fi
-pass "hyprlock-theme date label is dynamic"
+pass "hyprlock-theme carries no dead date label"
 [[ ! -e $XDG_CACHE_HOME/dots/smart-colors/colors-hyprlock.conf ]] \
   || fail "hyprlock-theme wrote to the dots fallback"
 pass "hyprlock-theme reads dots fallback, writes canonical hornero"

@@ -54,17 +54,13 @@ if grep -q "source = ~/.cache/dots/smart-colors/colors-hyprlock.conf" \
   fail "hyprlock.conf still sources the unwritten dots/* Smart Colors path"
 fi
 pass "hyprlock sources canonical Smart Colors override"
-# hyprlock date label must be dynamic: $DATE rendered literally in VM
-# pixels (hyprlock expands $TIME12/$USER but not $DATE), so the date goes
-# through cmd[].
-grep -q 'text = cmd\[update:[0-9]*, date ' \
-  "$TMP_HOME/.config/hypr/hyprlock.conf" \
-  || fail "hyprlock.conf date label is not a dynamic cmd[] date"
-if grep -q 'text = $DATE' \
+# hyprlock carries no date label by design (see path-contract test):
+# neither $DATE nor cmd[] output renders in this hyprlock build.
+if grep -q 'text = \$DATE\|text = cmd' \
   "$TMP_HOME/.config/hypr/hyprlock.conf"; then
-  fail "hyprlock.conf renders a bare \$DATE literally"
+  fail "hyprlock.conf carries a dead date label"
 fi
-pass "hyprlock date label is dynamic"
+pass "hyprlock carries no dead date label"
 
 # --- (2) Kitty palettes --------------------------------------------------------
 [[ -f "$TMP_HOME/.config/kitty/hornero-dark.conf" ]] \
