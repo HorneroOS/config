@@ -191,7 +191,7 @@ label {
 
 label {
     monitor =
-    text = \$DATE
+    text = cmd[update:60000, date "+%A, %-d %B %Y"]
     text_align = center
     color = rgba(${on_surface_variant_rgba})
     font_size = 14
