@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 # render-brand-assets.sh - validate HorneroOS brand SVGs and render PNGs.
-# No repo writes except an explicit --out DIR for previews: all brand
-# binaries (PNG wallpapers, icon caches) are generated on the target
-# machine, never vendored. Binaries are NOT shipped in this repo.
+# No repo writes except an explicit --out DIR for previews: procedural
+# brand binaries (SVG renders, icon caches) are generated on the target
+# machine, never vendored. Exception: the photographic flagship
+# wallpapers (assets/brand/wallpaper/hornero-{dark,light}.png) ARE
+# vendored sources (~2 MB each) and are copied verbatim as the
+# hornero-dark/light defaults; the SVGs remain vector masters.
 # Usage: scripts/render-brand-assets.sh [--out DIR] [--wallpapers DIR]
 #   --out DIR        write recognizability PNGs (default: mktemp, kept on stdout)
 #   --wallpapers DIR render hornero-dark/light PNGs at 1920x1080 + 2560x1440
@@ -71,7 +74,7 @@ echo "BRAND-PASS: recognizability PNGs in $OUT"
 # adding a theme pack never requires touching this script.
 if [[ -n $WALLPAPERS_DIR ]]; then
   python3 - "$REPO_ROOT/profiles/themes" "$BRAND/wallpaper" "$WALLPAPERS_DIR" <<'PY'
-import json, subprocess, sys
+import json, shutil, subprocess, sys
 from pathlib import Path
 themes_dir, svg_dir, out_dir = (Path(a) for a in sys.argv[1:4])
 rendered = []
@@ -79,14 +82,23 @@ for recipe in sorted(themes_dir.glob("*/theme.json")):
     doc = json.loads(recipe.read_text(encoding="utf-8"))
     if doc.get("family") != "hornero":
         continue
-    svg = svg_dir / f"{doc['id']}.svg"
-    if not svg.is_file():
-        print(f"BRAND-SKIP: no flagship SVG for {doc['id']}", file=sys.stderr)
-        continue
     target_dir = out_dir / doc["wallpaperDir"]
     target_dir.mkdir(parents=True, exist_ok=True)
     default = target_dir / doc["defaultWallpaper"]
     hidpi = target_dir / f"{doc['id']}-02-hidpi.png"
+    # Photographic flagship override: vendored PNG wins over the SVG
+    # render for hornero-dark/light (1586x992 source; upscaling on
+    # larger panels is accepted until a 2560px master lands).
+    photo = svg_dir / f"{doc['id']}.png"
+    if photo.is_file():
+        shutil.copyfile(photo, default)
+        shutil.copyfile(photo, hidpi)
+        rendered.append(str(default.relative_to(out_dir)) + " (photo)")
+        continue
+    svg = svg_dir / f"{doc['id']}.svg"
+    if not svg.is_file():
+        print(f"BRAND-SKIP: no flagship SVG for {doc['id']}", file=sys.stderr)
+        continue
     subprocess.run(["rsvg-convert", "-w", "1920", "-h", "1080", str(svg),
                     "-o", str(default)], check=True)
     subprocess.run(["rsvg-convert", "-w", "2560", "-h", "1440", str(svg),
