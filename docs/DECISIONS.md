@@ -204,3 +204,19 @@ there is no `gtk-2.0/` engine dir anywhere in the deliverable.
   table + written-prefixes), new module row in `profiles/base/profile.toml`,
   gated by `tests/test_gtk_theme.sh` (byte-exact stage check, leak checks)
   and the existing `test_package.sh` prefix audit (allows `/usr/share`).
+- **horneroctl migration port (keybindings, autostart, dead wrappers).**
+  Upstream `ulises-jeremias/dotfiles@bca7380` finished the dots-scripts to
+  horneroctl migration: every `~/.local/bin/dots-*` call in the Hyprland
+  confs became a `horneroctl` verb, and the superseded wrappers
+  (launcher, power menu, clipboard) were deleted upstream. This repo lagged
+  behind still invoking the dead `dots-quickshell`/`dots-*` CLIs, so the
+  migrated `keybindings.conf`/`autostart.conf` were copied byte-exact
+  (only migration hunks differ; no personal content) and the three dead
+  wrappers removed. `scripts/generate-shortcuts.py` learned a
+  `horneroctl`-first id rule with pinned stable ids for the curated
+  Welcome actions, so the shell shortcut catalog is unchanged. Sibling
+  content excluded: upstream host-only lines (none — diff was pure
+  migration). Deferred: `dots-appearance`, `dots-gtk-theme`,
+  `dots-night-mode`, `dots-hyprlock-theme`, `dots-wallpaper-*`,
+  `dots-theme-selector` stay: live config-owned CLIs with no horneroctl
+  verb yet.

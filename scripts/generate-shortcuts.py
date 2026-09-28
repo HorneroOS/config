@@ -6,7 +6,7 @@ Reads the authoritative Hyprland bindings
 `shortcuts.json`:
 
     {"schemaVersion": 1, "source": "<relpath>", "entries": [
-      {"id": "exec:dots-launcher", "mods": ["SUPER"], "key": "SPACE",
+      {"id": "exec-launcher", "mods": ["CTRL"], "key": "SPACE",
        "dispatcher": "exec", "args": "...", "submap": ""}, ...]}
 
 Entry ids are stable slugs of dispatcher + first argument token. The
@@ -46,17 +46,43 @@ def entry_id(dispatcher: str, args: str) -> str:
     """Stable action-oriented id (machine key, never UX copy)."""
     if dispatcher == "exec":
         tokens = args.replace(",", " ").split()
+        prog_tokens = [
+            tok.split("/")[-1]
+            for tok in tokens
+            if not tok.startswith("-") and not tok.startswith("$")
+        ]
+        # `horneroctl <group> <verb> ...` is the system CLI: name the verb
+        # path, with pinned stable ids for the curated Welcome actions so a
+        # backend migration never renames the id the shell resolves. This
+        # runs before the legacy `ipc` rule: `shell ipc -- call ...` is a
+        # passthrough whose surface ids are pinned below.
+        if prog_tokens and prog_tokens[0] == "horneroctl":
+            sub = [t for t in prog_tokens[1:] if t not in ("--",)]
+            pinned = {
+                ("apps", "launch"): "exec-launcher",
+                ("capture", "clipboard"): "exec-clipboard",
+                ("capture", "screenshot"): "exec-screenshooter",
+                ("hardware", "keyboard", "keys"): "exec-keyboard-help",
+                ("shell", "ipc", "call", "drawers", "toggle", "session"): "exec-power-menu",
+                ("shell", "ipc", "call", "drawers", "toggle", "dashboard"): "ipc-dashboard-toggle",
+                ("shell", "ipc", "call", "lock", "lock"): "ipc-lock-lock",
+            }
+            for width in range(len(sub), 1, -1):
+                key = tuple(sub[:width])
+                if key in pinned:
+                    return pinned[key]
+            # `shell ipc -- call <a> <b>` passthrough: ipc-<a>-<b>.
+            if len(sub) >= 5 and sub[0:3] == ["shell", "ipc", "call"]:
+                return f"ipc-{slug('-'.join(sub[3:]))}"
+            if len(sub) >= 2:
+                return f"exec-horneroctl-{slug('-'.join(sub[:3]))}"
+            return "exec-horneroctl"
         if "ipc" in tokens:
             rest = tokens[tokens.index("ipc") + 1 :]
             return f"ipc-{slug('-'.join(rest))}"
         if "exo-open" in tokens and "--launch" in tokens:
             launched = tokens[tokens.index("--launch") + 1 :]
             return f"app-{slug('-'.join(launched))}"
-        prog_tokens = [
-            tok.split("/")[-1]
-            for tok in tokens
-            if not tok.startswith("-") and not tok.startswith("$")
-        ]
         # `dots <subcommand>` is a multi-call binary: name the subcommand.
         if prog_tokens and prog_tokens[0] == "dots" and len(prog_tokens) > 1:
             return f"exec-{slug(prog_tokens[1])}"

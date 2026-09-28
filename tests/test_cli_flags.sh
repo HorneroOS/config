@@ -37,10 +37,12 @@ out="$(HOME="$T_HOME" bash "$REPO_ROOT/bin/dots-gtk-theme" -q current 2>&1)" \
   || fail "dots-gtk-theme rejects -q without which: $out"
 pass "dots-gtk-theme parses -q without which"
 
-# Long flag on another shared-parser consumer stays working too.
-out="$(HOME="$T_HOME" bash "$REPO_ROOT/bin/dots-clipboard" --help 2>&1)" \
-  || fail "dots-clipboard --help exits nonzero without which: $out"
-pass "dots-clipboard parses --help without which"
+# Long flag on another shared-parser consumer stays working too
+# (dots-clipboard was removed: clipboard history is `horneroctl capture
+# clipboard`, so dots-night-mode covers the second consumer here).
+out="$(HOME="$T_HOME" bash "$REPO_ROOT/bin/dots-night-mode" --help 2>&1)" \
+  || fail "dots-night-mode --help exits nonzero without which: $out"
+pass "dots-night-mode parses --help without which"
 
 # Sanity: unshadowed runs keep working (no regression on normal systems).
 unset -f which
