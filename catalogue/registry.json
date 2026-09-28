@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "source": "profiles/themes",
+  "count": 15,
+  "entries": [
+    {
+      "id": "catppuccin-latte",
+      "name": "Catppuccin Latte",
+      "description": "Light Catppuccin mauve for soft daytime sessions",
+      "tags": [
+        "catppuccin",
+        "pastel",
+        "light"
+      ],
+      "mode": "light",
+      "family": "",
+      "version": "",
+      "schemeType": "tonal-spot",
+      "defaultWallpaper": "catppuccin-latte-01.png",
+      "wallpaperDir": "catppuccin-latte"
+    },
+    {
+      "id": "catppuccin-mocha",
+      "name": "Catppuccin Mocha",
+      "description": "Cozy dark Catppuccin with soft pastels",
+      "tags": [
+        "catppuccin",
+        "pastel",
+        "cozy",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "schemeType": "tonal-spot",
+      "defaultWallpaper": "catppuccin-mauve-02.png",
+      "wallpaperDir": "catppuccin-mocha"
+    },
+    {
+      "id": "everforest",
+      "name": "Everforest",
+      "description": "Soft green forest fidelity theme",
+      "tags": [
+        "everforest",
+        "nature",
+        "green",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "schemeType": "fidelity",
+      "defaultWallpaper": "everforest-deep-01.png",
+      "wallpaperDir": "everforest"
+    },
+    {
+      "id": "gruvbox",
+      "name": "Gruvbox",
+      "description": "Warm retro palette with anime and pixel art",
+      "tags": [
+        "gruvbox",
+        "warm",
+        "retro",
+        "anime",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "schemeType": "expressive",
+      "defaultWallpaper": "gruvbox-anime-01.jpg",
+      "wallpaperDir": "gruvbox"
+    },
+    {
+      "id": "hornero-dark",
+      "name": "Hornero Dark",
+      "description": "Flagship Hornero dark theme: ember terracotta, warm clay and sunset amber on a toasted-adobe night surface",
+      "tags": [
+        "hornero",
+        "flagship",
+        "terracotta",
+        "clay",
+        "sunset",
+        "warm",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "hornero",
+      "version": "1.0.0",
+      "schemeType": "vibrant",
+      "defaultWallpaper": "hornero-dark-01.png",
+      "wallpaperDir": "hornero-dark"
+    },
+    {
+      "id": "hornero-light",
+      "name": "Hornero Light",
+      "description": "Flagship Hornero light theme: deep terracotta, fired clay and sunset amber on warm morning paper — a first-class light ramp, not an inverted dark",
+      "tags": [
+        "hornero",
+        "flagship",
+        "terracotta",
+        "clay",
+        "sunset",
+        "warm",
+        "light"
+      ],
+      "mode": "light",
+      "family": "hornero",
+      "version": "1.0.0",
+      "schemeType": "vibrant",
+      "defaultWallpaper": "hornero-light-01.png",
+      "wallpaperDir": "hornero-light"
+    },
+    {
+      "id": "landscape",
+      "name": "Landscape",
+      "description": "Cinematic nature vistas and fantasy scenery",
+      "tags": [
+        "nature",
+        "cinematic",
+        "landscape",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "schemeType": "fidelity",
+      "defaultWallpaper": "landscape-01.jpg",
+      "wallpaperDir": "landscape"
+    },
+    {
+      "id": "monochrome",
+      "name": "Monochrome",
+      "description": "High-contrast black and white focus aesthetic",
+      "tags": [
+        "monochrome",
+        "minimal",
+        "a11y",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "schemeType": "monochrome",
+      "defaultWallpaper": "mono-curated-1.jpg",
+      "wallpaperDir": "monochrome"
+    },
+    {
+      "id": "neon-city",
+      "name": "Neon City",
+      "description": "Cyberpunk neon nights and futuristic streets",
+      "tags": [
+        "cyberpunk",
+        "neon",
+        "dark",
+        "city"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "schemeType": "vibrant",
+      "defaultWallpaper": "neon-city-01.jpg",
+      "wallpaperDir": "neon-city"
+    },
+    {
+      "id": "nord-dreams",
+      "name": "Nord Dreams",
+      "description": "Cool arctic Nord tones and frosty calm",
+      "tags": [
+        "nord",
+        "cool",
+        "minimal",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "schemeType": "tonal-spot",
+      "defaultWallpaper": "nord-aurora-01.png",
+      "wallpaperDir": "nord-dreams"
+    },
+    {
+      "id": "pampa",
+      "name": "Pampa",
+      "description": "Hornero Pampa theme: deep grassland greens, olive and earth with warm cream and muted gold — the humid pampa night, not a recolored flagship",
+      "tags": [
+        "hornero",
+        "pampa",
+        "green",
+        "olive",
+        "earth",
+        "cream",
+        "gold",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "hornero",
+      "version": "1.0.0",
+      "schemeType": "tonal-spot",
+      "defaultWallpaper": "pampa-01.png",
+      "wallpaperDir": "pampa"
+    },
+    {
+      "id": "rose-pine",
+      "name": "Rosé Pine",
+      "description": "Elegant muted rose and pine dark palette",
+      "tags": [
+        "rose-pine",
+        "muted",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "schemeType": "expressive",
+      "defaultWallpaper": "rose-pine-dawn-01.png",
+      "wallpaperDir": "rose-pine"
+    },
+    {
+      "id": "soft-morning",
+      "name": "Soft Morning",
+      "description": "Calm mist, florals, and soft natural light",
+      "tags": [
+        "morning",
+        "calm",
+        "pastel",
+        "light"
+      ],
+      "mode": "light",
+      "family": "",
+      "version": "",
+      "schemeType": "neutral",
+      "defaultWallpaper": "morning-lake-2.jpg",
+      "wallpaperDir": "soft-morning"
+    },
+    {
+      "id": "vapor-dreams",
+      "name": "Vapor Dreams",
+      "description": "Nostalgic 80s/90s vaporwave with retro gradients",
+      "tags": [
+        "vaporwave",
+        "retro",
+        "synthwave",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "schemeType": "expressive",
+      "defaultWallpaper": "vapor-dreams-01.jpg",
+      "wallpaperDir": "vapor-dreams"
+    },
+    {
+      "id": "warm-sunset",
+      "name": "Warm Sunset",
+      "description": "Golden-hour landscapes with warm cinematic tones",
+      "tags": [
+        "sunset",
+        "warm",
+        "cinematic",
+        "light"
+      ],
+      "mode": "light",
+      "family": "",
+      "version": "",
+      "schemeType": "vibrant",
+      "defaultWallpaper": "warm-sunset-05.jpg",
+      "wallpaperDir": "warm-sunset"
+    }
+  ]
+}
