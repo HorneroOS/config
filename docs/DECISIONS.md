@@ -220,3 +220,10 @@ there is no `gtk-2.0/` engine dir anywhere in the deliverable.
   `dots-night-mode`, `dots-hyprlock-theme`, `dots-wallpaper-*`,
   `dots-theme-selector` stay: live config-owned CLIs with no horneroctl
   verb yet.
+- **Theme catalogue registry (derived, offline-first).**
+  `scripts/generate-catalogue.py` derives `catalogue/registry.json`
+  from `profiles/themes/*/theme.json` (15 packs); store-style surfaces
+  render from the registry without touching packs, wallpapers stay
+  fetch-on-demand per `wallpapers.manifest.json`. `tests/test_catalogue.sh`
+  fails when the registry is stale or a pack is uncovered. Wired into
+  `ci.yml` next to the shortcuts contract.
