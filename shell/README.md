@@ -31,5 +31,5 @@ to this copy.
 
 `scripts/materialize.sh` deliberately does **not** install a user-root
 `~/.config/hornero/shell.json`: the user file is created by the shell
-runtime on first launch (`dots-quickshell` writes `{}` when absent).
+runtime on first launch (the shell writes `{}` when absent).
 Packaging is the only writer of the system default.
