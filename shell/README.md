@@ -20,9 +20,10 @@ no machine specifics, XDG-aware, `set -euo pipefail`, materialized through
 `/etc/xdg/hornero/shell.json` (path-contract row 6). Content is owned by
 `HorneroOS/shell` (`config/shell.default.json`); this repo only packages it.
 
-Sync status (2026-09-13): byte-exact copy of
-`HorneroOS/shell@2360697` (`config/shell.default.json`, shell PR #18;
-content unchanged since shell PR #17, verified by sha256).
+Sync status (2026-09-30): byte-exact copy of
+`HorneroOS/shell@002086a` (`config/shell.default.json`, last content
+change: persist Appearance section disclosure; includes #63 lock
+hideNotifs + #56 horneroctl verbs; verified by sha256).
 Refresh rule: when the shell pin ships a new factory default, replace
 this file byte-exact and record the new source SHA here. `PKGBUILD`
 fails the build if the file is missing; `tests/test_package.sh`
