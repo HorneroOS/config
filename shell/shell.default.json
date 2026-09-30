@@ -1,5 +1,6 @@
 {
   "appearance": {
+    "theme": "hornero-dark",
     "rounding": {
       "scale": 1
     },
@@ -220,7 +221,8 @@
     "sizes": {
       "heightMult": 0.7,
       "ratio": 1.7777777777777777
-    }
+    },
+    "appearanceExpandedSections": ["themes"]
   },
   "launcher": {
     "enabled": true,
@@ -255,7 +257,7 @@
       {"name": "Themes", "icon": "style", "description": "Apply a desktop theme pack", "command": ["autocomplete", "theme"], "enabled": true, "dangerous": false},
       {"name": "Layout", "icon": "dashboard_customize", "description": "Change the shell bar layout", "command": ["layoutpicker"], "enabled": true, "dangerous": false},
       {"name": "Transparency", "icon": "opacity", "description": "Change shell transparency", "command": ["autocomplete", "transparency"], "enabled": false, "dangerous": false},
-      {"name": "Random", "icon": "casino", "description": "Switch to a random wallpaper", "command": ["sh", "-c", "f=\"$(find -L \"$HOME/Pictures/Wallpapers\" -type f | shuf -n 1)\"; [ -n \"$f\" ] && dots-wallpaper-set \"$f\""], "enabled": true, "dangerous": false},
+      {"name": "Random", "icon": "casino", "description": "Switch to a random wallpaper", "command": ["sh", "-c", "f=\"$(find -L \"$HOME/Pictures/Wallpapers\" -type f | shuf -n 1)\"; [ -n \"$f\" ] && horneroctl wallpaper set --yes \"$f\""], "enabled": true, "dangerous": false},
       {"name": "Light", "icon": "light_mode", "description": "Change the scheme to light mode", "command": ["setMode", "light"], "enabled": true, "dangerous": false},
       {"name": "Dark", "icon": "dark_mode", "description": "Change the scheme to dark mode", "command": ["setMode", "dark"], "enabled": true, "dangerous": false},
       {"name": "Shutdown", "icon": "power_settings_new", "description": "Shutdown the system", "command": ["systemctl", "poweroff"], "enabled": true, "dangerous": true},
@@ -263,7 +265,7 @@
       {"name": "Logout", "icon": "exit_to_app", "description": "Log out of the current session", "command": ["loginctl", "terminate-user", ""], "enabled": true, "dangerous": true},
       {"name": "Lock", "icon": "lock", "description": "Lock the current session", "command": ["loginctl", "lock-session"], "enabled": true, "dangerous": false},
       {"name": "Sleep", "icon": "bedtime", "description": "Suspend then hibernate", "command": ["systemctl", "suspend-then-hibernate"], "enabled": true, "dangerous": false},
-      {"name": "Settings", "icon": "settings", "description": "Configure the shell", "command": ["dots-settings-gui", "menu"], "enabled": true, "dangerous": false}
+      {"name": "Settings", "icon": "settings", "description": "Configure the shell", "command": ["horneroctl", "config", "gui"], "enabled": true, "dangerous": false}
     ]
   },
   "notifs": {
@@ -317,6 +319,7 @@
   },
   "lock": {
     "recolourLogo": false,
+    "hideNotifs": true,
     "enableFprint": true,
     "maxFprintTries": 3,
     "sizes": {
