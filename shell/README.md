@@ -20,15 +20,18 @@ no machine specifics, XDG-aware, `set -euo pipefail`, materialized through
 `/etc/xdg/hornero/shell.json` (path-contract row 6). Content is owned by
 `HorneroOS/shell` (`config/shell.default.json`); this repo only packages it.
 
-Sync status (2026-09-30): byte-exact copy of
-`HorneroOS/shell@002086a` (`config/shell.default.json`, last content
-change: persist Appearance section disclosure; includes #63 lock
-hideNotifs + #56 horneroctl verbs; verified by sha256).
-Refresh rule: when the shell pin ships a new factory default, replace
-this file byte-exact and record the new source SHA here. `PKGBUILD`
-fails the build if the file is missing; `tests/test_package.sh`
-asserts the installed `/etc/xdg/hornero/shell.json` is byte-identical
-to this copy.
+Provenance lives in `shell/shell.default.source` (`shell_sha=`, the
+shell commit the copy was taken from). `tests/test_shell_default_sync.sh`
+(CI) fails when the vendored file is not byte-identical to
+`config/shell.default.json` at that commit, and emits a warning when
+shell main has changed the file since. The release gate is in
+`HorneroOS/hornero` `scripts/compose.sh`: a composition fails when its
+config pin ships a different factory default than its shell pin.
+
+Refresh rule: copy the file byte-exact from a newer shell commit and
+update `shell_sha=` in the same commit. `PKGBUILD` fails the build if
+the file is missing; `tests/test_package.sh` asserts the installed
+`/etc/xdg/hornero/shell.json` is byte-identical to this copy.
 
 `scripts/materialize.sh` deliberately does **not** install a user-root
 `~/.config/hornero/shell.json`: the user file is created by the shell

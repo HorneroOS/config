@@ -1,0 +1,8 @@
+# Provenance of shell/shell.default.json (path-contract row 6).
+#
+# Content authority: HorneroOS/shell (config/shell.default.json).
+# This repo packages a byte-exact copy synced from the shell commit below.
+# tests/test_shell_default_sync.sh fails CI when the vendored copy differs
+# from that commit, and warns when shell main has moved past it.
+# Refresh: copy the file from a newer shell commit, then update this SHA.
+shell_sha=2aa085d702a6ffabcbccc0986e57d889d820bf45
