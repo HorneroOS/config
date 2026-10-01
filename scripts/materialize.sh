@@ -190,6 +190,30 @@ fi
 compat_link "$DATA_HOME/hornero/themes" "$DATA_HOME/dots/themes"
 compat_link "$DATA_HOME/hornero/shell-presets" "$DATA_HOME/dots/shell-presets"
 
+# --- the Hornero shell owns org.freedesktop.Notifications --------------------
+# Stand-alone daemons (dunst, mako, swaync) claim the same bus name through
+# D-Bus activation of their systemd user units; when one wins the race (a
+# notify-send while the shell restarts) notifications bypass the shell for
+# the rest of the session. Mask their user units (symlink to /dev/null, the
+# systemd convention). A user-authored unit file is never replaced.
+# Reversible: rm ~/.config/systemd/user/<daemon>.service
+mask_user_unit() {
+  local unit="$CONFIG_HOME/systemd/user/$1"
+  if [[ -e $unit && ! -L $unit ]]; then
+    echo "keeping user-authored $unit (not masked)"
+    return
+  fi
+  if [[ $DRY_RUN -eq 1 ]]; then
+    echo "would mask user unit $1 -> /dev/null"
+    return
+  fi
+  mkdir -p "$(dirname "$unit")"
+  ln -sfn /dev/null "$unit"
+}
+for unit in dunst.service mako.service swaync.service; do
+  mask_user_unit "$unit"
+done
+
 # hypr helper scripts must stay executable after the 644 normalization above
 if [[ $DRY_RUN -eq 0 ]]; then
   chmod 755 "$CONFIG_HOME"/hypr/scripts/*.sh

@@ -168,6 +168,28 @@ for f in "$TMP_HOME/.local/bin/dots-gtk-theme" "$TMP_HOME/.local/bin/dots-hyprlo
   fi
 done
 
+# notification daemons that would steal org.freedesktop.Notifications
+for u in dunst mako swaync; do
+  link="$TMP_HOME/.config/systemd/user/$u.service"
+  if [[ -L $link && $(readlink "$link") == /dev/null ]]; then
+    echo "TEST-PASS: $u.service masked"
+  else
+    echo "TEST-FAIL: $u.service not masked" >&2
+    exit 1
+  fi
+done
+# a user-authored unit is kept, and re-running stays idempotent
+printf '[Service]\nExecStart=/bin/true\n' > "$TMP_HOME/.config/systemd/user/dunst.service.tmp"
+rm "$TMP_HOME/.config/systemd/user/dunst.service"
+mv "$TMP_HOME/.config/systemd/user/dunst.service.tmp" "$TMP_HOME/.config/systemd/user/dunst.service"
+bash "$REPO_ROOT/scripts/materialize.sh" --dest "$TMP_HOME" >/dev/null
+if [[ ! -L "$TMP_HOME/.config/systemd/user/dunst.service" ]]; then
+  echo "TEST-PASS: user-authored dunst.service kept"
+else
+  echo "TEST-FAIL: user-authored dunst.service replaced" >&2
+  exit 1
+fi
+
 # repo-level validation still green
 "$REPO_ROOT/scripts/validate.sh"
 echo "test_materialize.sh: ALL GREEN"
