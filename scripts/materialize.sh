@@ -190,6 +190,55 @@ fi
 compat_link "$DATA_HOME/hornero/themes" "$DATA_HOME/dots/themes"
 compat_link "$DATA_HOME/hornero/shell-presets" "$DATA_HOME/dots/shell-presets"
 
+# --- the Hornero shell owns org.freedesktop.Notifications --------------------
+# Stand-alone daemons (dunst, mako, swaync) claim the same bus name through
+# D-Bus activation of their systemd user units; when one wins the race (a
+# notify-send while the shell restarts) notifications bypass the shell for
+# the rest of the session. Mask their user units (symlink to /dev/null, the
+# systemd convention). A user-authored unit file is never replaced.
+# Reversible: rm ~/.config/systemd/user/<daemon>.service
+mask_user_unit() {
+  local unit="$CONFIG_HOME/systemd/user/$1"
+  if [[ -e $unit && ! -L $unit ]]; then
+    echo "keeping user-authored $unit (not masked)"
+    return
+  fi
+  if [[ $DRY_RUN -eq 1 ]]; then
+    echo "would mask user unit $1 -> /dev/null"
+    return
+  fi
+  mkdir -p "$(dirname "$unit")"
+  ln -sfn /dev/null "$unit"
+}
+for unit in dunst.service mako.service swaync.service; do
+  mask_user_unit "$unit"
+done
+
+# Some daemons D-Bus-activate without going through systemd (Arch mako:
+# fr.emersion.mako.service has Exec=/usr/bin/mako, no SystemdService), so a
+# masked unit alone does not stop them. A user-level D-Bus service file with
+# the same name takes precedence over the system one: shadow each with a
+# no-op. A user-authored file of that name is kept.
+# Reversible: rm ~/.local/share/dbus-1/services/<name>.service
+shadow_dbus_service() {
+  local svc="$DATA_HOME/dbus-1/services/$1"
+  if [[ -e $svc ]] && ! grep -q '^# hornero: notification daemon shadow' "$svc"; then
+    echo "keeping user-authored $svc (not shadowed)"
+    return
+  fi
+  if [[ $DRY_RUN -eq 1 ]]; then
+    echo "would shadow D-Bus service $1"
+    return
+  fi
+  mkdir -p "$(dirname "$svc")"
+  printf '%s\n' '# hornero: notification daemon shadow (the shell owns org.freedesktop.Notifications)' \
+    '[D-BUS Service]' 'Name=org.freedesktop.Notifications' 'Exec=/bin/false' >"$svc"
+  chmod 644 "$svc"
+}
+for svc in org.knopwob.dunst.service fr.emersion.mako.service org.erikreider.swaync.service; do
+  shadow_dbus_service "$svc"
+done
+
 # hypr helper scripts must stay executable after the 644 normalization above
 if [[ $DRY_RUN -eq 0 ]]; then
   chmod 755 "$CONFIG_HOME"/hypr/scripts/*.sh
