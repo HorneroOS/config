@@ -178,6 +178,15 @@ for u in dunst mako swaync; do
     exit 1
   fi
 done
+for svc in org.knopwob.dunst.service fr.emersion.mako.service org.erikreider.swaync.service; do
+  f="$TMP_HOME/.local/share/dbus-1/services/$svc"
+  if grep -q '^Exec=/bin/false' "$f" 2>/dev/null; then
+    echo "TEST-PASS: D-Bus activation shadowed: $svc"
+  else
+    echo "TEST-FAIL: D-Bus activation not shadowed: $svc" >&2
+    exit 1
+  fi
+done
 # a user-authored unit is kept, and re-running stays idempotent
 printf '[Service]\nExecStart=/bin/true\n' > "$TMP_HOME/.config/systemd/user/dunst.service.tmp"
 rm "$TMP_HOME/.config/systemd/user/dunst.service"
