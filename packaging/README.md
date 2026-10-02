@@ -27,12 +27,14 @@ the resolved manifest is installed both as
 `package()` reuses the canonical mapping instead of duplicating it: it
 calls `scripts/materialize.sh --dest` into a staging HOME and rearranges
 that staged HOME into the system layout. Per-application file lists live
-only in `scripts/materialize.sh`; the PKGBUILD loop over the staged
-`.config` tree is generic so new modules flow through unchanged.
+only in `scripts/materialize.sh`; the PKGBUILD maps staged configuration to
+system paths, with an explicit systemd user-unit exception to preserve
+systemd's `/etc/xdg/systemd/user` symlink.
 
 | Staged HOME path (via `materialize.sh`) | Package path                          |
 | --------------------------------------- | ------------------------------------- |
-| `.config/*`                             | `/etc/xdg/*`                          |
+| `.config/*` (except `systemd/user`)     | `/etc/xdg/*`                          |
+| `.config/systemd/user/*.service`        | `/etc/systemd/user/*.service` (system-wide user-unit masks) |
 | `.gtkrc-2.0`                            | `/etc/xdg/gtkrc-2.0` (skeleton; copy to `~/.gtkrc-2.0` to use) |
 | `shell/shell.default.json` (repo file, **not** staged HOME) | `/etc/xdg/hornero/shell.json` (factory default; content owned by `HorneroOS/shell`, synced byte-exact — see `shell/README.md`) |
 | `.local/lib/dots`                       | `/usr/share/hornero/lib/dots`         |
@@ -43,7 +45,7 @@ only in `scripts/materialize.sh`; the PKGBUILD loop over the staged
 | Selection name                          | `/usr/share/hornero/HORNERO_PROFILE`  |
 | `LICENSE`                               | `/usr/share/licenses/hornero-config/LICENSE` |
 
-Only `/etc/xdg`, `/usr/share/hornero`, and `/usr/share/themes`
+Only `/etc/xdg`, `/etc/systemd/user`, `/usr/share/hornero`, and `/usr/share/themes`
 (plus the standard license dir) are written.
 
 `scripts/materialize.sh` user-root behavior is unchanged: it never writes
