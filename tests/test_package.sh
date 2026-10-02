@@ -39,12 +39,20 @@ STAGE="$(mktemp -d)"
 bash "$REPO_ROOT/scripts/materialize.sh" --dest "$STAGE" >/dev/null
 for entry in "$STAGE"/.config/*; do
   base="$(basename "$entry")"
+  if [[ "$base" == systemd ]]; then
+    for unit in dunst.service mako.service swaync.service; do
+      [[ -L "$ROOT/etc/systemd/user/$unit" ]] \
+        && [[ $(readlink "$ROOT/etc/systemd/user/$unit") == /dev/null ]] \
+        || fail "systemd user-unit mask $unit installed at /etc/systemd/user"
+    done
+    continue
+  fi
   [[ -e "$ROOT/etc/xdg/$base" ]] || fail "installed tree missing /etc/xdg/$base"
 done
 # /etc/xdg/hornero/shell.json is sourced from shell/shell.default.json (not
 # the staged HOME) and asserted separately below, so the hornero dir is
 # excluded here; materialize.sh never stages .config/hornero/*.
-diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero >/dev/null 2>&1 \
+diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero --exclude=systemd >/dev/null 2>&1 \
   && pass "staged .config matches /etc/xdg" \
   || fail "staged .config differs from /etc/xdg"
 cmp -s "$STAGE/.gtkrc-2.0" "$ROOT/etc/xdg/gtkrc-2.0" \
@@ -76,13 +84,14 @@ cmp -s "$REPO_ROOT/LICENSE" "$ROOT/usr/share/licenses/hornero-config/LICENSE" \
 rm -rf "$STAGE"
 
 # --- nothing outside the documented prefixes ------------------------------------
-# Allowed: the prefix dirs themselves, everything below /etc/xdg and
+# Allowed: the prefix dirs themselves, everything below /etc/xdg,
+# system-wide user-unit overrides in /etc/systemd/user, and
 # /usr/share, and the pacman metadata dotfiles. Anything else fails.
 if find "$ROOT" -path "$ROOT/.BUILDINFO" -prune -o -path "$ROOT/.PKGINFO" -prune \
     -o -path "$ROOT/.MTREE" -prune -o -print \
-    | grep -vE "^$ROOT/(etc/xdg|usr/share)(/|$)" | grep -vE "^$ROOT/(etc|usr)$" \
+    | grep -vE "^$ROOT/(etc/xdg|etc/systemd|usr/share)(/|$)" | grep -vE "^$ROOT/(etc|usr)$" \
     | grep -vE "^$ROOT$" | grep -q .; then
-  fail "files outside /etc/xdg + /usr/share"
+  fail "files outside /etc/xdg + /etc/systemd/user + /usr/share"
 else
   pass "install prefixes"
 fi

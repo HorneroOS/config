@@ -40,11 +40,12 @@ host), audited against the layout in `packaging/README.md`.
 | `developer`       | ok    | `developer`                          | identical    |
 | `bogus`           | fails | —                                    | `error: unknown HORNERO_PROFILE='bogus'` in `package()` |
 
-## Installed layout (67 files, 39 dirs under `/etc/xdg` + `/usr/share`)
+## Installed layout
 
-Nothing is installed outside `/etc/xdg` and `/usr/share/hornero`
-(plus `/usr/share/licenses/hornero-config` and the pacman metadata
-dotfiles `.PKGINFO`/`.BUILDINFO`/`.MTREE`).
+The package installs XDG defaults under `/etc/xdg`, global systemd user-unit
+masks under `/etc/systemd/user`, and product data under `/usr/share/hornero`
+and `/usr/share/themes` (plus `/usr/share/licenses/hornero-config` and the
+pacman metadata dotfiles `.PKGINFO`/`.BUILDINFO`/`.MTREE`).
 
 ```text
 /etc/xdg/btop/btop.conf
