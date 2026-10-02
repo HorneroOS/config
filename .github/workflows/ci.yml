@@ -34,6 +34,8 @@ jobs:
         run: tests/test_materialize.sh
       - name: Shortcut manifest contract
         run: tests/test_shortcuts.sh
+      - name: Optional plugins never break a plugin-less session
+        run: tests/test_optional_plugins.sh
       - name: Theme catalogue contract
         run: tests/test_catalogue.sh
       - name: Desktop integration (hypr/kitty/qt/factory)
