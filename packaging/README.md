@@ -33,7 +33,7 @@ systemd's `/etc/xdg/systemd/user` symlink.
 
 | Staged HOME path (via `materialize.sh`) | Package path                          |
 | --------------------------------------- | ------------------------------------- |
-| `.config/*` (except `systemd/user`)     | `/etc/xdg/*`                          |
+| `.config/*` (except `systemd/user` and `Thunar/uca.xml`) | `/etc/xdg/*` |
 | `.config/systemd/user/*.service`        | `/etc/systemd/user/*.service` (system-wide user-unit masks) |
 | `.gtkrc-2.0`                            | `/etc/xdg/gtkrc-2.0` (skeleton; copy to `~/.gtkrc-2.0` to use) |
 | `shell/shell.default.json` (repo file, **not** staged HOME) | `/etc/xdg/hornero/shell.json` (factory default; content owned by `HorneroOS/shell`, synced byte-exact — see `shell/README.md`) |
@@ -41,9 +41,14 @@ systemd's `/etc/xdg/systemd/user` symlink.
 | `.local/bin/dots-*`                     | `/usr/share/hornero/bin/dots-*`       |
 | `.local/share/dots/themes`              | `/usr/share/hornero/themes`           |
 | `.local/share/themes/Hornero-{Dark,Light,Pampa}` (theme trees only; `src/`, `build.sh`, `gallery.py` are dev-only and never staged) | `/usr/share/themes/Hornero-{Dark,Light,Pampa}` (real GTK 3+4 themes; sole owner of `/usr/share/themes`, no file shipped twice) |
+
 | `profiles/base/profile.toml`            | `/usr/share/hornero/profiles/base/profile.toml` and `/usr/share/hornero/profile.toml` |
 | Selection name                          | `/usr/share/hornero/HORNERO_PROFILE`  |
 | `LICENSE`                               | `/usr/share/licenses/hornero-config/LICENSE` |
+
+The package intentionally omits `/etc/xdg/Thunar/uca.xml`, which is owned by
+the `thunar` package on Arch. The curated custom actions stay available in the
+user config managed by `~/.dotfiles` at `~/.config/Thunar/uca.xml`.
 
 Only `/etc/xdg`, `/etc/systemd/user`, `/usr/share/hornero`, and `/usr/share/themes`
 (plus the standard license dir) are written.

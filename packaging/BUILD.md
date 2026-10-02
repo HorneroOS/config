@@ -82,7 +82,6 @@ pacman metadata dotfiles `.PKGINFO`/`.BUILDINFO`/`.MTREE`).
 /etc/xdg/kitty/kitty.conf
 /etc/xdg/Thunar/accels.scm
 /etc/xdg/Thunar/renamerc
-/etc/xdg/Thunar/uca.xml
 /usr/share/hornero/HORNERO_PROFILE
 /usr/share/hornero/bin/dots-appearance (755)
 /usr/share/hornero/bin/dots-gtk-theme (755)
@@ -121,7 +120,8 @@ Verification detail:
 
 - Every staged `~/.config/*` entry from `scripts/materialize.sh --dest`
   exists under `/etc/xdg`, and `diff -r` of the staged tree vs
-  `/etc/xdg` is identical except the documented extra `gtkrc-2.0`.
+  `/etc/xdg` is identical except the documented extra `gtkrc-2.0` and
+  Thunar's package-owned `uca.xml`, which remains a per-user customization.
 - `lib/dots`, `bin/dots-*`, and `themes` are byte-identical to the
   staged HOME; both `profile.toml` copies match `profiles/base/`.
 - Dirs are `755`; files are `644` except the restored executables above.

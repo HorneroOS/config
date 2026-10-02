@@ -122,6 +122,11 @@ package() {
     fi
   done
 
+  # Thunar ships /etc/xdg/Thunar/uca.xml itself. Packaging the staged user
+  # custom actions there causes a pacman ownership conflict on Arch. The
+  # same curated file remains in materialize.sh for per-user dotfile installs.
+  rm -f "$pkgdir/etc/xdg/Thunar/uca.xml"
+
   # GTK 2 skeleton (per-user ~/.gtkrc-2.0 upstream, system default here).
   install -Dm644 "$stage/.gtkrc-2.0" "$pkgdir/etc/xdg/gtkrc-2.0"
 

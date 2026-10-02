@@ -52,9 +52,15 @@ done
 # /etc/xdg/hornero/shell.json is sourced from shell/shell.default.json (not
 # the staged HOME) and asserted separately below, so the hornero dir is
 # excluded here; materialize.sh never stages .config/hornero/*.
-diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero --exclude=systemd >/dev/null 2>&1 \
+diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero --exclude=systemd --exclude=uca.xml >/dev/null 2>&1 \
   && pass "staged .config matches /etc/xdg" \
   || fail "staged .config differs from /etc/xdg"
+[[ -f "$STAGE/.config/Thunar/uca.xml" ]] \
+  && pass "custom Thunar actions remain available to per-user installs" \
+  || fail "staged Thunar custom actions missing"
+[[ ! -e "$ROOT/etc/xdg/Thunar/uca.xml" ]] \
+  && pass "package leaves Thunar-owned system uca.xml untouched" \
+  || fail "package conflicts with Thunar-owned system uca.xml"
 cmp -s "$STAGE/.gtkrc-2.0" "$ROOT/etc/xdg/gtkrc-2.0" \
   && pass "gtkrc-2.0 skeleton" || fail "gtkrc-2.0 skeleton"
 # Factory shell default (path-contract row 6): system location only, byte-

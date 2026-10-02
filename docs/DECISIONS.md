@@ -17,7 +17,7 @@ materialized into final config; no raw personal template variable ships here.
 | `desktop/fastfetch/config.jsonc` | `home/dot_config/fastfetch/` | No image path set (upstream default requires none). |
 | `desktop/btop/btop.conf` | `home/dot_config/btop/` | Stock settings, TTY theme. |
 | `desktop/cava/config` | `home/dot_config/cava/` | All tuned values still commented; ships defaults. |
-| `desktop/thunar/` (`accels.scm`, `renamerc`, `uca.xml`) | `home/dot_config/Thunar/` | Two generic custom actions (open terminal, open in yazi). |
+| `desktop/thunar/` (`accels.scm`, `renamerc`, `uca.xml`) | `home/dot_config/Thunar/` | Two generic custom actions (open terminal, open in yazi). `uca.xml` remains a per-user config only; the system package's `/etc/xdg/Thunar/uca.xml` is owned by Arch's `thunar` package and is excluded from `hornero-config`. |
 | `desktop/copyq/copyq.conf` | `home/dot_config/copyq/copyq.conf.tmpl` | Verified benign: the `.tmpl` suffix is historical, the file contains zero template variables; shipped verbatim minus suffix. |
 | `xdg/handlr/handlr.toml` | `home/dot_config/handlr/` | Generic defaults (`enable_selector = false`). |
 | `xdg/git/config` + `xdg/git/ignore` | `home/dot_config/git/config.tmpl` + `ignore` | Materialized: `{{ .chezmoi.homeDir }}` → `~`; mergetool range loop expanded to three static stanzas; the `[commit] template` stanza dropped (template file not shipped — a dangling reference would break `git commit`); the `diff-merge-tools`/`gui-config` includes dropped (files not shipped). The `config.user` include is kept as an overlay hook. **No `[user]` stanza ships** (`config.user.tmpl` identity excluded). |
