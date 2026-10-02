@@ -10,7 +10,7 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CONF_DIR="$REPO_ROOT/desktop/hypr/hyprland.conf.d"
-PLUGIN_RE='scrolloverview|^[[:space:]]*plugin[[:space:]]*[{]'
+PLUGIN_RE='scrolloverview'
 fail=0
 
 for f in "$CONF_DIR"/*.conf; do
@@ -24,7 +24,17 @@ for f in "$CONF_DIR"/*.conf; do
             open = 0; next
         }
         /^[[:space:]]*#/ { next }
-        $0 ~ re && !open { printf "%s:%d: plugin line outside a noerror block: %s\n", file, NR, $0; bad = 1 }
+        # Every line inside a `plugin { ... }` block is plugin config,
+        # whatever its key is, so track brace depth from the opener.
+        $0 ~ /^[[:space:]]*plugin[[:space:]]*[{]/ { depth = 0; inplugin = 1 }
+        {
+            plugin_line = inplugin || $0 ~ re
+            if (inplugin) {
+                depth += gsub(/[{]/, "{") - gsub(/[}]/, "}")
+                if (depth <= 0) inplugin = 0
+            }
+        }
+        plugin_line && !open { printf "%s:%d: plugin line outside a noerror block: %s\n", file, NR, $0; bad = 1 }
         END {
             if (open) { printf "%s: unterminated noerror block\n", file; bad = 1 }
             exit bad
