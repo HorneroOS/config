@@ -237,6 +237,17 @@ else
   fail "personal-data guard"
 fi
 
+# --- packaged runtime deps: every shipped helper's imports are declared -----------
+# generate-m3-colors.py imports materialyoucolor; without the dependency a
+# package-only install cannot switch theme (found by Hornero QA, Preview 13).
+if [[ -f "$REPO_ROOT/lib/dots/generate-m3-colors.py" ]]; then
+  if grep -Eq "^depends=\(.*'python-materialyoucolor'" "$REPO_ROOT/packaging/PKGBUILD"; then
+    pass "PKGBUILD declares python-materialyoucolor (M3 scheme helper)"
+  else
+    fail "PKGBUILD depends lacks python-materialyoucolor (lib/dots/generate-m3-colors.py)"
+  fi
+fi
+
 if [[ $FAIL -ne 0 ]]; then
   echo "validate.sh: FAIL" >&2
   exit 1
