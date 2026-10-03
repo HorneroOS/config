@@ -1,6 +1,6 @@
 {
   "provenance": "ulises-jeremias/dotfiles@b26db04 home/dot_local/share/dots/themes/*/theme.json",
-  "note": "theme.json packs only; binary wallpapers (~45M upstream) are NOT vendored. Fetch wallpaper packs separately into ~/.local/share/dots/wallpapers/<wallpaperDir>/ or ~/Pictures/Wallpapers/<id>/; resolution order is documented in lib/dots/wallpaper-resolver.sh.",
+  "note": "Theme metadata is shipped separately from wallpaper media. Hornero flagship wallpaper assets ship with Hornero config packages; third-party packs are not vendored. Install optional media in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/. Older ~/.local/share/dots/wallpapers paths remain read-only fallbacks.",
   "themes": [
     {
       "id": "catppuccin-latte",
