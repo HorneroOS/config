@@ -1,6 +1,6 @@
 {
   "provenance": "ulises-jeremias/dotfiles@b26db04 home/dot_local/share/dots/themes/*/theme.json",
-  "note": "Theme metadata is shipped separately from wallpaper media. Hornero flagship wallpaper assets ship with Hornero config packages; third-party packs are not vendored. Install optional media in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/. Older ~/.local/share/dots/wallpapers paths remain read-only fallbacks.",
+  "note": "Theme metadata is shipped separately from wallpaper media. Hornero flagship images ship at /usr/share/hornero/wallpapers/<wallpaperDir>/ and Hornero theme selection resolves them from the installed package; they are not copied into the personal wallpaper gallery. Third-party pack media is not vendored. Install optional images in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/. Older ~/.local/share/dots/wallpapers paths remain read-only fallbacks.",
   "themes": [
     {
       "id": "catppuccin-latte",
