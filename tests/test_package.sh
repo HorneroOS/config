@@ -75,6 +75,8 @@ diff -r "$STAGE/.local/lib/dots" "$ROOT/usr/share/hornero/lib/dots" >/dev/null 2
   && pass "lib/dots payload" || fail "lib/dots payload"
 diff -r "$STAGE/.local/share/hornero/themes" "$ROOT/usr/share/hornero/themes" >/dev/null 2>&1 \
   && pass "themes payload (canonical hornero source)" || fail "themes payload"
+diff -r "$STAGE/.local/share/hornero/shell-presets" "$ROOT/usr/share/hornero/shell-presets" >/dev/null 2>&1 \
+  && pass "layout preset payload (pinned HorneroOS/shell source)" || fail "layout preset payload"
 for cli in "$STAGE"/.local/bin/dots-*; do
   cmp -s "$cli" "$ROOT/usr/share/hornero/bin/$(basename "$cli")" \
     || fail "bin adapter $(basename "$cli") differs"

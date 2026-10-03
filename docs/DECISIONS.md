@@ -45,7 +45,6 @@ materialized into final config; no raw personal template variable ships here.
 | `home/dot_config/gtk-4.0/` (absent upstream) | Generated at apply time by `dots-gtk-theme`; never hand-edited. |
 | `home/dot_config/autostart/*.desktop` | Session composition; revisited with the installer. |
 | `sss/`, `tmux/`, `yazi/`, `wpg/`, `lxqt/`, `xfce4/`, `guitarix/`, `REAPER/` | Not in the approved extraction list; future passes decide per app. |
-| `home/dot_local/share/dots/shell-presets/` | Quickshell-owned; moves with `shell/`. |
 | Wallpaper binaries | Distributed separately (see manifest note). |
 | `dots-{color-scheme,wal-reload}` and the wider `dots-*` fleet | Smart-colors/Quickshell runtime; only the GTK-theme family moves in this pass. |
 
@@ -93,7 +92,7 @@ added, moved, or removed in this pass.
 
 Triage counts: ADOPT-COPY 2 (tmux, yazi) / EXCLUDE 7 (lxqt, guitarix,
 REAPER, bookmarks, config.user, private_credentials, wallpaper-binaries)
-/ KEEP-DEFERRED 4 (autostart, shell-presets, shell-stub, profiles).
+/ KEEP-DEFERRED 3 (autostart, shell-stub, profiles).
 
 Notes: `sss/`, `wpg/`, and `xfce4/` keep their existing deferred status
 unchanged (outside this pass's row list). Existing tables above are

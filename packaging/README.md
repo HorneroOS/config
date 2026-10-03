@@ -40,6 +40,7 @@ systemd's `/etc/xdg/systemd/user` symlink.
 | `.local/lib/dots`                       | `/usr/share/hornero/lib/dots`         |
 | `.local/bin/dots-*`                     | `/usr/share/hornero/bin/dots-*`       |
 | `.local/share/dots/themes`              | `/usr/share/hornero/themes`           |
+| `.local/share/hornero/shell-presets`     | `/usr/share/hornero/shell-presets` (layout presets synced byte-exact from the pinned HorneroOS/shell source) |
 | `.local/share/themes/Hornero-{Dark,Light,Pampa}` (theme trees only; `src/`, `build.sh`, `gallery.py` are dev-only and never staged) | `/usr/share/themes/Hornero-{Dark,Light,Pampa}` (real GTK 3+4 themes; sole owner of `/usr/share/themes`, no file shipped twice) |
 
 | `profiles/base/profile.toml`            | `/usr/share/hornero/profiles/base/profile.toml` and `/usr/share/hornero/profile.toml` |
