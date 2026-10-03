@@ -37,3 +37,22 @@ the file is missing; `tests/test_package.sh` asserts the installed
 `~/.config/hornero/shell.json`: the user file is created by the shell
 runtime on first launch (the shell writes `{}` when absent).
 Packaging is the only writer of the system default.
+
+## Layout preset catalogue
+
+The layout definitions are authored by HorneroOS/shell in `presets/*.json`.
+This repo carries a package copy in `profiles/shell-presets/` so the system
+catalogue can work without a user's dotfiles or Shell checkout. Provenance is
+recorded in `shell/shell-presets.source`; `tests/test_shell_presets_sync.sh`
+requires a byte-exact match at that shell commit and warns when shell main
+advances the catalogue.
+
+`scripts/materialize.sh` puts the same files under the canonical user data
+path `~/.local/share/hornero/shell-presets/`, while `packaging/PKGBUILD`
+installs the read-only package copy at `/usr/share/hornero/shell-presets/`.
+`horneroctl shell preset list` resolves user data first and then the system
+catalogue, so a deliberate user override still wins.
+
+Refresh the package copy from a reviewed HorneroOS/shell commit, update the
+source SHA, and run the sync test. Shell schema and layout rendering tests
+remain in HorneroOS/shell and HorneroOS/qa.

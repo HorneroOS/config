@@ -174,8 +174,9 @@ fi
 # static data, no runtime fetch (see docs/FACTORY_DEFAULTS.md).
 install_file "profiles/factory.json" "$DATA_HOME/hornero/factory.json"
 # --- shell layout presets catalogue -> canonical hornero/* --------------------
-# Row 2: no curated source in this repo yet (owner HorneroOS/shell per
-# docs/DECISIONS.md); ensure the canonical dir exists for future packs.
+# Layout data is synced from the pinned HorneroOS/shell source; materialize
+# the canonical user-readable copy. The package also installs this catalogue
+# read-only under /usr/share/hornero/shell-presets.
 if [[ -d "$REPO_ROOT/profiles/shell-presets" ]]; then
   install_dir "profiles/shell-presets" "$DATA_HOME/hornero/shell-presets"
 else

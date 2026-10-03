@@ -72,6 +72,9 @@ else
   echo "TEST-FAIL: missing hornero/shell-presets" >&2
   exit 1
 fi
+diff -r "$REPO_ROOT/profiles/shell-presets" "$TMP_HOME/.local/share/hornero/shell-presets" >/dev/null 2>&1 \
+  && echo "TEST-PASS: pinned shell presets materialize byte-exactly" \
+  || { echo "TEST-FAIL: materialized shell preset catalogue differs" >&2; exit 1; }
 # factory default parses, but materialize never writes a user-root shell.json
 # (path-contract row 6: user file owned by the shell runtime; packaging is
 # the only writer of the system default /etc/xdg/hornero/shell.json)
