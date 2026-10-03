@@ -1,9 +1,10 @@
 # Decisions — initial config extraction
 
-Source: `ulises-jeremias/dotfiles@b26db04`, read-only. Every imported file
-below was copied (`cp`, never moved); the dotfiles checkout is untouched.
+Initial source: `ulises-jeremias/dotfiles@b26db04`, read-only. Imported files
+were copied (`cp`, never moved); the dotfiles checkout was untouched.
 Template variables (`{{ .chezmoi.* }}`, `{{ .gitconfig.* }}`) were
 materialized into final config; no raw personal template variable ships here.
+Later product-owned payloads identify their HorneroOS source in the table.
 
 ## What was copied (and why it is safe)
 
@@ -22,6 +23,7 @@ materialized into final config; no raw personal template variable ships here.
 | `xdg/handlr/handlr.toml` | `home/dot_config/handlr/` | Generic defaults (`enable_selector = false`). |
 | `xdg/git/config` + `xdg/git/ignore` | `home/dot_config/git/config.tmpl` + `ignore` | Materialized: `{{ .chezmoi.homeDir }}` → `~`; mergetool range loop expanded to three static stanzas; the `[commit] template` stanza dropped (template file not shipped — a dangling reference would break `git commit`); the `diff-merge-tools`/`gui-config` includes dropped (files not shipped). The `config.user` include is kept as an overlay hook. **No `[user]` stanza ships** (`config.user.tmpl` identity excluded). |
 | `profiles/themes/<12 ids>/theme.json` + `wallpapers.manifest.json` | `home/dot_local/share/dots/themes/` | Recipes only. Binary wallpaper packs (~45M upstream) are not vendored; the manifest records each pack's `defaultWallpaper`/`wallpaperDir` refs and where to fetch them. |
+| `profiles/shell-presets/<15 ids>.json` | `HorneroOS/shell@7de18f3` (`presets/`) | Layout source stays in Shell; Config carries the byte-synced package payload under `shell/shell-presets.source` and installs it at `/usr/share/hornero/shell-presets`. Materialize also publishes the canonical user catalogue. |
 | `lib/dots/` (10 implementation files + `easy-options/easyoptions.sh`) | `home/dot_local/lib/dots/` | Appearance/GTK/wallpaper logic plus vendored arg parser. `executable_example.sh` not taken (sample noise). |
 | `bin/dots-{gtk-theme,hyprlock-theme,theme-selector,appearance}` | `home/dot_local/bin/executable_dots-*` | The GTK-theme family CLI contract: `dots-gtk-theme` is the canonical apply path into `lib/dots/gtk-theme-manager.sh`; the other three call it (documented in each file's header). `executable_` prefix stripped (chezmoi deploy marker, meaningless here); `+x` preserved. |
 
@@ -68,11 +70,11 @@ materialized into final config; no raw personal template variable ships here.
 ## Deferred triage (Track 3c)
 
 Method: read-only reference clone of `ulises-jeremias/dotfiles@b26db04`
-(inspected via `cp`-free reads; nothing copied into this repo and nothing
-deleted or moved upstream). Each row re-examines one deferred or excluded
-item against `AGENTS.md`: renders identically for two users, no machine
-specifics, identity only via overlay hooks. No implementation file was
-added, moved, or removed in this pass.
+(inspected via `cp`-free reads; no files were copied into this repo or
+deleted from dotfiles during the initial triage). Each row re-examines one
+deferred or excluded item against `AGENTS.md`: renders identically for two
+users, no machine specifics, identity only via overlay hooks. Later adoption
+is recorded in both the verdict and the shipped-payload table above.
 
 | Item | Upstream | Verdict | Reason / owner |
 |---|---|---|---|
@@ -86,11 +88,11 @@ added, moved, or removed in this pass.
 | config.user | `home/dot_config/git/config.user.tmpl` | EXCLUDE | Identity (`user.name`/`user.email`) by definition; lives only in `~/.config/git/config.user` via the kept `[include]` overlay hook. Confirms the existing excluded row. |
 | private_credentials | `home/dot_config/private_credentials/` (2 password-manager-backed key templates) | EXCLUDE | API-key templates resolved from a password manager; never curated, never shipped. Confirms the existing excluded row. |
 | wallpaper-binaries | `home/dot_local/share/dots/wallpapers/` (~45M upstream) | EXCLUDE | Binaries are never vendored; `profiles/themes/wallpapers.manifest.json` records refs plus fetch locations and is the distribution contract. Packs ship via the release pipeline, separately. |
-| shell-presets | `home/dot_local/share/dots/shell-presets/` (11 layout JSON files) | KEEP-DEFERRED | Quickshell-owned layout presets; owner `HorneroOS/shell`. Moves with `shell/`, same as `quickshell/`. |
+| shell-presets | `home/dot_local/share/dots/shell-presets/` (15 layout JSON files) | ADOPT-COPY | Quickshell-owned source remains `HorneroOS/shell`; the Config package and materialized user catalogue now carry a byte-synced copy pinned in `shell/shell-presets.source`. Dotfiles can retire its duplicate after that package is installed. |
 | shell-stub | `dot_zshrc`, `dot_p10k.zsh`, aliases, profile, xinitrc, xprofile, `dot_zsh/`, `dot_Xresources` | KEEP-DEFERRED | Owner `HorneroOS/config` shell design pass (see `shell/README.md`): prompt choice, plugin surface, and POSIX-vs-zsh scope are undecided. No generic default invented here. |
 | profiles | `profiles/base`, `HORNERO_PROFILE=desktop` / `developer` (packaging matrix) | KEEP-DEFERRED | Owner `HorneroOS/config`. `desktop` and `developer` stay aliases of `base` (the packaging test asserts byte-identical trees) until a real divergence is wanted; no profile invented in this pass. |
 
-Triage counts: ADOPT-COPY 2 (tmux, yazi) / EXCLUDE 7 (lxqt, guitarix,
+Triage counts: ADOPT-COPY 3 (tmux, yazi, shell-presets) / EXCLUDE 7 (lxqt, guitarix,
 REAPER, bookmarks, config.user, private_credentials, wallpaper-binaries)
 / KEEP-DEFERRED 3 (autostart, shell-stub, profiles).
 
