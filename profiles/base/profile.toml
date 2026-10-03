@@ -73,7 +73,7 @@ description = "dots-gtk-theme-family CLI adapters."
 [modules.themes]
 source = "profiles/themes"
 target = "{data}/dots/themes"
-description = "12 apply-once theme packs (theme.json + wallpaper refs, no binaries)."
+description = "Curated apply-once theme packs (theme.json + wallpaper refs, no binaries)."
 
 [modules.gtk-theme]
 source = "desktop/gtk-theme"
