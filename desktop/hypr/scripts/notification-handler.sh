@@ -21,7 +21,7 @@
 
 set -euo pipefail
 
-source ~/.local/lib/dots/easy-options/easyoptions.sh || exit
+source ~/.local/lib/hornero/easy-options/easyoptions.sh || exit
 
 readonly ACTION="${arguments[0]:-}"
 readonly APP_NAME="${arguments[1]:-}"

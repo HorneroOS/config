@@ -32,9 +32,9 @@ that in CI.
 
 Curated from the generic parts of the dotfiles: Hyprland, kitty,
 GTK 2/3, Qt6ct, fontconfig, fastfetch, btop, cava, Thunar, CopyQ,
-handlr, git-minus-identity, 15 theme packs (13 recipes + 2 flagship
-semantic-token themes `hornero-dark` / `hornero-light`), `lib/dots`
-implementation libraries and the `dots-gtk-theme`-family CLI adapters.
+handlr, git-minus-identity, 17 theme packs (15 recipes + 2 flagship
+semantic-token themes `hornero-dark` / `hornero-light`), `lib/hornero`
+implementation libraries and the `hornero-gtk-theme`-family CLI adapters.
 See `docs/DECISIONS.md` for the full copied / excluded-as-personal /
 deferred accounting.
 
@@ -43,10 +43,10 @@ deferred accounting.
 ```text
 desktop/    per-application defaults      -> ~/.config/<app>, ~/.gtkrc-2.0
 xdg/        git (no identity) + handlr    -> ~/.config/git, ~/.config/handlr
-profiles/   base profile manifest + 15 theme packs -> ~/.local/share/dots/…
+profiles/   base profile manifest + 17 theme packs -> ~/.local/share/hornero/…
 shell/      stub note (interactive shell deferred)
-lib/dots/   appearance/GTK/wallpaper implementation libs -> ~/.local/lib/dots
-bin/        dots-gtk-theme-family CLIs    -> ~/.local/bin
+lib/hornero/   appearance/GTK/wallpaper implementation libs -> ~/.local/lib/hornero
+bin/        hornero-gtk-theme-family CLIs    -> ~/.local/bin
 scripts/    materialize.sh, validate.sh, guard-personal-data.sh
 tests/      temp-HOME materialization test
 docs/       DECISIONS.md (per-item provenance)
@@ -95,7 +95,7 @@ Apply a theme pack (recipes reference wallpaper packs fetched separately):
 
 ```sh
 export PATH="$HOME/.local/bin:$PATH"
-dots-gtk-theme theme vapor-dreams
+hornero-gtk-theme theme vapor-dreams
 ```
 
 ## Provenance

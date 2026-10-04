@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2019-2026 Ulises Jeremias Cornejo Fandos
+## Licensed under MIT.
+## Internal Hornero CLI adapter for optional Snappy Switcher theme updates.
+
+set -euo pipefail
+
+manager=""
+for candidate in \
+	"${HOME}/.local/lib/hornero/snappy-switcher-manager.sh" \
+	"/usr/share/hornero/lib/hornero/snappy-switcher-manager.sh"; do
+	if [[ -f $candidate ]]; then
+		manager="$candidate"
+		break
+	fi
+done
+
+if [[ -z $manager ]]; then
+	echo "Hornero Snappy Switcher integration is unavailable; reinstall hornero-config." >&2
+	exit 1
+fi
+
+# shellcheck source=/dev/null
+source "$manager"
+
+case "${1:-}" in
+	apply-theme)
+		[[ -n ${2:-} ]] || {
+			echo "Usage: horneroctl apps switcher apply-theme <theme-file> --yes" >&2
+			exit 2
+		}
+		apply_snappy_switcher_theme "$2"
+		;;
+	apply-theme-pack)
+		[[ -n ${2:-} ]] || {
+			echo "Usage: horneroctl apps switcher apply-theme-pack <theme-id> --yes" >&2
+			exit 2
+		}
+		apply_theme_snappy_switcher_theme "$2"
+		;;
+	*)
+		echo "This helper is internal. Use horneroctl apps switcher apply-theme or apply-theme-pack." >&2
+		exit 2
+		;;
+esac

@@ -2,48 +2,32 @@
 # Shared appearance apply pipeline (QS-down / CLI fallback).
 # Theme packs are apply-once recipes — this never writes a "current theme" id.
 
-# Path contract (HorneroOS/hornero docs/PATH_CONTRACT.md rows 1,4,5,9,11):
-# canonical hornero/* first, dots/* fallback for reads; writes go to hornero/*.
+# All persisted appearance state uses the Hornero XDG roots.
 HORNERO_THEMES_DIR="${HORNERO_THEMES_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/hornero/themes}"
-DOTS_THEMES_DIR="${DOTS_THEMES_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/dots/themes}"
 HORNERO_WALLPAPERS_DIR="${HORNERO_WALLPAPERS_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/hornero/wallpapers}"
-DOTS_WALLPAPERS_DIR="${DOTS_WALLPAPERS_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/dots/wallpapers}"
 HORNERO_STATE_DIR="${HORNERO_STATE_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}/hornero}"
-DOTS_STATE_DIR="${DOTS_STATE_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}/dots}"
 HORNERO_CACHE_DIR="${HORNERO_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/hornero}"
-DOTS_CACHE_DIR="${DOTS_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/dots}"
 HORNERO_WALLPAPER_POINTER_FILE="${HORNERO_WALLPAPER_POINTER_FILE:-$HORNERO_STATE_DIR/wallpaper/path}"
-DOTS_WALLPAPER_POINTER_FILE="${DOTS_WALLPAPER_POINTER_FILE:-$DOTS_STATE_DIR/wallpaper/path}"
+HORNERO_SCHEME_STATE_FILE="${HORNERO_SCHEME_STATE_FILE:-$HORNERO_STATE_DIR/scheme/state.json}"
 HORNERO_SCHEME_FILE="${HORNERO_SCHEME_FILE:-$HORNERO_CACHE_DIR/smart-colors/scheme.json}"
-DOTS_SCHEME_FILE="${DOTS_SCHEME_FILE:-$DOTS_CACHE_DIR/smart-colors/scheme.json}"
-DOTS_M3_SCRIPT="${DOTS_M3_SCRIPT:-$HOME/.local/lib/dots/generate-m3-colors.py}"
-DOTS_PICTURES_WALLPAPERS="${DOTS_PICTURES_WALLPAPERS:-$HOME/Pictures/Wallpapers}"
+HORNERO_M3_SCRIPT="${HORNERO_M3_SCRIPT:-$HOME/.local/lib/hornero/generate-m3-colors.py}"
+HORNERO_PICTURES_WALLPAPERS="${HORNERO_PICTURES_WALLPAPERS:-$HOME/Pictures/Wallpapers}"
+HORNERO_HYPRLOCK_COLORS="${HORNERO_HYPRLOCK_COLORS:-$HORNERO_CACHE_DIR/smart-colors/colors-hyprlock.conf}"
 
-# Canonical-first resolvers. Explicit HORNERO_* overrides are already in
-# those vars; DOTS_* vars remain as read-only fallbacks.
-_dots_aa_resolve_theme_json() {
-	local theme_id="${1:-}"
-	if [[ -f $HORNERO_THEMES_DIR/$theme_id/theme.json ]]; then
-		printf '%s\n' "$HORNERO_THEMES_DIR/$theme_id/theme.json"
-	else
-		printf '%s\n' "$DOTS_THEMES_DIR/$theme_id/theme.json"
-	fi
+_hornero_appearance_resolve_theme_json() {
+  printf '%s\n' "$HORNERO_THEMES_DIR/${1:-}/theme.json"
 }
-_dots_aa_resolve_state_file() {
-	if [[ -f $HORNERO_STATE_DIR/scheme/state.json ]]; then
-		printf '%s\n' "$HORNERO_STATE_DIR/scheme/state.json"
-	else
-		printf '%s\n' "$DOTS_STATE_DIR/scheme/state.json"
-	fi
+_hornero_appearance_resolve_state_file() {
+  printf '%s\n' "$HORNERO_SCHEME_STATE_FILE"
 }
-_dots_aa_pointer_for_write() {
-	printf '%s\n' "$HORNERO_WALLPAPER_POINTER_FILE"
+_hornero_appearance_pointer_for_write() {
+  printf '%s\n' "$HORNERO_WALLPAPER_POINTER_FILE"
 }
-_dots_aa_scheme_for_write() {
-	printf '%s\n' "$HORNERO_SCHEME_FILE"
+_hornero_appearance_scheme_for_write() {
+  printf '%s\n' "$HORNERO_SCHEME_FILE"
 }
 
-_dots_aa_json_get() {
+_hornero_appearance_json_get() {
 	local file="$1" key="$2" default="${3:-}"
 	python3 - "$file" "$key" "$default" << 'PY'
 import json, sys
@@ -64,15 +48,15 @@ else:
 PY
 }
 
-_dots_aa_write_pointer() {
+_hornero_appearance_write_pointer() {
 	local path="$1"
 	local target
-	target="$(_dots_aa_pointer_for_write)"
+	target="$(_hornero_appearance_pointer_for_write)"
 	mkdir -p "$(dirname "$target")"
 	printf '%s\n' "$path" > "$target"
 }
 
-_dots_aa_normalize_scheme_type() {
+_hornero_appearance_normalize_scheme_type() {
 	local raw="${1:-tonal-spot}"
 	raw=$(printf '%s' "$raw" | tr '[:upper:]' '[:lower:]' | tr '_' '-' | tr -d ' ')
 	case "$raw" in
@@ -84,14 +68,14 @@ _dots_aa_normalize_scheme_type() {
 
 # Resolve gtk-application-prefer-dark independently of shell darkMode when possible.
 # Priority: theme.json gtkPreferDark → Light/Dark in gtk theme name → shell mode.
-_dots_aa_resolve_gtk_prefer() {
+_hornero_appearance_resolve_gtk_prefer() {
 	local config_json="${1:-}"
 	local dark_mode="${2:-dark}"
 	local gtk_theme="${3:-}"
 	local explicit=""
 
 	if [[ -n $config_json && -f $config_json ]]; then
-		explicit="$(_dots_aa_json_get "$config_json" gtkPreferDark "")"
+		explicit="$(_hornero_appearance_json_get "$config_json" gtkPreferDark "")"
 	fi
 	case "$explicit" in
 		true | false)
@@ -119,7 +103,7 @@ _dots_aa_resolve_gtk_prefer() {
 	esac
 }
 
-_dots_aa_resolve_theme_wallpaper() {
+_hornero_appearance_resolve_theme_wallpaper() {
 	local theme_id="$1"
 	local wallpaper_dir="$2"
 	local default_name="$3"
@@ -134,14 +118,14 @@ _dots_aa_resolve_theme_wallpaper() {
 		}
 	fi
 
-	for base in "$DOTS_PICTURES_WALLPAPERS/$wallpaper_dir" "$HORNERO_WALLPAPERS_DIR/$wallpaper_dir" "$DOTS_WALLPAPERS_DIR/$wallpaper_dir"; do
+	for base in "$HORNERO_PICTURES_WALLPAPERS/$wallpaper_dir" "$HORNERO_WALLPAPERS_DIR/$wallpaper_dir" "$HORNERO_WALLPAPERS_DIR/$wallpaper_dir"; do
 		if [[ -n $default_name && -f $base/$default_name ]]; then
 			readlink -f "$base/$default_name"
 			return 0
 		fi
 	done
 
-	for base in "$DOTS_PICTURES_WALLPAPERS/$wallpaper_dir" "$HORNERO_WALLPAPERS_DIR/$wallpaper_dir" "$DOTS_WALLPAPERS_DIR/$wallpaper_dir"; do
+	for base in "$HORNERO_PICTURES_WALLPAPERS/$wallpaper_dir" "$HORNERO_WALLPAPERS_DIR/$wallpaper_dir" "$HORNERO_WALLPAPERS_DIR/$wallpaper_dir"; do
 		[[ -d $base ]] || continue
 		candidate="$(
 			find -L "$base" -maxdepth 1 \( -type f -o -type l \) \
@@ -157,13 +141,12 @@ _dots_aa_resolve_theme_wallpaper() {
 }
 
 # Re-apply persisted GTK color-scheme policy (follow tracks shell mode).
-# Optional $1 is ignored except as a legacy positional from older callers.
-_dots_aa_sync_gtk_color_scheme() {
-	if command -v dots-gtk-theme > /dev/null 2>&1; then
-		dots-gtk-theme -q sync-color-scheme > /dev/null 2>&1 || true
-	elif [[ -f $HOME/.local/lib/dots/gtk-theme-manager.sh ]]; then
+_hornero_appearance_sync_gtk_color_scheme() {
+	if command -v hornero-gtk-theme > /dev/null 2>&1; then
+		hornero-gtk-theme -q sync-color-scheme > /dev/null 2>&1 || true
+	elif [[ -f $HOME/.local/lib/hornero/gtk-theme-manager.sh ]]; then
 		# shellcheck source=/dev/null
-		source "$HOME/.local/lib/dots/gtk-theme-manager.sh" 2> /dev/null || true
+		source "$HOME/.local/lib/hornero/gtk-theme-manager.sh" 2> /dev/null || true
 		if declare -f sync_gtk_color_scheme > /dev/null 2>&1; then
 			sync_gtk_color_scheme > /dev/null 2>&1 || true
 		elif declare -f apply_gtk_color_scheme > /dev/null 2>&1; then
@@ -176,7 +159,7 @@ _dots_aa_sync_gtk_color_scheme() {
 # terminal re-themes atomically with the rest (Preview 2 QA: light shell
 # with a dark terminal is a half-applied desktop). Best-effort reload via
 # SIGUSR1; a missing variant file or kitty.conf skips silently.
-_dots_aa_sync_kitty() {
+_hornero_appearance_sync_kitty() {
 	local theme_id="${1:-}"
 	local kitty_dir="${XDG_CONFIG_HOME:-$HOME/.config}/kitty"
 	local variant="$kitty_dir/${theme_id}.conf"
@@ -192,7 +175,7 @@ _dots_aa_sync_kitty() {
 # ~/.config/gtk-4.0/gtk.css redefines the public palette; the per-variant
 # recolor.css files ship in the installed theme trees and are test-gated
 # against theme.json (tests/test_gtk_theme.sh).
-_dots_aa_sync_recolor() {
+_hornero_appearance_sync_recolor() {
 	local theme_id="${1:-}"
 	local tree=""
 	case "$theme_id" in
@@ -214,7 +197,7 @@ _dots_aa_sync_recolor() {
 # (scripts/generate-qt-schemes.py) and materialized with the rest of
 # desktop/qt6ct. Line-edit preserves the file's comments (no INI
 # rewrite). Graceful no-op when the scheme is absent (uncurated theme).
-_dots_aa_sync_qt() {
+_hornero_appearance_sync_qt() {
 	local theme_id="${1:-}"
 	local qt_dir="${XDG_CONFIG_HOME:-$HOME/.config}/qt6ct"
 	local scheme="$qt_dir/colors/${theme_id}.conf"
@@ -258,14 +241,14 @@ PY
 }
 
 # Pack recipe → canonical gtkColorScheme policy.
-_dots_aa_resolve_gtk_color_scheme() {
+_hornero_appearance_resolve_gtk_color_scheme() {
 	local config_json="${1:-}"
 	local dark_mode="${2:-dark}"
 	local gtk_theme="${3:-}"
 	local explicit=""
 
 	if [[ -n $config_json && -f $config_json ]]; then
-		explicit="$(_dots_aa_json_get "$config_json" gtkColorScheme "")"
+		explicit="$(_hornero_appearance_json_get "$config_json" gtkColorScheme "")"
 	fi
 	case "$explicit" in
 		follow | default | prefer-light | prefer-dark)
@@ -287,7 +270,7 @@ _dots_aa_resolve_gtk_color_scheme() {
 	esac
 
 	local prefer
-	prefer="$(_dots_aa_resolve_gtk_prefer "$config_json" "$dark_mode" "$gtk_theme")"
+	prefer="$(_hornero_appearance_resolve_gtk_prefer "$config_json" "$dark_mode" "$gtk_theme")"
 	if [[ $prefer == "false" ]]; then
 		printf 'prefer-light\n'
 	else
@@ -295,7 +278,7 @@ _dots_aa_resolve_gtk_color_scheme() {
 	fi
 }
 
-_dots_aa_run_palette() {
+_hornero_appearance_run_palette() {
 	local wallpaper="$1"
 	local scheme_type="$2"
 	local dark_mode="$3"
@@ -314,46 +297,46 @@ _dots_aa_run_palette() {
 		wal -i "$wallpaper" -q || return 1
 	fi
 
-	_dots_aa_write_pointer "$wallpaper"
+	_hornero_appearance_write_pointer "$wallpaper"
 	rm -f "$HOME/.cache/wal/wal"
 	printf '%s\n' "$wallpaper" > "$HOME/.cache/wal/wal"
 
-	[[ -f $DOTS_M3_SCRIPT ]] || {
+	[[ -f $HORNERO_M3_SCRIPT ]] || {
 		echo "apply-appearance: missing generate-m3-colors.py" >&2
 		return 1
 	}
 	# Prefer system Python with materialyoucolor over pyenv shims on PATH.
 	# shellcheck source=/dev/null
-	source "${HOME}/.local/lib/dots/python-m3.sh" 2> /dev/null || true
+	source "${HOME}/.local/lib/hornero/python-m3.sh" 2> /dev/null || true
 	local scheme_out
-	scheme_out="$(_dots_aa_scheme_for_write)"
+	scheme_out="$(_hornero_appearance_scheme_for_write)"
 	mkdir -p "$(dirname "$scheme_out")"
-	if declare -f dots_run_m3_colors > /dev/null 2>&1; then
-		dots_run_m3_colors \
+	if declare -f hornero_run_m3_colors > /dev/null 2>&1; then
+		hornero_run_m3_colors \
 			--image "$wallpaper" \
 			--scheme-type "$scheme_type" \
 			--mode "$dark_mode" \
 			--output "$scheme_out" || return 1
-	elif command -v dots-m3-colors > /dev/null 2>&1; then
-		dots-m3-colors \
+	elif command -v hornero-m3-colors > /dev/null 2>&1; then
+		hornero-m3-colors \
 			--image "$wallpaper" \
 			--scheme-type "$scheme_type" \
 			--mode "$dark_mode" \
 			--output "$scheme_out" || return 1
 	else
-		python3 "$DOTS_M3_SCRIPT" \
+		python3 "$HORNERO_M3_SCRIPT" \
 			--image "$wallpaper" \
 			--scheme-type "$scheme_type" \
 			--mode "$dark_mode" \
 			--output "$scheme_out" || return 1
 	fi
 
-	if command -v dots-color-scheme > /dev/null 2>&1; then
-		dots-color-scheme sync-state > /dev/null 2>&1 || return 1
+	if command -v hornero-color-scheme > /dev/null 2>&1; then
+		hornero-color-scheme sync-state > /dev/null 2>&1 || return 1
 	fi
-	_dots_aa_sync_gtk_color_scheme "$dark_mode"
-	if command -v dots-hyprlock-theme > /dev/null 2>&1; then
-		dots-hyprlock-theme > /dev/null 2>&1 || true
+	_hornero_appearance_sync_gtk_color_scheme "$dark_mode"
+	if command -v hornero-hyprlock-theme > /dev/null 2>&1; then
+		hornero-hyprlock-theme > /dev/null 2>&1 || true
 	fi
 	if command -v hyprctl > /dev/null 2>&1; then
 		hyprctl reload > /dev/null 2>&1 || true
@@ -362,105 +345,100 @@ _dots_aa_run_palette() {
 }
 
 # Apply a theme pack once (no persistent current-theme state).
-dots_apply_theme() {
+hornero_apply_theme() {
 	local theme_id="${1:-}"
 	local wallpaper_override="${2:-}"
 
 	[[ -n $theme_id ]] || {
-		echo "dots_apply_theme: theme id required" >&2
+		echo "hornero_apply_theme: theme id required" >&2
 		return 1
 	}
 	local config_json
-	config_json="$(_dots_aa_resolve_theme_json "$theme_id")"
+	config_json="$(_hornero_appearance_resolve_theme_json "$theme_id")"
 	[[ -f $config_json ]] || {
-		echo "dots_apply_theme: theme not found: $theme_id" >&2
+		echo "hornero_apply_theme: theme not found: $theme_id" >&2
 		return 1
 	}
 
 	local scheme_type dark_mode_raw dark_mode gtk_theme icon_theme theme_name wallpaper_dir default_wp wallpaper
-	scheme_type="$(_dots_aa_normalize_scheme_type "$(_dots_aa_json_get "$config_json" schemeType tonal-spot)")"
-	dark_mode_raw="$(_dots_aa_json_get "$config_json" darkMode true)"
+	scheme_type="$(_hornero_appearance_normalize_scheme_type "$(_hornero_appearance_json_get "$config_json" schemeType tonal-spot)")"
+	dark_mode_raw="$(_hornero_appearance_json_get "$config_json" darkMode true)"
 	if [[ $dark_mode_raw == "false" ]]; then
 		dark_mode="light"
 	else
 		dark_mode="dark"
 	fi
-	gtk_theme="$(_dots_aa_json_get "$config_json" gtkTheme Orchis-Light-Compact)"
-	icon_theme="$(_dots_aa_json_get "$config_json" iconTheme Numix-Circle)"
-	theme_name="$(_dots_aa_json_get "$config_json" name "$theme_id")"
-	wallpaper_dir="$(_dots_aa_json_get "$config_json" wallpaperDir "$theme_id")"
-	default_wp="$(_dots_aa_json_get "$config_json" defaultWallpaper "")"
+	gtk_theme="$(_hornero_appearance_json_get "$config_json" gtkTheme Orchis-Light-Compact)"
+	icon_theme="$(_hornero_appearance_json_get "$config_json" iconTheme Numix-Circle)"
+	theme_name="$(_hornero_appearance_json_get "$config_json" name "$theme_id")"
+	wallpaper_dir="$(_hornero_appearance_json_get "$config_json" wallpaperDir "$theme_id")"
+	default_wp="$(_hornero_appearance_json_get "$config_json" defaultWallpaper "")"
 
-	wallpaper="$(_dots_aa_resolve_theme_wallpaper "$theme_id" "$wallpaper_dir" "$default_wp" "$wallpaper_override" || true)"
+	wallpaper="$(_hornero_appearance_resolve_theme_wallpaper "$theme_id" "$wallpaper_dir" "$default_wp" "$wallpaper_override" || true)"
 	[[ -n ${wallpaper:-} && -f $wallpaper ]] || {
-		echo "dots_apply_theme: no wallpaper for theme $theme_id" >&2
+		echo "hornero_apply_theme: no wallpaper for theme $theme_id" >&2
 		return 1
 	}
 
-	_dots_aa_run_palette "$wallpaper" "$scheme_type" "$dark_mode" || return 1
+	_hornero_appearance_run_palette "$wallpaper" "$scheme_type" "$dark_mode" || return 1
 
 	local gtk_policy
-	gtk_policy="$(_dots_aa_resolve_gtk_color_scheme "$config_json" "$dark_mode" "$gtk_theme")"
+	gtk_policy="$(_hornero_appearance_resolve_gtk_color_scheme "$config_json" "$dark_mode" "$gtk_theme")"
 
-	if command -v dots-gtk-theme > /dev/null 2>&1; then
+	if command -v hornero-gtk-theme > /dev/null 2>&1; then
 		if [[ -n $gtk_theme && $gtk_theme != "auto" ]]; then
-			dots-gtk-theme -q apply "$gtk_theme" "${icon_theme:-Numix-Circle}" "$gtk_policy" > /dev/null 2>&1 || true
+			hornero-gtk-theme -q apply "$gtk_theme" "${icon_theme:-Numix-Circle}" "$gtk_policy" > /dev/null 2>&1 || true
 		elif [[ $gtk_theme == "auto" ]]; then
-			dots-gtk-theme -q theme "$theme_id" > /dev/null 2>&1 || true
-			dots-gtk-theme -q color-scheme "$gtk_policy" > /dev/null 2>&1 || true
+			hornero-gtk-theme -q theme "$theme_id" > /dev/null 2>&1 || true
+			hornero-gtk-theme -q color-scheme "$gtk_policy" > /dev/null 2>&1 || true
 		elif [[ -n $icon_theme ]]; then
-			dots-gtk-theme -q set-icons "$icon_theme" > /dev/null 2>&1 || true
-			dots-gtk-theme -q color-scheme "$gtk_policy" > /dev/null 2>&1 || true
+			hornero-gtk-theme -q set-icons "$icon_theme" > /dev/null 2>&1 || true
+			hornero-gtk-theme -q color-scheme "$gtk_policy" > /dev/null 2>&1 || true
 		else
-			dots-gtk-theme -q color-scheme "$gtk_policy" > /dev/null 2>&1 || true
+			hornero-gtk-theme -q color-scheme "$gtk_policy" > /dev/null 2>&1 || true
 		fi
 	elif [[ -n $icon_theme ]] && command -v gsettings > /dev/null 2>&1; then
 		gsettings set org.gnome.desktop.interface icon-theme "$icon_theme" > /dev/null 2>&1 || true
-		_dots_aa_sync_gtk_color_scheme
+		_hornero_appearance_sync_gtk_color_scheme
 	else
-		_dots_aa_sync_gtk_color_scheme
+		_hornero_appearance_sync_gtk_color_scheme
 	fi
 
-	_dots_aa_sync_kitty "$theme_id"
-	_dots_aa_sync_recolor "$theme_id"
-	_dots_aa_sync_qt "$theme_id"
+	_hornero_appearance_sync_kitty "$theme_id"
+	_hornero_appearance_sync_recolor "$theme_id"
+	_hornero_appearance_sync_qt "$theme_id"
 
-	if [[ -f $HOME/.local/lib/dots/snappy-switcher-manager.sh ]]; then
+	if [[ -f $HOME/.local/lib/hornero/snappy-switcher-manager.sh ]]; then
 		# shellcheck source=/dev/null
-		source "$HOME/.local/lib/dots/snappy-switcher-manager.sh" 2> /dev/null || true
+		source "$HOME/.local/lib/hornero/snappy-switcher-manager.sh" 2> /dev/null || true
 		if declare -f apply_theme_snappy_switcher_theme > /dev/null 2>&1; then
 			apply_theme_snappy_switcher_theme "$theme_id" > /dev/null 2>&1 || true
 		fi
 	fi
 
 	if command -v notify-send > /dev/null 2>&1; then
-		notify-send "HorneroConfig" "${theme_name} theme applied" > /dev/null 2>&1 || true
+		notify-send "Hornero" "${theme_name} theme applied" > /dev/null 2>&1 || true
 	fi
 	return 0
 }
 
-# Back-compat name used by older callers during transition.
-dots_apply_appearance() {
-	dots_apply_theme "$@"
-}
-
 # Wallpaper-only: live mode/flavour from scheme state.
-dots_apply_wallpaper_only() {
+hornero_apply_wallpaper_only() {
 	local wallpaper="${1:-}"
 	wallpaper="$(readlink -f "$wallpaper" 2> /dev/null || true)"
 	[[ -n ${wallpaper:-} && -f $wallpaper ]] || {
-		echo "dots_apply_wallpaper_only: wallpaper not found" >&2
+		echo "hornero_apply_wallpaper_only: wallpaper not found" >&2
 		return 1
 	}
 
 	local scheme_type="tonal-spot" dark_mode="dark"
 	local state_file
-	state_file="$(_dots_aa_resolve_state_file)"
+	state_file="$(_hornero_appearance_resolve_state_file)"
 	if [[ -f $state_file ]]; then
-		scheme_type="$(_dots_aa_normalize_scheme_type "$(_dots_aa_json_get "$state_file" flavour tonal-spot)")"
-		dark_mode="$(_dots_aa_json_get "$state_file" mode dark)"
+		scheme_type="$(_hornero_appearance_normalize_scheme_type "$(_hornero_appearance_json_get "$state_file" flavour tonal-spot)")"
+		dark_mode="$(_hornero_appearance_json_get "$state_file" mode dark)"
 		[[ $dark_mode == "light" || $dark_mode == "dark" ]] || dark_mode="dark"
 	fi
 
-	_dots_aa_run_palette "$wallpaper" "$scheme_type" "$dark_mode"
+	_hornero_appearance_run_palette "$wallpaper" "$scheme_type" "$dark_mode"
 }

@@ -4,20 +4,20 @@
 ## Copyright (C) 2019-2025 Ulises Jeremias Cornejo Fandos
 ## Licensed under MIT.
 ##
-## Provides standardized logging functions for dots scripts
-## Usage: source ~/.local/lib/dots/logging.sh
+## Provides standardized logging functions for Hornero utilities
+## Usage: source ~/.local/lib/hornero/logging.sh
 
 # Initialize logging if not already initialized
-if [[ -z ${DOTS_LOG_INITIALIZED:-} ]] || [[ -z ${DOTS_LOG_FILE:-} ]]; then
-  DOTS_LOG_DIR="${DOTS_LOG_DIR:-$HOME/.cache/dots/logs}"
-  DOTS_LOG_FILE="${DOTS_LOG_FILE:-$DOTS_LOG_DIR/$(basename "${0:-dots-script}" .sh).log}"
+if [[ -z ${HORNERO_LOG_INITIALIZED:-} ]] || [[ -z ${HORNERO_LOG_FILE:-} ]]; then
+  HORNERO_LOG_DIR="${HORNERO_LOG_DIR:-$HOME/.cache/hornero/logs}"
+  HORNERO_LOG_FILE="${HORNERO_LOG_FILE:-$HORNERO_LOG_DIR/$(basename "${0:-hornero-script}" .sh).log}"
 
   # Create log directory if it doesn't exist
-  mkdir -p "$DOTS_LOG_DIR"
+  mkdir -p "$HORNERO_LOG_DIR"
 
-  export DOTS_LOG_INITIALIZED=1
-  export DOTS_LOG_DIR
-  export DOTS_LOG_FILE
+  export HORNERO_LOG_INITIALIZED=1
+  export HORNERO_LOG_DIR
+  export HORNERO_LOG_FILE
 fi
 
 # Log levels
@@ -27,21 +27,21 @@ readonly LOG_LEVEL_INFO=2
 readonly LOG_LEVEL_DEBUG=3
 
 # Default log level (can be overridden by script)
-DOTS_LOG_LEVEL="${DOTS_LOG_LEVEL:-$LOG_LEVEL_INFO}"
+HORNERO_LOG_LEVEL="${HORNERO_LOG_LEVEL:-$LOG_LEVEL_INFO}"
 
 # Check if verbose mode is enabled
 _is_verbose() {
-  [[ ${verbose:-no} == "yes" ]] || [[ ${debug:-no} == "yes" ]] || [[ ${DOTS_LOG_LEVEL} -ge $LOG_LEVEL_DEBUG ]]
+  [[ ${verbose:-no} == "yes" ]] || [[ ${debug:-no} == "yes" ]] || [[ ${HORNERO_LOG_LEVEL} -ge $LOG_LEVEL_DEBUG ]]
 }
 
 # Check if level should be logged
 _should_log() {
   local level="$1"
   case "$level" in
-    ERROR) [[ $DOTS_LOG_LEVEL -ge $LOG_LEVEL_ERROR ]] ;;
-    WARN) [[ $DOTS_LOG_LEVEL -ge $LOG_LEVEL_WARN ]] ;;
-    INFO) [[ $DOTS_LOG_LEVEL -ge $LOG_LEVEL_INFO ]] ;;
-    DEBUG) [[ $DOTS_LOG_LEVEL -ge $LOG_LEVEL_DEBUG ]] ;;
+    ERROR) [[ $HORNERO_LOG_LEVEL -ge $LOG_LEVEL_ERROR ]] ;;
+    WARN) [[ $HORNERO_LOG_LEVEL -ge $LOG_LEVEL_WARN ]] ;;
+    INFO) [[ $HORNERO_LOG_LEVEL -ge $LOG_LEVEL_INFO ]] ;;
+    DEBUG) [[ $HORNERO_LOG_LEVEL -ge $LOG_LEVEL_DEBUG ]] ;;
     *) true ;;
   esac
 }
@@ -80,7 +80,7 @@ log() {
   fi
 
   # Always log to file
-  echo "$log_entry" >>"${DOTS_LOG_FILE:-$HOME/.cache/dots/logs/dots.log}" 2>/dev/null || true
+  echo "$log_entry" >>"${HORNERO_LOG_FILE:-$HOME/.cache/hornero/logs/hornero.log}" 2>/dev/null || true
 }
 
 # Convenience functions
@@ -103,10 +103,10 @@ log_debug() {
 # Set log level
 set_log_level() {
   case "${1:-INFO}" in
-    ERROR) DOTS_LOG_LEVEL=$LOG_LEVEL_ERROR ;;
-    WARN) DOTS_LOG_LEVEL=$LOG_LEVEL_WARN ;;
-    INFO) DOTS_LOG_LEVEL=$LOG_LEVEL_INFO ;;
-    DEBUG) DOTS_LOG_LEVEL=$LOG_LEVEL_DEBUG ;;
-    *) DOTS_LOG_LEVEL=$LOG_LEVEL_INFO ;;
+    ERROR) HORNERO_LOG_LEVEL=$LOG_LEVEL_ERROR ;;
+    WARN) HORNERO_LOG_LEVEL=$LOG_LEVEL_WARN ;;
+    INFO) HORNERO_LOG_LEVEL=$LOG_LEVEL_INFO ;;
+    DEBUG) HORNERO_LOG_LEVEL=$LOG_LEVEL_DEBUG ;;
+    *) HORNERO_LOG_LEVEL=$LOG_LEVEL_INFO ;;
   esac
 }

@@ -22,7 +22,7 @@
  *
  * Libadwaita: this stylesheet styles plain GTK 3 / GTK 4 widgets. Libadwaita
  * apps ship their own stylesheet and are integrated at the palette level
- * (prefer-dark + color-scheme policy in lib/dots/gtk-theme-manager.sh), not
+ * (prefer-dark + color-scheme policy in lib/hornero/gtk-theme-manager.sh), not
  * restyled here — see desktop/gtk-theme/README.md ("Libadwaita decision").
  */
 

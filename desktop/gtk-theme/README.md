@@ -5,7 +5,7 @@ from the flagship token palettes
 (`profiles/themes/hornero-dark|light|pampa/theme.json`; dark/light are the
 terracotta/clay/sunset family, pampa is the grassland-night green third
 flagship). No GTK 2 is shipped and none is claimed:
-there is no `gtk-2.0/` engine dir; the legacy `desktop/gtk/gtkrc-2.0`
+there is no `gtk-2.0/` engine dir; the separate `desktop/gtk/gtkrc-2.0`
 settings skeleton is untouched and out of scope.
 
 ## Layout
@@ -55,8 +55,8 @@ CSS nodes, so GNOME point releases cannot break it the way a restyle would.
 Concretely: each variant ships `gtk-4.0/recolor.css` (values wired to
 `theme.json`, gated by `tests/test_gtk_theme.sh`). `materialize.sh`
 installs the factory-default (dark) copy as `~/.config/gtk-4.0/gtk.css`,
-and `lib/dots/apply-appearance.sh` swaps it on theme set
-(`_dots_aa_sync_recolor`). Still rejected: `GTK_THEME=` overrides and any
+and `lib/hornero/apply-appearance.sh` swaps it on theme set
+(`_hornero_appearance_sync_recolor`). Still rejected: `GTK_THEME=` overrides and any
 `gtk.css` with widget selectors (private-node coupling + Flatpak portal
 risk).
 
@@ -76,7 +76,7 @@ trees live only under `/usr/share/themes`. `src/`, `build.sh`, and
 ## Applying
 
 ```sh
-dots-gtk-theme theme hornero-dark    # sets Hornero-Dark + Papirus-Dark + prefer-dark
-dots-gtk-theme theme hornero-light   # sets Hornero-Light + Numix-Circle + prefer-light
+hornero-gtk-theme theme hornero-dark    # sets Hornero-Dark + Papirus-Dark + prefer-dark
+hornero-gtk-theme theme hornero-light   # sets Hornero-Light + Numix-Circle + prefer-light
 python3 desktop/gtk-theme/gallery.py --theme Hornero-Dark
 ```

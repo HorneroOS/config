@@ -1,6 +1,6 @@
 {
-  "provenance": "ulises-jeremias/dotfiles@b26db04 home/dot_local/share/dots/themes/*/theme.json",
-  "note": "Theme metadata is shipped separately from wallpaper media. Hornero flagship images ship at /usr/share/hornero/wallpapers/<wallpaperDir>/ and Hornero theme selection resolves them from the installed package; they are not copied into the personal wallpaper gallery. Third-party pack media is not vendored. Install optional images in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/. Older ~/.local/share/dots/wallpapers paths remain read-only fallbacks.",
+  "provenance": "https://github.com/ulises-jeremias/dotfiles (theme metadata source, b26db04)",
+  "note": "Theme metadata is shipped separately from most wallpaper media. Hornero flagship images ship at /usr/share/hornero/wallpapers/<wallpaperDir>/. Recipe wallpapers are optional media and can live in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/. The curated Patagonia and Fin del Mundo artwork is maintained in https://github.com/ulises-jeremias/dotfiles. If a referenced image is absent, the theme remains available and the Shell explains that wallpaper media is missing.",
   "themes": [
     {
       "id": "catppuccin-latte",
@@ -76,6 +76,16 @@
       "id": "pampa",
       "defaultWallpaper": "pampa-01.png",
       "wallpaperDir": "pampa"
+    },
+    {
+      "id": "patagonia",
+      "defaultWallpaper": "patagonia-glacier-01.jpg",
+      "wallpaperDir": "patagonia"
+    },
+    {
+      "id": "fin-del-mundo",
+      "defaultWallpaper": "beagle-blue-hour-01.jpg",
+      "wallpaperDir": "fin-del-mundo"
     }
   ]
 }

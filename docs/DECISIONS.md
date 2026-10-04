@@ -11,7 +11,7 @@ Later product-owned payloads identify their HorneroOS source in the table.
 | Shipped as | From | Notes |
 |---|---|---|
 | `desktop/hypr/` (main conf, 13 `conf.d` modules, `hypridle.conf`, `hyprlock.conf`, 3 helper scripts) | `home/dot_config/hypr/` | No template vars, no identity. `monitors.conf` is a generic autodetect fallback written for this repo (see excluded row). |
-| `desktop/kitty/kitty.conf` | `home/dot_config/kitty/` | Static palette + fonts. The `include ~/.cache/dots/smart-colors/…` line is a generated-cache hook, benign when absent. |
+| `desktop/kitty/kitty.conf` | `home/dot_config/kitty/` | Static palette + fonts. The `include ~/.cache/hornero/smart-colors/…` line is a generated-cache hook, benign when absent. |
 | `desktop/gtk/settings.ini` | `home/dot_config/gtk-3.0/settings.ini` | Static theme/font/cursor defaults. |
 | `desktop/gtk/gtkrc-2.0` | `home/dot_gtkrc-2.0` | Byte-identical. The `include "/home/user/.gtkrc-2.0.mine"` line is upstream's generic LXAppearance override hook, not a real user path. |
 | `desktop/fontconfig/fonts.conf` | `home/dot_config/fontconfig/` | Generic hinting/rendering defaults. |
@@ -22,10 +22,10 @@ Later product-owned payloads identify their HorneroOS source in the table.
 | `desktop/copyq/copyq.conf` | `home/dot_config/copyq/copyq.conf.tmpl` | Verified benign: the `.tmpl` suffix is historical, the file contains zero template variables; shipped verbatim minus suffix. |
 | `xdg/handlr/handlr.toml` | `home/dot_config/handlr/` | Generic defaults (`enable_selector = false`). |
 | `xdg/git/config` + `xdg/git/ignore` | `home/dot_config/git/config.tmpl` + `ignore` | Materialized: `{{ .chezmoi.homeDir }}` → `~`; mergetool range loop expanded to three static stanzas; the `[commit] template` stanza dropped (template file not shipped — a dangling reference would break `git commit`); the `diff-merge-tools`/`gui-config` includes dropped (files not shipped). The `config.user` include is kept as an overlay hook. **No `[user]` stanza ships** (`config.user.tmpl` identity excluded). |
-| `profiles/themes/<12 ids>/theme.json` + `wallpapers.manifest.json` | `home/dot_local/share/dots/themes/` | Recipes only. Binary wallpaper packs (~45M upstream) are not vendored; the manifest records each pack's `defaultWallpaper`/`wallpaperDir` refs and where to fetch them. |
+| `profiles/themes/<12 ids>/theme.json` + `wallpapers.manifest.json` | `home/dot_local/share/hornero/themes/` | Recipes only. Binary wallpaper packs (~45M upstream) are not vendored; the manifest records each pack's `defaultWallpaper`/`wallpaperDir` refs and where to fetch them. |
 | `profiles/shell-presets/<15 ids>.json` | `HorneroOS/shell@7de18f3` (`presets/`) | Layout source stays in Shell; Config carries the byte-synced package payload under `shell/shell-presets.source` and installs it at `/usr/share/hornero/shell-presets`. Materialize also publishes the canonical user catalogue. |
-| `lib/dots/` (10 implementation files + `easy-options/easyoptions.sh`) | `home/dot_local/lib/dots/` | Appearance/GTK/wallpaper logic plus vendored arg parser. `executable_example.sh` not taken (sample noise). |
-| `bin/dots-{gtk-theme,hyprlock-theme,theme-selector,appearance}` | `home/dot_local/bin/executable_dots-*` | The GTK-theme family CLI contract: `dots-gtk-theme` is the canonical apply path into `lib/dots/gtk-theme-manager.sh`; the other three call it (documented in each file's header). `executable_` prefix stripped (chezmoi deploy marker, meaningless here); `+x` preserved. |
+| `lib/hornero/` (10 implementation files + `easy-options/easyoptions.sh`) | `home/dot_local/lib/hornero/` | Appearance/GTK/wallpaper logic plus vendored arg parser. `executable_example.sh` not taken (sample noise). |
+| `bin/hornero-{gtk-theme,hyprlock-theme,appearance}` | Product-owned command wrappers | `hornero-gtk-theme` is the canonical GTK apply path into `lib/hornero/gtk-theme-manager.sh`; `hornero-theme-selector` was removed because it depended on a nonexistent settings GUI and duplicated Control Center. |
 
 ## What was excluded as personal
 
@@ -44,17 +44,17 @@ Later product-owned payloads identify their HorneroOS source in the table.
 | Deferred | Home |
 |---|---|
 | `home/dot_config/quickshell/` | `HorneroOS/shell` — real component with its own lifecycle. |
-| `home/dot_config/gtk-4.0/` (absent upstream) | Generated at apply time by `dots-gtk-theme`; never hand-edited. |
+| `home/dot_config/gtk-4.0/` (absent upstream) | Generated at apply time by `hornero-gtk-theme`; never hand-edited. |
 | `home/dot_config/autostart/*.desktop` | Session composition; revisited with the installer. |
 | `sss/`, `tmux/`, `yazi/`, `wpg/`, `lxqt/`, `xfce4/`, `guitarix/`, `REAPER/` | Not in the approved extraction list; future passes decide per app. |
 | Wallpaper binaries | Distributed separately (see manifest note). |
-| `dots-{color-scheme,wal-reload}` and the wider `dots-*` fleet | Smart-colors/Quickshell runtime; only the GTK-theme family moves in this pass. |
+| `hornero-{color-scheme,wal-reload}` and the wider `hornero-*` fleet | Smart-colors/Quickshell runtime; only the GTK-theme family moves in this pass. |
 
 ## Tooling decisions
 
 - **shellcheck gate severity is `error`, not `warning`.** Every shipped shell
   file is still checked; pre-existing upstream warnings do not fail the build:
-  SC1090 (runtime `~/.local/lib/dots/…` sourcing is by design — repo layout
+  SC1090 (runtime `~/.local/lib/hornero/…` sourcing is by design — repo layout
   differs from install layout), SC2034 (`scripts_list` and palette vars are
   consumed cross-file), SC2154 (`arguments` is provided by easyoptions at
   runtime). Rewriting upstream runtime-sourcing logic to please the linter
@@ -87,8 +87,8 @@ is recorded in both the verdict and the shipped-payload table above.
 | bookmarks | `home/dot_config/gtk-3.0/bookmarks.tmpl` | EXCLUDE | Embodies username plus personal directory layout via template; hosts generate GTK bookmarks from XDG dirs at install. Confirms the existing excluded row. |
 | config.user | `home/dot_config/git/config.user.tmpl` | EXCLUDE | Identity (`user.name`/`user.email`) by definition; lives only in `~/.config/git/config.user` via the kept `[include]` overlay hook. Confirms the existing excluded row. |
 | private_credentials | `home/dot_config/private_credentials/` (2 password-manager-backed key templates) | EXCLUDE | API-key templates resolved from a password manager; never curated, never shipped. Confirms the existing excluded row. |
-| wallpaper-binaries | `home/dot_local/share/dots/wallpapers/` (~45M upstream) | EXCLUDE | Binaries are never vendored; `profiles/themes/wallpapers.manifest.json` records refs plus fetch locations and is the distribution contract. Packs ship via the release pipeline, separately. |
-| shell-presets | `home/dot_local/share/dots/shell-presets/` (15 layout JSON files) | ADOPT-COPY | Quickshell-owned source remains `HorneroOS/shell`; the Config package and materialized user catalogue now carry a byte-synced copy pinned in `shell/shell-presets.source`. Dotfiles can retire its duplicate after that package is installed. |
+| wallpaper-binaries | `home/dot_local/share/hornero/wallpapers/` (~45M upstream) | EXCLUDE | Binaries are never vendored; `profiles/themes/wallpapers.manifest.json` records refs plus fetch locations and is the distribution contract. Packs ship via the release pipeline, separately. |
+| shell-presets | `home/dot_local/share/hornero/shell-presets/` (15 layout JSON files) | ADOPT-COPY | Quickshell-owned source remains `HorneroOS/shell`; the Config package and materialized user catalogue now carry a byte-synced copy pinned in `shell/shell-presets.source`. Dotfiles can retire its duplicate after that package is installed. |
 | shell-stub | `dot_zshrc`, `dot_p10k.zsh`, aliases, profile, xinitrc, xprofile, `dot_zsh/`, `dot_Xresources` | KEEP-DEFERRED | Owner `HorneroOS/config` shell design pass (see `shell/README.md`): prompt choice, plugin surface, and POSIX-vs-zsh scope are undecided. No generic default invented here. |
 | profiles | `profiles/base`, `HORNERO_PROFILE=desktop` / `developer` (packaging matrix) | KEEP-DEFERRED | Owner `HorneroOS/config`. `desktop` and `developer` stay aliases of `base` (the packaging test asserts byte-identical trees) until a real divergence is wanted; no profile invented in this pass. |
 
@@ -145,7 +145,7 @@ ASCII mark and flows through the existing fastfetch install mapping.
 Wallpapers: flagship `defaultWallpaper` refs are now
 `hornero-{dark,light}-01.png` + `pampa-01.png`, produced on-device by
 `render-brand-assets.sh --wallpapers`; the missing-file empty state
-(`dots-wallpaper-set` exits 1) is unchanged. Icon base: `Papirus-Dark`
+(`hornero-wallpaper-set` exits 1) is unchanged. Icon base: `Papirus-Dark`
 verified for `hornero-dark`; `hornero-light` overturned
 `Numix-Circle` (chaotic-aur `-git` only, no official package) to
 `Papirus` — one family, one official `extra/papirus-icon-theme`
@@ -179,7 +179,7 @@ there is no `gtk-2.0/` engine dir anywhere in the deliverable.
   Libadwaita apps ignore GTK themes by design and recolor through
   `org.gnome.desktop.interface color-scheme` /
   `gtk-application-prefer-dark-theme`, which
-  `lib/dots/gtk-theme-manager.sh` already drives. Forcing the theme via
+  `lib/hornero/gtk-theme-manager.sh` already drives. Forcing the theme via
   `GTK_THEME=` or `~/.config/gtk-4.0/gtk.css` widget overrides reaches into
   Libadwaita's private CSS nodes (renamed freely upstream: every GNOME
   upgrade risks breakage) and fights Flatpak portal expectations — so the
@@ -205,26 +205,25 @@ there is no `gtk-2.0/` engine dir anywhere in the deliverable.
   table + written-prefixes), new module row in `profiles/base/profile.toml`,
   gated by `tests/test_gtk_theme.sh` (byte-exact stage check, leak checks)
   and the existing `test_package.sh` prefix audit (allows `/usr/share`).
-- **horneroctl migration port (keybindings, autostart, dead wrappers).**
-  Upstream `ulises-jeremias/dotfiles@bca7380` finished the dots-scripts to
-  horneroctl migration: every `~/.local/bin/dots-*` call in the Hyprland
-  confs became a `horneroctl` verb, and the superseded wrappers
-  (launcher, power menu, clipboard) were deleted upstream. This repo lagged
-  behind still invoking the dead `dots-quickshell`/`dots-*` CLIs, so the
-  migrated `keybindings.conf`/`autostart.conf` were copied byte-exact
-  (only migration hunks differ; no personal content) and the three dead
-  wrappers removed. `scripts/generate-shortcuts.py` learned a
-  `horneroctl`-first id rule with pinned stable ids for the curated
-  Welcome actions, so the shell shortcut catalog is unchanged. Sibling
-  content excluded: upstream host-only lines (none — diff was pure
-  migration). Deferred: `dots-appearance`, `dots-gtk-theme`,
-  `dots-night-mode`, `dots-hyprlock-theme`, `dots-wallpaper-*`,
-  `dots-theme-selector` stay: live config-owned CLIs with no horneroctl
-  verb yet.
+- **Hornero-native command boundary.** Keybindings, theme operations, Control
+  Center navigation, and system actions use `horneroctl` or Shell IPC. The
+  config package keeps only its declared Hornero-specific implementation
+  helpers; the Shell registry owns GUI destinations. The CLI does not contain
+  a user-data migration command, and packaged paths are read-only inputs.
+
 - **Theme catalogue registry (derived, offline-first).**
   `scripts/generate-catalogue.py` derives `catalogue/registry.json`
-  from `profiles/themes/*/theme.json` (15 packs); store-style surfaces
+  from `profiles/themes/*/theme.json` (17 packs); store-style surfaces
   render from the registry without touching packs, wallpapers stay
   fetch-on-demand per `wallpapers.manifest.json`. `tests/test_catalogue.sh`
   fails when the registry is stale or a pack is uncovered. Wired into
   `ci.yml` next to the shortcuts contract.
+
+- **Argentine landscape themes stay wallpaper-led recipes.** Patagonia and
+  Fin del Mundo use original artwork, then let the selected Material 3
+  variant shape the Shell palette from the wallpaper. They remain in the
+  recipe tier because their identity comes from the image and generated
+  colors, not a fixed semantic token ramp. The semantic Hornero family keeps
+  its curated token palettes for the built-in brand looks. This avoids
+  duplicating colors that drift from each wallpaper; the optional artwork is
+  listed in `wallpapers.manifest.json` and missing media must remain explicit.

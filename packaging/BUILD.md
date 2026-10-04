@@ -31,14 +31,12 @@ host), audited against the layout in `packaging/README.md`.
 - `package()` re-ran `scripts/guard-personal-data.sh` during the build:
   `guard-personal-data: OK (no personal data or secret hits)`.
 
-## Profile matrix
+## Profile selection
 
-| `HORNERO_PROFILE` | Build | `/usr/share/hornero/HORNERO_PROFILE` | Tree vs base |
-| ----------------- | ----- | ------------------------------------ | ------------ |
-| (unset)           | ok    | `base`                               | —            |
-| `desktop`         | ok    | `desktop`                            | identical    |
-| `developer`       | ok    | `developer`                          | identical    |
-| `bogus`           | fails | —                                    | `error: unknown HORNERO_PROFILE='bogus'` in `package()` |
+| `HORNERO_PROFILE` | Build | Recorded profile |
+| ----------------- | ----- | ---------------- |
+| (unset) or `base` | ok | `base` |
+| any other value | fails | — |
 
 ## Installed layout
 
@@ -83,21 +81,20 @@ pacman metadata dotfiles `.PKGINFO`/`.BUILDINFO`/`.MTREE`).
 /etc/xdg/Thunar/accels.scm
 /etc/xdg/Thunar/renamerc
 /usr/share/hornero/HORNERO_PROFILE
-/usr/share/hornero/bin/dots-appearance (755)
-/usr/share/hornero/bin/dots-gtk-theme (755)
-/usr/share/hornero/bin/dots-hyprlock-theme (755)
-/usr/share/hornero/bin/dots-theme-selector (755)
-/usr/share/hornero/lib/dots/apply-appearance.sh
-/usr/share/hornero/lib/dots/apply-shell-preset.py
-/usr/share/hornero/lib/dots/dots-scripts.sh
-/usr/share/hornero/lib/dots/easy-options/easyoptions.sh
-/usr/share/hornero/lib/dots/generate-m3-colors.py
-/usr/share/hornero/lib/dots/gtk-theme-manager.sh
-/usr/share/hornero/lib/dots/list-themes.py
-/usr/share/hornero/lib/dots/logging.sh
-/usr/share/hornero/lib/dots/python-m3.sh
-/usr/share/hornero/lib/dots/snappy-switcher-manager.sh
-/usr/share/hornero/lib/dots/wallpaper-resolver.sh
+/usr/share/hornero/bin/hornero-appearance (755)
+/usr/share/hornero/bin/hornero-gtk-theme (755)
+/usr/share/hornero/bin/hornero-hyprlock-theme (755)
+/usr/share/hornero/bin/hornero-snappy-switcher (755)
+/usr/share/hornero/lib/hornero/apply-appearance.sh
+/usr/share/hornero/lib/hornero/hornero-scripts.sh
+/usr/share/hornero/lib/hornero/easy-options/easyoptions.sh
+/usr/share/hornero/lib/hornero/generate-m3-colors.py
+/usr/share/hornero/lib/hornero/gtk-theme-manager.sh
+/usr/share/hornero/lib/hornero/list-themes.py
+/usr/share/hornero/lib/hornero/logging.sh
+/usr/share/hornero/lib/hornero/python-m3.sh
+/usr/share/hornero/lib/hornero/snappy-switcher-manager.sh
+/usr/share/hornero/lib/hornero/wallpaper-resolver.sh
 /usr/share/hornero/profile.toml
 /usr/share/hornero/profiles/base/profile.toml
 /usr/share/hornero/themes/catppuccin-latte/theme.json
@@ -122,7 +119,7 @@ Verification detail:
   exists under `/etc/xdg`, and `diff -r` of the staged tree vs
   `/etc/xdg` is identical except the documented extra `gtkrc-2.0` and
   Thunar's package-owned `uca.xml`, which remains a per-user customization.
-- `lib/dots`, `bin/dots-*`, and `themes` are byte-identical to the
+- `lib/hornero`, `bin/hornero-*`, and `themes` are byte-identical to the
   staged HOME; both `profile.toml` copies match `profiles/base/`.
 - Dirs are `755`; files are `644` except the restored executables above.
 - Installed-tree scans: no `[user]` stanza, no mailbox strings, no

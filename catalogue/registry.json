@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "profiles/themes",
-  "count": 15,
+  "count": 17,
   "entries": [
     {
       "id": "catppuccin-latte",
@@ -52,6 +52,26 @@
       "schemeType": "fidelity",
       "defaultWallpaper": "everforest-deep-01.png",
       "wallpaperDir": "everforest"
+    },
+    {
+      "id": "fin-del-mundo",
+      "name": "Fin del Mundo",
+      "description": "A maritime twilight of Beagle water, wind-shaped southern forest and distant harbor light",
+      "tags": [
+        "argentina",
+        "tierra-del-fuego",
+        "beagle",
+        "forest",
+        "sea-glass",
+        "copper",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "schemeType": "expressive",
+      "defaultWallpaper": "beagle-blue-hour-01.jpg",
+      "wallpaperDir": "fin-del-mundo"
     },
     {
       "id": "gruvbox",
@@ -199,6 +219,26 @@
       "schemeType": "tonal-spot",
       "defaultWallpaper": "pampa-01.png",
       "wallpaperDir": "pampa"
+    },
+    {
+      "id": "patagonia",
+      "name": "Patagonia",
+      "description": "Blue-hour ice, basalt and glacial water with a restrained copper horizon",
+      "tags": [
+        "argentina",
+        "patagonia",
+        "glacier",
+        "basalt",
+        "cyan",
+        "dark",
+        "nature"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "schemeType": "fidelity",
+      "defaultWallpaper": "patagonia-glacier-01.jpg",
+      "wallpaperDir": "patagonia"
     },
     {
       "id": "rose-pine",

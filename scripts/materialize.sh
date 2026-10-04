@@ -26,7 +26,7 @@ else
   CONFIG_HOME="$DEST/.config"
   DATA_HOME="$DEST/.local/share"
 fi
-LIB_DIR="$DEST/.local/lib/dots"
+LIB_DIR="$DEST/.local/lib/hornero"
 BIN_DIR="$DEST/.local/bin"
 
 install_dir() {
@@ -52,31 +52,6 @@ install_file() {
   chmod 644 "$dest"
 }
 
-# Back-compat symlink dots/* -> hornero/* (reversible: rm the symlink).
-# Idempotent: existing correct symlink is kept; stale file/dir is replaced.
-# Target is relative (../hornero/<name>) so --dest stays hermetic.
-compat_link() {
-  local target="$1" link="$2"
-  local name
-  name="$(basename "$target")"
-  if [[ $DRY_RUN -eq 1 ]]; then
-    echo "would link $link -> ../hornero/$name"
-    return
-  fi
-  if [[ -L $link ]]; then
-    local cur
-    cur="$(readlink "$link" || true)"
-    if [[ $cur == "$target" || $cur == "../hornero/$name" ]]; then
-      return
-    fi
-    rm -f "$link"
-  elif [[ -e $link ]]; then
-    rm -rf "$link"
-  fi
-  mkdir -p "$(dirname "$link")" "$(dirname "$target")"
-  ln -sfn "../hornero/$name" "$link"
-}
-
 # --- desktop defaults -> ~/.config -------------------------------------------
 install_dir "desktop/hypr" "$CONFIG_HOME/hypr"
 install_dir "desktop/kitty" "$CONFIG_HOME/kitty"
@@ -99,12 +74,12 @@ install_dir "xdg/handlr" "$CONFIG_HOME/handlr"
 install_dir "xdg/git" "$CONFIG_HOME/git"
 
 # --- implementation libs + CLI adapters ---------------------------------------
-install_dir "lib/dots" "$LIB_DIR"
+install_dir "lib/hornero" "$LIB_DIR"
 if [[ $DRY_RUN -eq 1 ]]; then
-  echo "would install bin/dots-* -> $BIN_DIR/"
+  echo "would install bin/hornero-* -> $BIN_DIR/"
 else
   mkdir -p "$BIN_DIR"
-  for cli in "$REPO_ROOT"/bin/dots-*; do
+  for cli in "$REPO_ROOT"/bin/hornero-*; do
     cp "$cli" "$BIN_DIR/$(basename "$cli")"
     chmod 755 "$BIN_DIR/$(basename "$cli")"
   done
@@ -187,10 +162,6 @@ else
     chmod 755 "$DATA_HOME/hornero/shell-presets"
   fi
 fi
-# --- back-compat dots/* symlinks -> hornero/* (symlink strategy) -------------
-compat_link "$DATA_HOME/hornero/themes" "$DATA_HOME/dots/themes"
-compat_link "$DATA_HOME/hornero/shell-presets" "$DATA_HOME/dots/shell-presets"
-
 # --- the Hornero shell owns org.freedesktop.Notifications --------------------
 # Stand-alone daemons (dunst, mako, swaync) claim the same bus name through
 # D-Bus activation of their systemd user units; when one wins the race (a

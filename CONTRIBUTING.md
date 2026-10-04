@@ -11,7 +11,7 @@
 
 1. Name the upstream path and commit (`ulises-jeremias/dotfiles@<sha>`).
 2. Copy it into the Hornero layout (`desktop/<app>`, `xdg/`, `profiles/`,
-   `lib/dots/`, `bin/`) with `cp`; strip `executable_` prefixes and `.tmpl`
+   `lib/hornero/`, `bin/`) with `cp`; strip `executable_` prefixes and `.tmpl`
    suffixes at copy time, materialize template variables, keep `+x` where the
    file must execute.
 3. Record the decision in `docs/DECISIONS.md`: what was copied, what sibling

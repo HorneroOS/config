@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""List appearance theme packs as JSON for Quickshell / CLI.
-
-Path contract (HorneroOS/hornero docs/PATH_CONTRACT.md rows 1, 11):
-canonical hornero/* first, dots/* fallback for reads.
-"""
+"""List Hornero appearance packs as JSON for Quickshell and CLI."""
 from __future__ import annotations
 
 import json
@@ -18,81 +14,46 @@ def _data_home() -> Path:
     return Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share")
 
 
-def _canonical_themes_dir() -> Path:
-    return Path(
-        os.environ.get("HORNERO_THEMES_DIR") or _data_home() / "hornero/themes"
-    )
-
-
-def _fallback_themes_dir() -> Path:
-    return Path(os.environ.get("DOTS_THEMES_DIR") or _data_home() / "dots/themes")
-
-
-def _resolve_themes_dirs() -> list[Path]:
-    """Explicit single dir wins; otherwise canonical-first + fallback."""
+def _resolve_themes_dir() -> Path:
     if len(sys.argv) > 1:
-        return [Path(sys.argv[1])]
-    for var in ("THEMES_DIR", "DOTS_THEMES_DIR", "HORNERO_THEMES_DIR"):
-        if var in os.environ:
-            return [Path(os.environ[var])]
-    canon = _canonical_themes_dir()
-    fallback = _fallback_themes_dir()
-    if fallback == canon:
-        return [canon]
-    return [canon, fallback]
+        return Path(sys.argv[1])
+    return Path(os.environ.get("HORNERO_THEMES_DIR") or _data_home() / "hornero/themes")
 
 
-def _resolve_walls_roots() -> list[Path]:
-    """Explicit single root wins; otherwise hornero-first + dots fallback."""
-    for var in ("DOTS_WALLPAPERS_DIR", "HORNERO_WALLPAPERS_DIR"):
-        if var in os.environ:
-            return [Path(os.environ[var])]
-    canon = Path(
-        os.environ.get("HORNERO_WALLPAPERS_DIR")
-        or _data_home() / "hornero/wallpapers"
+def _resolve_walls_root() -> Path:
+    return Path(
+        os.environ.get("HORNERO_WALLPAPERS_DIR") or _data_home() / "hornero/wallpapers"
     )
-    fallback = Path(
-        os.environ.get("DOTS_WALLPAPERS_DIR") or _data_home() / "dots/wallpapers"
-    )
-    if fallback == canon:
-        return [canon]
-    return [canon, fallback]
-
 
 def resolve_wallpaper_file(
-    wallpaper_dir: str, filename: str, walls_roots: list[Path] | Path
+    wallpaper_dir: str, filename: str, walls_roots: Path
 ) -> str:
-    """Prefer Pictures (chezmoi link), then hornero, then dots."""
-    if isinstance(walls_roots, Path):
-        walls_roots = [walls_roots]
+    """Prefer the user Pictures directory, then Hornero’s managed wallpaper directory."""
     pics = Path.home() / "Pictures/Wallpapers" / wallpaper_dir / filename
     if pics.is_file():
         return str(pics)
-    for root in walls_roots:
-        data_path = root / wallpaper_dir / filename
-        if data_path.is_file():
-            return str(data_path)
-    # Canonical post-chezmoi target even if not linked yet.
+    data_path = walls_roots / wallpaper_dir / filename
+    if data_path.is_file():
+        return str(data_path)
+    # Default user-editable location even if it has not been created yet.
     return str(pics)
 
 
 def wallpaper_index(
-    theme_id: str, wallpaper_dir: str, walls_roots: list[Path] | Path
+    theme_id: str, wallpaper_dir: str, walls_roots: Path
 ) -> dict[str, str]:
     """Map wallpaper filename → absolute path across Pictures + data roots."""
-    if isinstance(walls_roots, Path):
-        walls_roots = [walls_roots]
     paths: dict[str, str] = {}
     pics_root = Path.home() / "Pictures/Wallpapers"
     dir_name = wallpaper_dir or theme_id
-    for root in [pics_root, *walls_roots]:
+    for root in [pics_root, walls_roots]:
         d = root / dir_name
         if not d.is_dir():
             continue
         for p in d.iterdir():
             if not p.is_file() or p.suffix.lower() not in EXTS:
                 continue
-            # First root wins: Pictures, then hornero, then dots.
+            # First root wins: user Pictures, then Hornero-managed wallpapers.
             if p.name in paths:
                 continue
             paths[p.name] = str(p.resolve()) if p.exists() else str(p)
@@ -119,7 +80,7 @@ def _gtk_color_scheme(data: dict) -> str:
     return "prefer-dark" if data.get("darkMode", True) else "prefer-light"
 
 
-def load_theme(theme_dir: Path, walls_roots: list[Path] | Path) -> dict | None:
+def load_theme(theme_dir: Path, walls_roots: Path) -> dict | None:
     path = theme_dir / "theme.json"
     if not path.is_file():
         return None
@@ -175,16 +136,14 @@ def load_theme(theme_dir: Path, walls_roots: list[Path] | Path) -> dict | None:
 
 
 def main() -> int:
-    themes_dirs = _resolve_themes_dirs()
-    walls_roots = _resolve_walls_roots()
+    themes_dir = _resolve_themes_dir()
+    walls_root = _resolve_walls_root()
     seen: dict[str, dict] = {}
-    for themes_dir in themes_dirs:
-        if not themes_dir.is_dir():
-            continue
+    if themes_dir.is_dir():
         for child in sorted(themes_dir.iterdir()):
             if not child.is_dir():
                 continue
-            item = load_theme(child, walls_roots)
+            item = load_theme(child, walls_root)
             if item and item["id"] not in seen:
                 seen[item["id"]] = item
     themes = [seen[key] for key in sorted(seen)]

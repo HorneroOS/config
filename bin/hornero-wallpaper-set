@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 ## Provenance: COPY (never moved) from ulises-jeremias/dotfiles@b26db04
-## home/dot_local/bin/executable_dots-wallpaper-set via read-only reference clone.
+## home/dot_local/bin/executable_hornero-wallpaper-set via read-only reference clone.
 ## Local changes vs upstream: `executable_` chezmoi deploy prefix stripped.
-## Needs lib/dots/wallpaper-resolver.sh + lib/dots/apply-appearance.sh (already shipped).
+## Needs lib/hornero/wallpaper-resolver.sh + lib/hornero/apply-appearance.sh (already shipped).
 
 ## Copyright (C) 2019-2026 Ulises Jeremias Cornejo Fandos
 ## Licensed under MIT.
@@ -65,8 +65,8 @@ if pgrep -x quickshell >/dev/null 2>&1; then
 fi
 
 # shellcheck source=/dev/null
-source "$HOME/.local/lib/dots/wallpaper-resolver.sh" 2>/dev/null || true
+source "$HOME/.local/lib/hornero/wallpaper-resolver.sh" 2>/dev/null || true
 # shellcheck source=/dev/null
-source "$HOME/.local/lib/dots/apply-appearance.sh"
+source "$HOME/.local/lib/hornero/apply-appearance.sh"
 
-dots_apply_wallpaper_only "$WALLPAPER_PATH"
+hornero_apply_wallpaper_only "$WALLPAPER_PATH"

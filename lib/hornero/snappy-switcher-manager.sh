@@ -6,10 +6,9 @@
 ## Snappy Switcher Theme Manager
 ##
 ## Usage:
-##   source ~/.local/lib/dots/snappy-switcher-manager.sh
+##   source ~/.local/lib/hornero/snappy-switcher-manager.sh
 ##   apply_theme_snappy_switcher_theme [theme_id]
 ##   apply_snappy_switcher_theme <theme_file.ini>
-##   apply_rice_snappy_switcher_theme [theme_id]  # deprecated alias
 ##
 
 set -euo pipefail
@@ -136,7 +135,10 @@ apply_snappy_switcher_theme() {
 
 get_theme_snappy_theme() {
 	local theme_id="$1"
-	local theme_json="$HOME/.local/share/dots/themes/${theme_id}/theme.json"
+	local theme_json="${XDG_DATA_HOME:-$HOME/.local/share}/hornero/themes/${theme_id}/theme.json"
+	if [[ ! -f $theme_json ]]; then
+		theme_json="/usr/share/hornero/themes/${theme_id}/theme.json"
+	fi
 
 	if [[ ! -f $theme_json ]]; then
 		snappy_log "ERROR" "Theme pack not found: $theme_json"
@@ -144,8 +146,8 @@ get_theme_snappy_theme() {
 	fi
 
 	local snappy_theme="" dark_mode="true"
-	snappy_theme="$(python3 -c "import json;print(json.load(open('$theme_json')).get('snappyTheme',''))" 2> /dev/null || true)"
-	dark_mode="$(python3 -c "import json;print('true' if json.load(open('$theme_json')).get('darkMode',True) else 'false')" 2> /dev/null || echo true)"
+	snappy_theme="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("snappyTheme", ""))' "$theme_json" 2> /dev/null || true)"
+	dark_mode="$(python3 -c 'import json,sys; print("true" if json.load(open(sys.argv[1], encoding="utf-8")).get("darkMode", True) else "false")' "$theme_json" 2> /dev/null || echo true)"
 
 	if [[ -n $snappy_theme ]]; then
 		echo "$snappy_theme"
@@ -170,9 +172,4 @@ apply_theme_snappy_switcher_theme() {
 	local theme_name
 	theme_name="$(get_theme_snappy_theme "$theme_id")" || return 1
 	apply_snappy_switcher_theme "$theme_name"
-}
-
-# Backward-compatible alias for callers still using the rice name.
-apply_rice_snappy_switcher_theme() {
-	apply_theme_snappy_switcher_theme "$@"
 }

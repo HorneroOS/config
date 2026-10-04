@@ -14,8 +14,8 @@ if command -v shellcheck >/dev/null 2>&1; then
   # pre-existing upstream warnings (SC1090 runtime XDG sourcing, SC2034 registry
   # vars consumed cross-file, SC2154 easyoptions-provided `arguments`) do not
   # fail the build. See docs/DECISIONS.md.
-  if shellcheck -S error "$REPO_ROOT"/scripts/*.sh "$REPO_ROOT"/lib/dots/*.sh \
-      "$REPO_ROOT"/lib/dots/easy-options/*.sh "$REPO_ROOT"/bin/dots-* \
+  if shellcheck -S error "$REPO_ROOT"/scripts/*.sh "$REPO_ROOT"/lib/hornero/*.sh \
+      "$REPO_ROOT"/lib/hornero/easy-options/*.sh "$REPO_ROOT"/bin/hornero-* \
       "$REPO_ROOT"/desktop/hypr/scripts/*.sh "$REPO_ROOT"/tests/*.sh; then
     pass "shellcheck"
   else
@@ -240,11 +240,11 @@ fi
 # --- packaged runtime deps: every shipped helper's imports are declared -----------
 # generate-m3-colors.py imports materialyoucolor; without the dependency a
 # package-only install cannot switch theme (found by Hornero QA, Preview 13).
-if [[ -f "$REPO_ROOT/lib/dots/generate-m3-colors.py" ]]; then
+if [[ -f "$REPO_ROOT/lib/hornero/generate-m3-colors.py" ]]; then
   if grep -Eq "^depends=\(.*'python-materialyoucolor'" "$REPO_ROOT/packaging/PKGBUILD"; then
     pass "PKGBUILD declares python-materialyoucolor (M3 scheme helper)"
   else
-    fail "PKGBUILD depends lacks python-materialyoucolor (lib/dots/generate-m3-colors.py)"
+    fail "PKGBUILD depends lacks python-materialyoucolor (lib/hornero/generate-m3-colors.py)"
   fi
 fi
 

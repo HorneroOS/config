@@ -21,7 +21,7 @@ smallest reproduction using `scripts/materialize.sh --dest <tmpdir>`.
   all fail the build.
 - The guard is syntactic. Reviewers still read diffs for semantic leaks
   (hostnames in comments, personal SSIDs in examples, tokens in fixtures).
-- Helper scripts in `lib/dots` and `bin/` execute with user privileges and
+- Helper scripts in `lib/hornero` and `bin/` execute with user privileges and
   must never `curl | sh`, exfiltrate, or write outside XDG locations without
   an explicit flag. Report any script violating that as a security issue.
 - Git identity is intentionally **not** shipped: if you find a `user.name`
