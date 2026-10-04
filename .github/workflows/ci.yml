@@ -6,6 +6,17 @@ on:
   pull_request:
 
 jobs:
+  niri-config:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:base
+    steps:
+      - name: Install Git and the Arch Niri package
+        run: pacman -Syu --noconfirm git niri
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - name: Validate the actual Niri configuration
+        run: NIRI_CONFIG="$GITHUB_WORKSPACE/desktop/niri/config.kdl" niri validate
+
   validate:
     runs-on: ubuntu-latest
     steps:

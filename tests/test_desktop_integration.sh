@@ -138,6 +138,15 @@ assert factory["wallpaper"]["defaultWallpaper"] == json.load(
     open(f"{base}/hornero-dark/theme.json"))["defaultWallpaper"]
 PY
 pass "factory record matches flagship theme recipes"
+
+# Niri binds must pass the required pane argument to the Shell IPC contract,
+# and the package-owned Exo helper must resolve the default terminal without
+# a personal dotfiles checkout.
+grep -Fq '"controlCenter" "open" "appearance"' "$TMP_HOME/.config/niri/config.kdl" \
+  || fail "Niri Settings shortcut does not pass a valid Control Center pane"
+grep -qx 'TerminalEmulator=kitty' "$TMP_HOME/.config/xfce4/helpers.rc" \
+  || fail "Exo default terminal is missing from the materialized Hornero profile"
+pass "Niri Settings IPC and package-owned default terminal are valid"
 # No runtime dependency on ulises-jeremias/dotfiles in anything new or
 # materialized: that repo is a read-only extraction source (provenance
 # mentions in DECISIONS/docs stay allowlisted per AGENTS.md).

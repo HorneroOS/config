@@ -3,7 +3,7 @@
 
 [profile]
 name = "base"
-description = "HorneroOS curated desktop defaults (Hyprland + GTK + terminal + XDG)."
+description = "HorneroOS Wayland-first desktop defaults (Hyprland validated; Niri experimental)."
 provenance = "ulises-jeremias/dotfiles@b26db04 (curated subset, see docs/DECISIONS.md)"
 
 [modules.hypr]
@@ -11,9 +11,19 @@ source = "desktop/hypr"
 target = "{config}/hypr"
 description = "Hyprland compositor defaults (generic monitor fallback included)."
 
+[modules.niri]
+source = "desktop/niri"
+target = "{config}/niri"
+description = "Niri session defaults; Shell bindings use horneroctl and unsupported Hyprland-only operations remain unavailable."
+
 [modules.kitty]
 source = "desktop/kitty"
 target = "{config}/kitty"
+
+[modules.exo]
+source = "desktop/xfce4/helpers.rc"
+target = "{config}/xfce4/helpers.rc"
+description = "Hornero default application helpers (Kitty terminal)."
 
 [modules.qt6ct]
 source = "desktop/qt6ct"

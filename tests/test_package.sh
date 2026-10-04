@@ -47,12 +47,18 @@ for entry in "$STAGE"/.config/*; do
     done
     continue
   fi
+  [[ "$base" == niri ]] && continue
   [[ -e "$ROOT/etc/xdg/$base" ]] || fail "installed tree missing /etc/xdg/$base"
 done
+# Niri uses its compositor-specific system fallback path, rather than the
+# generic /etc/xdg tree. The same source also materializes into user XDG config.
+cmp -s "$STAGE/.config/niri/config.kdl" "$ROOT/etc/niri/config.kdl" \
+  && pass "Niri system fallback matches materialized user config" \
+  || fail "Niri system fallback missing or differs"
 # /etc/xdg/hornero/shell.json is sourced from shell/shell.default.json (not
 # the staged HOME) and asserted separately below, so the hornero dir is
 # excluded here; materialize.sh never stages .config/hornero/*.
-diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero --exclude=systemd --exclude=uca.xml >/dev/null 2>&1 \
+diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero --exclude=systemd --exclude=niri --exclude=uca.xml >/dev/null 2>&1 \
   && pass "staged .config matches /etc/xdg" \
   || fail "staged .config differs from /etc/xdg"
 [[ -f "$STAGE/.config/Thunar/uca.xml" ]] \
@@ -113,7 +119,7 @@ rm -rf "$STAGE"
 # /usr/share, and the pacman metadata dotfiles. Anything else fails.
 if find "$ROOT" -path "$ROOT/.BUILDINFO" -prune -o -path "$ROOT/.PKGINFO" -prune \
     -o -path "$ROOT/.MTREE" -prune -o -print \
-    | grep -vE "^$ROOT/(etc/xdg|etc/systemd|usr/share)(/|$)" | grep -vE "^$ROOT/(etc|usr)$" \
+    | grep -vE "^$ROOT/(etc/xdg|etc/systemd|etc/niri|usr/share)(/|$)" | grep -vE "^$ROOT/(etc|usr)$" \
     | grep -vE "^$ROOT$" | grep -q .; then
   fail "files outside /etc/xdg + /etc/systemd/user + /usr/share"
 else
