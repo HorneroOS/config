@@ -71,13 +71,13 @@ cmp -s "$REPO_ROOT/shell/shell.default.json" "$ROOT/etc/xdg/hornero/shell.json" 
   && pass "factory shell.json matches vendored default" || fail "factory shell.json differs"
 python3 -c "import json; json.load(open('$ROOT/etc/xdg/hornero/shell.json'))" \
   && pass "factory shell.json parses" || fail "factory shell.json parses"
-diff -r "$STAGE/.local/lib/dots" "$ROOT/usr/share/hornero/lib/dots" >/dev/null 2>&1 \
-  && pass "lib/dots payload" || fail "lib/dots payload"
+diff -r "$STAGE/.local/lib/hornero" "$ROOT/usr/share/hornero/lib/hornero" >/dev/null 2>&1 \
+  && pass "lib/hornero payload" || fail "lib/hornero payload"
 diff -r "$STAGE/.local/share/hornero/themes" "$ROOT/usr/share/hornero/themes" >/dev/null 2>&1 \
   && pass "themes payload (canonical hornero source)" || fail "themes payload"
 diff -r "$STAGE/.local/share/hornero/shell-presets" "$ROOT/usr/share/hornero/shell-presets" >/dev/null 2>&1 \
   && pass "layout preset payload (pinned HorneroOS/shell source)" || fail "layout preset payload"
-for cli in "$STAGE"/.local/bin/dots-*; do
+for cli in "$STAGE"/.local/bin/hornero-*; do
   cmp -s "$cli" "$ROOT/usr/share/hornero/bin/$(basename "$cli")" \
     || fail "bin adapter $(basename "$cli") differs"
 done
@@ -109,7 +109,8 @@ fi
   && pass "dir perms 755" || fail "dir perms 755"
 [[ -z $(find "$ROOT/etc" "$ROOT/usr" -type f ! -perm 644 ! -perm 755) ]] \
   && pass "file perms 644/755" || fail "file perms 644/755"
-[[ -x "$ROOT/usr/share/hornero/bin/dots-gtk-theme" ]] \
+[[ -x "$ROOT/usr/share/hornero/bin/hornero-gtk-theme" ]] \
+  && [[ -x "$ROOT/usr/share/hornero/bin/hornero-snappy-switcher" ]] \
   && [[ -x "$ROOT/etc/xdg/hypr/scripts/gaps-interactive.sh" ]] \
   && pass "executables preserved" || fail "executables preserved"
 
@@ -128,22 +129,11 @@ git config --file "$ROOT/etc/xdg/git/config" --list >/dev/null 2>&1 \
 python3 -c "import tomllib; tomllib.load(open('$ROOT/etc/xdg/handlr/handlr.toml','rb')); tomllib.load(open('$ROOT/usr/share/hornero/profile.toml','rb'))" \
   && pass "installed TOML parses" || fail "installed TOML parses"
 
-# --- profile matrix ---------------------------------------------------------------
+# --- profile contract ---------------------------------------------------------------
 if (cd "$PKGDIR" && HORNERO_PROFILE=desktop makepkg -f >/dev/null 2>&1); then
-  DESKROOT="$(mktemp -d)"
-  bsdtar -xf "$PKGDIR"/hornero-config-*.pkg.tar.zst -C "$DESKROOT"
-  [[ $(cat "$DESKROOT/usr/share/hornero/HORNERO_PROFILE") == "desktop" ]] \
-    && pass "HORNERO_PROFILE=desktop" || fail "HORNERO_PROFILE=desktop record"
-  diff -r "$ROOT/etc" "$DESKROOT/etc" >/dev/null 2>&1 \
-    && pass "desktop tree identical to base" || fail "desktop tree differs from base"
-  rm -rf "$DESKROOT"
+  fail "unsupported desktop profile unexpectedly built"
 else
-  fail "makepkg build (desktop profile)"
-fi
-if (cd "$PKGDIR" && HORNERO_PROFILE=bogus makepkg -f >/dev/null 2>&1); then
-  fail "bogus profile unexpectedly built"
-else
-  pass "bogus profile rejected"
+  pass "unsupported profile rejected"
 fi
 
 if [[ $FAIL -ne 0 ]]; then

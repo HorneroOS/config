@@ -42,17 +42,10 @@ pass "hyprland colors.conf carries active/inactive/group/groupbar set"
 grep -qi "b24827" "$TMP_HOME/.config/hypr/hyprland.conf.d/hornero-light.conf" \
   || fail "hornero-light.conf missing flagship light primary"
 pass "hyprland light fragment materialized with flagship light tokens"
-# hyprlock Smart Colors override must source the canonical hornero/* path:
-# dots-hyprlock-theme writes $XDG_CACHE_HOME/hornero/smart-colors/ (path
-# contract), so the old dots/* source globbed nothing and hyprlock fell
-# back to its static colors on every start (proven in VM logs).
+# Hyprlock Smart Colors override must source the canonical Hornero cache path.
 grep -q "source = ~/.cache/hornero/smart-colors/colors-hyprlock.conf" \
   "$TMP_HOME/.config/hypr/hyprlock.conf" \
   || fail "hyprlock.conf does not source the canonical Smart Colors override"
-if grep -q "source = ~/.cache/dots/smart-colors/colors-hyprlock.conf" \
-  "$TMP_HOME/.config/hypr/hyprlock.conf"; then
-  fail "hyprlock.conf still sources the unwritten dots/* Smart Colors path"
-fi
 pass "hyprlock sources canonical Smart Colors override"
 # hyprlock carries no date label by design (see path-contract test):
 # neither $DATE nor cmd[] output renders in this hyprlock build.
@@ -164,15 +157,15 @@ pass "no dotfiles runtime dependency in desktop-integration files"
 export XDG_CONFIG_HOME="$TMP_HOME/.config" XDG_DATA_HOME="$TMP_HOME/.local/share"
 export HOME="$TMP_HOME" REPO_ROOT="$REPO_ROOT"
 bash -c '
-    source "$REPO_ROOT/lib/dots/apply-appearance.sh"
-    _dots_aa_sync_kitty hornero-light
+    source "$REPO_ROOT/lib/hornero/apply-appearance.sh"
+    _hornero_appearance_sync_kitty hornero-light
     grep -qx "include hornero-light.conf" "$XDG_CONFIG_HOME/kitty/kitty.conf" || exit 11
-    _dots_aa_sync_recolor hornero-light
+    _hornero_appearance_sync_recolor hornero-light
     cmp -s "$XDG_DATA_HOME/themes/Hornero-Light/gtk-4.0/recolor.css" \
            "$XDG_CONFIG_HOME/gtk-4.0/gtk.css" || exit 12
-    _dots_aa_sync_kitty hornero-dark
+    _hornero_appearance_sync_kitty hornero-dark
     grep -qx "include hornero-dark.conf" "$XDG_CONFIG_HOME/kitty/kitty.conf" || exit 13
-    _dots_aa_sync_recolor hornero-dark
+    _hornero_appearance_sync_recolor hornero-dark
     cmp -s "$XDG_DATA_HOME/themes/Hornero-Dark/gtk-4.0/recolor.css" \
            "$XDG_CONFIG_HOME/gtk-4.0/gtk.css" || exit 14
   ' || fail "theme switch does not re-theme kitty + recolor atomically ($?)"

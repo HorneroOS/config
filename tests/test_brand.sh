@@ -64,8 +64,8 @@ done
 rm -rf "$WALLS"
 
 # --- 6. missing-wallpaper empty state still fails clean ----------------------------
-if bash "$REPO_ROOT/bin/dots-wallpaper-set" "$STAGE/.config/does-not-exist.png" 2>/dev/null; then
-  fail "dots-wallpaper-set accepted a missing file"
+if bash "$REPO_ROOT/bin/hornero-wallpaper-set" "$STAGE/.config/does-not-exist.png" 2>/dev/null; then
+  fail "hornero-wallpaper-set accepted a missing file"
 else
   pass "missing wallpaper still errors cleanly"
 fi

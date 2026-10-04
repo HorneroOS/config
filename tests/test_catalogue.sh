@@ -32,9 +32,26 @@ ids = [e["id"] for e in doc["entries"]]
 assert ids == packs, f"registry ids {ids} != pack dirs {packs}"
 assert doc["count"] == len(packs), "count must match pack dirs"
 required = {"id", "name", "mode", "defaultWallpaper", "wallpaperDir"}
+entries = {entry["id"]: entry for entry in doc["entries"]}
 for entry in doc["entries"]:
     missing = required - set(entry)
     assert not missing, f"{entry['id']}: missing keys {missing}"
     assert entry["mode"] in ("dark", "light"), f"{entry['id']}: bad mode"
+
+manifest = json.loads((root / "profiles/themes/wallpapers.manifest.json").read_text())
+wallpaper_refs = manifest["themes"]
+wallpaper_ids = [item["id"] for item in wallpaper_refs]
+assert len(wallpaper_ids) == len(set(wallpaper_ids)), "duplicate wallpaper theme id"
+assert set(wallpaper_ids) == set(packs), "wallpaper manifest must cover every theme pack"
+for item in wallpaper_refs:
+    entry = entries[item["id"]]
+    assert item["wallpaperDir"] == entry["wallpaperDir"], f"{item['id']}: wallpaper directory drift"
+    assert item["defaultWallpaper"] == entry["defaultWallpaper"], f"{item['id']}: default wallpaper drift"
+
+patagonia = entries["patagonia"]
+fin_del_mundo = entries["fin-del-mundo"]
+assert patagonia["schemeType"] == "fidelity", "Patagonia should keep the wallpaper palette close to its source"
+assert fin_del_mundo["schemeType"] == "expressive", "Fin del Mundo should use its more varied palette"
 print(f"TEST-PASS: {len(ids)} catalogue entries cover every pack")
+print(f"TEST-PASS: wallpaper manifest covers {len(wallpaper_ids)} packs without drift")
 EOF

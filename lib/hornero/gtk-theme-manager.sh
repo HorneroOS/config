@@ -9,7 +9,7 @@
 ## allowing for automatic theme switching based on theme preferences and color schemes.
 ##
 ## Usage:
-##     source ~/.local/lib/dots/gtk-theme-manager.sh
+##     source ~/.local/lib/hornero/gtk-theme-manager.sh
 ##     apply_gtk_theme "theme-name" "icon-theme-name" [prefer-dark]
 ##     detect_optimal_gtk_theme
 ##     apply_theme_gtk_theme
@@ -18,47 +18,21 @@
 set -euo pipefail
 
 # Source smart colors for theme detection
-if [[ -f "$HOME/.local/lib/dots/smart-colors.sh" ]]; then
-	source "$HOME/.local/lib/dots/smart-colors.sh"
+if [[ -f "$HOME/.local/lib/hornero/smart-colors.sh" ]]; then
+	source "$HOME/.local/lib/hornero/smart-colors.sh"
 fi
 
 # GTK configuration paths
 readonly GTK2_CONFIG="$HOME/.gtkrc-2.0"
 readonly GTK3_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-3.0/settings.ini"
 readonly GTK4_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-4.0/settings.ini"
-# Path contract (HorneroOS/hornero docs/PATH_CONTRACT.md rows 1,5):
-# canonical hornero/* first, dots/* fallback for reads; writes go to hornero/*.
+# Appearance state and theme packs use one Hornero-owned XDG namespace.
 HORNERO_SCHEME_STATE="${HORNERO_SCHEME_STATE:-${XDG_STATE_HOME:-$HOME/.local/state}/hornero/scheme/state.json}"
-DOTS_SCHEME_STATE_FALLBACK="${DOTS_SCHEME_STATE:-${XDG_STATE_HOME:-$HOME/.local/state}/dots/scheme/state.json}"
-DOTS_SCHEME_STATE="${DOTS_SCHEME_STATE:-$HORNERO_SCHEME_STATE}"
 HORNERO_THEMES_DIR="${HORNERO_THEMES_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/hornero/themes}"
-DOTS_THEMES_DIR_FALLBACK="${DOTS_THEMES_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/dots/themes}"
 
-# Canonical-first state file for reads; canonical when neither exists.
-_gtk_resolve_state_for_read() {
-	if [[ -f $HORNERO_SCHEME_STATE ]]; then
-		printf '%s\n' "$HORNERO_SCHEME_STATE"
-	elif [[ -f $DOTS_SCHEME_STATE_FALLBACK ]]; then
-		printf '%s\n' "$DOTS_SCHEME_STATE_FALLBACK"
-	else
-		printf '%s\n' "$HORNERO_SCHEME_STATE"
-	fi
-}
-
-# Canonical write target (dots/* is read-only fallback).
-_gtk_resolve_state_for_write() {
-	printf '%s\n' "$HORNERO_SCHEME_STATE"
-}
-
-# Canonical-first theme pack lookup (row 1).
-_gtk_resolve_theme_json() {
-	local theme_id="${1:-}"
-	if [[ -f $HORNERO_THEMES_DIR/$theme_id/theme.json ]]; then
-		printf '%s\n' "$HORNERO_THEMES_DIR/$theme_id/theme.json"
-	else
-		printf '%s\n' "$DOTS_THEMES_DIR_FALLBACK/$theme_id/theme.json"
-	fi
-}
+_gtk_resolve_state_for_read() { printf '%s\n' "$HORNERO_SCHEME_STATE"; }
+_gtk_resolve_state_for_write() { printf '%s\n' "$HORNERO_SCHEME_STATE"; }
+_gtk_resolve_theme_json() { printf '%s\n' "$HORNERO_THEMES_DIR/${1:-}/theme.json"; }
 
 # Function to log messages
 log() {
@@ -286,7 +260,7 @@ read_live_shell_mode() {
 	fi
 }
 
-# Persisted policy. Missing key → follow (legacy: GTK tracked shell mode).
+# Persisted policy. Missing key → follow (GTK tracks shell mode).
 read_live_gtk_color_scheme() {
 	local policy=""
 	local state_file
@@ -326,7 +300,7 @@ data.setdefault("name", "dynamic")
 data.setdefault("flavour", "tonal-spot")
 data.setdefault("variant", "tonalspot")
 # No setdefault for "mode": shell mode is owned by the shell pipeline
-# (`dots-color-scheme sync-state`). A defaulted dark went stale on first
+# (`hornero-color-scheme sync-state`). A defaulted dark went stale on first
 # write and broke later light applies (see tests/test_gtk_state.sh).
 path.parent.mkdir(parents=True, exist_ok=True)
 path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
@@ -484,12 +458,12 @@ detect_optimal_gtk_theme() {
 				done
 			fi
 		fi
-	elif command -v dots-smart-colors > /dev/null 2>&1; then
+	elif command -v hornero-smart-colors > /dev/null 2>&1; then
 		# Fallback: use smart-colors to analyze current theme
 		log "INFO" "Using smart-colors to analyze current theme"
 
 		# Check if current theme is light or dark using smart-colors logic
-		if dots-smart-colors --analyze 2> /dev/null | grep -q "light theme\|bright"; then
+		if hornero-smart-colors --analyze 2> /dev/null | grep -q "light theme\|bright"; then
 			log "INFO" "Light theme detected, suggesting light GTK theme"
 			local light_themes=(
 				"Orchis-Light"
@@ -546,10 +520,10 @@ apply_theme_gtk_theme() {
 	if [[ -z $theme_id ]]; then
 		log "WARN" "No theme specified, using wallpaper-based detection"
 		local wallpaper=""
-		if [[ -f "$HOME/.local/lib/dots/wallpaper-resolver.sh" ]]; then
+		if [[ -f "$HOME/.local/lib/hornero/wallpaper-resolver.sh" ]]; then
 			# shellcheck source=/dev/null
-			source "$HOME/.local/lib/dots/wallpaper-resolver.sh"
-			wallpaper="$(dots_current_wallpaper 2> /dev/null || true)"
+			source "$HOME/.local/lib/hornero/wallpaper-resolver.sh"
+			wallpaper="$(hornero_current_wallpaper 2> /dev/null || true)"
 		fi
 		# Never readlink ~/.cache/wal/wal — it is a text path file, not an image symlink.
 		if [[ -n $wallpaper && -f $wallpaper ]]; then
@@ -611,10 +585,10 @@ PY
 
 	if [[ -z $gtk_theme ]] || [[ $gtk_theme == "auto" ]]; then
 		local wal_wallpaper=""
-		if [[ -f "$HOME/.local/lib/dots/wallpaper-resolver.sh" ]]; then
+		if [[ -f "$HOME/.local/lib/hornero/wallpaper-resolver.sh" ]]; then
 			# shellcheck source=/dev/null
-			source "$HOME/.local/lib/dots/wallpaper-resolver.sh"
-			wal_wallpaper="$(dots_current_wallpaper 2> /dev/null || true)"
+			source "$HOME/.local/lib/hornero/wallpaper-resolver.sh"
+			wal_wallpaper="$(hornero_current_wallpaper 2> /dev/null || true)"
 		fi
 		# Prefer wallpaper-resolver (handles text wal pointer + state pointer).
 		if [[ -n $wal_wallpaper && -f $wal_wallpaper ]]; then

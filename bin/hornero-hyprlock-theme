@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2019-2025 Ulises Jeremias Cornejo Fandos
+## Licensed under MIT.
+##
+## Generate hyprlock color overrides from Hornero's current generated palette.
+## User materialization takes precedence over the read-only system package.
+
+set -euo pipefail
+
+_lib_candidates=("$HOME/.local/lib/hornero" "/usr/share/hornero/lib/hornero")
+for _lib in "${_lib_candidates[@]}"; do
+  if [[ -f "$_lib/wallpaper-resolver.sh" ]]; then
+    # shellcheck source=/dev/null
+    source "$_lib/wallpaper-resolver.sh"
+    break
+  fi
+done
+
+HORNERO_CACHE_DIR="${HORNERO_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/hornero}"
+HORNERO_STATE_DIR="${HORNERO_STATE_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}/hornero}"
+HORNERO_SCHEME_FILE="${HORNERO_SCHEME_FILE:-$HORNERO_CACHE_DIR/smart-colors/scheme.json}"
+HORNERO_WALLPAPER_POINTER_FILE="${HORNERO_WALLPAPER_POINTER_FILE:-$HORNERO_STATE_DIR/wallpaper/path}"
+SCHEME_FILE="$HORNERO_SCHEME_FILE"
+SMART_COLORS_DIR="$(dirname "$HORNERO_SCHEME_FILE")"
+OUTPUT_FILE="${SMART_COLORS_DIR}/colors-hyprlock.conf"
+WALLPAPER_POINTER="$HORNERO_WALLPAPER_POINTER_FILE"

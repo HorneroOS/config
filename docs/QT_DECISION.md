@@ -13,7 +13,7 @@ Evidence from this repo (inspected, not assumed):
   Neither app ships config or a packaging dependency here; they are
   user-installed, not curated defaults.
 - `HorneroOS/shell` (Quickshell) is QtQuick/QML and self-themed from the
-  generated M3 scheme (`lib/dots/generate-m3-colors.py`); it does not
+  generated M3 scheme (`lib/hornero/generate-m3-colors.py`); it does not
   consume a Widgets platform theme. It is owned by `HorneroOS/shell`,
   not this repo.
 - Everything else curated here (Thunar, pavucontrol references,
@@ -47,7 +47,7 @@ Plasma/KDE component.
   `custom_palette=true` in `qt6ct.conf`. So each official theme ships a
   generated scheme (`desktop/qt6ct/colors/<id>.conf`, produced by
   `scripts/generate-qt-schemes.py` from the canonical theme tokens),
-  and applying a theme points qt6ct at it (`_dots_aa_sync_qt`). The
+  and applying a theme points qt6ct at it (`_hornero_appearance_sync_qt`). The
   factory default stays `custom_palette=false` (stock Fusion until a
   theme is applied). Inactive mirrors active; disabled dims text roles
   toward Window; Highlight/HighlightedText carry the theme primary pair
@@ -63,7 +63,7 @@ Plasma/KDE component.
 - `desktop/qt6ct/colors/{hornero-dark,hornero-light,pampa}.conf`
   (generated, drift-tested).
 - `scripts/generate-qt-schemes.py` (canonical tokens → QPalette roles).
-- `_dots_aa_sync_qt` in `lib/dots/apply-appearance.sh` (per-theme
+- `_hornero_appearance_sync_qt` in `lib/hornero/apply-appearance.sh` (per-theme
   `color_scheme_path` + `custom_palette=true`, comment-preserving).
 - `QT_QPA_PLATFORMTHEME=qt6ct` pin left untouched (pre-existing evidence,
   not new authorship).

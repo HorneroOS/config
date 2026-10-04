@@ -54,12 +54,12 @@
 set -euo pipefail
 
 # Source EasyOptions for argument parsing
-source ~/.local/lib/dots/easy-options/easyoptions.sh || exit
+source ~/.local/lib/hornero/easy-options/easyoptions.sh || exit
 
 # Source the GTK theme manager - try multiple locations
 gtk_theme_manager_paths=(
-	"$HOME/.local/lib/dots/gtk-theme-manager.sh"
-	"$(dirname "$(realpath "${BASH_SOURCE[0]}")")/../lib/dots/gtk-theme-manager.sh"
+	"$HOME/.local/lib/hornero/gtk-theme-manager.sh"
+	"$(dirname "$(realpath "${BASH_SOURCE[0]}")")/../lib/hornero/gtk-theme-manager.sh"
 )
 
 gtk_theme_manager_found=false
@@ -156,7 +156,7 @@ cmd_list() {
 	done <<<"$themes"
 
 	log "" ""
-	log "" "${CYAN}💡 Tip:${NC} Use 'dots gtk-theme apply <theme>' to apply a theme"
+	log "" "${CYAN}💡 Tip:${NC} Use 'hornero-gtk-theme apply <theme>' to apply a theme"
 }
 
 # Function to show current theme
@@ -302,10 +302,10 @@ cmd_detect() {
 	local wallpaper_path="${1:-}"
 
 	if [[ -z $wallpaper_path ]]; then
-		if [[ -f $HOME/.local/lib/dots/wallpaper-resolver.sh ]]; then
+		if [[ -f $HOME/.local/lib/hornero/wallpaper-resolver.sh ]]; then
 			# shellcheck source=/dev/null
-			source "$HOME/.local/lib/dots/wallpaper-resolver.sh"
-			wallpaper_path="$(dots_current_wallpaper 2>/dev/null || true)"
+			source "$HOME/.local/lib/hornero/wallpaper-resolver.sh"
+			wallpaper_path="$(hornero_current_wallpaper 2>/dev/null || true)"
 		fi
 		if [[ -z ${wallpaper_path:-} ]]; then
 			echo -e "${RED}❌ No wallpaper specified and no current wallpaper found${NC}"

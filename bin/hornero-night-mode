@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 ## Provenance: COPY (never moved) from ulises-jeremias/dotfiles@b26db04
-## home/dot_local/bin/executable_dots-night-mode via read-only reference clone.
+## home/dot_local/bin/executable_hornero-night-mode via read-only reference clone.
 ## Local changes vs upstream: `executable_` chezmoi deploy prefix stripped;
 ## state file honors ${XDG_CACHE_HOME:-$HOME/.cache} instead of hardcoded $HOME/.cache.
 
 ## Copyright (C) 2019-2025 Ulises Jeremias Cornejo Fandos
 ## Licensed under MIT.
 ##
-## Check full documentation at: https://github.com/ulises-jeremias/dotfiles/wiki
+## Documentation: https://hornero-os.vercel.app/docs/
 ##
 ## Enhanced night mode toggle with multiple backend support and better features
 ## Now detects state from running processes instead of external state files
@@ -21,24 +21,11 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Simple state file for when detection is ambiguous.
-#
-# Path contract (HorneroOS/hornero docs/PATH_CONTRACT.md): canonical
-# hornero/* first, dots/* fallback for reads; writes go to hornero/*.
+# Canonical application state under the XDG cache namespace.
 HORNERO_NIGHT_MODE_STATE_FILE="${HORNERO_NIGHT_MODE_STATE_FILE:-${XDG_CACHE_HOME:-$HOME/.cache}/hornero/night_mode_state}"
-NIGHT_MODE_STATE_FILE_FALLBACK="${NIGHT_MODE_STATE_FILE:-${XDG_CACHE_HOME:-$HOME/.cache}/dots/night_mode_state}"
-# Write target is always canonical.
 NIGHT_MODE_STATE_FILE="$HORNERO_NIGHT_MODE_STATE_FILE"
 
-# Canonical-first read: prefer the hornero file when present, else the
-# dots fallback (read-only; never written).
-night_mode_state_file_for_read() {
-  if [[ -f $HORNERO_NIGHT_MODE_STATE_FILE ]]; then
-    printf '%s\n' "$HORNERO_NIGHT_MODE_STATE_FILE"
-  else
-    printf '%s\n' "$NIGHT_MODE_STATE_FILE_FALLBACK"
-  fi
-}
+night_mode_state_file_for_read() { printf '%s\n' "$HORNERO_NIGHT_MODE_STATE_FILE"; }
 
 # Ensure cache directory exists
 mkdir -p "$(dirname "$NIGHT_MODE_STATE_FILE")"

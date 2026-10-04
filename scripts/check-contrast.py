@@ -6,7 +6,7 @@ Walks profiles/themes/*/theme.json. Every theme carrying the versioned
 semantic token model (palette + components) has each component
 {background, foreground} pair measured against WCAG 2.x relative-luminance
 contrast; WCAG AA for normal text requires >= 4.5:1, which is the gate for
-every pair (large-text 3:1 is subsumed). Legacy recipe-only packs without
+every pair (large-text 3:1 is subsumed). Recipe-only packs without
 palette/components are reported and skipped. Any violation exits nonzero
 so CI fails. Standard library only (no third-party code).
 """

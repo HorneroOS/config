@@ -53,8 +53,8 @@ def entry_id(dispatcher: str, args: str) -> str:
         ]
         # `horneroctl <group> <verb> ...` is the system CLI: name the verb
         # path, with pinned stable ids for the curated Welcome actions so a
-        # backend migration never renames the id the shell resolves. This
-        # runs before the legacy `ipc` rule: `shell ipc -- call ...` is a
+        # changing implementation details never renames the id the shell
+        # resolves. This runs before the `ipc` rule: `shell ipc -- call ...` is a
         # passthrough whose surface ids are pinned below.
         if prog_tokens and prog_tokens[0] == "horneroctl":
             sub = [t for t in prog_tokens[1:] if t not in ("--",)]
@@ -83,11 +83,8 @@ def entry_id(dispatcher: str, args: str) -> str:
         if "exo-open" in tokens and "--launch" in tokens:
             launched = tokens[tokens.index("--launch") + 1 :]
             return f"app-{slug('-'.join(launched))}"
-        # `dots <subcommand>` is a multi-call binary: name the subcommand.
-        if prog_tokens and prog_tokens[0] == "dots" and len(prog_tokens) > 1:
-            return f"exec-{slug(prog_tokens[1])}"
         for prog in prog_tokens:
-            prog = re.sub(r"^dots-", "", prog)
+            prog = re.sub(r"^hornero-", "", prog)
             if prog:
                 return f"exec-{slug(prog)}"
         return "exec-custom"

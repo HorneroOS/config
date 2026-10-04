@@ -3,24 +3,14 @@
 Arch package `hornero-config`: system-wide install of the curated
 HorneroOS desktop defaults owned by this repo.
 
-## Profiles
+## Profile
 
-Select a profile with the `HORNERO_PROFILE` environment variable:
+The package builds the single curated composition in `profiles/base`.
+`HORNERO_PROFILE` is optional and accepts only `base`; other values fail
+clearly instead of silently resolving to a different profile.
 
-| Requested value | Resolves to         | Notes                                 |
-| --------------- | ------------------- | ------------------------------------- |
-| `base`          | `profiles/base`     | Default curated desktop composition.  |
-| `desktop`       | `profiles/base`     | Alias of `base` until a curated desktop composition lands. |
-| `developer`     | `profiles/base`     | Alias of `base` until a curated developer composition lands. |
-
-```sh
-HORNERO_PROFILE=desktop makepkg -s
-```
-
-The requested name is recorded in `/usr/share/hornero/HORNERO_PROFILE`;
-the resolved manifest is installed both as
-`/usr/share/hornero/profiles/base/profile.toml` and as the stable path
-`/usr/share/hornero/profile.toml`.
+The package records the selected profile in `/usr/share/hornero/HORNERO_PROFILE`
+and installs its manifest at `/usr/share/hornero/profile.toml`.
 
 ## Layout
 
@@ -37,9 +27,9 @@ systemd's `/etc/xdg/systemd/user` symlink.
 | `.config/systemd/user/*.service`        | `/etc/systemd/user/*.service` (system-wide user-unit masks) |
 | `.gtkrc-2.0`                            | `/etc/xdg/gtkrc-2.0` (skeleton; copy to `~/.gtkrc-2.0` to use) |
 | `shell/shell.default.json` (repo file, **not** staged HOME) | `/etc/xdg/hornero/shell.json` (factory default; content owned by `HorneroOS/shell`, synced byte-exact — see `shell/README.md`) |
-| `.local/lib/dots`                       | `/usr/share/hornero/lib/dots`         |
-| `.local/bin/dots-*`                     | `/usr/share/hornero/bin/dots-*`       |
-| `.local/share/dots/themes`              | `/usr/share/hornero/themes`           |
+| `.local/lib/hornero`                       | `/usr/share/hornero/lib/hornero`         |
+| `.local/bin/hornero-*`                     | `/usr/share/hornero/bin/hornero-*`       |
+| `.local/share/hornero/themes`              | `/usr/share/hornero/themes`           |
 | `.local/share/hornero/shell-presets`     | `/usr/share/hornero/shell-presets` (layout presets synced byte-exact from the pinned HorneroOS/shell source) |
 | `.local/share/themes/Hornero-{Dark,Light,Pampa}` (theme trees only; `src/`, `build.sh`, `gallery.py` are dev-only and never staged) | `/usr/share/themes/Hornero-{Dark,Light,Pampa}` (real GTK 3+4 themes; sole owner of `/usr/share/themes`, no file shipped twice) |
 
@@ -78,7 +68,7 @@ Run from this directory:
 bash -n PKGBUILD
 shellcheck -S error PKGBUILD
 makepkg --printsrcinfo
-HORNERO_PROFILE=desktop makepkg -s
+makepkg -s
 ```
 
 Full repo gates (must stay green; this package changes no install mapping,
@@ -101,7 +91,7 @@ cp -r /etc/xdg/hypr ~/.config/hypr
 
 # CLI adapters live outside PATH by design; add them explicitly:
 export PATH="/usr/share/hornero/bin:$PATH"
-dots-gtk-theme theme vapor-dreams
+hornero-gtk-theme theme vapor-dreams
 ```
 
 ## License

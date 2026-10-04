@@ -27,18 +27,18 @@ export XDG_CONFIG_HOME="$TMP_HOME/.config"
 export XDG_STATE_HOME="$TMP_HOME/.local/state"
 export XDG_CACHE_HOME="$TMP_HOME/.cache"
 export HORNERO_THEMES_DIR="$REPO_ROOT/profiles/themes"
-# Hermetic PATH: the apply chain probes for helper CLIs (dots-color-scheme,
-# dots-gtk-theme, hyprctl); ambient developer binaries must not leak in.
+# Hermetic PATH: the apply chain probes for helper CLIs (hornero-color-scheme,
+# hornero-gtk-theme, hyprctl); ambient developer binaries must not leak in.
 export PATH="$TMP_HOME/.local/bin:/usr/local/bin:/usr/bin:/bin"
 
 bash "$REPO_ROOT/scripts/materialize.sh" --dest "$TMP_HOME" >/dev/null \
   || fail "materialize failed"
 
 # shellcheck source=/dev/null
-source "$REPO_ROOT/lib/dots/apply-appearance.sh"
+source "$REPO_ROOT/lib/hornero/apply-appearance.sh"
 
 for tid in $OFFICIAL_IDS; do
-  dots_apply_theme "$tid" >/dev/null 2>&1 \
+  hornero_apply_theme "$tid" >/dev/null 2>&1 \
     || fail "apply failed for official theme $tid"
   [[ -f "$XDG_STATE_HOME/hornero/wallpaper/path" ]] \
     || fail "no wallpaper pointer after applying $tid"

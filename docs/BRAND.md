@@ -73,7 +73,7 @@ boot shows intentional Hornero visuals through this chain:
 3. The flagship `theme.json` packs and `wallpapers.manifest.json` point
    `defaultWallpaper` at those PNG names, so the normal resolver picks
    them up once rendered.
-4. Missing-file behavior is unchanged: `bin/dots-wallpaper-set` exits 1
+4. Missing-file behavior is unchanged: `bin/hornero-wallpaper-set` exits 1
    with `Error: wallpaper file not found` and the empty state stays the
    fallback until packs are rendered or fetched.
 

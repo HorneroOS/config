@@ -36,18 +36,17 @@ check ".config/copyq/copyq.conf"
 check ".config/handlr/handlr.toml"
 check ".config/git/config"
 check ".config/git/ignore"
-check ".local/lib/dots/gtk-theme-manager.sh"
-check ".local/lib/dots/wallpaper-resolver.sh"
-check ".local/lib/dots/easy-options/easyoptions.sh"
-check ".local/bin/dots-gtk-theme"
-check ".local/bin/dots-hyprlock-theme"
-check ".local/bin/dots-theme-selector"
-check ".local/bin/dots-appearance"
-# dots-launcher, dots-power-menu, dots-clipboard are gone: launcher,
+check ".local/lib/hornero/gtk-theme-manager.sh"
+check ".local/lib/hornero/wallpaper-resolver.sh"
+check ".local/lib/hornero/easy-options/easyoptions.sh"
+check ".local/bin/hornero-gtk-theme"
+check ".local/bin/hornero-hyprlock-theme"
+check ".local/bin/hornero-appearance"
+# hornero-launcher, hornero-power-menu, hornero-clipboard are gone: launcher,
 # session drawer and clipboard history are horneroctl verbs now.
-check ".local/bin/dots-night-mode"
-check ".local/bin/dots-wallpaper-set"
-check ".local/bin/dots-wallpaper-current"
+check ".local/bin/hornero-night-mode"
+check ".local/bin/hornero-wallpaper-set"
+check ".local/bin/hornero-wallpaper-current"
 
 # theme packs: every curated pack in profiles/themes lands in canonical
 # hornero/* (rows 1+8). The expected count is derived from the repo so
@@ -89,32 +88,6 @@ if [[ -e "$TMP_HOME/.config/hornero/shell.json" ]]; then
   exit 1
 fi
 echo "TEST-PASS: no user-root hornero/shell.json materialized"
-# back-compat dots/* symlinks -> hornero/* (reversible, relative for hermeticity)
-for pair in "dots/themes:hornero/themes" "dots/shell-presets:hornero/shell-presets"; do
-  link_name="${pair%%:*}"
-  canon_name="${pair##*:}"
-  link="$TMP_HOME/.local/share/$link_name"
-  if [[ -L $link ]]; then
-    target="$(readlink "$link")"
-    if [[ $target == "../hornero/$(basename "$canon_name")" ]]; then
-      echo "TEST-PASS: back-compat symlink $link_name -> $target"
-    else
-      echo "TEST-FAIL: $link_name points at $target, want ../hornero/$(basename "$canon_name")" >&2
-      exit 1
-    fi
-  else
-    echo "TEST-FAIL: $link_name is not a symlink" >&2
-    exit 1
-  fi
-done
-# dots fallback still resolves every pack through the symlink
-compat_count=$(find -L "$TMP_HOME/.local/share/dots/themes" -maxdepth 2 -name theme.json | wc -l)
-if [[ $compat_count -eq $expected ]]; then
-  echo "TEST-PASS: dots/themes fallback resolves $compat_count packs"
-else
-  echo "TEST-FAIL: dots fallback resolves $compat_count packs, want $expected" >&2
-  exit 1
-fi
 # --dest hermeticity: a temp dest distinct from HOME must not leak into ambient XDG
 herm_xdg="$(mktemp -d)"
 herm_dest="$(mktemp -d)"
@@ -130,10 +103,10 @@ if HOME="$TMP_HOME" XDG_DATA_HOME="$herm_xdg" XDG_CONFIG_HOME="$herm_xdg/config"
     exit 1
   fi
   if [[ -f "$herm_dest/.local/share/hornero/themes/wallpapers.manifest.json" ]] \
-    && [[ -L "$herm_dest/.local/share/dots/themes" ]]; then
-    echo "TEST-PASS: hermetic dest holds canonical + symlink"
+    && [[ -d "$herm_dest/.local/share/hornero/themes" ]]; then
+    echo "TEST-PASS: hermetic dest holds canonical catalogue"
   else
-    echo "TEST-FAIL: hermetic dest missing canonical/symlink" >&2
+    echo "TEST-FAIL: hermetic dest missing canonical catalogue" >&2
     rm -rf "$herm_xdg" "$herm_dest"
     exit 1
   fi
@@ -158,10 +131,10 @@ fi
 echo "TEST-PASS: no identity in installed git config"
 
 # executables survived with +x
-for f in "$TMP_HOME/.local/bin/dots-gtk-theme" "$TMP_HOME/.local/bin/dots-hyprlock-theme" \
-         "$TMP_HOME/.local/bin/dots-theme-selector" "$TMP_HOME/.local/bin/dots-appearance" \
-         "$TMP_HOME/.local/bin/dots-night-mode" \
-         "$TMP_HOME/.local/bin/dots-wallpaper-set" "$TMP_HOME/.local/bin/dots-wallpaper-current" \
+for f in "$TMP_HOME/.local/bin/hornero-gtk-theme" "$TMP_HOME/.local/bin/hornero-hyprlock-theme" \
+         "$TMP_HOME/.local/bin/hornero-appearance" \
+         "$TMP_HOME/.local/bin/hornero-night-mode" \
+         "$TMP_HOME/.local/bin/hornero-wallpaper-set" "$TMP_HOME/.local/bin/hornero-wallpaper-current" \
          "$TMP_HOME/.config/hypr/scripts/gaps-interactive.sh"; do
   if [[ -x $f ]]; then
     echo "TEST-PASS: executable $f"

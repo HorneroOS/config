@@ -50,6 +50,6 @@ named readers; verified against the Arch extra repo on 2026-09-13:
 `hornero-light` recipes, `desktop/kitty/hornero-light.conf`, and
 `desktop/hypr/hyprland.conf.d/hornero-light.conf` ship alongside for an
 explicit opt-in (documented switch lines in `kitty.conf`/`hyprland.conf`).
-Nothing auto-switches today; a future dots-appearance day/night policy may
+Nothing auto-switches today; a future Hornero appearance schedule may
 consume `availableThemes` + the GTK preference to flip all three surfaces
 together.

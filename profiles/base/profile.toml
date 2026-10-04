@@ -1,6 +1,5 @@
-# HorneroOS base profile: the curated default desktop composition.
-# This manifest declares which modules materialize.sh installs and the
-# themes available apply-once via bin/dots-gtk-theme and lib/dots/.
+# HorneroOS base profile: the single curated declarative desktop composition.
+# scripts/materialize.sh is the canonical materializer for these modules.
 
 [profile]
 name = "base"
@@ -61,18 +60,18 @@ target = "{config}/git"
 description = "Git defaults WITHOUT identity (config.user is never shipped)."
 
 [modules.lib]
-source = "lib/dots"
-target = "{home}/.local/lib/dots"
-description = "dots implementation libraries (appearance, GTK, wallpaper)."
+source = "lib/hornero"
+target = "{home}/.local/lib/hornero"
+description = "Hornero appearance and integration capabilities."
 
 [modules.bin]
 source = "bin"
 target = "{home}/.local/bin"
-description = "dots-gtk-theme-family CLI adapters."
+description = "Installed Hornero command-line tools."
 
 [modules.themes]
 source = "profiles/themes"
-target = "{data}/dots/themes"
+target = "{data}/hornero/themes"
 description = "Curated apply-once theme packs (theme.json + wallpaper refs, no binaries)."
 
 [modules.gtk-theme]
