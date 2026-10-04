@@ -11,7 +11,7 @@ arch=('any')
 url="https://github.com/HorneroOS/config"
 license=('MIT')
 # python-materialyoucolor: lib/hornero/generate-m3-colors.py (theme switching via
-# `horneroctl scheme regenerate`); without it every theme set rolls back.
+# `horneroctl appearance scheme regenerate`); without it every theme set rolls back.
 depends=('bash' 'git' 'python' 'python-materialyoucolor')
 makedepends=('librsvg')
 optdepends=(
