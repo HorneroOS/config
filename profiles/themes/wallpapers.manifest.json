@@ -1,6 +1,6 @@
 {
   "provenance": "https://github.com/ulises-jeremias/dotfiles (theme metadata source, b26db04)",
-  "note": "Theme metadata is shipped separately from most wallpaper media. Hornero flagship images ship at /usr/share/hornero/wallpapers/<wallpaperDir>/. Recipe wallpapers are optional media and can live in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/. The curated Patagonia and Fin del Mundo artwork is maintained in https://github.com/ulises-jeremias/dotfiles. If a referenced image is absent, the theme remains available and the Shell explains that wallpaper media is missing.",
+  "note": "Theme metadata is shipped separately from most wallpaper media. Hornero flagship images ship at /usr/share/hornero/wallpapers/<wallpaperDir>/. Recipe wallpapers are optional media and can live in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/. Hornero Originals artwork is maintained in https://github.com/ulises-jeremias/dotfiles. If a referenced image is absent, the theme remains available and the Shell explains that wallpaper media is missing.",
   "themes": [
     {
       "id": "catppuccin-latte",
@@ -86,6 +86,21 @@
       "id": "fin-del-mundo",
       "defaultWallpaper": "beagle-blue-hour-01.jpg",
       "wallpaperDir": "fin-del-mundo"
+    },
+    {
+      "id": "quebrada",
+      "defaultWallpaper": "quebrada-mineral-01.jpg",
+      "wallpaperDir": "quebrada"
+    },
+    {
+      "id": "ibera",
+      "defaultWallpaper": "ibera-mist-01.jpg",
+      "wallpaperDir": "ibera"
+    },
+    {
+      "id": "buenos-aires-nocturno",
+      "defaultWallpaper": "buenos-aires-nocturno-01.jpg",
+      "wallpaperDir": "buenos-aires-nocturno"
     }
   ]
 }

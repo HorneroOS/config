@@ -2,6 +2,8 @@
   "schemaVersion": 1,
   "id": "fin-del-mundo",
   "name": "Fin del Mundo",
+  "collection": "hornero-originals",
+  "collectionOrder": 6,
   "description": "A maritime twilight of Beagle water, wind-shaped southern forest and distant harbor light",
   "tags": ["argentina", "tierra-del-fuego", "beagle", "forest", "sea-glass", "copper", "dark"],
   "darkMode": true,

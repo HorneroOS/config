@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://hornero.os/config/tokens.schema.json",
   "title": "HorneroOS semantic appearance tokens",
-  "description": "Versioned semantic token model for HorneroOS theme packs. Recipe fields (id, name, darkMode, schemeType, gtkTheme, iconTheme, gtkPreferDark, defaultWallpaper, wallpaperDir) may be enriched with family, mode, version, palette, and WCAG-AA-checked component tokens.",
+  "description": "Versioned semantic token model for HorneroOS theme packs. Recipe fields (id, name, darkMode, schemeType, gtkTheme, iconTheme, gtkPreferDark, defaultWallpaper, wallpaperDir) may be enriched with family, mode, version, palette, and WCAG-AA-checked component tokens. The optional collection field groups product-authored visual looks without changing their palette model.",
   "version": "1.0.0",
   "type": "object",
   "required": [
@@ -34,6 +34,13 @@
     "name": {
       "type": "string",
       "minLength": 1
+    },
+    "collection": {
+      "enum": ["hornero-originals"]
+    },
+    "collectionOrder": {
+      "type": "integer",
+      "minimum": 1
     },
     "family": {
       "type": "string",

@@ -52,6 +52,16 @@ patagonia = entries["patagonia"]
 fin_del_mundo = entries["fin-del-mundo"]
 assert patagonia["schemeType"] == "fidelity", "Patagonia should keep the wallpaper palette close to its source"
 assert fin_del_mundo["schemeType"] == "expressive", "Fin del Mundo should use its more varied palette"
+originals = {
+    "hornero-dark", "hornero-light", "pampa", "patagonia", "fin-del-mundo",
+    "quebrada", "ibera", "buenos-aires-nocturno",
+}
+assert {theme_id for theme_id, entry in entries.items() if entry["collection"] == "hornero-originals"} == originals
+assert sorted(entries[theme_id]["collectionOrder"] for theme_id in originals) == list(range(1, 9))
+assert all(entries[theme_id]["model"] == "semantic" for theme_id in ("hornero-dark", "hornero-light", "pampa"))
+assert all(entries[theme_id]["model"] == "recipe" for theme_id in originals - {"hornero-dark", "hornero-light", "pampa"})
+assert {entries[theme_id]["mode"] for theme_id in ("quebrada", "ibera", "buenos-aires-nocturno")} == {"light", "dark"}
 print(f"TEST-PASS: {len(ids)} catalogue entries cover every pack")
+print(f"TEST-PASS: {len(originals)} Hornero Originals retain their semantic-or-recipe model")
 print(f"TEST-PASS: wallpaper manifest covers {len(wallpaper_ids)} packs without drift")
 EOF

@@ -75,6 +75,22 @@ diff -r "$STAGE/.local/lib/hornero" "$ROOT/usr/share/hornero/lib/hornero" >/dev/
   && pass "lib/hornero payload" || fail "lib/hornero payload"
 diff -r "$STAGE/.local/share/hornero/themes" "$ROOT/usr/share/hornero/themes" >/dev/null 2>&1 \
   && pass "themes payload (canonical hornero source)" || fail "themes payload"
+[[ ! -e "$ROOT/usr/share/hornero/lib/dots" ]] \
+  && pass "retired dots library is absent" || fail "retired dots library shipped"
+if find "$ROOT/usr/share/hornero/bin" -maxdepth 1 -type f -name 'dots-*' -print -quit | grep -q .; then
+  fail "retired dots command wrapper shipped"
+else
+  pass "retired dots command wrappers are absent"
+fi
+THEME_COUNT="$(find "$ROOT/usr/share/hornero/themes" -mindepth 2 -maxdepth 2 -name theme.json | wc -l)"
+[[ "$THEME_COUNT" -eq 20 ]] \
+  && pass "all 20 theme packs ship in the package-only catalogue" \
+  || fail "expected 20 theme packs, found $THEME_COUNT"
+for id in patagonia fin-del-mundo quebrada ibera buenos-aires-nocturno; do
+  [[ -f "$ROOT/usr/share/hornero/themes/$id/theme.json" ]] \
+    && pass "original theme $id is package-visible" \
+    || fail "original theme $id missing from package"
+done
 diff -r "$STAGE/.local/share/hornero/shell-presets" "$ROOT/usr/share/hornero/shell-presets" >/dev/null 2>&1 \
   && pass "layout preset payload (pinned HorneroOS/shell source)" || fail "layout preset payload"
 for cli in "$STAGE"/.local/bin/hornero-*; do

@@ -32,8 +32,9 @@ that in CI.
 
 Curated from the generic parts of the dotfiles: Hyprland, kitty,
 GTK 2/3, Qt6ct, fontconfig, fastfetch, btop, cava, Thunar, CopyQ,
-handlr, git-minus-identity, 17 theme packs (15 recipes + 2 flagship
-semantic-token themes `hornero-dark` / `hornero-light`), `lib/hornero`
+handlr, git-minus-identity, 20 theme packs (8 Hornero Originals, including
+three semantic-token themes and five wallpaper-led looks, plus 12 other
+curated looks), `lib/hornero`
 implementation libraries and the `hornero-gtk-theme`-family CLI adapters.
 See `docs/DECISIONS.md` for the full copied / excluded-as-personal /
 deferred accounting.
@@ -43,7 +44,7 @@ deferred accounting.
 ```text
 desktop/    per-application defaults      -> ~/.config/<app>, ~/.gtkrc-2.0
 xdg/        git (no identity) + handlr    -> ~/.config/git, ~/.config/handlr
-profiles/   base profile manifest + 17 theme packs -> ~/.local/share/hornero/…
+profiles/   base profile manifest + 20 theme packs -> ~/.local/share/hornero/…
 shell/      stub note (interactive shell deferred)
 lib/hornero/   appearance/GTK/wallpaper implementation libs -> ~/.local/lib/hornero
 bin/        hornero-gtk-theme-family CLIs    -> ~/.local/bin

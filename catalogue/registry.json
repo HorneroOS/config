@@ -1,8 +1,32 @@
 {
   "schemaVersion": 1,
   "source": "profiles/themes",
-  "count": 17,
+  "count": 20,
   "entries": [
+    {
+      "id": "buenos-aires-nocturno",
+      "name": "Buenos Aires Nocturno",
+      "description": "Rain-dark avenues, layered façades and a measured pulse of amber and electric light",
+      "tags": [
+        "argentina",
+        "buenos-aires",
+        "urban",
+        "night",
+        "graphite",
+        "amber",
+        "magenta",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "collection": "hornero-originals",
+      "collectionOrder": 7,
+      "model": "recipe",
+      "schemeType": "vibrant",
+      "defaultWallpaper": "buenos-aires-nocturno-01.jpg",
+      "wallpaperDir": "buenos-aires-nocturno"
+    },
     {
       "id": "catppuccin-latte",
       "name": "Catppuccin Latte",
@@ -15,6 +39,9 @@
       "mode": "light",
       "family": "",
       "version": "",
+      "collection": "",
+      "collectionOrder": 0,
+      "model": "recipe",
       "schemeType": "tonal-spot",
       "defaultWallpaper": "catppuccin-latte-01.png",
       "wallpaperDir": "catppuccin-latte"
@@ -32,6 +59,9 @@
       "mode": "dark",
       "family": "",
       "version": "",
+      "collection": "",
+      "collectionOrder": 0,
+      "model": "recipe",
       "schemeType": "tonal-spot",
       "defaultWallpaper": "catppuccin-mauve-02.png",
       "wallpaperDir": "catppuccin-mocha"
@@ -49,6 +79,9 @@
       "mode": "dark",
       "family": "",
       "version": "",
+      "collection": "",
+      "collectionOrder": 0,
+      "model": "recipe",
       "schemeType": "fidelity",
       "defaultWallpaper": "everforest-deep-01.png",
       "wallpaperDir": "everforest"
@@ -69,6 +102,9 @@
       "mode": "dark",
       "family": "",
       "version": "",
+      "collection": "hornero-originals",
+      "collectionOrder": 6,
+      "model": "recipe",
       "schemeType": "expressive",
       "defaultWallpaper": "beagle-blue-hour-01.jpg",
       "wallpaperDir": "fin-del-mundo"
@@ -87,6 +123,9 @@
       "mode": "dark",
       "family": "",
       "version": "",
+      "collection": "",
+      "collectionOrder": 0,
+      "model": "recipe",
       "schemeType": "expressive",
       "defaultWallpaper": "gruvbox-anime-01.jpg",
       "wallpaperDir": "gruvbox"
@@ -107,6 +146,9 @@
       "mode": "dark",
       "family": "hornero",
       "version": "1.0.0",
+      "collection": "hornero-originals",
+      "collectionOrder": 1,
+      "model": "semantic",
       "schemeType": "vibrant",
       "defaultWallpaper": "hornero-dark-01.png",
       "wallpaperDir": "hornero-dark"
@@ -127,9 +169,35 @@
       "mode": "light",
       "family": "hornero",
       "version": "1.0.0",
+      "collection": "hornero-originals",
+      "collectionOrder": 4,
+      "model": "semantic",
       "schemeType": "vibrant",
       "defaultWallpaper": "hornero-light-01.png",
       "wallpaperDir": "hornero-light"
+    },
+    {
+      "id": "ibera",
+      "name": "Iberá",
+      "description": "Dark lagoon water, floating green islands and silver dawn light",
+      "tags": [
+        "argentina",
+        "corrientes",
+        "wetlands",
+        "water",
+        "teal",
+        "green",
+        "dark"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "collection": "hornero-originals",
+      "collectionOrder": 5,
+      "model": "recipe",
+      "schemeType": "expressive",
+      "defaultWallpaper": "ibera-mist-01.jpg",
+      "wallpaperDir": "ibera"
     },
     {
       "id": "landscape",
@@ -144,6 +212,9 @@
       "mode": "dark",
       "family": "",
       "version": "",
+      "collection": "",
+      "collectionOrder": 0,
+      "model": "recipe",
       "schemeType": "fidelity",
       "defaultWallpaper": "landscape-01.jpg",
       "wallpaperDir": "landscape"
@@ -161,6 +232,9 @@
       "mode": "dark",
       "family": "",
       "version": "",
+      "collection": "",
+      "collectionOrder": 0,
+      "model": "recipe",
       "schemeType": "monochrome",
       "defaultWallpaper": "mono-curated-1.jpg",
       "wallpaperDir": "monochrome"
@@ -178,6 +252,9 @@
       "mode": "dark",
       "family": "",
       "version": "",
+      "collection": "",
+      "collectionOrder": 0,
+      "model": "recipe",
       "schemeType": "vibrant",
       "defaultWallpaper": "neon-city-01.jpg",
       "wallpaperDir": "neon-city"
@@ -195,6 +272,9 @@
       "mode": "dark",
       "family": "",
       "version": "",
+      "collection": "",
+      "collectionOrder": 0,
+      "model": "recipe",
       "schemeType": "tonal-spot",
       "defaultWallpaper": "nord-aurora-01.png",
       "wallpaperDir": "nord-dreams"
@@ -216,6 +296,9 @@
       "mode": "dark",
       "family": "hornero",
       "version": "1.0.0",
+      "collection": "hornero-originals",
+      "collectionOrder": 8,
+      "model": "semantic",
       "schemeType": "tonal-spot",
       "defaultWallpaper": "pampa-01.png",
       "wallpaperDir": "pampa"
@@ -236,9 +319,35 @@
       "mode": "dark",
       "family": "",
       "version": "",
+      "collection": "hornero-originals",
+      "collectionOrder": 2,
+      "model": "recipe",
       "schemeType": "fidelity",
       "defaultWallpaper": "patagonia-glacier-01.jpg",
       "wallpaperDir": "patagonia"
+    },
+    {
+      "id": "quebrada",
+      "name": "Quebrada",
+      "description": "High-altitude mineral bands, violet shade and clear Andean light",
+      "tags": [
+        "argentina",
+        "jujuy",
+        "andean",
+        "mineral",
+        "rose",
+        "violet",
+        "light"
+      ],
+      "mode": "light",
+      "family": "",
+      "version": "",
+      "collection": "hornero-originals",
+      "collectionOrder": 3,
+      "model": "recipe",
+      "schemeType": "fidelity",
+      "defaultWallpaper": "quebrada-mineral-01.jpg",
+      "wallpaperDir": "quebrada"
     },
     {
       "id": "rose-pine",
@@ -252,6 +361,9 @@
       "mode": "dark",
       "family": "",
       "version": "",
+      "collection": "",
+      "collectionOrder": 0,
+      "model": "recipe",
       "schemeType": "expressive",
       "defaultWallpaper": "rose-pine-dawn-01.png",
       "wallpaperDir": "rose-pine"
@@ -269,6 +381,9 @@
       "mode": "light",
       "family": "",
       "version": "",
+      "collection": "",
+      "collectionOrder": 0,
+      "model": "recipe",
       "schemeType": "neutral",
       "defaultWallpaper": "morning-lake-2.jpg",
       "wallpaperDir": "soft-morning"
@@ -286,6 +401,9 @@
       "mode": "dark",
       "family": "",
       "version": "",
+      "collection": "",
+      "collectionOrder": 0,
+      "model": "recipe",
       "schemeType": "expressive",
       "defaultWallpaper": "vapor-dreams-01.jpg",
       "wallpaperDir": "vapor-dreams"
@@ -303,6 +421,9 @@
       "mode": "light",
       "family": "",
       "version": "",
+      "collection": "",
+      "collectionOrder": 0,
+      "model": "recipe",
       "schemeType": "vibrant",
       "defaultWallpaper": "warm-sunset-05.jpg",
       "wallpaperDir": "warm-sunset"

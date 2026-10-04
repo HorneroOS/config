@@ -1,0 +1,17 @@
+{
+  "$schema": "../tokens.schema.json",
+  "schemaVersion": 1,
+  "id": "ibera",
+  "name": "Iberá",
+  "collection": "hornero-originals",
+  "collectionOrder": 5,
+  "description": "Dark lagoon water, floating green islands and silver dawn light",
+  "tags": ["argentina", "corrientes", "wetlands", "water", "teal", "green", "dark"],
+  "darkMode": true,
+  "schemeType": "expressive",
+  "gtkTheme": "Adwaita-dark",
+  "iconTheme": "Papirus-Dark",
+  "gtkPreferDark": true,
+  "defaultWallpaper": "ibera-mist-01.jpg",
+  "wallpaperDir": "ibera"
+}

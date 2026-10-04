@@ -4,6 +4,8 @@
   "id": "pampa",
   "name": "Pampa",
   "family": "hornero",
+  "collection": "hornero-originals",
+  "collectionOrder": 8,
   "mode": "dark",
   "version": "1.0.0",
   "tokensVersion": "1.0.0",

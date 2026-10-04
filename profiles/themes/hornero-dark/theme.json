@@ -4,6 +4,8 @@
   "id": "hornero-dark",
   "name": "Hornero Dark",
   "family": "hornero",
+  "collection": "hornero-originals",
+  "collectionOrder": 1,
   "mode": "dark",
   "version": "1.0.0",
   "tokensVersion": "1.0.0",

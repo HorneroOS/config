@@ -1,0 +1,17 @@
+{
+  "$schema": "../tokens.schema.json",
+  "schemaVersion": 1,
+  "id": "quebrada",
+  "name": "Quebrada",
+  "collection": "hornero-originals",
+  "collectionOrder": 3,
+  "description": "High-altitude mineral bands, violet shade and clear Andean light",
+  "tags": ["argentina", "jujuy", "andean", "mineral", "rose", "violet", "light"],
+  "darkMode": false,
+  "schemeType": "fidelity",
+  "gtkTheme": "Adwaita",
+  "iconTheme": "Papirus",
+  "gtkPreferDark": false,
+  "defaultWallpaper": "quebrada-mineral-01.jpg",
+  "wallpaperDir": "quebrada"
+}
