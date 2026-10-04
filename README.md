@@ -30,7 +30,18 @@ that in CI.
 
 ## Status
 
-Curated from the generic parts of the dotfiles: Hyprland, kitty,
+HorneroOS Desktop is Wayland-first. Hyprland remains the validated session;
+Niri has a curated session configuration and Shell integration marked
+experimental until graphical acceptance runs cover the real session. The
+defaults include Niri's upstream 26.04 configuration as a starting point,
+Hornero Shell startup, Hornero shortcuts, native screenshot selection, and
+the compositor-specific `/etc/niri/config.kdl` package fallback. This does
+not claim full feature parity: Niri currently has no special workspaces,
+Hyprland-native window previews, or Hyprland window geometry picker. See
+[`docs/NIRI.md`](docs/NIRI.md) and the Shell's
+[`docs/COMPOSITORS.md`](https://github.com/HorneroOS/shell/blob/main/docs/COMPOSITORS.md).
+
+Curated from the generic parts of the dotfiles: Hyprland, Niri, kitty,
 GTK 2/3, Qt6ct, fontconfig, fastfetch, btop, cava, Thunar, CopyQ,
 handlr, git-minus-identity, 20 theme packs (8 Hornero Originals, including
 three semantic-token themes and five wallpaper-led looks, plus 12 other
@@ -44,7 +55,7 @@ deferred accounting.
 ```text
 desktop/    per-application defaults      -> ~/.config/<app>, ~/.gtkrc-2.0
 xdg/        git (no identity) + handlr    -> ~/.config/git, ~/.config/handlr
-profiles/   base profile manifest + 20 theme packs -> ~/.local/share/hornero/…
+profiles/   base desktop profile + 20 theme packs -> ~/.local/share/hornero/…
 shell/      stub note (interactive shell deferred)
 lib/hornero/   appearance/GTK/wallpaper implementation libs -> ~/.local/lib/hornero
 bin/        hornero-gtk-theme-family CLIs    -> ~/.local/bin

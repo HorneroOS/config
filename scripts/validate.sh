@@ -144,6 +144,25 @@ while IFS= read -r src; do
 done < <(grep -rhoE "source *= *[^ ]*hypr/[^ ]+" "$REPO_ROOT/desktop/hypr/hyprland.conf" | sed -E 's/.*hypr\///')
 [[ $HYPR_FAIL -eq 0 ]] && pass "hypr sanity (no templates, balanced, sources resolve)"
 
+# --- Niri config ---------------------------------------------------------------
+NIRI_CONFIG="$REPO_ROOT/desktop/niri/config.kdl"
+if [[ ! -s "$NIRI_CONFIG" ]]; then
+  fail "Niri config missing or empty"
+elif command -v niri >/dev/null 2>&1; then
+  if NIRI_CONFIG="$NIRI_CONFIG" niri validate; then
+    pass "Niri config parses with installed niri"
+  else
+    fail "Niri config parser"
+  fi
+else
+  # Static contract only: this is not a substitute for upstream niri validate.
+  grep -q '^binds {' "$NIRI_CONFIG" \
+    && grep -q 'spawn-at-startup "horneroctl" "shell" "start" "--yes"' "$NIRI_CONFIG" \
+    && grep -q 'Mod+Shift+B.*layoutPicker' "$NIRI_CONFIG" \
+    && pass "Niri config presence and Hornero binding contract (niri parser unavailable)" \
+    || fail "Niri config Hornero binding contract"
+fi
+
 # --- Hornero GTK theme (parser errors + index.theme + src sync) -----------------
 if ! python3 - "$REPO_ROOT" <<'PY'
 import configparser, re, sys

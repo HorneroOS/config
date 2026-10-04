@@ -22,9 +22,11 @@ done
 if [[ $DEST == "${HOME}" ]]; then
   CONFIG_HOME="${XDG_CONFIG_HOME:-$DEST/.config}"
   DATA_HOME="${XDG_DATA_HOME:-$DEST/.local/share}"
+  CACHE_HOME="${XDG_CACHE_HOME:-$DEST/.cache}"
 else
   CONFIG_HOME="$DEST/.config"
   DATA_HOME="$DEST/.local/share"
+  CACHE_HOME="$DEST/.cache"
 fi
 LIB_DIR="$DEST/.local/lib/hornero"
 BIN_DIR="$DEST/.local/bin"
@@ -54,7 +56,9 @@ install_file() {
 
 # --- desktop defaults -> ~/.config -------------------------------------------
 install_dir "desktop/hypr" "$CONFIG_HOME/hypr"
+install_dir "desktop/niri" "$CONFIG_HOME/niri"
 install_dir "desktop/kitty" "$CONFIG_HOME/kitty"
+install_file "desktop/xfce4/helpers.rc" "$CONFIG_HOME/xfce4/helpers.rc"
 install_dir "desktop/qt6ct" "$CONFIG_HOME/qt6ct"
 install_file "desktop/gtk/settings.ini" "$CONFIG_HOME/gtk-3.0/settings.ini"
 install_file "desktop/gtk/settings.ini" "$CONFIG_HOME/gtk-4.0/settings.ini"
@@ -115,7 +119,7 @@ install_dir "assets/brand" "$DATA_HOME/hornero/brand"
 if [[ $DRY_RUN -eq 1 ]]; then
   echo "would render flagship wallpapers -> $DATA_HOME/hornero/wallpapers"
 elif command -v rsvg-convert >/dev/null 2>&1; then
-  bash "$REPO_ROOT/scripts/render-brand-assets.sh" --wallpapers \
+  XDG_CACHE_HOME="$CACHE_HOME" bash "$REPO_ROOT/scripts/render-brand-assets.sh" --wallpapers \
     "$DATA_HOME/hornero/wallpapers" >/dev/null
 else
   echo "warn: rsvg-convert missing, skipping flagship wallpaper render" >&2
