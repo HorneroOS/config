@@ -213,17 +213,21 @@ there is no `gtk-2.0/` engine dir anywhere in the deliverable.
 
 - **Theme catalogue registry (derived, offline-first).**
   `scripts/generate-catalogue.py` derives `catalogue/registry.json`
-  from `profiles/themes/*/theme.json` (17 packs); store-style surfaces
+  from `profiles/themes/*/theme.json` (20 packs); store-style surfaces
   render from the registry without touching packs, wallpapers stay
   fetch-on-demand per `wallpapers.manifest.json`. `tests/test_catalogue.sh`
   fails when the registry is stale or a pack is uncovered. Wired into
   `ci.yml` next to the shortcuts contract.
 
-- **Argentine landscape themes stay wallpaper-led recipes.** Patagonia and
-  Fin del Mundo use original artwork, then let the selected Material 3
-  variant shape the Shell palette from the wallpaper. They remain in the
-  recipe tier because their identity comes from the image and generated
-  colors, not a fixed semantic token ramp. The semantic Hornero family keeps
-  its curated token palettes for the built-in brand looks. This avoids
-  duplicating colors that drift from each wallpaper; the optional artwork is
-  listed in `wallpapers.manifest.json` and missing media must remain explicit.
+- **Product collection and palette model are separate.** The eight
+  `hornero-originals` looks are first-party creative work, while only
+  Hornero Dark, Hornero Light, and Pampa use the versioned semantic token
+  model. Patagonia, Fin del Mundo, Quebrada, Iberá, and Buenos Aires
+  Nocturno are wallpaper-led looks whose palettes are generated from their
+  chosen scenes. The other catalogue entries remain equally selectable
+  curated looks. `collection` and `collectionOrder` drive product grouping;
+  `family`, `palette`, and `components` describe semantic implementation.
+  Keeping those concepts separate avoids false token claims while allowing
+  the interface to present every look as a first-class choice. Original
+  optional artwork remains listed in `wallpapers.manifest.json` and missing
+  media must remain explicit.

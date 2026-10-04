@@ -1,0 +1,17 @@
+{
+  "$schema": "../tokens.schema.json",
+  "schemaVersion": 1,
+  "id": "buenos-aires-nocturno",
+  "name": "Buenos Aires Nocturno",
+  "collection": "hornero-originals",
+  "collectionOrder": 7,
+  "description": "Rain-dark avenues, layered façades and a measured pulse of amber and electric light",
+  "tags": ["argentina", "buenos-aires", "urban", "night", "graphite", "amber", "magenta", "dark"],
+  "darkMode": true,
+  "schemeType": "vibrant",
+  "gtkTheme": "Adwaita-dark",
+  "iconTheme": "Papirus-Dark",
+  "gtkPreferDark": true,
+  "defaultWallpaper": "buenos-aires-nocturno-01.jpg",
+  "wallpaperDir": "buenos-aires-nocturno"
+}
