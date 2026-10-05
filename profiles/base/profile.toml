@@ -16,6 +16,11 @@ source = "desktop/niri"
 target = "{config}/niri"
 description = "Niri session defaults; Shell bindings use horneroctl and unsupported Hyprland-only operations remain unavailable."
 
+[modules.niri-portals]
+source = "desktop/xdg-desktop-portal/niri-portals.conf"
+target = "{config}/xdg-desktop-portal/niri-portals.conf"
+description = "Use GTK for fallback and file chooser portals and GNOME for Niri screencasting."
+
 [modules.kitty]
 source = "desktop/kitty"
 target = "{config}/kitty"

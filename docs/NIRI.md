@@ -56,11 +56,13 @@ creation/renaming, Hyprland layer/window rules, or global shortcuts through
 Quickshell's Hyprland-only protocol. Controls that require those capabilities
 stay hidden or disabled. They are not emulated.
 
-Niri ships its own `niri-portals.conf` selection. Install the Niri-recommended
-GNOME portal backend for screencasting where needed, and `xwayland-satellite`
-for X11 applications. These dependencies are optional and do not enter the
-Hyprland default package set. OBS and screen recording still need graphical
-acceptance under Niri before the edition can claim those workflows.
+Hornero's config package installs `niri-portals.conf` as a user default and
+system-wide XDG default. It selects GTK for the fallback portal and file
+chooser, and GNOME for screencasting. Install `xdg-desktop-portal-gtk` and
+`xdg-desktop-portal-gnome` for those interfaces, plus `xwayland-satellite` for
+X11 applications. These Niri dependencies do not enter the Hyprland package
+set. OBS and screen recording still need graphical acceptance under Niri
+before the edition can claim those workflows.
 
 ## Validation boundary
 
