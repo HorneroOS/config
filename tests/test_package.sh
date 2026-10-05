@@ -55,6 +55,10 @@ done
 cmp -s "$STAGE/.config/niri/config.kdl" "$ROOT/etc/niri/config.kdl" \
   && pass "Niri system fallback matches materialized user config" \
   || fail "Niri system fallback missing or differs"
+cmp -s "$STAGE/.config/xdg-desktop-portal/niri-portals.conf" \
+  "$ROOT/etc/xdg/xdg-desktop-portal/niri-portals.conf" \
+  && pass "Niri portal selection packages as an XDG default" \
+  || fail "Niri portal selection package path/content"
 # /etc/xdg/hornero/shell.json is sourced from shell/shell.default.json (not
 # the staged HOME) and asserted separately below, so the hornero dir is
 # excluded here; materialize.sh never stages .config/hornero/*.

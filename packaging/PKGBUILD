@@ -17,7 +17,8 @@ makedepends=('librsvg')
 optdepends=(
   'hyprland: compositor defaults under /etc/xdg/hypr'
   'niri: compositor defaults in /etc/niri (fallback) and ~/.config/niri'
-  'xdg-desktop-portal-gnome: screen-sharing portal for Niri sessions'
+  'xdg-desktop-portal-gtk: default fallback portal and file chooser for Niri sessions'
+  'xdg-desktop-portal-gnome: screencasting portal for Niri sessions'
   'xwayland-satellite: XWayland bridge for Niri sessions'
   'kitty: terminal defaults under /etc/xdg/kitty'
   'exo: Hornero default application launcher and TerminalEmulator helper'

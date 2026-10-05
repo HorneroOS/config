@@ -57,6 +57,7 @@ install_file() {
 # --- desktop defaults -> ~/.config -------------------------------------------
 install_dir "desktop/hypr" "$CONFIG_HOME/hypr"
 install_dir "desktop/niri" "$CONFIG_HOME/niri"
+install_file "desktop/xdg-desktop-portal/niri-portals.conf" "$CONFIG_HOME/xdg-desktop-portal/niri-portals.conf"
 install_dir "desktop/kitty" "$CONFIG_HOME/kitty"
 install_file "desktop/xfce4/helpers.rc" "$CONFIG_HOME/xfce4/helpers.rc"
 install_dir "desktop/qt6ct" "$CONFIG_HOME/qt6ct"
