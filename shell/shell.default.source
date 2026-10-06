@@ -5,4 +5,4 @@
 # tests/test_shell_default_sync.sh fails CI when the vendored copy differs
 # from that commit, and warns when shell main has moved past it.
 # Refresh: copy the file from a newer shell commit, then update this SHA.
-shell_sha=8765af543b0f72fe82a3adf9da9bf34396e33024
+shell_sha=f8db401b0e5530c86ceb5e5d30cd819903839a50
