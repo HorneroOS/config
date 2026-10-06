@@ -161,6 +161,12 @@ flagship token palettes and wired through the `gtkTheme` fields of
 `Orchis-*-Compact` references). No GTK 2 is shipped and none is claimed:
 there is no `gtk-2.0/` engine dir anywhere in the deliverable.
 
+The dark recipe packs Buenos Aires Nocturno, Fin del Mundo, Iberá,
+Monochrome, and Patagonia select `Hornero-Dark`; the light Quebrada pack
+selects `Hornero-Light`. Their shell palettes remain scene-specific; GTK
+applications use the matching installed Hornero surface instead of depending
+on a desktop-provided Adwaita style.
+
 - **Source architecture: hand-structured CSS, no SCSS, no vendored trees.**
   Colloid/Orchis/Graphite generate from large copyleft-licensed SCSS
   forests that cannot enter this MIT-only repo, and an SCSS pipeline would

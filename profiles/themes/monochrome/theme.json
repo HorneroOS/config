@@ -6,7 +6,7 @@
   "tags": ["monochrome", "minimal", "a11y", "dark"],
   "darkMode": true,
   "schemeType": "monochrome",
-  "gtkTheme": "Adwaita-dark",
+  "gtkTheme": "Hornero-Dark",
   "iconTheme": "Papirus-Dark",
   "defaultWallpaper": "mono-curated-1.jpg",
   "wallpaperDir": "monochrome",
