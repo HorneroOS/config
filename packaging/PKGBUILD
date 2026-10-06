@@ -32,7 +32,6 @@ optdepends=(
   'handlr: default-application handler under /etc/xdg/handlr'
   'qt6ct: Qt6 platform-theme defaults under /etc/xdg/qt6ct'
   'papirus-icon-theme: Papirus-Dark factory icons'
-  'orchis-theme: Orchis factory GTK themes'
   'ttf-material-symbols-variable: Material Symbols shell icon font'
 )
 # Named "config" (not "$pkgname") so the checkout lands at

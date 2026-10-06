@@ -98,23 +98,21 @@ apply_gtk_theme() {
 	if ! is_gtk_theme_installed "$gtk_theme"; then
 		log "WARN" "GTK theme '$gtk_theme' not found, trying fallbacks..."
 
-		# Common fallback themes in order of preference
-		local fallback_themes=(
-			"Orchis-Light"
-			"elementary"
-			"Arc-Dark"
-			"Arc"
-			"Breeze"
-			"oxygen-gtk"
-		)
-
-		for fallback in "${fallback_themes[@]}"; do
-			if is_gtk_theme_installed "$fallback"; then
-				gtk_theme="$fallback"
-				log "INFO" "Using fallback theme: $gtk_theme"
-				break
-			fi
-		done
+		# Keep GTK applications inside the Hornero appearance family. A missing
+		# pack style falls back to the matching Hornero surface, never a random
+		# third-party theme with unrelated geometry or colors.
+		local effective_scheme fallback_theme
+		effective_scheme="$(effective_gtk_color_scheme "${3:-follow}")"
+		if [[ $effective_scheme == "prefer-light" ]] ||
+			[[ $effective_scheme == "default" && $(read_live_shell_mode) == "light" ]]; then
+			fallback_theme="Hornero-Light"
+		else
+			fallback_theme="Hornero-Dark"
+		fi
+		if is_gtk_theme_installed "$fallback_theme"; then
+			gtk_theme="$fallback_theme"
+			log "INFO" "Using Hornero fallback theme: $gtk_theme"
+		fi
 
 		if ! is_gtk_theme_installed "$gtk_theme"; then
 			log "ERROR" "No suitable GTK theme found, keeping current theme"
@@ -405,7 +403,7 @@ get_current_gtk_color_scheme() {
 # Function to detect optimal GTK theme based on wallpaper colors
 detect_optimal_gtk_theme() {
 	local wallpaper_path="$1"
-	local detected_theme="Orchis-Light" # Default
+	local detected_theme="Hornero-Light"
 	local prefer_dark="false"
 
 	# First, try to use pywal's background color to determine if theme should be dark or light
@@ -426,36 +424,12 @@ detect_optimal_gtk_theme() {
 			# If background is dark (low brightness), suggest dark theme
 			if [[ $brightness -lt 384 ]]; then # 384 = 128 * 3 (threshold for dark)
 				log "INFO" "Dark background detected (brightness: $brightness), suggesting dark theme"
-				local dark_themes=(
-					"Orchis-Dark-Compact"
-					"Arc-Dark"
-					"elementary-dark"
-					"Breeze-Dark"
-				)
-
-				for theme in "${dark_themes[@]}"; do
-					if is_gtk_theme_installed "$theme"; then
-						detected_theme="$theme"
-						prefer_dark="true"
-						break
-					fi
-				done
+				detected_theme="Hornero-Dark"
+				prefer_dark="true"
 			else
 				log "INFO" "Light background detected (brightness: $brightness), suggesting light theme"
-				local light_themes=(
-					"Orchis-Light"
-					"Arc"
-					"elementary"
-					"Breeze"
-				)
-
-				for theme in "${light_themes[@]}"; do
-					if is_gtk_theme_installed "$theme"; then
-						detected_theme="$theme"
-						prefer_dark="false"
-						break
-					fi
-				done
+				detected_theme="Hornero-Light"
+				prefer_dark="false"
 			fi
 		fi
 	elif command -v hornero-smart-colors > /dev/null 2>&1; then
@@ -465,36 +439,12 @@ detect_optimal_gtk_theme() {
 		# Check if current theme is light or dark using smart-colors logic
 		if hornero-smart-colors --analyze 2> /dev/null | grep -q "light theme\|bright"; then
 			log "INFO" "Light theme detected, suggesting light GTK theme"
-			local light_themes=(
-				"Orchis-Light"
-				"Arc"
-				"elementary"
-				"Breeze"
-			)
-
-			for theme in "${light_themes[@]}"; do
-				if is_gtk_theme_installed "$theme"; then
-					detected_theme="$theme"
-					prefer_dark="false"
-					break
-				fi
-			done
+			detected_theme="Hornero-Light"
+			prefer_dark="false"
 		else
 			log "INFO" "Dark theme detected, suggesting dark GTK theme"
-			local dark_themes=(
-				"Orchis-Dark-Compact"
-				"Arc-Dark"
-				"elementary-dark"
-				"Breeze-Dark"
-			)
-
-			for theme in "${dark_themes[@]}"; do
-				if is_gtk_theme_installed "$theme"; then
-					detected_theme="$theme"
-					prefer_dark="true"
-					break
-				fi
-			done
+			detected_theme="Hornero-Dark"
+			prefer_dark="true"
 		fi
 	else
 		log "WARN" "No color analysis available, using default light theme"
@@ -534,7 +484,13 @@ apply_theme_gtk_theme() {
 			prefer_dark="$(normalize_prefer_dark "${theme_info#*:}")"
 			apply_gtk_theme "$gtk_theme" "Numix-Circle" "$prefer_dark"
 		else
-			apply_gtk_theme "Orchis-Dark" "Numix-Circle" "true"
+			local mode
+			mode="$(read_live_shell_mode)"
+			if [[ $mode == "light" ]]; then
+				apply_gtk_theme "Hornero-Light" "Numix-Circle" "false"
+			else
+				apply_gtk_theme "Hornero-Dark" "Numix-Circle" "true"
+			fi
 		fi
 		return
 	fi
@@ -597,9 +553,9 @@ PY
 			gtk_theme="${theme_info%:*}"
 		else
 			if [[ $color_scheme == "prefer-dark" ]]; then
-				gtk_theme="Orchis-Dark-Compact"
+				gtk_theme="Hornero-Dark"
 			else
-				gtk_theme="Orchis-Light-Compact"
+				gtk_theme="Hornero-Light"
 			fi
 		fi
 	fi

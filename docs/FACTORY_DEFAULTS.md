@@ -33,8 +33,10 @@ named readers; verified against the Arch extra repo on 2026-09-13:
   declared in `shell/shell.default.json`
   (`appearance.font.family.material = "Material Symbols Rounded"`).
 - `extra/papirus-icon-theme` — provides `Papirus-Dark` (factory dark).
-- `extra/orchis-theme` — provides `Orchis-Dark-Compact` (factory) and
-  `Orchis-Light-Compact` (light), the GTK themes the flagship recipes pin.
+- Hornero GTK styles — factory appearances use `Hornero-Dark` or
+  `Hornero-Light` to match their selected mode. GTK 2 remains on its toolkit
+  default because Hornero ships GTK 3 and GTK 4 theme trees only; the Hornero
+  appearance catalogue does not need a third-party theme package.
 - `extra/qt6ct` — reader for the shipped Qt6 platform-theme default.
 - Light icon set `Numix-Circle` has no extra package
   (`chaotic-aur/numix-circle-icon-theme-git` only, checked 2026-09-13),

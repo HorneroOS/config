@@ -161,11 +161,11 @@ flagship token palettes and wired through the `gtkTheme` fields of
 `Orchis-*-Compact` references). No GTK 2 is shipped and none is claimed:
 there is no `gtk-2.0/` engine dir anywhere in the deliverable.
 
-The dark recipe packs Buenos Aires Nocturno, Fin del Mundo, Iberá,
-Monochrome, and Patagonia select `Hornero-Dark`; the light Quebrada pack
-selects `Hornero-Light`. Their shell palettes remain scene-specific; GTK
-applications use the matching installed Hornero surface instead of depending
-on a desktop-provided Adwaita style.
+Recipe packs select `Hornero-Dark` or `Hornero-Light` to match their mode,
+while Pampa selects `Hornero-Pampa`. Their shell palettes remain
+scene-specific; GTK 3/4 applications use the matching installed Hornero
+surface instead of depending on an external style. GTK 2 stays on its toolkit
+default because Hornero ships no GTK 2 theme tree.
 
 - **Source architecture: hand-structured CSS, no SCSS, no vendored trees.**
   Colloid/Orchis/Graphite generate from large copyleft-licensed SCSS
