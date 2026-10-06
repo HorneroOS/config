@@ -50,4 +50,17 @@ HOME="$T_HOME" bash "$REPO_ROOT/bin/hornero-gtk-theme" -q current >/dev/null 2>&
   || fail "hornero-gtk-theme -q current exits nonzero with which present"
 pass "hornero-gtk-theme parses -q with which present"
 
+# Package-only layout keeps the parser beside the installed wrapper in
+# /usr/share/hornero and does not materialize the personal ~/.local/lib tree.
+PACKAGE_ROOT="$T_HOME/package/usr/share/hornero"
+mkdir -p "$PACKAGE_ROOT/bin" "$PACKAGE_ROOT/lib/hornero"
+cp "$REPO_ROOT/bin/hornero-gtk-theme" "$PACKAGE_ROOT/bin/hornero-gtk-theme"
+ln -s "$REPO_ROOT/lib/hornero/easy-options" "$PACKAGE_ROOT/lib/hornero/easy-options"
+ln -s "$REPO_ROOT/lib/hornero/gtk-theme-manager.sh" "$PACKAGE_ROOT/lib/hornero/gtk-theme-manager.sh"
+PACKAGE_HOME="$T_HOME/package-home"
+mkdir -p "$PACKAGE_HOME/.config"
+out="$(HOME="$PACKAGE_HOME" bash "$PACKAGE_ROOT/bin/hornero-gtk-theme" -q current 2>&1)" \
+  || fail "package-only hornero-gtk-theme resolves sibling parser without user dotfiles: $out"
+pass "package-only GTK wrapper resolves the sibling parser"
+
 echo "test_cli_flags.sh: ALL GREEN"

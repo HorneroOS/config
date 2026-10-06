@@ -112,7 +112,8 @@ def load_theme(theme_dir: Path, walls_roots: Path) -> dict | None:
         "tags": data.get("tags") or [],
         "darkMode": bool(data.get("darkMode", True)),
         "schemeType": data.get("schemeType") or "tonal-spot",
-        "gtkTheme": data.get("gtkTheme") or "Orchis-Light-Compact",
+        "gtkTheme": data.get("gtkTheme")
+        or ("Hornero-Dark" if data.get("darkMode", True) else "Hornero-Light"),
         "iconTheme": data.get("iconTheme") or "Numix-Circle",
         "gtkPreferDark": (
             bool(data["gtkPreferDark"])

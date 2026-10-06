@@ -43,7 +43,7 @@
 ##     @script.name -q -p current
 ##     @script.name -q -p current-icon
 ##     @script.name -q -p current-color-scheme
-##     @script.name apply Orchis-Dark-Compact Numix-Circle prefer-light
+##     @script.name apply Hornero-Dark Papirus-Dark prefer-dark
 ##     @script.name set-icons Papirus-Dark
 ##     @script.name color-scheme prefer-light
 ##     @script.name color-scheme follow
@@ -53,8 +53,27 @@
 
 set -euo pipefail
 
-# Source EasyOptions for argument parsing
-source ~/.local/lib/hornero/easy-options/easyoptions.sh || exit
+# Resolve the shared option parser from a user install or the package's
+# /usr/share/hornero sibling tree. Package-only installs must not depend on a
+# dotfiles-managed copy under ~/.local/lib.
+script_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+easyoptions_paths=(
+	"$HOME/.local/lib/hornero/easy-options/easyoptions.sh"
+	"$script_dir/../lib/hornero/easy-options/easyoptions.sh"
+)
+easyoptions_found=false
+for path in "${easyoptions_paths[@]}"; do
+	if [[ -f $path ]]; then
+		source "$path"
+		easyoptions_found=true
+		break
+	fi
+done
+
+if [[ $easyoptions_found != "true" ]]; then
+	echo "Error: Hornero option parser not found in the user or package data paths." >&2
+	exit 1
+fi
 
 # Source the GTK theme manager - try multiple locations
 gtk_theme_manager_paths=(

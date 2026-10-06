@@ -368,7 +368,9 @@ hornero_apply_theme() {
 	else
 		dark_mode="dark"
 	fi
-	gtk_theme="$(_hornero_appearance_json_get "$config_json" gtkTheme Orchis-Light-Compact)"
+	gtk_fallback="Hornero-Dark"
+	[[ $dark_mode == "light" ]] && gtk_fallback="Hornero-Light"
+	gtk_theme="$(_hornero_appearance_json_get "$config_json" gtkTheme "$gtk_fallback")"
 	icon_theme="$(_hornero_appearance_json_get "$config_json" iconTheme Numix-Circle)"
 	theme_name="$(_hornero_appearance_json_get "$config_json" name "$theme_id")"
 	wallpaper_dir="$(_hornero_appearance_json_get "$config_json" wallpaperDir "$theme_id")"

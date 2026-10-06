@@ -30,14 +30,18 @@ that in CI.
 
 ## Status
 
-HorneroOS Desktop is Wayland-first. Hyprland remains the validated session;
-Niri has a curated session configuration and Shell integration marked
-experimental until graphical acceptance runs cover the real session. The
-defaults include Niri's upstream 26.04 configuration as a starting point,
-Hornero Shell startup, Hornero shortcuts, native screenshot selection, and
-the compositor-specific `/etc/niri/config.kdl` package fallback. This does
-not claim full feature parity: Niri currently has no special workspaces,
-Hyprland-native window previews, or Hyprland window geometry picker. See
+HorneroOS Desktop is Wayland-first. Hyprland remains the supported session.
+Niri 26.04 has a passing single-output Hornero QA baseline covering Shell
+startup, workspace/window state and switching, Launcher, Hornero Light,
+package wallpaper discovery, Appearance, Layout Picker, lock/unlock,
+screencast portal presence, and screenshot capture. Niri remains experimental
+while multiple outputs, HiDPI, actual OBS capture, notifications, recovery,
+and the broader Shell surface matrix are validated. The defaults include
+Niri's upstream 26.04 configuration, Hornero Shell startup, Hornero shortcuts,
+native screenshot selection, and the compositor-specific
+`/etc/niri/config.kdl` package fallback. This does not claim full feature
+parity: Niri currently has no special workspaces, Hyprland-native window
+previews, or Hyprland window geometry picker. See
 [`docs/NIRI.md`](docs/NIRI.md) and the Shell's
 [`docs/COMPOSITORS.md`](https://github.com/HorneroOS/shell/blob/main/docs/COMPOSITORS.md).
 

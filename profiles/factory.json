@@ -17,8 +17,7 @@
     "note": "Fusion + Hornero fonts; see docs/QT_DECISION.md."
   },
   "gtk": {
-    "theme": "Orchis-Dark-Compact",
-    "package": "extra/orchis-theme",
+    "theme": "Hornero-Dark",
     "iconTheme": "Papirus-Dark",
     "preferDark": true,
     "note": "Applied by the config-gtk worker via desktop/gtk/settings.ini; recorded here so fresh-boot-dark is one contract."

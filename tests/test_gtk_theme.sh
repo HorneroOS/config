@@ -33,27 +33,37 @@ root = Path(sys.argv[1])
 errors = []
 def err(msg): errors.append(msg)
 
+factory = json.loads((root / "profiles/factory.json").read_text())
+if factory.get("gtk", {}).get("theme") != "Hornero-Dark":
+    err("factory GTK style must use Hornero-Dark")
+if "orchis-theme" in (root / "packaging/PKGBUILD").read_text():
+    err("the Hornero GTK catalogue must not depend on Orchis")
+gtk_manager = (root / "lib/hornero/gtk-theme-manager.sh").read_text()
+if "Orchis" in gtk_manager:
+    err("GTK auto-detection and fallbacks must stay in the Hornero theme family")
+if 'gtk-theme-name="Orchis-Light"' in (root / "desktop/gtk/gtkrc-2.0").read_text():
+    err("the GTK2 skeleton must not request the unavailable Orchis theme")
+
 pairs = (("hornero-dark", "Hornero-Dark"), ("hornero-light", "Hornero-Light"))
 # Every dark pack that previously fell back to stock Adwaita uses the
 # matching first-party GTK surface. Keep the recipe catalogue independent
 # from whether a desktop environment happens to install Adwaita.
 recipe_root = root / "profiles/themes"
-for tid, expected in {
-    "buenos-aires-nocturno": "Hornero-Dark",
-    "fin-del-mundo": "Hornero-Dark",
-    "ibera": "Hornero-Dark",
-    "monochrome": "Hornero-Dark",
-    "patagonia": "Hornero-Dark",
-    "quebrada": "Hornero-Light",
-}.items():
-    theme = json.loads((recipe_root / tid / "theme.json").read_text())
-    if theme.get("gtkTheme") != expected:
-        err(f"{tid}/theme.json gtkTheme={theme.get('gtkTheme')!r}, want {expected!r}")
 for recipe in sorted(recipe_root.glob("*/theme.json")):
     theme = json.loads(recipe.read_text())
     gtk_theme = theme.get("gtkTheme", "")
-    if gtk_theme.lower().startswith("adwaita"):
-        err(f"{recipe.parent.name}/theme.json depends on stock GTK style {gtk_theme!r}")
+    theme_id = recipe.parent.name
+    expected = (
+        "Hornero-Pampa"
+        if theme_id == "pampa"
+        else "Hornero-Dark"
+        if theme.get("darkMode", True)
+        else "Hornero-Light"
+    )
+    if gtk_theme != expected:
+        err(f"{theme_id}/theme.json gtkTheme={gtk_theme!r}, want {expected!r}")
+    if gtk_theme.lower().startswith(("adwaita", "orchis")):
+        err(f"{theme_id}/theme.json depends on an external GTK style {gtk_theme!r}")
 
 # Selectors every shipped gtk.css must carry (gallery fixture covers these).
 required = ["button", "entry", "headerbar", "notebook", "tab", "sidebar",
