@@ -157,7 +157,8 @@ elif command -v niri >/dev/null 2>&1; then
 else
   # Static contract only: this is not a substitute for upstream niri validate.
   grep -q '^binds {' "$NIRI_CONFIG" \
-    && grep -q 'spawn-at-startup "horneroctl" "shell" "start" "--yes"' "$NIRI_CONFIG" \
+    && grep -q 'NIRI_SOCKET=' "$NIRI_CONFIG" \
+    && grep -q 'horneroctl shell start --yes' "$NIRI_CONFIG" \
     && grep -q 'Mod+Shift+B.*layoutPicker' "$NIRI_CONFIG" \
     && pass "Niri config presence and Hornero binding contract (niri parser unavailable)" \
     || fail "Niri config Hornero binding contract"
