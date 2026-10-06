@@ -272,10 +272,11 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 
-// Niri stores its IPC socket in the user runtime directory. The package's
-// spawn-at-startup child does not receive NIRI_SOCKET, so resolve it before
-// starting the shared Shell and its compositor adapter.
-spawn-sh-at-startup "for attempt in 1 2 3 4 5; do NIRI_SOCKET=$(find \"$XDG_RUNTIME_DIR\" -maxdepth 1 -type s -name 'niri.*.sock' -print -quit); [ -S \"$NIRI_SOCKET\" ] && break; sleep 0.1; done; [ -S \"$NIRI_SOCKET\" ] || exit 1; export NIRI_SOCKET; horneroctl shell start --yes"
+// Niri's IPC socket name includes the Wayland display for its instance.
+// The package's startup child does not receive NIRI_SOCKET, so match this
+// session's WAYLAND_DISPLAY instead of choosing another Niri instance's
+// socket from the shared runtime directory.
+spawn-sh-at-startup "for attempt in 1 2 3 4 5; do NIRI_SOCKET=$(find \"$XDG_RUNTIME_DIR\" -maxdepth 1 -type s -name \"niri.$WAYLAND_DISPLAY.*.sock\" -print -quit); [ -S \"$NIRI_SOCKET\" ] && break; sleep 0.1; done; [ -S \"$NIRI_SOCKET\" ] || exit 1; export NIRI_SOCKET; niri msg --json outputs >/dev/null 2>&1 || exit 1; horneroctl shell start --yes"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"

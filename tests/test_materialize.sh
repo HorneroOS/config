@@ -30,6 +30,8 @@ grep -q '^default=gtk;$' "$TMP_HOME/.config/xdg-desktop-portal/niri-portals.conf
 grep -q '^org.freedesktop.impl.portal.FileChooser=gtk;$' "$TMP_HOME/.config/xdg-desktop-portal/niri-portals.conf"
 grep -q '^org.freedesktop.impl.portal.Screencast=gnome;$' "$TMP_HOME/.config/xdg-desktop-portal/niri-portals.conf"
 grep -Fq 'NIRI_SOCKET=' "$TMP_HOME/.config/niri/config.kdl"
+grep -Fq 'niri.$WAYLAND_DISPLAY.*.sock' "$TMP_HOME/.config/niri/config.kdl"
+grep -Fq 'niri msg --json outputs' "$TMP_HOME/.config/niri/config.kdl"
 grep -Fq 'horneroctl shell start --yes' "$TMP_HOME/.config/niri/config.kdl"
 grep -q 'Mod+Shift+B.*layoutPicker' "$TMP_HOME/.config/niri/config.kdl"
 check ".config/kitty/kitty.conf"
