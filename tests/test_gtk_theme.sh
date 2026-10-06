@@ -34,6 +34,27 @@ errors = []
 def err(msg): errors.append(msg)
 
 pairs = (("hornero-dark", "Hornero-Dark"), ("hornero-light", "Hornero-Light"))
+# Every dark pack that previously fell back to stock Adwaita uses the
+# matching first-party GTK surface. Keep the recipe catalogue independent
+# from whether a desktop environment happens to install Adwaita.
+recipe_root = root / "profiles/themes"
+for tid, expected in {
+    "buenos-aires-nocturno": "Hornero-Dark",
+    "fin-del-mundo": "Hornero-Dark",
+    "ibera": "Hornero-Dark",
+    "monochrome": "Hornero-Dark",
+    "patagonia": "Hornero-Dark",
+    "quebrada": "Hornero-Light",
+}.items():
+    theme = json.loads((recipe_root / tid / "theme.json").read_text())
+    if theme.get("gtkTheme") != expected:
+        err(f"{tid}/theme.json gtkTheme={theme.get('gtkTheme')!r}, want {expected!r}")
+for recipe in sorted(recipe_root.glob("*/theme.json")):
+    theme = json.loads(recipe.read_text())
+    gtk_theme = theme.get("gtkTheme", "")
+    if gtk_theme.lower().startswith("adwaita"):
+        err(f"{recipe.parent.name}/theme.json depends on stock GTK style {gtk_theme!r}")
+
 # Selectors every shipped gtk.css must carry (gallery fixture covers these).
 required = ["button", "entry", "headerbar", "notebook", "tab", "sidebar",
             "menu", "popover", "tooltip", "scrollbar", "scale", "progressbar",
