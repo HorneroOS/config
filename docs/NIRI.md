@@ -70,14 +70,25 @@ The configuration is based on upstream Niri v26.04 and `scripts/validate.sh`
 runs `NIRI_CONFIG=... niri validate` when the Niri executable is available. In
 environments without Niri, static validation checks only the file and key
 product bindings. A QEMU guest running Niri v26.04 at 1280×800 has been
-booted and exercised through keyboard and pointer input: Shell startup,
-Launcher, Dashboard, Control Center, Appearance, a Hornero Light theme change,
-Layout Picker/Hornero Left, workspace switching, and native screenshot
-selection. This proves a real one-output session rather than config parsing
-alone. The host itself remains on Hyprland. Multi-output focus, lock/session
-recovery, OBS/screencast through the selected portal, external GTK/Qt app
-agreement, and the remaining supported-shell surfaces still need graphical
-acceptance before Niri can move beyond experimental.
+booted and exercised with keyboard and pointer input. The baseline journey
+covers Shell startup, the Hornero Left rail, real workspace and focused-window
+state, Launcher, Dashboard, Control Center, Appearance, a Hornero Light theme
+change, Layout Picker, Kitty, outside-click dismissal, and Niri's native
+screenshot action. The run also verifies that the desktop portal exports
+`org.freedesktop.portal.ScreenCast`; this confirms portal discovery, not an
+end-to-end OBS recording. The host itself remains on Hyprland. This is a real
+one-output session, not config parsing alone, but it does not establish
+multi-output focus, lock/session recovery, actual screencast capture, external
+GTK/Qt app agreement, or the remaining Shell surface matrix. Niri therefore
+remains experimental.
+
+The repeatable acceptance scenario is
+[`HorneroOS/qa/scenarios/compositors/niri-desktop-baseline.yaml`](https://github.com/HorneroOS/qa/blob/main/scenarios/compositors/niri-desktop-baseline.yaml).
+Its October 6, 2026 run used the `niri-main-20261006` image built from Shell
+`2608fdee`, Config `e4ebd349`, and `horneroctl` preview15 (`7471351`); all
+scenario actions and assertions passed. The run is recorded under ID
+`20261006T172058Z-compositors-niri-desktop-baseline-1`; `hornero-qa inspect`
+shows its per-step screenshots and JSON probes alongside the IPC evidence.
 
 ## Upstream references
 
