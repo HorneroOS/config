@@ -1,6 +1,6 @@
 {
-  "provenance": "https://github.com/ulises-jeremias/dotfiles (theme metadata source, b26db04)",
-  "note": "Theme metadata is shipped separately from most wallpaper media. Hornero flagship images ship at /usr/share/hornero/wallpapers/<wallpaperDir>/. Recipe wallpapers are optional media and can live in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/. Hornero Originals artwork is maintained in https://github.com/ulises-jeremias/dotfiles. If a referenced image is absent, the theme remains available and the Shell explains that wallpaper media is missing.",
+  "provenance": "HorneroOS/config profiles/themes plus licensed assets in assets/wallpapers/argentina/",
+  "note": "Theme metadata is shipped with the config package. Procedural flagship wallpapers and the six attributed Argentina photo defaults ship under /usr/share/hornero/wallpapers/<wallpaperDir>/. Optional user collections remain in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/. If a referenced optional image is absent, the theme remains available and the Shell explains that wallpaper media is missing.",
   "themes": [
     {
       "id": "catppuccin-latte",
@@ -74,7 +74,7 @@
     },
     {
       "id": "pampa",
-      "defaultWallpaper": "pampa-01.png",
+      "defaultWallpaper": "pampa-01.jpg",
       "wallpaperDir": "pampa"
     },
     {

@@ -63,6 +63,17 @@ check ".local/bin/hornero-appearance"
 check ".local/bin/hornero-night-mode"
 check ".local/bin/hornero-wallpaper-set"
 check ".local/bin/hornero-wallpaper-current"
+for photo in \
+  buenos-aires-nocturno/buenos-aires-nocturno-01.jpg \
+  fin-del-mundo/beagle-blue-hour-01.jpg \
+  ibera/ibera-mist-01.jpg \
+  pampa/pampa-01.jpg \
+  patagonia/patagonia-glacier-01.jpg \
+  quebrada/quebrada-mineral-01.jpg; do
+  [[ -f "$TMP_HOME/.local/share/hornero/wallpapers/$photo" ]] \
+    || { echo "TEST-FAIL: photo wallpaper not staged: $photo" >&2; exit 1; }
+done
+echo "TEST-PASS: six licensed Argentina photo wallpapers staged"
 
 # theme packs: every curated pack in profiles/themes lands in canonical
 # hornero/* (rows 1+8). The expected count is derived from the repo so

@@ -1,0 +1,2 @@
+# Reproducible derivative generator for profiles/themes/wallpaper-provenance.json
+Pillow==12.3.0
