@@ -25,12 +25,6 @@ else
   echo "VALIDATE-SKIP: shellcheck not installed" >&2
 fi
 
-if python3 "$REPO_ROOT/scripts/validate-wallpapers.py"; then
-  pass "licensed wallpaper assets and provenance"
-else
-  fail "licensed wallpaper assets and provenance"
-fi
-
 # --- structured formats via python stdlib ---------------------------------------
 if ! python3 - "$REPO_ROOT" <<'PY'
 import configparser, json, re, sys, tomllib, xml.etree.ElementTree as ET

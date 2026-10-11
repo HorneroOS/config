@@ -24,7 +24,7 @@ Later product-owned payloads identify their HorneroOS source in the table.
 | `desktop/copyq/copyq.conf` | `home/dot_config/copyq/copyq.conf.tmpl` | Verified benign: the `.tmpl` suffix is historical, the file contains zero template variables; shipped verbatim minus suffix. |
 | `xdg/handlr/handlr.toml` | `home/dot_config/handlr/` | Generic defaults (`enable_selector = false`). |
 | `xdg/git/config` + `xdg/git/ignore` | `home/dot_config/git/config.tmpl` + `ignore` | Materialized: `{{ .chezmoi.homeDir }}` → `~`; mergetool range loop expanded to three static stanzas; the `[commit] template` stanza dropped (template file not shipped — a dangling reference would break `git commit`); the `diff-merge-tools`/`gui-config` includes dropped (files not shipped). The `config.user` include is kept as an overlay hook. **No `[user]` stanza ships** (`config.user.tmpl` identity excluded). |
-| `profiles/themes/<20 ids>/theme.json` + `wallpapers.manifest.json` | `home/dot_local/share/hornero/themes/` | Theme recipes and stable wallpaper refs. The six licensed regional default photos are product assets in this repository and ship in the AUR package; optional user-curated packs remain outside the product package. See `docs/WALLPAPERS.md`. |
+| `profiles/themes/<12 ids>/theme.json` + `wallpapers.manifest.json` | `home/dot_local/share/hornero/themes/` | Recipes only. Binary wallpaper packs (~45M upstream) are not vendored; the manifest records each pack's `defaultWallpaper`/`wallpaperDir` refs and where to fetch them. |
 | `profiles/shell-presets/<15 ids>.json` | `HorneroOS/shell@7de18f3` (`presets/`) | Layout source stays in Shell; Config carries the byte-synced package payload under `shell/shell-presets.source` and installs it at `/usr/share/hornero/shell-presets`. Materialize also publishes the canonical user catalogue. |
 | `lib/hornero/` (10 implementation files + `easy-options/easyoptions.sh`) | `home/dot_local/lib/hornero/` | Appearance/GTK/wallpaper logic plus vendored arg parser. `executable_example.sh` not taken (sample noise). |
 | `bin/hornero-{gtk-theme,hyprlock-theme,appearance}` | Product-owned command wrappers | `hornero-gtk-theme` is the canonical GTK apply path into `lib/hornero/gtk-theme-manager.sh`; `hornero-theme-selector` was removed because it depended on a nonexistent settings GUI and duplicated Control Center. |
@@ -89,7 +89,7 @@ is recorded in both the verdict and the shipped-payload table above.
 | bookmarks | `home/dot_config/gtk-3.0/bookmarks.tmpl` | EXCLUDE | Embodies username plus personal directory layout via template; hosts generate GTK bookmarks from XDG dirs at install. Confirms the existing excluded row. |
 | config.user | `home/dot_config/git/config.user.tmpl` | EXCLUDE | Identity (`user.name`/`user.email`) by definition; lives only in `~/.config/git/config.user` via the kept `[include]` overlay hook. Confirms the existing excluded row. |
 | private_credentials | `home/dot_config/private_credentials/` (2 password-manager-backed key templates) | EXCLUDE | API-key templates resolved from a password manager; never curated, never shipped. Confirms the existing excluded row. |
-| wallpaper-binaries | `home/dot_local/share/hornero/wallpapers/` (~45M at the audited dotfiles revision) | PARTIAL / AUDIT | Personal optional collections are not copied or redistributed. Six Argentina defaults are separately sourced, license-verified photos maintained by HorneroOS/config and shipped by its AUR package. Full classification and hashes: `profiles/themes/dotfiles-wallpaper-audit.json`. |
+| wallpaper-binaries | `home/dot_local/share/hornero/wallpapers/` (~45M upstream) | EXCLUDE | Binaries are never vendored; `profiles/themes/wallpapers.manifest.json` records refs plus fetch locations and is the distribution contract. Packs ship via the release pipeline, separately. |
 | shell-presets | `home/dot_local/share/hornero/shell-presets/` (15 layout JSON files) | ADOPT-COPY | Quickshell-owned source remains `HorneroOS/shell`; the Config package and materialized user catalogue now carry a byte-synced copy pinned in `shell/shell-presets.source`. Dotfiles can retire its duplicate after that package is installed. |
 | shell-stub | `dot_zshrc`, `dot_p10k.zsh`, aliases, profile, xinitrc, xprofile, `dot_zsh/`, `dot_Xresources` | KEEP-DEFERRED | Owner `HorneroOS/config` shell design pass (see `shell/README.md`): prompt choice, plugin surface, and POSIX-vs-zsh scope are undecided. No generic default invented here. |
 | profiles | `profiles/base`, `HORNERO_PROFILE=desktop` / `developer` (packaging matrix) | KEEP-DEFERRED | Owner `HorneroOS/config`. `desktop` and `developer` stay aliases of `base` (the packaging test asserts byte-identical trees) until a real divergence is wanted; no profile invented in this pass. |
@@ -120,9 +120,8 @@ v1.0.0. Dark and light are first-class distinct ramps (deep terracotta
 `#B24827`/white for light, ember `#E07856`/espresso for dark), never an
 inversion. `scripts/check-contrast.py` (stdlib-only, MIT) gates every
 text-on-surface pair at WCAG AA (>= 4.5:1) and runs in `scripts/validate.sh`,
-`tests/test_contrast.sh`, and CI; photos now have a dedicated per-image
-provenance and license manifest. The package declares MIT, CC BY 2.0, and
-CC BY-SA 4.0 for the respective assets. See `docs/WALLPAPERS.md`.
+`tests/test_contrast.sh`, and CI; wallpaper binaries stay refs-only in
+`wallpapers.manifest.json`. All new code is MIT-only (no GPL).
 
 
 ## Brand identity P2 (new authorship, not extraction)

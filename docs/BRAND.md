@@ -60,10 +60,7 @@ fastfetch --logo-type file \
 
 ## Wallpaper solution (no vendored binaries)
 
-Flagship SVG sources remain procedural and render at install time. The six
-licensed Argentina photo defaults are shipped separately as optimized JPEGs;
-their attribution and terms are documented in `profiles/themes/WALLPAPER-CREDITS.md`.
-See `docs/WALLPAPERS.md` for the full asset policy. Fresh
+Wallpaper binaries are never vendored (see `docs/DECISIONS.md`). Fresh
 boot shows intentional Hornero visuals through this chain:
 
 1. Source: `assets/brand/wallpaper/hornero-{dark,light}.svg` +
