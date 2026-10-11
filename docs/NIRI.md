@@ -29,6 +29,11 @@ backend.
 | `Super+X` | Session menu |
 | `Super+,` | Appearance in Control Center |
 | `Super+E` | Open Yazi in the configured terminal, restoring its last directory |
+
+The Yazi shortcut opens a floating file-manager window in Niri. Hornero's
+window rule recognizes the application IDs used by Kitty, Alacritty, and
+Ghostty, so changing the configured terminal does not turn that workflow into
+another tiled terminal column.
 | `Super+V` | Clipboard history |
 | `Super+L` | Lock session |
 | `Print` | Niri screenshot selection UI |

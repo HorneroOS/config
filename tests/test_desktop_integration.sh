@@ -154,6 +154,9 @@ grep -Fq 'horneroctl apps terminal-file --new-window --path "%f"' "$TMP_HOME/.co
 grep -Fq 'match:class = ^(yazi-popup|com\.horneroos\.yazi-popup)$' \
   "$TMP_HOME/.config/hypr/hyprland.conf.d/window-rules.conf" \
   || fail "Yazi popup rule does not recognize Ghostty's GTK application ID"
+grep -Fq 'match app-id=r#"^(yazi-popup|com\.horneroos\.yazi-popup)$"#' \
+  "$TMP_HOME/.config/niri/config.kdl" \
+  || fail "Niri Yazi popup rule does not recognize Ghostty's application ID"
 grep -qx 'TerminalEmulator=kitty' "$TMP_HOME/.config/xfce4/helpers.rc" \
   || fail "Exo default terminal is missing from the materialized Hornero profile"
 pass "Niri, Hyprland and Thunar use the package-owned default terminal"
