@@ -109,6 +109,9 @@ for _qt in hornero-dark hornero-light pampa; do
   cmp -s "$_QTDRIFT/$_qt.conf" "$TMP_HOME/.config/qt6ct/colors/$_qt.conf" \
     || fail "qt6ct colors/$_qt.conf drifts from the generator"
 done
+grep -q '^; Default wallpaper: pampa-01.png\.$' \
+  "$TMP_HOME/.config/qt6ct/colors/pampa.conf" \
+  || fail "Pampa qt6ct scheme does not document its default wallpaper"
 rm -rf "$_QTDRIFT"
 pass "qt6ct per-theme palettes materialized and drift-free"
 

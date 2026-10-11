@@ -169,12 +169,18 @@ def build_scheme(theme: dict) -> dict[str, list[str]]:
     }
 
 
-def render(theme_id: str, scheme: dict[str, list[str]], collection: str) -> str:
+def render(
+    theme_id: str,
+    scheme: dict[str, list[str]],
+    collection: str,
+    default_wallpaper: str,
+) -> str:
     lines = [
         "; qt6ct color scheme — GENERATED, do not hand-edit.",
         f"; Source: profiles/themes/{theme_id}/theme.json via",
         ";   scripts/generate-qt-schemes.py (regenerate must diff clean).",
         *([f"; Product collection: {collection}."] if collection else []),
+        f"; Default wallpaper: {default_wallpaper}.",
         "; Roles follow QPalette::ColorRole order; see the generator",
         "; header for the token mapping.",
         "[ColorScheme]",
@@ -196,7 +202,13 @@ def main() -> int:
     for theme_id in THEMES:
         theme = json.loads((THEMES_DIR / theme_id / "theme.json").read_text())
         (out / f"{theme_id}.conf").write_text(
-            render(theme_id, build_scheme(theme), theme.get("collection", "")))
+            render(
+                theme_id,
+                build_scheme(theme),
+                theme.get("collection", ""),
+                theme["defaultWallpaper"],
+            )
+        )
         print(f"wrote {theme_id}.conf")
     return 0
 
