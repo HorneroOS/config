@@ -147,66 +147,13 @@ grep -Fq '"controlCenter" "open" "appearance"' "$TMP_HOME/.config/niri/config.kd
 grep -qx 'TerminalEmulator=kitty' "$TMP_HOME/.config/xfce4/helpers.rc" \
   || fail "Exo default terminal is missing from the materialized Hornero profile"
 pass "Niri Settings IPC and package-owned default terminal are valid"
-
-# Optional terminal configs use their native lookup paths and all share the
-# same dynamic Hornero palette output. Kitty remains Exo's default terminal.
-grep -Fq 'import = ["hornero-dark.toml", "hornero-colors.toml"]' \
-  "$TMP_HOME/.config/alacritty/alacritty.toml" \
-  || fail "Alacritty does not import its static and generated palette files"
-grep -Fq 'live_config_reload = true' "$TMP_HOME/.config/alacritty/alacritty.toml" \
-  || fail "Alacritty generated colors will not live-reload"
-grep -qx 'theme = Hornero Dynamic' "$TMP_HOME/.config/ghostty/config.ghostty" \
-  || fail "Ghostty does not select Hornero Dynamic"
-python3 - "$REPO_ROOT/profiles/factory.json" <<'PY'
-import json, sys
-terminal = json.load(open(sys.argv[1]))["terminal"]
-assert terminal["default"] == "kitty"
-assert terminal["optional"] == [
-    "{config}/alacritty/alacritty.toml",
-    "{config}/ghostty/config.ghostty",
-]
-PY
-pass "optional terminal defaults are explicit and Kitty remains the default"
-python3 - "$REPO_ROOT" <<'PY'
-import re, sys, tomllib
-from pathlib import Path
-root = Path(sys.argv[1])
-for name, kitty_name in (("hornero-dark", "hornero-dark.conf"),
-                         ("hornero-light", "hornero-light.conf")):
-    toml = tomllib.loads((root / "desktop/alacritty" / f"{name}.toml").read_text())
-    kitty = {}
-    for line in (root / "desktop/kitty" / kitty_name).read_text().splitlines():
-        match = re.match(r"^(background|foreground|color([0-9]|1[0-5]))\s+(#[0-9A-Fa-f]{6})$", line)
-        if match:
-            kitty[match.group(1)] = match.group(3)
-    assert toml["colors"]["primary"]["background"] == kitty["background"]
-    assert toml["colors"]["primary"]["foreground"] == kitty["foreground"]
-    assert [toml["colors"]["normal"][key] for key in
-            ("black", "red", "green", "yellow", "blue", "magenta", "cyan", "white")] == [
-                kitty[f"color{i}"] for i in range(8)]
-    assert [toml["colors"]["bright"][key] for key in
-            ("black", "red", "green", "yellow", "blue", "magenta", "cyan", "white")] == [
-                kitty[f"color{i}"] for i in range(8, 16)]
-ghostty = {}
-for line in (root / "desktop/ghostty/themes/Hornero Dynamic").read_text().splitlines():
-    match = re.match(r"^palette = ([0-9]|1[0-5])=(#[0-9A-Fa-f]{6})$", line)
-    if match:
-        ghostty[int(match.group(1))] = match.group(2)
-assert [ghostty[i] for i in range(16)] == [
-    re.search(rf"^color{i}\s+(#[0-9A-Fa-f]{{6}})$",
-              (root / "desktop/kitty/hornero-dark.conf").read_text(), re.M).group(1)
-    for i in range(16)
-]
-PY
-pass "Alacritty static variants and Ghostty fallback match Hornero's tested Kitty palettes"
 # No runtime dependency on ulises-jeremias/dotfiles in anything new or
 # materialized: that repo is a read-only extraction source (provenance
 # mentions in DECISIONS/docs stay allowlisted per AGENTS.md).
 # NOTE: this test file itself is excluded from the search below because it
 # necessarily spells out the forbidden patterns to assert their absence.
 if grep -rn "git clone.*dotfiles\|curl.*dotfiles\|wget.*dotfiles\|github.com/ulises-jeremias/dotfiles.*clone\|raw.githubusercontent.*dotfiles" \
-    "$REPO_ROOT/desktop/kitty" "$REPO_ROOT/desktop/alacritty" "$REPO_ROOT/desktop/ghostty" \
-    "$REPO_ROOT/desktop/hypr" "$REPO_ROOT/desktop/qt6ct" \
+    "$REPO_ROOT/desktop/kitty" "$REPO_ROOT/desktop/hypr" "$REPO_ROOT/desktop/qt6ct" \
     "$REPO_ROOT/profiles/factory.json" "$REPO_ROOT/scripts/check-terminal-contrast.py" \
     2>/dev/null | grep -v "test_desktop_integration" ; then
   fail "new desktop-integration files reference a dotfiles runtime fetch"

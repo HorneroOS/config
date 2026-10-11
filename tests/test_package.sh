@@ -48,7 +48,6 @@ for entry in "$STAGE"/.config/*; do
     continue
   fi
   [[ "$base" == niri ]] && continue
-  [[ "$base" == alacritty || "$base" == ghostty ]] && continue
   [[ -e "$ROOT/etc/xdg/$base" ]] || fail "installed tree missing /etc/xdg/$base"
 done
 # Niri uses its compositor-specific system fallback path, rather than the
@@ -63,7 +62,7 @@ cmp -s "$STAGE/.config/xdg-desktop-portal/niri-portals.conf" \
 # /etc/xdg/hornero/shell.json is sourced from shell/shell.default.json (not
 # the staged HOME) and asserted separately below, so the hornero dir is
 # excluded here; materialize.sh never stages .config/hornero/*.
-diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero --exclude=systemd --exclude=niri --exclude=alacritty --exclude=ghostty --exclude=uca.xml >/dev/null 2>&1 \
+diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero --exclude=systemd --exclude=niri --exclude=uca.xml >/dev/null 2>&1 \
   && pass "staged .config matches /etc/xdg" \
   || fail "staged .config differs from /etc/xdg"
 [[ -f "$STAGE/.config/Thunar/uca.xml" ]] \
@@ -72,20 +71,6 @@ diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero -
 [[ ! -e "$ROOT/etc/xdg/Thunar/uca.xml" ]] \
   && pass "package leaves Thunar-owned system uca.xml untouched" \
   || fail "package conflicts with Thunar-owned system uca.xml"
-for file in alacritty.toml hornero-dark.toml hornero-light.toml hornero-colors.toml; do
-  cmp -s "$STAGE/.config/alacritty/$file" "$ROOT/etc/alacritty/$file" \
-    && pass "Alacritty system fallback $file" \
-    || fail "Alacritty system fallback missing/different: $file"
-done
-cmp -s "$STAGE/.config/ghostty/config.ghostty" \
-  "$ROOT/etc/skel/.config/ghostty/config.ghostty" \
-  && pass "Ghostty new-user config seed" || fail "Ghostty skel config missing/different"
-cmp -s "$STAGE/.config/ghostty/themes/Hornero Dynamic" \
-  "$ROOT/usr/share/ghostty/themes/Hornero Dynamic" \
-  && pass "Ghostty system theme fallback" || fail "Ghostty system theme missing/different"
-[[ ! -e "$ROOT/etc/xdg/alacritty" && ! -e "$ROOT/etc/xdg/ghostty" ]] \
-  && pass "terminal configs use upstream-supported system locations" \
-  || fail "Alacritty/Ghostty config was staged under unsupported /etc/xdg"
 cmp -s "$STAGE/.gtkrc-2.0" "$ROOT/etc/xdg/gtkrc-2.0" \
   && pass "gtkrc-2.0 skeleton" || fail "gtkrc-2.0 skeleton"
 # Factory shell default (path-contract row 6): system location only, byte-
@@ -138,9 +123,9 @@ rm -rf "$STAGE"
 # /usr/share, and the pacman metadata dotfiles. Anything else fails.
 if find "$ROOT" -path "$ROOT/.BUILDINFO" -prune -o -path "$ROOT/.PKGINFO" -prune \
     -o -path "$ROOT/.MTREE" -prune -o -print \
-    | grep -vE "^$ROOT/(etc/xdg|etc/systemd|etc/niri|etc/alacritty|etc/skel|usr/share)(/|$)" | grep -vE "^$ROOT/(etc|usr)$" \
+    | grep -vE "^$ROOT/(etc/xdg|etc/systemd|etc/niri|usr/share)(/|$)" | grep -vE "^$ROOT/(etc|usr)$" \
     | grep -vE "^$ROOT$" | grep -q .; then
-  fail "files outside /etc/xdg + /etc/alacritty + /etc/skel + /etc/systemd/user + /usr/share"
+  fail "files outside /etc/xdg + /etc/systemd/user + /usr/share"
 else
   pass "install prefixes"
 fi
