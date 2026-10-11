@@ -73,6 +73,8 @@ install_dir "desktop/btop" "$CONFIG_HOME/btop"
 install_dir "desktop/cava" "$CONFIG_HOME/cava"
 install_dir "desktop/thunar" "$CONFIG_HOME/Thunar"
 install_file "desktop/copyq/copyq.conf" "$CONFIG_HOME/copyq/copyq.conf"
+install_dir "desktop/alacritty" "$CONFIG_HOME/alacritty"
+install_dir "desktop/ghostty" "$CONFIG_HOME/ghostty"
 
 # --- XDG defaults --------------------------------------------------------------
 install_dir "xdg/handlr" "$CONFIG_HOME/handlr"

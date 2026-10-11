@@ -56,9 +56,31 @@ try:
 except Exception as e: err(f"{ff}: {e}")
 
 # TOML: handlr + base profile
-for f in (root/"xdg"/"handlr"/"handlr.toml", root/"profiles"/"base"/"profile.toml"):
+for f in (root/"xdg"/"handlr"/"handlr.toml", root/"profiles"/"base"/"profile.toml",
+          root/"desktop"/"alacritty"/"alacritty.toml",
+          root/"desktop"/"alacritty"/"hornero-dark.toml",
+          root/"desktop"/"alacritty"/"hornero-light.toml",
+          root/"desktop"/"alacritty"/"hornero-colors.toml"):
     try: tomllib.loads(f.read_text())
     except Exception as e: err(f"{f}: {e}")
+
+# Ghostty uses a line-oriented key=value config and native palette theme files.
+ghostty_config = root/"desktop"/"ghostty"/"config.ghostty"
+for line_no, line in enumerate(ghostty_config.read_text().splitlines(), 1):
+    stripped = line.strip()
+    if stripped and not stripped.startswith("#") and "=" not in stripped:
+        err(f"{ghostty_config}:{line_no}: expected key = value")
+ghostty_theme = root/"desktop"/"ghostty"/"themes"/"Hornero Dynamic"
+palette_entries = 0
+for line_no, line in enumerate(ghostty_theme.read_text().splitlines(), 1):
+    stripped = line.strip()
+    if not stripped or stripped.startswith("#"): continue
+    if not re.fullmatch(r"palette = (?:[0-9]|1[0-5])=#[0-9A-Fa-f]{6}", stripped) and not re.fullmatch(
+        r"(?:background|foreground|cursor-color|cursor-text|selection-background|selection-foreground) = #[0-9A-Fa-f]{6}", stripped
+    ):
+        err(f"{ghostty_theme}:{line_no}: invalid Ghostty theme entry: {stripped}")
+    if stripped.startswith("palette = "): palette_entries += 1
+if palette_entries != 16: err(f"{ghostty_theme}: expected 16 palette entries, got {palette_entries}")
 
 # INI with sections: gtk settings, thunar renamerc, copyq
 for f in (root/"desktop"/"gtk"/"settings.ini",

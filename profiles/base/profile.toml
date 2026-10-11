@@ -25,6 +25,16 @@ description = "Use GTK for fallback and file chooser portals and GNOME for Niri 
 source = "desktop/kitty"
 target = "{config}/kitty"
 
+[modules.alacritty]
+source = "desktop/alacritty"
+target = "{config}/alacritty"
+description = "Optional Alacritty defaults with a static Hornero fallback and a generated-color import."
+
+[modules.ghostty]
+source = "desktop/ghostty"
+target = "{config}/ghostty"
+description = "Optional Ghostty defaults and a Hornero Dynamic fallback theme."
+
 [modules.exo]
 source = "desktop/xfce4/helpers.rc"
 target = "{config}/xfce4/helpers.rc"

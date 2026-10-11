@@ -33,6 +33,8 @@ jobs:
         run: scripts/validate.sh
       - name: Appearance contrast (WCAG AA)
         run: tests/test_contrast.sh
+      - name: Native terminal palette renderers
+        run: python3 tests/test_terminal_themes.py
       - name: Hornero GTK theme (GTK3+GTK4, no GTK2)
         run: tests/test_gtk_theme.sh
       - name: CLI flags without which

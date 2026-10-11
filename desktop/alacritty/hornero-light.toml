@@ -1,0 +1,33 @@
+# HorneroOS Alacritty palette; static fallback, generated colors override it.
+
+[colors.primary]
+background = "#FAF1E3"
+foreground = "#2B1A11"
+
+[colors.cursor]
+cursor = "#B24827"
+text = "#FFFFFF"
+
+[colors.selection]
+background = "#F1E3CE"
+text = "#2B1A11"
+
+[colors.normal]
+black = "#4E3423"
+red = "#B24827"
+green = "#3E6B2F"
+yellow = "#96590A"
+blue = "#3E63A0"
+magenta = "#9C4A6E"
+cyan = "#2F7A72"
+white = "#F1E3CE"
+
+[colors.bright]
+black = "#6E5140"
+red = "#C65D33"
+green = "#55813D"
+yellow = "#B07A1E"
+blue = "#5278B8"
+magenta = "#B25E82"
+cyan = "#3F9187"
+white = "#2B1A11"
