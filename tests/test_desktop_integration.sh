@@ -149,7 +149,7 @@ grep -Fq '"terminal-file" "--new-window" "--last-dir"' "$TMP_HOME/.config/niri/c
 grep -Fq 'horneroctl apps terminal-file --new-window --last-dir' \
   "$TMP_HOME/.config/hypr/hyprland.conf.d/keybindings.conf" \
   || fail "Hyprland terminal file-manager shortcut does not use the configured terminal"
-grep -Fq 'horneroctl apps terminal-file --new-window --path %f' "$TMP_HOME/.config/Thunar/uca.xml" \
+grep -Fq 'horneroctl apps terminal-file --new-window --path "%f"' "$TMP_HOME/.config/Thunar/uca.xml" \
   || fail "Thunar Yazi action does not use the configured terminal"
 grep -qx 'TerminalEmulator=kitty' "$TMP_HOME/.config/xfce4/helpers.rc" \
   || fail "Exo default terminal is missing from the materialized Hornero profile"
