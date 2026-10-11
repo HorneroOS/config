@@ -9,7 +9,12 @@
   },
   "terminal": {
     "config": "{config}/kitty/hornero-dark.conf",
-    "note": "16 ANSI + fg/bg/cursor/selection/URL/tab; light variant hornero-light.conf."
+    "default": "kitty",
+    "optional": [
+      "{config}/alacritty/alacritty.toml",
+      "{config}/ghostty/config.ghostty"
+    ],
+    "note": "Kitty is the Exo/default terminal. Alacritty and Ghostty are optional curated configurations; wallpaper-derived M3 colors render to each app's native format."
   },
   "qt": {
     "platformTheme": "qt6ct",

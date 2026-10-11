@@ -1,0 +1,18 @@
+# HorneroOS Alacritty defaults. Keep color values in the imports below so
+# generated wallpaper colors can override the static Hornero fallback.
+[general]
+import = ["hornero-dark.toml", "hornero-colors.toml"]
+live_config_reload = true
+
+[window]
+padding = { x = 12, y = 12 }
+opacity = 0.88
+
+[scrolling]
+history = 2500
+
+[cursor]
+style = { shape = "Block", blinking = "Never" }
+
+[mouse]
+hide_when_typing = true

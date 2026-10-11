@@ -6,7 +6,7 @@
 is `hornero-dark`, plus the compositor/terminal/Qt/GTK/font/icon/wallpaper
 pointers a first boot resolves. Everything it points at is a static file
 in this repo installed by `scripts/materialize.sh` (user scope) or the
-generic `PKGBUILD` staged-HOME loop (system `/etc/xdg` scope). No step
+`PKGBUILD`'s upstream-compatible system fallback locations. No step
 fetches, clones, or otherwise depends on `ulises-jeremias/dotfiles` at
 runtime — that repo is a read-only extraction source (see
 `docs/DECISIONS.md` "Ownership"); the packaging-time `guard-personal-data`
@@ -19,6 +19,8 @@ reference is introduced.
 |---|---|---|
 | Hyprland borders/groups/shadow (dark) | `desktop/hypr/hyprland.conf.d/colors.conf` + `hyprland.conf` fallbacks | `{config}/hypr/…` → `/etc/xdg/hypr/…` |
 | Kitty palette (dark) | `desktop/kitty/hornero-dark.conf`, included by `kitty.conf` | `{config}/kitty/…` → `/etc/xdg/kitty/…` |
+| Alacritty (optional) | `desktop/alacritty/alacritty.toml` imports the active generated palette over a Hornero Dark fallback | `{config}/alacritty/…` → `/etc/alacritty/…` |
+| Ghostty (optional) | `desktop/ghostty/config.ghostty` selects `Hornero Dynamic`; the package seeds new homes and installs a matching system theme fallback | `{config}/ghostty/…`; `/etc/skel/.config/ghostty/…`; `/usr/share/ghostty/themes/…` |
 | Qt6 style/fonts (dark-adjacent) | `desktop/qt6ct/qt6ct.conf` + existing `QT_QPA_PLATFORMTHEME=qt6ct` pin | `{config}/qt6ct/…` → `/etc/xdg/qt6ct/…` |
 | Theme recipes + factory record | `profiles/themes/*` + `profiles/factory.json` | `{data}/hornero/…` → `/usr/share/hornero/…` |
 | GTK theme/icons/dark preference | `desktop/gtk/settings.ini` | **config-gtk worker** (recorded in `factory.json` only) |
@@ -49,9 +51,12 @@ named readers; verified against the Arch extra repo on 2026-09-13:
 
 ## Light variant
 
-`hornero-light` recipes, `desktop/kitty/hornero-light.conf`, and
-`desktop/hypr/hyprland.conf.d/hornero-light.conf` ship alongside for an
-explicit opt-in (documented switch lines in `kitty.conf`/`hyprland.conf`).
-Nothing auto-switches today; a future Hornero appearance schedule may
-consume `availableThemes` + the GTK preference to flip all three surfaces
-together.
+`hornero-light` recipes, Kitty's `desktop/kitty/hornero-light.conf`,
+Alacritty's `desktop/alacritty/hornero-light.toml`, and
+`desktop/hypr/hyprland.conf.d/hornero-light.conf` ship as static fallbacks.
+When Hornero applies an appearance or regenerates wallpaper colors, one
+Material scheme renders Kitty, Alacritty, and Ghostty files in their native
+formats. Kitty and Alacritty live-reload their configuration; Ghostty uses
+the stable `Hornero Dynamic` theme name, whose file is regenerated in the
+user theme directory. Alacritty and Ghostty remain optional applications;
+Kitty remains the factory/default terminal.

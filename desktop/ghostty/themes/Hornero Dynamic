@@ -1,0 +1,23 @@
+# Hornero Dynamic is the package fallback; the user cache is refreshed from wallpaper colors.
+palette = 0=#2B1F18
+palette = 1=#E07856
+palette = 2=#9CC184
+palette = 3=#D9A05F
+palette = 4=#7FA3B8
+palette = 5=#C08CA6
+palette = 6=#8FB3A6
+palette = 7=#E9D3BC
+palette = 8=#6B4E3B
+palette = 9=#F28B82
+palette = 10=#BFD9AE
+palette = 11=#F2B749
+palette = 12=#A9C6DA
+palette = 13=#D8A9BE
+palette = 14=#AECDC3
+palette = 15=#F6E9DB
+background = #1D1410
+foreground = #F6E9DB
+cursor-color = #F2B749
+cursor-text = #211310
+selection-background = #3C2C21
+selection-foreground = #F6E9DB
