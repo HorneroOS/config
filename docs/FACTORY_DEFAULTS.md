@@ -24,7 +24,7 @@ reference is introduced.
 | Qt6 style/fonts (dark-adjacent) | `desktop/qt6ct/qt6ct.conf` + existing `QT_QPA_PLATFORMTHEME=qt6ct` pin | `{config}/qt6ct/…` → `/etc/xdg/qt6ct/…` |
 | Theme recipes + factory record | `profiles/themes/*` + `profiles/factory.json` | `{data}/hornero/…` → `/usr/share/hornero/…` |
 | GTK theme/icons/dark preference | `desktop/gtk/settings.ini` | **config-gtk worker** (recorded in `factory.json` only) |
-| Wallpaper | ref `hornero-dark-01.jpg` | release pipeline (binaries never vendored) |
+| Wallpaper | procedural source `assets/brand/wallpaper/hornero-dark.svg` | rendered into the package at build time; regional photo defaults are shipped as licensed JPEG assets |
 
 ## Fonts and icon packages (Arch)
 

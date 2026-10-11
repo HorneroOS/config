@@ -44,6 +44,6 @@
   "wallpaper": {
     "defaultWallpaper": "hornero-dark-01.png",
     "wallpaperDir": "hornero-dark",
-    "note": "Ref-only; binaries ship via the release pipeline (see profiles/themes/wallpapers.manifest.json)."
+    "note": "Procedural SVG source is rendered at package staging; the theme applies the raster at /usr/share/hornero/wallpapers/hornero-dark/hornero-dark-01.png."
   }
 }

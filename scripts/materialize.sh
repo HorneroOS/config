@@ -128,6 +128,29 @@ else
   echo "warn: rsvg-convert missing, skipping flagship wallpaper render" >&2
 fi
 
+# --- licensed Argentina photo collection -------------------------------------
+# These are approved Hornero Originals, kept alongside the procedural flagship
+# art so clean package-only installs have every regional default available.
+for entry in "$REPO_ROOT"/assets/wallpapers/argentina/*.jpg; do
+  [[ -f "$entry" ]] || continue
+  case "$(basename "$entry")" in
+    buenos-aires-nocturno-01.jpg) rel="buenos-aires-nocturno/buenos-aires-nocturno-01.jpg" ;;
+    beagle-blue-hour-01.jpg) rel="fin-del-mundo/beagle-blue-hour-01.jpg" ;;
+    ibera-mist-01.jpg) rel="ibera/ibera-mist-01.jpg" ;;
+    pampa-01.jpg) rel="pampa/pampa-01.jpg" ;;
+    patagonia-glacier-01.jpg) rel="patagonia/patagonia-glacier-01.jpg" ;;
+    quebrada-mineral-01.jpg) rel="quebrada/quebrada-mineral-01.jpg" ;;
+    *) echo "error: unregistered Argentina photo asset: $entry" >&2; exit 1 ;;
+  esac
+  target="$DATA_HOME/hornero/wallpapers/$rel"
+  if [[ $DRY_RUN -eq 1 ]]; then
+    echo "would install photo wallpaper $entry -> $target"
+  else
+    mkdir -p "$(dirname "$target")"
+    install -m644 "$entry" "$target"
+  fi
+done
+
 # --- Hornero GTK theme (real theme trees, standard lookup path) ----------------
 # desktop/gtk-theme/Hornero-{Dark,Light,Pampa} -> ~/.local/share/themes/ so
 # GTK 3 and GTK 4 discover them without extra env. Dev-only sources (src/,
