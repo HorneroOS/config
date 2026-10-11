@@ -60,6 +60,7 @@ def entry_id(dispatcher: str, args: str) -> str:
             sub = [t for t in prog_tokens[1:] if t not in ("--",)]
             pinned = {
                 ("apps", "launch"): "exec-launcher",
+                ("apps", "terminal-file"): "exec-terminal-file",
                 ("capture", "clipboard"): "exec-clipboard",
                 ("capture", "screenshot"): "exec-screenshooter",
                 ("hardware", "keyboard", "keys"): "exec-keyboard-help",

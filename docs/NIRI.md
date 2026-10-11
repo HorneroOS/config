@@ -28,7 +28,7 @@ backend.
 | `Super+Shift+B` | Layout Picker |
 | `Super+X` | Session menu |
 | `Super+,` | Appearance in Control Center |
-| `Super+E` | Terminal file manager |
+| `Super+E` | Open Yazi in the configured terminal, restoring its last directory |
 | `Super+V` | Clipboard history |
 | `Super+L` | Lock session |
 | `Print` | Niri screenshot selection UI |

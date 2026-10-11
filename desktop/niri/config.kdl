@@ -377,7 +377,7 @@ binds {
     Mod+Shift+B hotkey-overlay-title="Open Layout Picker" { spawn "horneroctl" "shell" "ipc" "--" "call" "drawers" "toggle" "layoutPicker"; }
     Mod+X hotkey-overlay-title="Open Session Menu" { spawn "horneroctl" "shell" "ipc" "--" "call" "drawers" "toggle" "session"; }
     Mod+Comma hotkey-overlay-title="Open Hornero Settings" { spawn "horneroctl" "shell" "ipc" "--" "call" "controlCenter" "open" "appearance"; }
-    Mod+E hotkey-overlay-title="Open Terminal File Manager" { spawn "horneroctl" "apps" "terminal-file"; }
+    Mod+E hotkey-overlay-title="Open Terminal File Manager" { spawn "horneroctl" "apps" "terminal-file" "--new-window" "--last-dir"; }
     Mod+V hotkey-overlay-title="Open Clipboard History" { spawn "horneroctl" "capture" "clipboard"; }
     Mod+L hotkey-overlay-title="Lock the Screen" { spawn "horneroctl" "shell" "ipc" "--" "call" "lock" "lock"; }
 

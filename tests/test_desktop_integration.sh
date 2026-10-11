@@ -144,9 +144,16 @@ pass "factory record matches flagship theme recipes"
 # a personal dotfiles checkout.
 grep -Fq '"controlCenter" "open" "appearance"' "$TMP_HOME/.config/niri/config.kdl" \
   || fail "Niri Settings shortcut does not pass a valid Control Center pane"
+grep -Fq '"terminal-file" "--new-window" "--last-dir"' "$TMP_HOME/.config/niri/config.kdl" \
+  || fail "Niri terminal file-manager shortcut does not use the configured terminal"
+grep -Fq 'horneroctl apps terminal-file --new-window --last-dir' \
+  "$TMP_HOME/.config/hypr/hyprland.conf.d/keybindings.conf" \
+  || fail "Hyprland terminal file-manager shortcut does not use the configured terminal"
+grep -Fq 'horneroctl apps terminal-file --new-window --path %f' "$TMP_HOME/.config/Thunar/uca.xml" \
+  || fail "Thunar Yazi action does not use the configured terminal"
 grep -qx 'TerminalEmulator=kitty' "$TMP_HOME/.config/xfce4/helpers.rc" \
   || fail "Exo default terminal is missing from the materialized Hornero profile"
-pass "Niri Settings IPC and package-owned default terminal are valid"
+pass "Niri, Hyprland and Thunar use the package-owned default terminal"
 
 # Optional terminal configs use their native lookup paths and all share the
 # same dynamic Hornero palette output. Kitty remains Exo's default terminal.

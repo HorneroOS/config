@@ -18,7 +18,7 @@ CURATED_IDS="exec-launcher
 ipc-dashboard-toggle
 scrolloverview-overview:toggle
 app-terminalemulator
-exec-kitty
+exec-terminal-file
 workspace:1
 movetoworkspace:1
 togglespecialworkspace:magic
@@ -52,7 +52,7 @@ curated = """exec-launcher
 ipc-dashboard-toggle
 scrolloverview-overview:toggle
 app-terminalemulator
-exec-kitty
+exec-terminal-file
 workspace:1
 movetoworkspace:1
 togglespecialworkspace:magic
