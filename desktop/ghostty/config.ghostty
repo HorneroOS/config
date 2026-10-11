@@ -1,0 +1,4 @@
+# HorneroOS keeps one theme name stable; M3 writes the selected wallpaper
+# palette into the user theme directory, which takes precedence over fallback.
+theme = Hornero Dynamic
+background-opacity = 0.88

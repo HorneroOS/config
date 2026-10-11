@@ -1,0 +1,33 @@
+# Initial Hornero Dark fallback. Hornero's wallpaper color pipeline replaces
+# this file with the active Material scheme before importing it.
+[colors.primary]
+background = "#1D1410"
+foreground = "#F6E9DB"
+
+[colors.cursor]
+cursor = "#F2B749"
+text = "#211310"
+
+[colors.selection]
+background = "#3C2C21"
+text = "#F6E9DB"
+
+[colors.normal]
+black = "#2B1F18"
+red = "#E07856"
+green = "#9CC184"
+yellow = "#D9A05F"
+blue = "#7FA3B8"
+magenta = "#C08CA6"
+cyan = "#8FB3A6"
+white = "#E9D3BC"
+
+[colors.bright]
+black = "#6B4E3B"
+red = "#F28B82"
+green = "#BFD9AE"
+yellow = "#F2B749"
+blue = "#A9C6DA"
+magenta = "#D8A9BE"
+cyan = "#AECDC3"
+white = "#F6E9DB"

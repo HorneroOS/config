@@ -12,6 +12,8 @@ Later product-owned payloads identify their HorneroOS source in the table.
 |---|---|---|
 | `desktop/hypr/` (main conf, 13 `conf.d` modules, `hypridle.conf`, `hyprlock.conf`, 3 helper scripts) | `home/dot_config/hypr/` | No template vars, no identity. `monitors.conf` is a generic autodetect fallback written for this repo (see excluded row). |
 | `desktop/kitty/kitty.conf` | `home/dot_config/kitty/` | Static palette + fonts. The `include ~/.cache/hornero/smart-colors/…` line is a generated-cache hook, benign when absent. |
+| `desktop/alacritty/` | HorneroOS product defaults | Optional terminal configuration with an upstream `/etc/alacritty` package fallback. A generated Material scheme replaces `hornero-colors.toml`; the checked-in fallback keeps Alacritty usable before first palette generation. |
+| `desktop/ghostty/` | HorneroOS product defaults | Optional terminal configuration. Ghostty has no global config lookup, so the package installs a system theme fallback and seeds new users through `/etc/skel`; user materialization remains XDG-native. |
 | `desktop/gtk/settings.ini` | `home/dot_config/gtk-3.0/settings.ini` | Static theme/font/cursor defaults. |
 | `desktop/gtk/gtkrc-2.0` | `home/dot_gtkrc-2.0` | Byte-identical. The `include "/home/user/.gtkrc-2.0.mine"` line is upstream's generic LXAppearance override hook, not a real user path. |
 | `desktop/fontconfig/fonts.conf` | `home/dot_config/fontconfig/` | Generic hinting/rendering defaults. |

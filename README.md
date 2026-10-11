@@ -45,14 +45,18 @@ previews, or Hyprland window geometry picker. See
 [`docs/NIRI.md`](docs/NIRI.md) and the Shell's
 [`docs/COMPOSITORS.md`](https://github.com/HorneroOS/shell/blob/main/docs/COMPOSITORS.md).
 
-Curated from the generic parts of the dotfiles: Hyprland, Niri, kitty,
-GTK 2/3, Qt6ct, fontconfig, fastfetch, btop, cava, Thunar, CopyQ,
+Curated from generic dotfiles material: Hyprland, Niri, Kitty, Alacritty,
+Ghostty, GTK 2/3, Qt6ct, fontconfig, fastfetch, btop, cava, Thunar, CopyQ,
 handlr, git-minus-identity, 20 theme packs (8 Hornero Originals, including
 three semantic-token themes and five wallpaper-led looks, plus 12 other
 curated looks), `lib/hornero`
 implementation libraries and the `hornero-gtk-theme`-family CLI adapters.
 See `docs/DECISIONS.md` for the full copied / excluded-as-personal /
 deferred accounting.
+
+Kitty remains the default terminal selected by Exo. Alacritty and Ghostty
+receive optional Hornero configurations; the Material palette pipeline
+renders one wallpaper-derived scheme into each terminal's native format.
 
 ## Layout
 
