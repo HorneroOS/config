@@ -311,41 +311,24 @@ _hornero_appearance_run_palette() {
 	local scheme_out
 	scheme_out="$(_hornero_appearance_scheme_for_write)"
 	mkdir -p "$(dirname "$scheme_out")"
-	local terminal_args=(
-		--kitty-output "${XDG_CACHE_HOME:-$HOME/.cache}/hornero/smart-colors/colors-kitty.conf"
-		--alacritty-output "${XDG_CONFIG_HOME:-$HOME/.config}/alacritty/hornero-colors.toml"
-		--ghostty-output "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes/Hornero Dynamic"
-	)
 	if declare -f hornero_run_m3_colors > /dev/null 2>&1; then
 		hornero_run_m3_colors \
 			--image "$wallpaper" \
 			--scheme-type "$scheme_type" \
 			--mode "$dark_mode" \
-			--output "$scheme_out" \
-			"${terminal_args[@]}" || return 1
+			--output "$scheme_out" || return 1
 	elif command -v hornero-m3-colors > /dev/null 2>&1; then
 		hornero-m3-colors \
 			--image "$wallpaper" \
 			--scheme-type "$scheme_type" \
 			--mode "$dark_mode" \
-			--output "$scheme_out" \
-			"${terminal_args[@]}" || return 1
+			--output "$scheme_out" || return 1
 	else
 		python3 "$HORNERO_M3_SCRIPT" \
 			--image "$wallpaper" \
 			--scheme-type "$scheme_type" \
 			--mode "$dark_mode" \
-			--output "$scheme_out" \
-			"${terminal_args[@]}" || return 1
-	fi
-	# Alacritty watches files when live_config_reload is enabled. Ghostty's
-	# GTK app needs SIGUSR2 to reload a regenerated named theme; use its user
-	# service when active, then fall back to signaling ordinary app instances.
-	if command -v systemctl > /dev/null 2>&1 && \
-		systemctl --user is-active --quiet app-com.mitchellh.ghostty.service; then
-		systemctl --user reload app-com.mitchellh.ghostty.service > /dev/null 2>&1 || true
-	else
-		pkill -USR2 -x ghostty > /dev/null 2>&1 || true
+			--output "$scheme_out" || return 1
 	fi
 
 	if command -v hornero-color-scheme > /dev/null 2>&1; then

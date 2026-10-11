@@ -58,9 +58,6 @@ def parse_args():
         help="Color mode (default: dark)",
     )
     parser.add_argument("--output", default=None, help="Output JSON file path")
-    parser.add_argument("--kitty-output", default=None, help="Render Kitty colors to this file")
-    parser.add_argument("--alacritty-output", default=None, help="Render Alacritty colors to this file")
-    parser.add_argument("--ghostty-output", default=None, help="Render a Ghostty theme to this file")
     parser.add_argument(
         "--quality",
         type=int,
@@ -83,12 +80,8 @@ def extract_source_color(image_path: str, quality: int = 5, max_colors: int = 12
         from materialyoucolor.score.score import Score
 
         histogram = ImageQuantizeCelebi(image_path, quality, max_colors)
-        scored = Score.score(histogram) if histogram else []
-        if scored:
-            return scored[0]
-    except (ImportError, OSError, IndexError, ZeroDivisionError):
-        # The native path can return an empty histogram for valid formats it
-        # cannot decode (notably WebP). Let Pillow handle those images below.
+        return Score.score(histogram)[0]
+    except (ImportError, OSError):
         pass
 
     # Fallback: PIL + QuantizeCelebi
@@ -318,22 +311,6 @@ def main() -> None:
         out.write_text(payload)
     else:
         sys.stdout.write(payload)
-
-    terminal_outputs = (args.kitty_output, args.alacritty_output, args.ghostty_output)
-    if any(terminal_outputs):
-        try:
-            from terminal_themes import render_scheme
-
-            for path in render_scheme(
-                colours,
-                kitty_output=args.kitty_output,
-                alacritty_output=args.alacritty_output,
-                ghostty_output=args.ghostty_output,
-            ):
-                print(f"wrote terminal colors: {path}", file=sys.stderr)
-        except (OSError, ValueError) as error:
-            print(f"Error: could not render terminal colors: {error}", file=sys.stderr)
-            sys.exit(1)
 
 
 if __name__ == "__main__":
