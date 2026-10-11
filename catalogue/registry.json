@@ -6,7 +6,7 @@
     {
       "id": "buenos-aires-nocturno",
       "name": "Buenos Aires Nocturno",
-      "description": "Rain-dark avenues, layered façades and a measured pulse of amber and electric light",
+      "description": "A night view of Buenos Aires: layered city lights, deep riverfront shadows and a measured amber glow",
       "tags": [
         "argentina",
         "buenos-aires",
@@ -89,7 +89,7 @@
     {
       "id": "fin-del-mundo",
       "name": "Fin del Mundo",
-      "description": "A maritime twilight of Beagle water, wind-shaped southern forest and distant harbor light",
+      "description": "A quiet blue-hour view across the Beagle Channel, with cold water and the last light over Tierra del Fuego",
       "tags": [
         "argentina",
         "tierra-del-fuego",
@@ -179,7 +179,7 @@
     {
       "id": "ibera",
       "name": "Iberá",
-      "description": "Dark lagoon water, floating green islands and silver dawn light",
+      "description": "A still lagoon among the Esteros del Iberá wetlands, where dark water meets dense green growth",
       "tags": [
         "argentina",
         "corrientes",
@@ -282,7 +282,7 @@
     {
       "id": "pampa",
       "name": "Pampa",
-      "description": "Hornero Pampa theme: deep grassland greens, olive and earth with warm cream and muted gold — the humid pampa night, not a recolored flagship",
+      "description": "An aerial view of the humid pampas: green grassland, river water and soft earth beneath a warm, open sky",
       "tags": [
         "hornero",
         "pampa",
@@ -300,13 +300,13 @@
       "collectionOrder": 8,
       "model": "semantic",
       "schemeType": "tonal-spot",
-      "defaultWallpaper": "pampa-01.png",
+      "defaultWallpaper": "pampa-01.jpg",
       "wallpaperDir": "pampa"
     },
     {
       "id": "patagonia",
       "name": "Patagonia",
-      "description": "Blue-hour ice, basalt and glacial water with a restrained copper horizon",
+      "description": "The Perito Moreno Glacier and the wide Patagonian sky, rendered in ice blue, stone and cloud",
       "tags": [
         "argentina",
         "patagonia",
@@ -329,7 +329,7 @@
     {
       "id": "quebrada",
       "name": "Quebrada",
-      "description": "High-altitude mineral bands, violet shade and clear Andean light",
+      "description": "The mineral folds of Hornocal in Jujuy: rose, ochre and violet strata under clear Andean light",
       "tags": [
         "argentina",
         "jujuy",

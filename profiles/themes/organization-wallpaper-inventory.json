@@ -1,0 +1,855 @@
+{
+  "schemaVersion": 1,
+  "auditDate": "2026-10-11",
+  "scope": "Wallpaper payloads and wallpaper-like previews found in HorneroOS repositories and the pinned dotfiles wallpaper source. Screenshots, Companion illustrations, greeter scenes and conceptual art are tracked separately as related visual assets.",
+  "repositoryPins": {
+    "HorneroOS/config": "branch under review; based on 9b78c16dc4f105c2c027bb7e3e7f6ed8b838a09c",
+    "HorneroOS/website": "branch under review; based on 5398ba52342981a41c63ff91a525581ff0502024",
+    "ulises-jeremias/dotfiles": "88a34fd58699fe4941b5b17c455df181479a2a57"
+  },
+  "themeDefaults": [
+    {
+      "themeId": "catppuccin-latte",
+      "defaultWallpaper": "catppuccin-latte-01.png",
+      "wallpaperDir": "catppuccin-latte",
+      "bundledProductDefault": false,
+      "distributionPath": null,
+      "websitePreview": false
+    },
+    {
+      "themeId": "catppuccin-mocha",
+      "defaultWallpaper": "catppuccin-mauve-02.png",
+      "wallpaperDir": "catppuccin-mocha",
+      "bundledProductDefault": false,
+      "distributionPath": null,
+      "websitePreview": false
+    },
+    {
+      "themeId": "everforest",
+      "defaultWallpaper": "everforest-deep-01.png",
+      "wallpaperDir": "everforest",
+      "bundledProductDefault": false,
+      "distributionPath": null,
+      "websitePreview": false
+    },
+    {
+      "themeId": "gruvbox",
+      "defaultWallpaper": "gruvbox-anime-01.jpg",
+      "wallpaperDir": "gruvbox",
+      "bundledProductDefault": false,
+      "distributionPath": null,
+      "websitePreview": true
+    },
+    {
+      "themeId": "landscape",
+      "defaultWallpaper": "landscape-01.jpg",
+      "wallpaperDir": "landscape",
+      "bundledProductDefault": false,
+      "distributionPath": null,
+      "websitePreview": true
+    },
+    {
+      "themeId": "monochrome",
+      "defaultWallpaper": "mono-curated-1.jpg",
+      "wallpaperDir": "monochrome",
+      "bundledProductDefault": false,
+      "distributionPath": null,
+      "websitePreview": true
+    },
+    {
+      "themeId": "neon-city",
+      "defaultWallpaper": "neon-city-01.jpg",
+      "wallpaperDir": "neon-city",
+      "bundledProductDefault": false,
+      "distributionPath": null,
+      "websitePreview": true
+    },
+    {
+      "themeId": "nord-dreams",
+      "defaultWallpaper": "nord-aurora-01.png",
+      "wallpaperDir": "nord-dreams",
+      "bundledProductDefault": false,
+      "distributionPath": null,
+      "websitePreview": false
+    },
+    {
+      "themeId": "rose-pine",
+      "defaultWallpaper": "rose-pine-dawn-01.png",
+      "wallpaperDir": "rose-pine",
+      "bundledProductDefault": false,
+      "distributionPath": null,
+      "websitePreview": false
+    },
+    {
+      "themeId": "soft-morning",
+      "defaultWallpaper": "morning-lake-2.jpg",
+      "wallpaperDir": "soft-morning",
+      "bundledProductDefault": false,
+      "distributionPath": null,
+      "websitePreview": true
+    },
+    {
+      "themeId": "vapor-dreams",
+      "defaultWallpaper": "vapor-dreams-01.jpg",
+      "wallpaperDir": "vapor-dreams",
+      "bundledProductDefault": false,
+      "distributionPath": null,
+      "websitePreview": true
+    },
+    {
+      "themeId": "warm-sunset",
+      "defaultWallpaper": "warm-sunset-05.jpg",
+      "wallpaperDir": "warm-sunset",
+      "bundledProductDefault": false,
+      "distributionPath": null,
+      "websitePreview": true
+    },
+    {
+      "themeId": "hornero-dark",
+      "defaultWallpaper": "hornero-dark-01.png",
+      "wallpaperDir": "hornero-dark",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/hornero-dark/hornero-dark-01.png",
+      "websitePreview": true
+    },
+    {
+      "themeId": "hornero-light",
+      "defaultWallpaper": "hornero-light-01.png",
+      "wallpaperDir": "hornero-light",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/hornero-light/hornero-light-01.png",
+      "websitePreview": true
+    },
+    {
+      "themeId": "pampa",
+      "defaultWallpaper": "pampa-01.jpg",
+      "wallpaperDir": "pampa",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/pampa/pampa-01.jpg",
+      "websitePreview": true
+    },
+    {
+      "themeId": "patagonia",
+      "defaultWallpaper": "patagonia-glacier-01.jpg",
+      "wallpaperDir": "patagonia",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/patagonia/patagonia-glacier-01.jpg",
+      "websitePreview": true
+    },
+    {
+      "themeId": "fin-del-mundo",
+      "defaultWallpaper": "beagle-blue-hour-01.jpg",
+      "wallpaperDir": "fin-del-mundo",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/fin-del-mundo/beagle-blue-hour-01.jpg",
+      "websitePreview": true
+    },
+    {
+      "themeId": "quebrada",
+      "defaultWallpaper": "quebrada-mineral-01.jpg",
+      "wallpaperDir": "quebrada",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/quebrada/quebrada-mineral-01.jpg",
+      "websitePreview": true
+    },
+    {
+      "themeId": "ibera",
+      "defaultWallpaper": "ibera-mist-01.jpg",
+      "wallpaperDir": "ibera",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/ibera/ibera-mist-01.jpg",
+      "websitePreview": true
+    },
+    {
+      "themeId": "buenos-aires-nocturno",
+      "defaultWallpaper": "buenos-aires-nocturno-01.jpg",
+      "wallpaperDir": "buenos-aires-nocturno",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/buenos-aires-nocturno/buenos-aires-nocturno-01.jpg",
+      "websitePreview": true
+    }
+  ],
+  "productWallpaperAssets": [
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/brand/wallpaper/hornero-dark.png",
+      "role": "derived/rendered wallpaper output",
+      "origin": "generated from the listed vector source",
+      "license": "MIT",
+      "rightsStatus": "verified in repository LICENSE"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/brand/wallpaper/hornero-dark.svg",
+      "role": "procedural wallpaper source",
+      "origin": "hand-authored vector/procedural source",
+      "license": "MIT",
+      "rightsStatus": "verified in repository LICENSE"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/brand/wallpaper/hornero-light.png",
+      "role": "derived/rendered wallpaper output",
+      "origin": "generated from the listed vector source",
+      "license": "MIT",
+      "rightsStatus": "verified in repository LICENSE"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/brand/wallpaper/hornero-light.svg",
+      "role": "procedural wallpaper source",
+      "origin": "hand-authored vector/procedural source",
+      "license": "MIT",
+      "rightsStatus": "verified in repository LICENSE"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/brand/wallpaper/pampa.svg",
+      "role": "procedural wallpaper source",
+      "origin": "hand-authored vector/procedural source",
+      "license": "MIT",
+      "rightsStatus": "verified in repository LICENSE"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/argentina/buenos-aires-nocturno-01.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "buenos-aires-nocturno",
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 717969,
+      "sha256": "23c3e25e8a27abc15b5613ce9fa6d8fc7c55b3570eec8a05202928a3b3929e8f",
+      "origin": "photograph",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Buenos_Aires_at_night.jpg",
+      "photographer": "Luis Argerich",
+      "license": "CC BY 2.0",
+      "rightsStatus": "verified; attribution/license distributed with package"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/argentina/beagle-blue-hour-01.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "fin-del-mundo",
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 764651,
+      "sha256": "e6b75ce325cd5a09e9958de4ac98efad9e52cbf4ac69b63b3782a091677180ed",
+      "origin": "photograph",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Beagle_Channel_-m.jpg",
+      "photographer": "RAYANDBEE",
+      "license": "CC BY 2.0",
+      "rightsStatus": "verified; attribution/license distributed with package"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/argentina/ibera-mist-01.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "ibera",
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 1277017,
+      "sha256": "c88d85e91ddd01cafa4080d9875a076445d9d3dc53861f58aef251e539f69e12",
+      "origin": "photograph",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Esteros_del_Ibera,_Corrientes,_Argentina,_Jan._2011_-_Flickr_-_PhillipC_(1).jpg",
+      "photographer": "Phillip Capper",
+      "license": "CC BY 2.0",
+      "rightsStatus": "verified; attribution/license distributed with package"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/argentina/pampa-01.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "pampa",
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 1248087,
+      "sha256": "8fd7f360b7b93e27dc9b913b726ecf807f4a7a3740e6d3b598be846f4c0e07be",
+      "origin": "photograph",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Drone_Laguna_de_rocha.jpg",
+      "photographer": "Alejandro Barrios",
+      "license": "CC BY-SA 4.0",
+      "rightsStatus": "verified; attribution/license distributed with package"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/argentina/patagonia-glacier-01.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "patagonia",
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 1424243,
+      "sha256": "e953280a8b244ba919a48963f3ce3d33dcf914978d4e89de666ac54f06b5fc63",
+      "origin": "photograph",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Perito_Moreno_Glacier_Panorama.jpg",
+      "photographer": "ThartmannWiki",
+      "license": "CC BY-SA 4.0",
+      "rightsStatus": "verified; attribution/license distributed with package"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/argentina/quebrada-mineral-01.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "quebrada",
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 1473209,
+      "sha256": "a7dad540050984ff2b8f6849b12c8792f67d245d05190ea2e0d559368808f637",
+      "origin": "photograph",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Serran%C3%ADa_de_Hornocal_03.jpg",
+      "photographer": "Bernard Gagnon",
+      "license": "CC BY-SA 4.0",
+      "rightsStatus": "verified; attribution/license distributed with package"
+    }
+  ],
+  "websiteWallpaperPreviews": [
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/buenos-aires-nocturno.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "buenos-aires-nocturno",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "format": "WEBP",
+      "bytes": 99928,
+      "sha256": "aecd2348783b1002ab8a397b538acfb30d4c4bf3ee8cf39ef152769e015c7622",
+      "origin": "photograph",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Buenos_Aires_at_night.jpg",
+      "photographer": "Luis Argerich",
+      "license": "CC BY 2.0",
+      "rightsStatus": "verified; attribution in shared generated catalog",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/fin-del-mundo.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "fin-del-mundo",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "format": "WEBP",
+      "bytes": 64538,
+      "sha256": "da1aa822eedaa3fd54db83573062b80a08e8132bbed6ea802191f51f7f13ad0e",
+      "origin": "photograph",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Beagle_Channel_-m.jpg",
+      "photographer": "RAYANDBEE",
+      "license": "CC BY 2.0",
+      "rightsStatus": "verified; attribution in shared generated catalog",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/gruvbox.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "gruvbox",
+      "dimensions": {
+        "width": 1440,
+        "height": 807
+      },
+      "format": "WEBP",
+      "bytes": 43840,
+      "sha256": "0345553f0424a51fc32f527aed32232c2741b3d0d7db035d2e29e3f610ce43ce",
+      "origin": "unverified wallpaper preview",
+      "sourceUrl": null,
+      "photographer": null,
+      "license": null,
+      "rightsStatus": "source/license not verified by this audit",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/hornero-dark.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "hornero-dark",
+      "dimensions": {
+        "width": 1439,
+        "height": 900
+      },
+      "format": "WEBP",
+      "bytes": 112882,
+      "sha256": "9fd53dfe794472a44643b0fe421af9b7f1c30493e5df89a1c1c2f2d4104427dd",
+      "origin": "unverified wallpaper preview",
+      "sourceUrl": null,
+      "photographer": null,
+      "license": null,
+      "rightsStatus": "source/license not verified by this audit",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/hornero-light.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "hornero-light",
+      "dimensions": {
+        "width": 1439,
+        "height": 900
+      },
+      "format": "WEBP",
+      "bytes": 118606,
+      "sha256": "22703fcda8a117e107230a1d85a52cf9df655dd1d6f67efbb1ae99f20d4cfaff",
+      "origin": "unverified wallpaper preview",
+      "sourceUrl": null,
+      "photographer": null,
+      "license": null,
+      "rightsStatus": "source/license not verified by this audit",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/ibera.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "ibera",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "format": "WEBP",
+      "bytes": 263666,
+      "sha256": "30d48af8f76f9b19eb530ff0cb36c19ec9ac207ce9b0f7608b3238f9d66307bc",
+      "origin": "photograph",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Esteros_del_Ibera,_Corrientes,_Argentina,_Jan._2011_-_Flickr_-_PhillipC_(1).jpg",
+      "photographer": "Phillip Capper",
+      "license": "CC BY 2.0",
+      "rightsStatus": "verified; attribution in shared generated catalog",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/landscape.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "landscape",
+      "dimensions": {
+        "width": 1440,
+        "height": 810
+      },
+      "format": "WEBP",
+      "bytes": 289136,
+      "sha256": "c484f5647dc16727f301edc36395af1afb614d52fc8c65e2f4c75fe87967d676",
+      "origin": "unverified wallpaper preview",
+      "sourceUrl": null,
+      "photographer": null,
+      "license": null,
+      "rightsStatus": "source/license not verified by this audit",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/monochrome.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "monochrome",
+      "dimensions": {
+        "width": 1440,
+        "height": 810
+      },
+      "format": "WEBP",
+      "bytes": 109024,
+      "sha256": "93135bc4967da27b5c8c3582a658931f9b97e12ffcc4dff65ac2d7245d1b0100",
+      "origin": "unverified wallpaper preview",
+      "sourceUrl": null,
+      "photographer": null,
+      "license": null,
+      "rightsStatus": "source/license not verified by this audit",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/neon-city.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "neon-city",
+      "dimensions": {
+        "width": 1440,
+        "height": 810
+      },
+      "format": "WEBP",
+      "bytes": 235896,
+      "sha256": "d4a79cb4f8ffa6e5903af5a08c1bde8577962420aeb71b85c84493ed6b9324ff",
+      "origin": "unverified wallpaper preview",
+      "sourceUrl": null,
+      "photographer": null,
+      "license": null,
+      "rightsStatus": "source/license not verified by this audit",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/pampa.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "pampa",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "format": "WEBP",
+      "bytes": 189734,
+      "sha256": "cdedcf84e5bcbfc7d9dfda0319b3e91fb1355f29d9d54864ef424e32da75856d",
+      "origin": "photograph",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Drone_Laguna_de_rocha.jpg",
+      "photographer": "Alejandro Barrios",
+      "license": "CC BY-SA 4.0",
+      "rightsStatus": "verified; attribution in shared generated catalog",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/patagonia.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "patagonia",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "format": "WEBP",
+      "bytes": 228306,
+      "sha256": "f3e6d70a178ca4642dd303bb2825c0e23023ace2029b01a5599723a3083a51ce",
+      "origin": "photograph",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Perito_Moreno_Glacier_Panorama.jpg",
+      "photographer": "ThartmannWiki",
+      "license": "CC BY-SA 4.0",
+      "rightsStatus": "verified; attribution in shared generated catalog",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/quebrada.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "quebrada",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "format": "WEBP",
+      "bytes": 245424,
+      "sha256": "1ad2f272bd86a0cc0315bf5ffb470efb94fd8149105bdf0d5a78fcdedc26be80",
+      "origin": "photograph",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Serran%C3%ADa_de_Hornocal_03.jpg",
+      "photographer": "Bernard Gagnon",
+      "license": "CC BY-SA 4.0",
+      "rightsStatus": "verified; attribution in shared generated catalog",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/soft-morning.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "soft-morning",
+      "dimensions": {
+        "width": 1350,
+        "height": 900
+      },
+      "format": "WEBP",
+      "bytes": 96816,
+      "sha256": "e3abba0d5bf82e237210efb89ee5464885b0fabcaf8bebc9eca507a10ce18181",
+      "origin": "unverified wallpaper preview",
+      "sourceUrl": null,
+      "photographer": null,
+      "license": null,
+      "rightsStatus": "source/license not verified by this audit",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/vapor-dreams.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "vapor-dreams",
+      "dimensions": {
+        "width": 1440,
+        "height": 810
+      },
+      "format": "WEBP",
+      "bytes": 132656,
+      "sha256": "6ef91ca1fda09f439a2b556321e7ca529b43e0885b3aead6cf73998850e04bd5",
+      "origin": "unverified wallpaper preview",
+      "sourceUrl": null,
+      "photographer": null,
+      "license": null,
+      "rightsStatus": "source/license not verified by this audit",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/theme-wallpapers/warm-sunset.webp",
+      "role": "theme wallpaper preview",
+      "themeId": "warm-sunset",
+      "dimensions": {
+        "width": 1440,
+        "height": 810
+      },
+      "format": "WEBP",
+      "bytes": 251394,
+      "sha256": "7048b785b2cfe5c7ae089e8c644a1b055f00cb250424c050ad0dd3df92ff4bea",
+      "origin": "unverified wallpaper preview",
+      "sourceUrl": null,
+      "photographer": null,
+      "license": null,
+      "rightsStatus": "source/license not verified by this audit",
+      "websiteDisplayed": true
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "public/wallpapers/argentina/buenos-aires-nocturno-720.webp",
+      "role": "responsive wallpaper-gallery preview",
+      "themeId": "buenos-aires-nocturno",
+      "dimensions": {
+        "width": 720,
+        "height": 405
+      },
+      "format": "WEBP",
+      "bytes": 35100,
+      "sha256": "e9a5615fe291baf562ee103e7f0e0383e90e3c102a4f16b8bbf78c65960c78b9",
+      "sourceAsset": "assets/wallpapers/argentina/buenos-aires-nocturno-01.jpg",
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "public/wallpapers/argentina/buenos-aires-nocturno-1280.webp",
+      "role": "responsive wallpaper-gallery preview",
+      "themeId": "buenos-aires-nocturno",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "format": "WEBP",
+      "bytes": 92472,
+      "sha256": "cf36d2111a9c55d24c1f4590846980bce37712e1fba71acf1ee887c1ada55cef",
+      "sourceAsset": "assets/wallpapers/argentina/buenos-aires-nocturno-01.jpg",
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "public/wallpapers/argentina/fin-del-mundo-720.webp",
+      "role": "responsive wallpaper-gallery preview",
+      "themeId": "fin-del-mundo",
+      "dimensions": {
+        "width": 720,
+        "height": 405
+      },
+      "format": "WEBP",
+      "bytes": 20698,
+      "sha256": "f90bedb256caf498cb6191cbe1bf53fd65d04aeb3b3ab5a3ebd5acc5ccf9c7d8",
+      "sourceAsset": "assets/wallpapers/argentina/beagle-blue-hour-01.jpg",
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "public/wallpapers/argentina/fin-del-mundo-1280.webp",
+      "role": "responsive wallpaper-gallery preview",
+      "themeId": "fin-del-mundo",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "format": "WEBP",
+      "bytes": 55808,
+      "sha256": "d1cf15c7802393c78ca571144c37d65179a66b6eea8d74c6b7e9cc07c810cc3a",
+      "sourceAsset": "assets/wallpapers/argentina/beagle-blue-hour-01.jpg",
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "public/wallpapers/argentina/ibera-720.webp",
+      "role": "responsive wallpaper-gallery preview",
+      "themeId": "ibera",
+      "dimensions": {
+        "width": 720,
+        "height": 405
+      },
+      "format": "WEBP",
+      "bytes": 88268,
+      "sha256": "1872f0ced2b16e4da4680fc97c3dc9e7e4e052104f4c50f3046a1fc75370ca72",
+      "sourceAsset": "assets/wallpapers/argentina/ibera-mist-01.jpg",
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "public/wallpapers/argentina/ibera-1280.webp",
+      "role": "responsive wallpaper-gallery preview",
+      "themeId": "ibera",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "format": "WEBP",
+      "bytes": 243076,
+      "sha256": "84f7c7b68deeade009b8002384187b464d737fe686657986afe2fcd09218c4e5",
+      "sourceAsset": "assets/wallpapers/argentina/ibera-mist-01.jpg",
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "public/wallpapers/argentina/pampa-720.webp",
+      "role": "responsive wallpaper-gallery preview",
+      "themeId": "pampa",
+      "dimensions": {
+        "width": 720,
+        "height": 405
+      },
+      "format": "WEBP",
+      "bytes": 53166,
+      "sha256": "c5d42388c1febcd6be29185e6c59bf5be0b3f62b208919c154ff50d00a5a63c3",
+      "sourceAsset": "assets/wallpapers/argentina/pampa-01.jpg",
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "public/wallpapers/argentina/pampa-1280.webp",
+      "role": "responsive wallpaper-gallery preview",
+      "themeId": "pampa",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "format": "WEBP",
+      "bytes": 171210,
+      "sha256": "0afec05752e0344a5d789b93275404bc9690e4fe68424a8fc380c507df6f9cd8",
+      "sourceAsset": "assets/wallpapers/argentina/pampa-01.jpg",
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "public/wallpapers/argentina/patagonia-720.webp",
+      "role": "responsive wallpaper-gallery preview",
+      "themeId": "patagonia",
+      "dimensions": {
+        "width": 720,
+        "height": 405
+      },
+      "format": "WEBP",
+      "bytes": 71582,
+      "sha256": "8f6c8688585dcd5f5ae0f2c39591b0afa9651d88d23d0fa83abf798fe32756da",
+      "sourceAsset": "assets/wallpapers/argentina/patagonia-glacier-01.jpg",
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "public/wallpapers/argentina/patagonia-1280.webp",
+      "role": "responsive wallpaper-gallery preview",
+      "themeId": "patagonia",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "format": "WEBP",
+      "bytes": 209444,
+      "sha256": "5dbee218882fab51e6c0f918d516dae71c094898f21ee0891f964c69951e2c2f",
+      "sourceAsset": "assets/wallpapers/argentina/patagonia-glacier-01.jpg",
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "public/wallpapers/argentina/quebrada-720.webp",
+      "role": "responsive wallpaper-gallery preview",
+      "themeId": "quebrada",
+      "dimensions": {
+        "width": 720,
+        "height": 405
+      },
+      "format": "WEBP",
+      "bytes": 67632,
+      "sha256": "42346329897a34970d45d7fa129654acad6bfd2b49543ed184f35c8729ff6059",
+      "sourceAsset": "assets/wallpapers/argentina/quebrada-mineral-01.jpg",
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "public/wallpapers/argentina/quebrada-1280.webp",
+      "role": "responsive wallpaper-gallery preview",
+      "themeId": "quebrada",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "format": "WEBP",
+      "bytes": 225792,
+      "sha256": "7b863451b12d8b69cf013f26a5d630175143b09ad67ecac7df4bee6e01512e7b",
+      "sourceAsset": "assets/wallpapers/argentina/quebrada-mineral-01.jpg",
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+    }
+  ],
+  "dotfilesWallpaperInventory": "dotfiles-wallpaper-audit.json",
+  "relatedVisualAssets": [
+    {
+      "repository": "HorneroOS/greeter",
+      "pathPrefix": "media/",
+      "role": "SDDM login-video scenes and posters",
+      "classification": "login backgrounds, not desktop wallpaper collection"
+    },
+    {
+      "repository": "HorneroOS/shell",
+      "pathPrefixes": [
+        "screens/qa/",
+        "docs/assets/",
+        "assets/companion/"
+      ],
+      "role": "QA captures, documentation captures, Companion art",
+      "classification": "screenshots/illustrations, not desktop wallpaper collection"
+    },
+    {
+      "repository": "HorneroOS/docs",
+      "pathPrefix": "desktop/assets/",
+      "role": "documentation screenshots",
+      "classification": "desktop captures, not wallpaper assets"
+    },
+    {
+      "repository": "HorneroOS/qa",
+      "pathPrefix": "screens/",
+      "role": "acceptance evidence",
+      "classification": "screenshots, not wallpapers"
+    },
+    {
+      "repository": "HorneroOS/installer",
+      "pathPrefix": "docs/",
+      "role": "installer UI evidence",
+      "classification": "screenshots, not wallpapers"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/brand/buenos-aires-cyberpunk.webp",
+      "role": "labeled conceptual city art",
+      "classification": "concept illustration, not a product wallpaper or documentary photo"
+    }
+  ],
+  "policy": "Unknown provenance or redistribution terms do not establish permission. Do not infer AI generation from visual style alone.",
+  "websiteSourcePhotoCopies": [
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/wallpapers/patagonia-glacier-01.jpg",
+      "role": "photo source copy",
+      "themeId": "patagonia",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Perito_Moreno_Glacier_Panorama.jpg",
+      "photographer": "ThartmannWiki",
+      "license": "CC BY-SA 4.0",
+      "sha256": "2fbfd75b5a2c69918c65d4ab1612c56daadff53e1bff11b40c9c46387753a14b"
+    },
+    {
+      "repository": "HorneroOS/website",
+      "path": "assets/screenshots/wallpapers/beagle-blue-hour-01.jpg",
+      "role": "photo source copy",
+      "themeId": "fin-del-mundo",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Beagle_Channel_-m.jpg",
+      "photographer": "RAYANDBEE",
+      "license": "CC BY 2.0",
+      "sha256": "ac6160e5701a16469482a63fa7b85d56a1650ed4bc6dee298b4740af402c393a"
+    }
+  ]
+}
