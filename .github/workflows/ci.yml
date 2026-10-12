@@ -29,6 +29,8 @@ jobs:
           python-version: "3.12"
       - name: Install lint tools
         run: pip install pre-commit yamllint
+      - name: AUR package tag contract
+        run: PYTHONPATH=. python3 tests/test_aur_release_stamp.py
       - name: Config syntax + personal-data guard
         run: scripts/validate.sh
       - name: Appearance contrast (WCAG AA)

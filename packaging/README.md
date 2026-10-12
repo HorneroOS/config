@@ -80,6 +80,15 @@ tests/test_materialize.sh
 pre-commit run --all-files
 ```
 
+## AUR release tags
+
+The `aur-publish` workflow accepts only package-scoped tags in the form
+`pkg/hornero-config-vX.Y.Z`. HorneroOS composition tags such as
+`v0.2.0-preview15` cannot trigger an AUR publish. Arch `pkgver` does not
+allow hyphens; use underscores for preview labels, for example
+`pkg/hornero-config-v0.2.0_preview1`. The workflow validates the version
+before it updates the PKGBUILD or submits it to the AUR.
+
 ## Use after install
 
 ```sh
