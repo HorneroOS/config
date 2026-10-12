@@ -56,7 +56,9 @@ Alacritty's `desktop/alacritty/hornero-light.toml`, and
 `desktop/hypr/hyprland.conf.d/hornero-light.conf` ship as static fallbacks.
 When Hornero applies an appearance or regenerates wallpaper colors, one
 Material scheme renders Kitty, Alacritty, and Ghostty files in their native
-formats. Kitty and Alacritty live-reload their configuration; Ghostty uses
-the stable `Hornero Dynamic` theme name, whose file is regenerated in the
-user theme directory. Alacritty and Ghostty remain optional applications;
-Kitty remains the factory/default terminal.
+formats. The cursor text uses `onPrimary` over `primary`, and generated
+surface, selection, cursor, and ANSI text pairs pass contrast checks before
+the palette files are written. Kitty and Alacritty live-reload their
+configuration; Ghostty uses the stable `Hornero Dynamic` theme name, whose
+file is regenerated in the user theme directory. Alacritty and Ghostty remain
+optional applications; Kitty remains the factory/default terminal.

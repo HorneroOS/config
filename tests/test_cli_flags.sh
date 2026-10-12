@@ -21,6 +21,18 @@ trap 'rm -rf "$T_HOME"' EXIT
 mkdir -p "$T_HOME/.local/lib" "$T_HOME/.config"
 ln -s "$REPO_ROOT/lib/hornero" "$T_HOME/.local/lib/hornero"
 
+run_with_home() {
+	local test_home="$1"
+	shift
+	env \
+		HOME="$test_home" \
+		XDG_CONFIG_HOME="$test_home/.config" \
+		XDG_DATA_HOME="$test_home/.local/share" \
+		XDG_STATE_HOME="$test_home/.local/state" \
+		GSETTINGS_BACKEND=memory \
+		bash "$@"
+}
+
 # Simulate a system without `which` at the exact call site: an exported
 # failing function shadows the binary for every child bash, producing the
 # same empty substitution the parser saw in minimal guests.
@@ -31,7 +43,7 @@ export -f which
 # "Error: unrecognized option -q." `current` is read-only (empty config
 # reads as empty theme); only the exit status and the absence of the
 # parser error are asserted.
-out="$(HOME="$T_HOME" bash "$REPO_ROOT/bin/hornero-gtk-theme" -q current 2>&1)" \
+out="$(run_with_home "$T_HOME" "$REPO_ROOT/bin/hornero-gtk-theme" -q current 2>&1)" \
   || fail "hornero-gtk-theme -q current exits nonzero without which: $out"
 [[ $out != *"unrecognized option"* ]] \
   || fail "hornero-gtk-theme rejects -q without which: $out"
@@ -40,13 +52,13 @@ pass "hornero-gtk-theme parses -q without which"
 # Long flag on another shared-parser consumer stays working too
 # (hornero-clipboard was removed: clipboard history is `horneroctl capture
 # clipboard`, so hornero-night-mode covers the second consumer here).
-out="$(HOME="$T_HOME" bash "$REPO_ROOT/bin/hornero-night-mode" --help 2>&1)" \
+out="$(run_with_home "$T_HOME" "$REPO_ROOT/bin/hornero-night-mode" --help 2>&1)" \
   || fail "hornero-night-mode --help exits nonzero without which: $out"
 pass "hornero-night-mode parses --help without which"
 
 # Sanity: unshadowed runs keep working (no regression on normal systems).
 unset -f which
-HOME="$T_HOME" bash "$REPO_ROOT/bin/hornero-gtk-theme" -q current >/dev/null 2>&1 \
+run_with_home "$T_HOME" "$REPO_ROOT/bin/hornero-gtk-theme" -q current >/dev/null 2>&1 \
   || fail "hornero-gtk-theme -q current exits nonzero with which present"
 pass "hornero-gtk-theme parses -q with which present"
 
@@ -59,7 +71,7 @@ ln -s "$REPO_ROOT/lib/hornero/easy-options" "$PACKAGE_ROOT/lib/hornero/easy-opti
 ln -s "$REPO_ROOT/lib/hornero/gtk-theme-manager.sh" "$PACKAGE_ROOT/lib/hornero/gtk-theme-manager.sh"
 PACKAGE_HOME="$T_HOME/package-home"
 mkdir -p "$PACKAGE_HOME/.config"
-out="$(HOME="$PACKAGE_HOME" bash "$PACKAGE_ROOT/bin/hornero-gtk-theme" -q current 2>&1)" \
+out="$(run_with_home "$PACKAGE_HOME" "$PACKAGE_ROOT/bin/hornero-gtk-theme" -q current 2>&1)" \
   || fail "package-only hornero-gtk-theme resolves sibling parser without user dotfiles: $out"
 pass "package-only GTK wrapper resolves the sibling parser"
 
