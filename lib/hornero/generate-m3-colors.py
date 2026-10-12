@@ -303,6 +303,16 @@ def main() -> None:
     colours.update(generate_success_colors(source_hct, dark))
     colours.update(generate_terminal_colors(source_hct, dark))
 
+    terminal_outputs = (args.kitty_output, args.alacritty_output, args.ghostty_output)
+    if any(terminal_outputs):
+        try:
+            from terminal_themes import validate_terminal_contrast
+
+            validate_terminal_contrast(colours)
+        except (ImportError, ValueError) as error:
+            print(f"Error: generated terminal palette is not readable: {error}", file=sys.stderr)
+            sys.exit(1)
+
     output = {
         "name": "dynamic",
         "flavour": scheme_type,
@@ -319,7 +329,6 @@ def main() -> None:
     else:
         sys.stdout.write(payload)
 
-    terminal_outputs = (args.kitty_output, args.alacritty_output, args.ghostty_output)
     if any(terminal_outputs):
         try:
             from terminal_themes import render_scheme
