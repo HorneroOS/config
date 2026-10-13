@@ -24,6 +24,14 @@ check ".config/hypr/hyprland.conf.d/keybindings.conf"
 check ".config/hypr/hypridle.conf"
 check ".config/hypr/hyprlock.conf"
 check ".config/hypr/scripts/gaps-interactive.sh"
+# Packaged Quickshell modules are discovered from Qt's system import path.
+# Development overrides must not leak into the normal compositor session.
+if grep -Eq '^[[:space:]]*env = (QML2?_IMPORT_PATH|QS_PLUGIN_PATH|HORNERO_LIB_DIR),' \
+    "$TMP_HOME/.config/hypr/hyprland.conf.d/environment.conf"; then
+  echo "TEST-FAIL: Hyprland defaults shadow packaged Quickshell modules" >&2
+  exit 1
+fi
+echo "TEST-PASS: Hyprland defaults use packaged Quickshell module paths"
 check ".config/niri/config.kdl"
 check ".config/xdg-desktop-portal/niri-portals.conf"
 grep -q '^default=gtk;$' "$TMP_HOME/.config/xdg-desktop-portal/niri-portals.conf"
