@@ -8,11 +8,47 @@
     "note": "Curated Hornero Dark borders/groups; shadow tint in hyprland.conf decoration block."
   },
   "terminal": {
-    "config": "{config}/kitty/hornero-dark.conf",
     "default": "kitty",
-    "optional": [
-      "{config}/alacritty/alacritty.toml",
-      "{config}/ghostty/config.ghostty"
+    "integrations": [
+      {
+        "id": "kitty",
+        "name": "Kitty",
+        "role": "default",
+        "package": "kitty",
+        "configSource": "desktop/kitty/kitty.conf",
+        "configPath": "{config}/kitty/kitty.conf",
+        "configExample": "include ~/.cache/hornero/smart-colors/colors-kitty.conf",
+        "palette": "colors-kitty.conf",
+        "palettePath": "{cache}/hornero/smart-colors/",
+        "detail": "GPU-accelerated, with the Kitty graphics protocol used by Yazi previews.",
+        "note": "A static Hornero Dark or Light palette keeps the terminal readable before the first generated scheme."
+      },
+      {
+        "id": "alacritty",
+        "name": "Alacritty",
+        "role": "optional",
+        "package": "alacritty",
+        "configSource": "desktop/alacritty/alacritty.toml",
+        "configPath": "{config}/alacritty/alacritty.toml",
+        "configExample": "import = [\"hornero-dark.toml\", \"hornero-colors.toml\"]",
+        "palette": "hornero-colors.toml",
+        "palettePath": "{config}/alacritty/",
+        "detail": "A compact TOML configuration with live reload; Yazi image previews use the Wayland adapter through Überzug++ where configured.",
+        "note": "The packaged dark/light fallback and generated color file are imported separately, so wallpaper colors can update without replacing your base config."
+      },
+      {
+        "id": "ghostty",
+        "name": "Ghostty",
+        "role": "optional",
+        "package": "ghostty",
+        "configSource": "desktop/ghostty/config.ghostty",
+        "configPath": "{config}/ghostty/config.ghostty",
+        "configExample": "theme = Hornero Dynamic",
+        "palette": "Hornero Dynamic",
+        "palettePath": "{config}/ghostty/themes/",
+        "detail": "A native Ghostty theme with a stable name that Hornero can refresh when appearance changes.",
+        "note": "A packaged system fallback is available before Hornero writes the user-level wallpaper palette."
+      }
     ],
     "note": "Kitty is the Exo/default terminal. Alacritty and Ghostty are optional curated configurations; wallpaper-derived M3 colors render to each app's native format."
   },

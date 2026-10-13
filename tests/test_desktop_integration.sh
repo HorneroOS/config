@@ -173,16 +173,50 @@ grep -Fq 'live_config_reload = true' "$TMP_HOME/.config/alacritty/alacritty.toml
   || fail "Alacritty generated colors will not live-reload"
 grep -qx 'theme = Hornero Dynamic' "$TMP_HOME/.config/ghostty/config.ghostty" \
   || fail "Ghostty does not select Hornero Dynamic"
-python3 - "$REPO_ROOT/profiles/factory.json" <<'PY'
-import json, sys
-terminal = json.load(open(sys.argv[1]))["terminal"]
+python3 - "$REPO_ROOT" <<'PY'
+import json, re, sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+terminal = json.loads((root / "profiles/factory.json").read_text())["terminal"]
+integrations = terminal["integrations"]
+ids = [integration["id"] for integration in integrations]
+assert ids == ["kitty", "alacritty", "ghostty"], ids
 assert terminal["default"] == "kitty"
-assert terminal["optional"] == [
-    "{config}/alacritty/alacritty.toml",
-    "{config}/ghostty/config.ghostty",
-]
+assert [item["id"] for item in integrations if item["role"] == "default"] == ["kitty"]
+assert all(item["role"] in {"default", "optional"} for item in integrations)
+assert all(item["package"] == item["id"] for item in integrations)
+package_metadata = (root / "packaging/PKGBUILD").read_text()
+optdepends_match = re.search(r"(?ms)^optdepends=\(\n(.*?)^\)", package_metadata)
+assert optdepends_match, "packaging/PKGBUILD has no optdepends array"
+optdepends = optdepends_match.group(1)
+appearance = (root / "lib/hornero/apply-appearance.sh").read_text()
+for integration in integrations:
+    config = root / integration["configSource"]
+    assert config.is_file(), f"missing {integration['id']} source: {config}"
+    expected_target = integration["configSource"].removeprefix("desktop/")
+    assert integration["configPath"] == "{config}/" + expected_target
+    assert integration["configExample"] in config.read_text(), (
+        f"{integration['id']} example drifted from {config}"
+    )
+    assert re.search(rf"^\s*'{re.escape(integration['package'])}:", optdepends, re.M), (
+        f"{integration['id']} has no matching package optdep"
+    )
+    assert integration["palette"] and integration["palettePath"]
+    path_prefix = {
+        "{cache}": "${XDG_CACHE_HOME:-$HOME/.cache}",
+        "{config}": "${XDG_CONFIG_HOME:-$HOME/.config}",
+    }
+    output_path = integration["palettePath"]
+    for token, expansion in path_prefix.items():
+        output_path = output_path.replace(token, expansion)
+    expected_output = f'--{integration["id"]}-output "{output_path}{integration["palette"]}"'
+    assert expected_output in appearance, (
+        f"{integration['id']} palette output drifted: expected {expected_output}"
+    )
+    assert integration["detail"] and integration["note"]
 PY
-pass "optional terminal defaults are explicit and Kitty remains the default"
+pass "factory terminal catalogue matches installed configs and Kitty remains the default"
 python3 - "$REPO_ROOT" <<'PY'
 import re, sys, tomllib
 from pathlib import Path
