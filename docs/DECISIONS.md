@@ -54,6 +54,17 @@ Later product-owned payloads identify their HorneroOS source in the table.
 
 ## Tooling decisions
 
+### Packaged Quickshell module discovery
+
+The Hyprland factory environment does not set `QML_IMPORT_PATH`,
+`QML2_IMPORT_PATH`, `QS_PLUGIN_PATH`, or `HORNERO_LIB_DIR`. The Hornero Shell
+AUR package installs its native QML modules in Qt's standard
+`/usr/lib/qt6/qml/Hornero` tree, and its runtime library path has a packaged
+default. Prepending user-local build paths to a normal desktop session can
+load stale plugins ahead of the installed package. Developers can set
+build-tree paths in their own test invocation as documented by the Shell
+repository; those paths are not product defaults.
+
 - **shellcheck gate severity is `error`, not `warning`.** Every shipped shell
   file is still checked; pre-existing upstream warnings do not fail the build:
   SC1090 (runtime `~/.local/lib/hornero/…` sourcing is by design — repo layout
