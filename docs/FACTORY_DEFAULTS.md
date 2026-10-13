@@ -13,6 +13,12 @@ runtime — that repo is a read-only extraction source (see
 check and `tests/test_desktop_integration.sh` assert no new runtime
 reference is introduced.
 
+The same factory record's `terminal.integrations` catalogue identifies each
+supported terminal, its package, source and installed config paths, palette
+output, and a verified config example. The website generates its terminal
+showcase data from the pinned factory record; the desktop integration test
+checks that the examples still exist in their packaged source files.
+
 ## How each default lands without user setup
 
 | Default | Ships as | Lands at |
