@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 import kitty.config
@@ -29,13 +31,29 @@ if not errors:
     raise SystemExit("Kitty parser diagnostic capture is not working")
 errors.clear()
 
+
+def was_loaded(config_path: Path, options: object) -> bool:
+    loaded_paths = getattr(options, "config_paths", ())
+    return config_path.resolve() in {Path(path).resolve() for path in loaded_paths}
+
+
+# Kitty can return defaults after ignoring a missing requested file. Prove the
+# validator distinguishes that case from a successfully parsed configuration.
+missing_probe = Path(tempfile.gettempdir()) / f"hornero-kitty-missing-{os.getpid()}.conf"
+missing_options = kitty.config.load_config(str(missing_probe), accumulate_bad_lines=[])
+if was_loaded(missing_probe, missing_options):
+    raise SystemExit("Kitty parser unexpectedly reported a missing config as loaded")
+errors.clear()
+
 config_paths = [Path(path) for path in sys.argv[2:]]
 if not config_paths:
     raise SystemExit("usage: validate_kitty_config.py <config> [<config> ...]")
 
 for config_path in config_paths:
     bad_lines = []
-    kitty.config.load_config(str(config_path), accumulate_bad_lines=bad_lines)
+    options = kitty.config.load_config(str(config_path), accumulate_bad_lines=bad_lines)
+    if not was_loaded(config_path, options):
+        errors.append(f"{config_path}: Kitty did not load the requested file")
     for bad_line in bad_lines:
         errors.append(f"{config_path}:{bad_line.number}: {bad_line.line}")
 
