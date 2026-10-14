@@ -50,6 +50,18 @@ root = Path(sys.argv[1])
 errors = []
 def err(msg): errors.append(msg)
 
+# Kitty remote control is powerful enough to send input to, inspect, and
+# manage terminal windows. Hornero does not use the protocol, so the shipped
+# factory configuration must keep it explicitly disabled.
+kitty_conf = root / "desktop" / "kitty" / "kitty.conf"
+kitty_remote_control = [
+    line.split(None, 1)[1].strip()
+    for line in kitty_conf.read_text().splitlines()
+    if line.strip().startswith("allow_remote_control ")
+]
+if kitty_remote_control != ["no"]:
+    err(f"{kitty_conf}: allow_remote_control must be explicitly set to no")
+
 # JSON: theme packs + manifest (strict)
 for f in sorted((root/"profiles"/"themes").rglob("*.json")):
     try: json.loads(f.read_text())
