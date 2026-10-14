@@ -43,24 +43,19 @@ else
 fi
 
 # --- structured formats via python stdlib ---------------------------------------
+if python3 "$REPO_ROOT/scripts/validate_kitty_remote_control.py" \
+    "$REPO_ROOT/desktop/kitty/kitty.conf"; then
+  pass "Kitty remote control is explicitly disabled"
+else
+  fail "Kitty remote control is explicitly disabled"
+fi
+
 if ! python3 - "$REPO_ROOT" <<'PY'
 import configparser, json, re, sys, tomllib, xml.etree.ElementTree as ET
 from pathlib import Path
 root = Path(sys.argv[1])
 errors = []
 def err(msg): errors.append(msg)
-
-# Kitty remote control is powerful enough to send input to, inspect, and
-# manage terminal windows. Hornero does not use the protocol, so the shipped
-# factory configuration must keep it explicitly disabled.
-kitty_conf = root / "desktop" / "kitty" / "kitty.conf"
-kitty_remote_control = [
-    line.split(None, 1)[1].strip()
-    for line in kitty_conf.read_text().splitlines()
-    if line.strip().startswith("allow_remote_control ")
-]
-if kitty_remote_control != ["no"]:
-    err(f"{kitty_conf}: allow_remote_control must be explicitly set to no")
 
 # JSON: theme packs + manifest (strict)
 for f in sorted((root/"profiles"/"themes").rglob("*.json")):
