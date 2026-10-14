@@ -43,6 +43,13 @@ else
 fi
 
 # --- structured formats via python stdlib ---------------------------------------
+if python3 "$REPO_ROOT/scripts/validate_kitty_remote_control.py" \
+    "$REPO_ROOT/desktop/kitty/kitty.conf"; then
+  pass "Kitty remote control is explicitly disabled"
+else
+  fail "Kitty remote control is explicitly disabled"
+fi
+
 if ! python3 - "$REPO_ROOT" <<'PY'
 import configparser, json, re, sys, tomllib, xml.etree.ElementTree as ET
 from pathlib import Path
