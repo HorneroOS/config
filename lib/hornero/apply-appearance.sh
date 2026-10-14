@@ -315,6 +315,8 @@ _hornero_appearance_run_palette() {
 		--kitty-output "${XDG_CACHE_HOME:-$HOME/.cache}/hornero/smart-colors/colors-kitty.conf"
 		--alacritty-output "${XDG_CONFIG_HOME:-$HOME/.config}/alacritty/hornero-colors.toml"
 		--ghostty-output "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes/Hornero Dynamic"
+		--btop-output "${XDG_CONFIG_HOME:-$HOME/.config}/btop/themes/Hornero Dynamic.theme"
+		--cava-output "${XDG_CONFIG_HOME:-$HOME/.config}/cava/themes/Hornero Dynamic"
 	)
 	if declare -f hornero_run_m3_colors > /dev/null 2>&1; then
 		hornero_run_m3_colors \

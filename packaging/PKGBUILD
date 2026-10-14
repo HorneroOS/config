@@ -133,6 +133,24 @@ package() {
     fi
   done
 
+  # btop searches its package-wide themes under /usr/share/btop/themes; it
+  # does not use /etc/xdg/btop/themes as a system theme directory. Keep the
+  # staged XDG copy for per-user materialization and install a recognized
+  # factory fallback for package-only systems.
+  install -Dm644 "$stage/.config/btop/themes/Hornero Dynamic.theme" \
+    "$pkgdir/usr/share/btop/themes/Hornero Dynamic.theme"
+
+  # btop and Cava read user configuration rather than /etc/xdg defaults.
+  # Seed new accounts with the curated configs; Cava resolves themes only
+  # from its user config directory, while btop also has the system fallback
+  # installed above.
+  install -Dm644 "$stage/.config/btop/btop.conf" \
+    "$pkgdir/etc/skel/.config/btop/btop.conf"
+  install -Dm644 "$stage/.config/cava/config" \
+    "$pkgdir/etc/skel/.config/cava/config"
+  install -Dm644 "$stage/.config/cava/themes/Hornero Dynamic" \
+    "$pkgdir/etc/skel/.config/cava/themes/Hornero Dynamic"
+
   # Niri reads /etc/niri/config.kdl as its system fallback after the user's
   # XDG config. Keep one source file: materialize.sh also places it in the
   # staged HOME for chezmoi and package-only user setup.

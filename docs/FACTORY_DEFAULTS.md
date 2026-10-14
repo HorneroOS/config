@@ -61,10 +61,13 @@ named readers; verified against the Arch extra repo on 2026-09-13:
 Alacritty's `desktop/alacritty/hornero-light.toml`, and
 `desktop/hypr/hyprland.conf.d/hornero-light.conf` ship as static fallbacks.
 When Hornero applies an appearance or regenerates wallpaper colors, one
-Material scheme renders Kitty, Alacritty, and Ghostty files in their native
-formats. The cursor text uses `onPrimary` over `primary`, and generated
-surface, selection, cursor, and ANSI text pairs pass contrast checks before
-the palette files are written. Kitty and Alacritty live-reload their
-configuration; Ghostty uses the stable `Hornero Dynamic` theme name, whose
-file is regenerated in the user theme directory. Alacritty and Ghostty remain
-optional applications; Kitty remains the factory/default terminal.
+Material scheme renders native themes for Kitty, Alacritty, Ghostty, btop, and
+Cava. Terminal cursor, selection, surface, and ANSI text pairs pass contrast
+checks before palette files are written. Kitty and Alacritty live-reload their
+configuration; Ghostty uses the stable `Hornero Dynamic` theme name. btop and
+Cava read the matching generated theme from their user config directories.
+The package seeds new accounts with their curated configs and a Hornero Dark
+Cava fallback, and installs a system-wide btop fallback under its supported
+theme path. Appearance changes regenerate both per-user themes. Alacritty,
+Ghostty, btop, and Cava are optional applications; Kitty remains the
+factory/default terminal.

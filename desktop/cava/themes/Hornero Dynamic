@@ -1,0 +1,10 @@
+# Hornero Dark fallback; regenerated from the active wallpaper palette.
+[color]
+background = '#1D1410'
+foreground = '#F6E9DB'
+gradient = 1
+gradient_count = 4
+gradient_color_1 = '#3C2C21'
+gradient_color_2 = '#E07856'
+gradient_color_3 = '#D9A05F'
+gradient_color_4 = '#F2B749'

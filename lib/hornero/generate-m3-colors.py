@@ -61,6 +61,8 @@ def parse_args():
     parser.add_argument("--kitty-output", default=None, help="Render Kitty colors to this file")
     parser.add_argument("--alacritty-output", default=None, help="Render Alacritty colors to this file")
     parser.add_argument("--ghostty-output", default=None, help="Render a Ghostty theme to this file")
+    parser.add_argument("--btop-output", default=None, help="Render a btop theme to this file")
+    parser.add_argument("--cava-output", default=None, help="Render a Cava theme to this file")
     parser.add_argument(
         "--quality",
         type=int,
@@ -303,14 +305,20 @@ def main() -> None:
     colours.update(generate_success_colors(source_hct, dark))
     colours.update(generate_terminal_colors(source_hct, dark))
 
-    terminal_outputs = (args.kitty_output, args.alacritty_output, args.ghostty_output)
-    if any(terminal_outputs):
+    application_outputs = (
+        args.kitty_output,
+        args.alacritty_output,
+        args.ghostty_output,
+        args.btop_output,
+        args.cava_output,
+    )
+    if any(application_outputs):
         try:
             from terminal_themes import validate_terminal_contrast
 
             validate_terminal_contrast(colours)
         except (ImportError, ValueError) as error:
-            print(f"Error: generated terminal palette is not readable: {error}", file=sys.stderr)
+            print(f"Error: generated application palette is not readable: {error}", file=sys.stderr)
             sys.exit(1)
 
     output = {
@@ -329,7 +337,7 @@ def main() -> None:
     else:
         sys.stdout.write(payload)
 
-    if any(terminal_outputs):
+    if any(application_outputs):
         try:
             from terminal_themes import render_scheme
 
@@ -338,10 +346,12 @@ def main() -> None:
                 kitty_output=args.kitty_output,
                 alacritty_output=args.alacritty_output,
                 ghostty_output=args.ghostty_output,
+                btop_output=args.btop_output,
+                cava_output=args.cava_output,
             ):
-                print(f"wrote terminal colors: {path}", file=sys.stderr)
+                print(f"wrote application colors: {path}", file=sys.stderr)
         except (OSError, ValueError) as error:
-            print(f"Error: could not render terminal colors: {error}", file=sys.stderr)
+            print(f"Error: could not render application colors: {error}", file=sys.stderr)
             sys.exit(1)
 
 
