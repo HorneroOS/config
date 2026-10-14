@@ -19,6 +19,13 @@ output, and a verified config example. The website generates its terminal
 showcase data from the pinned factory record; the desktop integration test
 checks that the examples still exist in their packaged source files.
 
+`paletteApplications` lists optional applications whose native themes are
+generated from the current wallpaper palette. The website projects this list
+for the workspace palette showcase, while the desktop integration test checks
+the package roles, source configs, theme paths, and native renderer outputs.
+This keeps palette-app claims aligned with what Hornero Config actually
+ships; it does not install btop or Cava.
+
 ## How each default lands without user setup
 
 | Default | Ships as | Lands at |
