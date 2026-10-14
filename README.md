@@ -98,6 +98,13 @@ Validate everything without writing to any HOME:
 scripts/validate.sh
 ```
 
+When Kitty is installed, validate all shipped Kitty files with Kitty's own
+parser (the normal CI job runs this against the current Arch package):
+
+```sh
+scripts/validate-kitty-config.sh
+```
+
 Run the temp-HOME materialization test:
 
 ```sh

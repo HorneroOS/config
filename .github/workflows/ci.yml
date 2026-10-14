@@ -12,10 +12,17 @@ jobs:
       image: archlinux:base
     steps:
       - name: Install Git and the Arch desktop validation packages
-        run: pacman -Syu --noconfirm git niri ghostty
+        run: pacman -Syu --noconfirm git niri ghostty kitty alacritty
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
       - name: Validate the actual Niri configuration
         run: NIRI_CONFIG="$GITHUB_WORKSPACE/desktop/niri/config.kdl" niri validate
+      - name: Validate shipped Kitty configs with Kitty's parser
+        run: scripts/validate-kitty-config.sh
+      - name: Validate shipped Alacritty configs with Alacritty's parser
+        run: |
+          for config in "$GITHUB_WORKSPACE"/desktop/alacritty/*.toml; do
+            alacritty migrate --config-file "$config" --dry-run --silent
+          done
       - name: Validate shipped Ghostty config and theme
         run: |
           export XDG_CONFIG_HOME="$GITHUB_WORKSPACE/desktop"
