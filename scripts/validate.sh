@@ -25,6 +25,17 @@ else
   echo "VALIDATE-SKIP: shellcheck not installed" >&2
 fi
 
+# --- Ghostty native parser (optional on non-Arch hosts) -------------------------
+if command -v ghostty >/dev/null 2>&1; then
+  if bash "$REPO_ROOT/scripts/validate-ghostty-config.sh"; then
+    pass "Ghostty config and fallback theme"
+  else
+    fail "Ghostty config and fallback theme"
+  fi
+else
+  echo "VALIDATE-SKIP: Ghostty native parser is not installed" >&2
+fi
+
 if python3 "$REPO_ROOT/scripts/validate-wallpapers.py"; then
   pass "licensed wallpaper assets and provenance"
 else

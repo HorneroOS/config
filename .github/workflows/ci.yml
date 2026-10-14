@@ -24,10 +24,7 @@ jobs:
             alacritty migrate --config-file "$config" --dry-run --silent
           done
       - name: Validate shipped Ghostty config and theme
-        run: |
-          export XDG_CONFIG_HOME="$GITHUB_WORKSPACE/desktop"
-          ghostty +validate-config --config-file="$GITHUB_WORKSPACE/desktop/ghostty/config.ghostty"
-          ghostty +validate-config --config-file="$GITHUB_WORKSPACE/desktop/ghostty/themes/Hornero Dynamic"
+        run: scripts/validate-ghostty-config.sh
 
   validate:
     runs-on: ubuntu-latest

@@ -105,6 +105,14 @@ parser (the normal CI job runs this against the current Arch package):
 scripts/validate-kitty-config.sh
 ```
 
+When Ghostty is installed, validate its shipped config and Hornero fallback
+theme with Ghostty's parser. `scripts/validate.sh` runs this automatically;
+the dedicated command is useful when changing terminal defaults:
+
+```sh
+scripts/validate-ghostty-config.sh
+```
+
 Run the temp-HOME materialization test:
 
 ```sh
