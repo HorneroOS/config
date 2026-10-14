@@ -57,7 +57,10 @@ deferred accounting.
 Kitty remains the default terminal selected by Exo. Alacritty and Ghostty
 receive optional Hornero configurations. The wallpaper-derived Material
 palette also generates native themes for Kitty, Alacritty, Ghostty, btop, and
-Cava, so terminal work and audio visualization share the active desktop look.
+Cava, so terminal work, system monitoring, and audio visualization share the
+active desktop look. Optional non-terminal palette integrations are recorded
+in `profiles/factory.json` and validated against their packaged configuration
+and renderer outputs.
 The btop default refreshes at the upstream-recommended 2-second interval to
 avoid the 100 ms polling cost of its inherited workstation setting.
 

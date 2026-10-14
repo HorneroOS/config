@@ -52,6 +52,36 @@
     ],
     "note": "Kitty is the Exo/default terminal. Alacritty and Ghostty are optional curated configurations; wallpaper-derived M3 colors render to each app's native format."
   },
+  "paletteApplications": [
+    {
+      "id": "btop",
+      "name": "btop",
+      "role": "optional",
+      "package": "btop",
+      "category": "System monitor",
+      "configSource": "desktop/btop/btop.conf",
+      "configPath": "{config}/btop/btop.conf",
+      "theme": "Hornero Dynamic",
+      "themeSource": "desktop/btop/themes/Hornero Dynamic.theme",
+      "themePath": "{config}/btop/themes/Hornero Dynamic.theme",
+      "detail": "A native btop theme generated from the active Hornero wallpaper palette.",
+      "note": "btop remains an optional application; Hornero Config provides its defaults and theme when installed."
+    },
+    {
+      "id": "cava",
+      "name": "Cava",
+      "role": "optional",
+      "package": "cava",
+      "category": "Audio visualizer",
+      "configSource": "desktop/cava/config",
+      "configPath": "{config}/cava/config",
+      "theme": "Hornero Dynamic",
+      "themeSource": "desktop/cava/themes/Hornero Dynamic",
+      "themePath": "{config}/cava/themes/Hornero Dynamic",
+      "detail": "A native Cava theme generated from the active Hornero wallpaper palette.",
+      "note": "Cava remains an optional application; Hornero Config provides its defaults and theme when installed."
+    }
+  ],
   "qt": {
     "platformTheme": "qt6ct",
     "config": "{config}/qt6ct/qt6ct.conf",
