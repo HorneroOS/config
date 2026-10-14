@@ -83,6 +83,16 @@ cmp -s "$STAGE/.config/ghostty/config.ghostty" \
 cmp -s "$STAGE/.config/ghostty/themes/Hornero Dynamic" \
   "$ROOT/usr/share/ghostty/themes/Hornero Dynamic" \
   && pass "Ghostty system theme fallback" || fail "Ghostty system theme missing/different"
+cmp -s "$STAGE/.config/btop/themes/Hornero Dynamic.theme" \
+  "$ROOT/usr/share/btop/themes/Hornero Dynamic.theme" \
+  && pass "btop system theme fallback" || fail "btop system theme missing/different"
+for app_config in \
+  btop/btop.conf \
+  cava/config \
+  "cava/themes/Hornero Dynamic"; do
+  cmp -s "$STAGE/.config/$app_config" "$ROOT/etc/skel/.config/$app_config" \
+    && pass "new-user seed $app_config" || fail "new-user seed missing/different: $app_config"
+done
 [[ ! -e "$ROOT/etc/xdg/alacritty" && ! -e "$ROOT/etc/xdg/ghostty" ]] \
   && pass "terminal configs use upstream-supported system locations" \
   || fail "Alacritty/Ghostty config was staged under unsupported /etc/xdg"

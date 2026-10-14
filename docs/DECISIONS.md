@@ -18,8 +18,8 @@ Later product-owned payloads identify their HorneroOS source in the table.
 | `desktop/gtk/gtkrc-2.0` | `home/dot_gtkrc-2.0` | Byte-identical. The `include "/home/user/.gtkrc-2.0.mine"` line is upstream's generic LXAppearance override hook, not a real user path. |
 | `desktop/fontconfig/fonts.conf` | `home/dot_config/fontconfig/` | Generic hinting/rendering defaults. |
 | `desktop/fastfetch/config.jsonc` | `home/dot_config/fastfetch/` | No image path set (upstream default requires none). |
-| `desktop/btop/btop.conf` | `home/dot_config/btop/` | Stock settings, TTY theme. |
-| `desktop/cava/config` | `home/dot_config/cava/` | All tuned values still commented; ships defaults. |
+| `desktop/btop/btop.conf` | `home/dot_config/btop/` | Curated btop defaults with a generated Hornero theme; the 2-second update cadence avoids the source file's 100 ms polling interval. |
+| `desktop/cava/config` | `home/dot_config/cava/` | Curated default config uses the generated Hornero color theme; other capture and visualization settings remain upstream defaults. |
 | `desktop/thunar/` (`accels.scm`, `renamerc`, `uca.xml`) | `home/dot_config/Thunar/` | Two generic custom actions (open terminal, open in yazi). `uca.xml` remains a per-user config only; the system package's `/etc/xdg/Thunar/uca.xml` is owned by Arch's `thunar` package and is excluded from `hornero-config`. |
 | `desktop/copyq/copyq.conf` | `home/dot_config/copyq/copyq.conf.tmpl` | Verified benign: the `.tmpl` suffix is historical, the file contains zero template variables; shipped verbatim minus suffix. |
 | `xdg/handlr/handlr.toml` | `home/dot_config/handlr/` | Generic defaults (`enable_selector = false`). |

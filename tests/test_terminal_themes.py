@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 
+import configparser
 import json
+import re
 import sys
 import tempfile
 import tomllib
@@ -20,11 +22,23 @@ from terminal_themes import render_scheme, render_scheme_file  # noqa: E402
 def sample_colours() -> dict[str, str]:
     colours = {
         "surface": "#1D1410",
+        "surfaceContainerHighest": "#3C2C21",
         "onSurface": "#F6E9DB",
+        "onSurfaceVariant": "#E9D3BC",
+        "outline": "#6B4E3B",
+        "outlineVariant": "#6B4E3B",
         "primary": "#E07856",
         "onPrimary": "#211310",
         "onPrimaryContainer": "#F6E9DB",
         "primaryContainer": "#3C2C21",
+        "secondary": "#D9A05F",
+        "secondaryContainer": "#6B4E3B",
+        "tertiary": "#7FA3B8",
+        "tertiaryContainer": "#3C2C21",
+        "error": "#F28B82",
+        "errorContainer": "#3C2C21",
+        "success": "#9CC184",
+        "successContainer": "#3C2C21",
     }
     colours.update(
         {
@@ -56,15 +70,22 @@ class TerminalThemeTests(unittest.TestCase):
             kitty = root / "kitty/colors.conf"
             alacritty = root / "alacritty/hornero-colors.toml"
             ghostty = root / "ghostty/themes/Hornero Dynamic"
+            btop = root / "btop/themes/Hornero Dynamic.theme"
+            cava = root / "cava/themes/Hornero Dynamic"
 
             written = render_scheme(
                 sample_colours(),
                 kitty_output=kitty,
                 alacritty_output=alacritty,
                 ghostty_output=ghostty,
+                btop_output=btop,
+                cava_output=cava,
             )
 
-            self.assertEqual(set(written), {str(kitty), str(alacritty), str(ghostty)})
+            self.assertEqual(
+                set(written),
+                {str(kitty), str(alacritty), str(ghostty), str(btop), str(cava)},
+            )
             kitty_text = kitty.read_text(encoding="utf-8")
             self.assertIn("background #1D1410", kitty_text)
             self.assertIn("cursor_text_color #211310", kitty_text)
@@ -81,6 +102,21 @@ class TerminalThemeTests(unittest.TestCase):
             self.assertIn("background = #1D1410", ghostty_lines)
             self.assertIn("foreground = #F6E9DB", ghostty_lines)
             self.assertIn("cursor-text = #211310", ghostty_lines)
+
+            btop_text = btop.read_text(encoding="utf-8")
+            btop_theme = dict(
+                re.findall(r'^theme\[([^]]+)\]="([^"]*)"$', btop_text, re.MULTILINE)
+            )
+            self.assertEqual(btop_theme["main_fg"], "#F6E9DB")
+            self.assertEqual(btop_theme["title"], "#E07856")
+            self.assertEqual(len(btop_theme), 42)
+
+            cava_parser = configparser.ConfigParser(interpolation=None)
+            cava_parser.read(cava, encoding="utf-8")
+            self.assertEqual(cava_parser["color"]["background"].strip("'\""), "#1D1410")
+            self.assertEqual(cava_parser["color"]["gradient"], "1")
+            self.assertEqual(cava_parser["color"]["gradient_count"], "4")
+            self.assertEqual(cava_parser["color"]["gradient_color_4"].strip("'\""), "#D9A05F")
 
     def test_scheme_file_requires_colours_object(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

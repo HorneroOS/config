@@ -126,6 +126,16 @@ for line in btop.read_text().splitlines():
     if "=" not in s: err(f"{btop}: line without '=': {s[:60]}")
 if n == 0: err(f"{btop}: no settings parsed")
 
+btop_theme = root/"desktop"/"btop"/"themes"/"Hornero Dynamic.theme"
+theme_keys = set()
+for line in btop_theme.read_text().splitlines():
+    s = line.strip()
+    if not s or s.startswith("#"): continue
+    m = re.fullmatch(r'theme\[([a-z_]+)\]="([^"]*)"', s)
+    if not m: err(f"{btop_theme}: invalid theme setting: {s[:60]}")
+    else: theme_keys.add(m.group(1))
+if len(theme_keys) != 42: err(f"{btop_theme}: expected 42 unique native theme colors, found {len(theme_keys)}")
+
 # cava config: sectionless key=value with ';'-comments
 cava = root/"desktop"/"cava"/"config"
 n = 0
@@ -135,6 +145,15 @@ for line in cava.read_text().splitlines():
     n += 1
     if "=" not in s: err(f"{cava}: line without '=': {s[:60]}")
 if n == 0: err(f"{cava}: no settings parsed")
+
+cava_theme = root/"desktop"/"cava"/"themes"/"Hornero Dynamic"
+try:
+    cp = configparser.ConfigParser(strict=True, interpolation=None)
+    cp.read_string(cava_theme.read_text())
+    if "color" not in cp: err(f"{cava_theme}: missing [color] section")
+    elif cp["color"].getint("gradient_count", fallback=0) != 4:
+        err(f"{cava_theme}: expected four generated gradient colors")
+except Exception as e: err(f"{cava_theme}: {e}")
 
 # XML: fontconfig + thunar custom actions
 for f in (root/"desktop"/"fontconfig"/"fonts.conf", root/"desktop"/"thunar"/"uca.xml"):

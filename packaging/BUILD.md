@@ -48,6 +48,10 @@ pacman metadata dotfiles `.PKGINFO`/`.BUILDINFO`/`.MTREE`).
 ```text
 /etc/xdg/btop/btop.conf
 /etc/xdg/cava/config
+/usr/share/btop/themes/Hornero Dynamic.theme
+/etc/skel/.config/btop/btop.conf
+/etc/skel/.config/cava/config
+/etc/skel/.config/cava/themes/Hornero Dynamic
 /etc/xdg/copyq/copyq.conf
 /etc/xdg/fastfetch/config.jsonc
 /etc/xdg/fontconfig/fonts.conf
