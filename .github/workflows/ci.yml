@@ -11,11 +11,16 @@ jobs:
     container:
       image: archlinux:base
     steps:
-      - name: Install Git and the Arch Niri package
-        run: pacman -Syu --noconfirm git niri
+      - name: Install Git and the Arch desktop validation packages
+        run: pacman -Syu --noconfirm git niri ghostty
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
       - name: Validate the actual Niri configuration
         run: NIRI_CONFIG="$GITHUB_WORKSPACE/desktop/niri/config.kdl" niri validate
+      - name: Validate shipped Ghostty config and theme
+        run: |
+          export XDG_CONFIG_HOME="$GITHUB_WORKSPACE/desktop"
+          ghostty +validate-config --config-file="$GITHUB_WORKSPACE/desktop/ghostty/config.ghostty"
+          ghostty +validate-config --config-file="$GITHUB_WORKSPACE/desktop/ghostty/themes/Hornero Dynamic"
 
   validate:
     runs-on: ubuntu-latest
