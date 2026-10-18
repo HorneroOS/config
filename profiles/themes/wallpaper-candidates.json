@@ -2,29 +2,308 @@
   "schemaVersion": 1,
   "reviewMethod": "Visual shortlist review from Commons previews and file metadata; selected originals were downloaded, checksum-verified, cropped and inspected at 2560x1440. Alternatives were not redistributed.",
   "themes": [
-    {"themeId":"buenos-aires-nocturno","intent":"Amber-lit urban night, dark riverfront and a cyberpunk-compatible atmosphere without invented neon.","selected":"Buenos Aires at night — Luis Argerich","candidates":[
-      {"title":"Buenos Aires at night","photographer":"Luis Argerich","location":"Puerto Madero, Buenos Aires","source":"https://commons.wikimedia.org/wiki/File:Buenos_Aires_at_night.jpg","resolution":"7323x2126","license":"CC BY 2.0","decision":"selected","reason":"Wide real night panorama, warm city light and usable 16:9 crop."},
-      {"title":"Buenos Aires by night","photographer":"Cezary Piwowarski","location":"Avenida 9 de Julio, Buenos Aires","source":"https://commons.wikimedia.org/wiki/File:Buenos_Aires_by_night.jpg","resolution":"4362x2252","license":"CC BY-SA 4.0 (also offers older alternatives)","decision":"not selected","reason":"Strong landmark composition, but the explicit Obelisk/avenue reads more as a tourist landmark than the layered city atmosphere sought."},
-      {"title":"Puerto Madero, Night","photographer":"Rodrigo Menezes","location":"Puerto Madero, Buenos Aires","source":"https://commons.wikimedia.org/wiki/File:Puerto_Madero,_Night.JPG","resolution":"3872x2592","license":"CC BY-SA 3.0","decision":"not selected","reason":"Good city/water reflections; selected panorama has more continuous urban skyline and horizontal space."}]},
-    {"themeId":"fin-del-mundo","intent":"Quiet maritime blue hour over Beagle water, cold light and southern distance.","selected":"Beagle Channel -m — RAYANDBEE","candidates":[
-      {"title":"Beagle Channel -m","photographer":"RAYANDBEE","location":"Beagle Channel, Tierra del Fuego","source":"https://commons.wikimedia.org/wiki/File:Beagle_Channel_-m.jpg","resolution":"3648x2736","license":"CC BY 2.0","decision":"selected","reason":"Soft twilight and calm water; large landscape original supports a careful wide crop."},
-      {"title":"Beaglekanal","photographer":"Mirko Thiessen","location":"Beagle Channel near Ushuaia","source":"https://commons.wikimedia.org/wiki/File:Beaglekanal.jpg","resolution":"1600x1064","license":"CC BY-SA 2.5","decision":"not selected","reason":"Authentic landscape, but below target resolution and less suitable as a 2560px-wide default."},
-      {"title":"Beagle-Kanal Ushuaia","photographer":"Zuarin","location":"Ushuaia, Tierra del Fuego","source":"https://commons.wikimedia.org/wiki/File:Beagle-Kanal_Ushuaia.JPG","resolution":"1712x2560","license":"CC BY 3.0","decision":"not selected","reason":"Portrait aerial view would require a destructive desktop crop."}]},
-    {"themeId":"ibera","intent":"Dense green wetland, dark lagoon water, floating vegetation and a calm dawn mood.","selected":"Esteros del Ibera, Corrientes, Argentina, Jan. 2011 - Flickr - PhillipC (1)","candidates":[
-      {"title":"Esteros del Ibera… PhillipC (1)","photographer":"Phillip Capper","location":"Esteros del Iberá, Corrientes","source":"https://commons.wikimedia.org/wiki/File:Esteros_del_Ibera,_Corrientes,_Argentina,_Jan._2011_-_Flickr_-_PhillipC_(1).jpg","resolution":"4288x2848","license":"CC BY 2.0","decision":"selected","reason":"Nikon D90 photograph; lagoon framed by vegetation gives the theme a quiet layered composition."},
-      {"title":"Esteros Del Ibera… PhillipC (3)","photographer":"Phillip Capper","location":"Esteros del Iberá, Corrientes","source":"https://commons.wikimedia.org/wiki/File:Esteros_Del_Ibera,_Corrientes,_Argentina,_2nd._Jan_2011_-_Flickr_-_PhillipC_(3).jpg","resolution":"not recorded in this shortlist","license":"CC BY 2.0","decision":"not selected","reason":"Genuine alternate wetland view; selected image has a more enclosed lagoon composition."},
-      {"title":"Esteros Del Ibera… PhillipC (5)","photographer":"Phillip Capper","location":"Esteros del Iberá, Corrientes","source":"https://commons.wikimedia.org/wiki/File:Esteros_Del_Ibera,_Corrientes,_Argentina,_2nd._Jan_2011_-_Flickr_-_PhillipC_(5).jpg","resolution":"not recorded in this shortlist","license":"CC BY 2.0","decision":"not selected","reason":"Sunset-oriented alternate considered; selected image aligns better with the green lagoon identity."}]},
-    {"themeId":"pampa","intent":"Humid grassland and water channels, open air, green and earth rather than rustic props.","selected":"Drone Laguna de rocha — Alejandro Barrios","candidates":[
-      {"title":"Drone Laguna de rocha","photographer":"Alejandro Barrios","location":"Laguna de Rocha, Buenos Aires Province","source":"https://commons.wikimedia.org/wiki/File:Drone_Laguna_de_rocha.jpg","resolution":"4000x2250","license":"CC BY-SA 4.0","decision":"selected","reason":"Native 16:9 aerial composition reads as humid grassland and river channels."},
-      {"title":"Argentine Pampas","photographer":"Luis Argerich","location":"Luján River, Buenos Aires Province","source":"https://commons.wikimedia.org/wiki/File:Argentine_Pampas.jpg","resolution":"3841x2525","license":"CC BY 2.0","decision":"not selected","reason":"Correct region; selected aerial has more distinctive water and vegetation geometry."},
-      {"title":"Atardecer en la Meseta El Fresco","photographer":"Turkeeeto","location":"Puelén Department, La Pampa Province","source":"https://commons.wikimedia.org/wiki/File:Atardecer_en_la_Meseta_El_Fresco.jpg","resolution":"1000x664","license":"CC BY-SA 4.0","decision":"not selected","reason":"Authentic moonrise landscape, but too small for a crisp 1440p default."}]},
-    {"themeId":"patagonia","intent":"Cold glacier blue, high mountain forms and open Patagonian scale.","selected":"Perito Moreno Glacier Panorama — ThartmannWiki","candidates":[
-      {"title":"Perito Moreno Glacier Panorama","photographer":"ThartmannWiki","location":"Los Glaciares National Park, Santa Cruz","source":"https://commons.wikimedia.org/wiki/File:Perito_Moreno_Glacier_Panorama.jpg","resolution":"15432x4970","license":"CC BY-SA 4.0","decision":"selected","reason":"High-resolution panorama; crop balances ice, mountains and sky."},
-      {"title":"Perito Moreno Glacier South","photographer":"Fernando","location":"Los Glaciares National Park, Santa Cruz","source":"https://commons.wikimedia.org/wiki/File:Perito_Moreno_Glacier_South.jpg","resolution":"5593x3729","license":"CC BY-SA 4.0","decision":"not selected","reason":"Strong close detail of the ice face; less broad landscape and tighter crop."},
-      {"title":"Perito Moreno Glacier panorama","photographer":"Makelelecba","location":"Los Glaciares National Park, Santa Cruz","source":"https://commons.wikimedia.org/wiki/File:Perito_Moreno_Glacier_panorama.jpg","resolution":"10320x3863","license":"CC BY-SA 4.0","decision":"not selected","reason":"Large five-frame panorama; the selected source gives a better balanced desktop crop."}]},
-    {"themeId":"quebrada","intent":"Jujuy mineral bands, high-altitude daylight, rose, ochre and violet shadow.","selected":"Serranía de Hornocal 03 — Bernard Gagnon","candidates":[
-      {"title":"Serranía de Hornocal 03","photographer":"Bernard Gagnon","location":"Serranía de Hornocal, Jujuy","source":"https://commons.wikimedia.org/wiki/File:Serran%C3%ADa_de_Hornocal_03.jpg","resolution":"5184x3456","license":"CC BY-SA 4.0","decision":"selected","reason":"Layered mineral color supports the theme's natural rose/ochre/violet palette."},
-      {"title":"Quebrada de Humahuaca 05","photographer":"Bernard Gagnon","location":"Quebrada de Humahuaca, Jujuy","source":"https://commons.wikimedia.org/wiki/File:Quebrada_de_Humahuaca_05.jpg","resolution":"5184x2196","license":"CC BY-SA 4.0","decision":"not selected","reason":"Wide mineral scene, but road/valley composition is less color-distinct than Hornocal."},
-      {"title":"Quebrada de Humahuaca 06","photographer":"Bernard Gagnon","location":"Quebrada de Humahuaca, Jujuy","source":"https://commons.wikimedia.org/wiki/File:Quebrada_de_Humahuaca_06.jpg","resolution":"not recorded in this shortlist","license":"CC BY-SA 4.0","decision":"not selected","reason":"Real Andean landscape; subdued ridges were a weaker match for the theme's mineral color direction."}]}
+    {
+      "themeId": "buenos-aires-nocturno",
+      "intent": "Amber-lit urban night, dark riverfront and a cyberpunk-compatible atmosphere without invented neon.",
+      "selected": "Buenos Aires at night — Luis Argerich",
+      "candidates": [
+        {
+          "title": "Buenos Aires at night",
+          "photographer": "Luis Argerich",
+          "location": "Puerto Madero, Buenos Aires",
+          "source": "https://commons.wikimedia.org/wiki/File:Buenos_Aires_at_night.jpg",
+          "resolution": "7323x2126",
+          "license": "CC BY 2.0",
+          "decision": "selected",
+          "reason": "Wide real night panorama, warm city light and usable 16:9 crop."
+        },
+        {
+          "title": "Buenos Aires by night",
+          "photographer": "Cezary Piwowarski",
+          "location": "Avenida 9 de Julio, Buenos Aires",
+          "source": "https://commons.wikimedia.org/wiki/File:Buenos_Aires_by_night.jpg",
+          "resolution": "4362x2252",
+          "license": "CC BY-SA 4.0 (also offers older alternatives)",
+          "decision": "not selected",
+          "reason": "Strong landmark composition, but the explicit Obelisk/avenue reads more as a tourist landmark than the layered city atmosphere sought."
+        },
+        {
+          "title": "Puerto Madero, Night",
+          "photographer": "Rodrigo Menezes",
+          "location": "Puerto Madero, Buenos Aires",
+          "source": "https://commons.wikimedia.org/wiki/File:Puerto_Madero,_Night.JPG",
+          "resolution": "3872x2592",
+          "license": "CC BY-SA 3.0",
+          "decision": "not selected",
+          "reason": "Good city/water reflections; selected panorama has more continuous urban skyline and horizontal space."
+        }
+      ]
+    },
+    {
+      "themeId": "fin-del-mundo",
+      "intent": "Quiet maritime blue hour over Beagle water, cold light and southern distance.",
+      "selected": "Beagle Channel -m — RAYANDBEE",
+      "candidates": [
+        {
+          "title": "Beagle Channel -m",
+          "photographer": "RAYANDBEE",
+          "location": "Beagle Channel, Tierra del Fuego",
+          "source": "https://commons.wikimedia.org/wiki/File:Beagle_Channel_-m.jpg",
+          "resolution": "3648x2736",
+          "license": "CC BY 2.0",
+          "decision": "selected",
+          "reason": "Soft twilight and calm water; large landscape original supports a careful wide crop."
+        },
+        {
+          "title": "Beaglekanal",
+          "photographer": "Mirko Thiessen",
+          "location": "Beagle Channel near Ushuaia",
+          "source": "https://commons.wikimedia.org/wiki/File:Beaglekanal.jpg",
+          "resolution": "1600x1064",
+          "license": "CC BY-SA 2.5",
+          "decision": "not selected",
+          "reason": "Authentic landscape, but below target resolution and less suitable as a 2560px-wide default."
+        },
+        {
+          "title": "Beagle-Kanal Ushuaia",
+          "photographer": "Zuarin",
+          "location": "Ushuaia, Tierra del Fuego",
+          "source": "https://commons.wikimedia.org/wiki/File:Beagle-Kanal_Ushuaia.JPG",
+          "resolution": "1712x2560",
+          "license": "CC BY 3.0",
+          "decision": "not selected",
+          "reason": "Portrait aerial view would require a destructive desktop crop."
+        }
+      ]
+    },
+    {
+      "themeId": "ibera",
+      "intent": "Dense green wetland, dark lagoon water, floating vegetation and a calm dawn mood.",
+      "selected": "Esteros del Ibera, Corrientes, Argentina, Jan. 2011 - Flickr - PhillipC (1)",
+      "candidates": [
+        {
+          "title": "Esteros del Ibera… PhillipC (1)",
+          "photographer": "Phillip Capper",
+          "location": "Esteros del Iberá, Corrientes",
+          "source": "https://commons.wikimedia.org/wiki/File:Esteros_del_Ibera,_Corrientes,_Argentina,_Jan._2011_-_Flickr_-_PhillipC_(1).jpg",
+          "resolution": "4288x2848",
+          "license": "CC BY 2.0",
+          "decision": "selected",
+          "reason": "Nikon D90 photograph; lagoon framed by vegetation gives the theme a quiet layered composition."
+        },
+        {
+          "title": "Esteros Del Ibera… PhillipC (3)",
+          "photographer": "Phillip Capper",
+          "location": "Esteros del Iberá, Corrientes",
+          "source": "https://commons.wikimedia.org/wiki/File:Esteros_Del_Ibera,_Corrientes,_Argentina,_2nd._Jan_2011_-_Flickr_-_PhillipC_(3).jpg",
+          "resolution": "not recorded in this shortlist",
+          "license": "CC BY 2.0",
+          "decision": "not selected",
+          "reason": "Genuine alternate wetland view; selected image has a more enclosed lagoon composition."
+        },
+        {
+          "title": "Esteros Del Ibera… PhillipC (5)",
+          "photographer": "Phillip Capper",
+          "location": "Esteros del Iberá, Corrientes",
+          "source": "https://commons.wikimedia.org/wiki/File:Esteros_Del_Ibera,_Corrientes,_Argentina,_2nd._Jan_2011_-_Flickr_-_PhillipC_(5).jpg",
+          "resolution": "not recorded in this shortlist",
+          "license": "CC BY 2.0",
+          "decision": "not selected",
+          "reason": "Sunset-oriented alternate considered; selected image aligns better with the green lagoon identity."
+        }
+      ]
+    },
+    {
+      "themeId": "pampa",
+      "intent": "Iconic humid-pampa atmosphere at golden hour: open grassland, a lone caldén and a saturated sunset sky.",
+      "selected": "Atardecer en el caldenal — Juanedc",
+      "candidates": [
+        {
+          "title": "Atardecer en el caldenal",
+          "photographer": "Juanedc",
+          "location": "Caldén forest, La Pampa",
+          "source": "https://commons.wikimedia.org/wiki/File:Atardecer_en_el_caldenal_(8280706996).jpg",
+          "resolution": "3448x2298",
+          "license": "CC BY 2.0",
+          "decision": "selected",
+          "reason": "Dramatic caldén silhouette against a full-spectrum pampas sunset; replaces the aerial lagoon view the project owner rejected as weak wallpaper material."
+        },
+        {
+          "title": "Drone Laguna de rocha",
+          "photographer": "Alejandro Barrios",
+          "location": "Laguna de Rocha, Buenos Aires Province",
+          "source": "https://commons.wikimedia.org/wiki/File:Drone_Laguna_de_rocha.jpg",
+          "resolution": "4000x2250",
+          "license": "CC BY-SA 4.0",
+          "decision": "not selected",
+          "reason": "Previously shipped; retired after owner review found the aerial lagoon flat and unrepresentative as the Pampa identity."
+        },
+        {
+          "title": "Atardecer equino",
+          "photographer": "Juanedc",
+          "location": "La Pampa",
+          "source": "https://commons.wikimedia.org/wiki/File:Atardecer_equino_(8950806404).jpg",
+          "resolution": "3888x2592",
+          "license": "CC BY 2.0",
+          "decision": "not selected",
+          "reason": "Strong light but people and horses dominate the foreground; less iconic and busier at desktop scale."
+        }
+      ]
+    },
+    {
+      "themeId": "patagonia",
+      "intent": "Cold glacier blue, high mountain forms and open Patagonian scale.",
+      "selected": "Perito Moreno Glacier Panorama — ThartmannWiki",
+      "candidates": [
+        {
+          "title": "Perito Moreno Glacier Panorama",
+          "photographer": "ThartmannWiki",
+          "location": "Los Glaciares National Park, Santa Cruz",
+          "source": "https://commons.wikimedia.org/wiki/File:Perito_Moreno_Glacier_Panorama.jpg",
+          "resolution": "15432x4970",
+          "license": "CC BY-SA 4.0",
+          "decision": "selected",
+          "reason": "High-resolution panorama; crop balances ice, mountains and sky."
+        },
+        {
+          "title": "Perito Moreno Glacier South",
+          "photographer": "Fernando",
+          "location": "Los Glaciares National Park, Santa Cruz",
+          "source": "https://commons.wikimedia.org/wiki/File:Perito_Moreno_Glacier_South.jpg",
+          "resolution": "5593x3729",
+          "license": "CC BY-SA 4.0",
+          "decision": "not selected",
+          "reason": "Strong close detail of the ice face; less broad landscape and tighter crop."
+        },
+        {
+          "title": "Perito Moreno Glacier panorama",
+          "photographer": "Makelelecba",
+          "location": "Los Glaciares National Park, Santa Cruz",
+          "source": "https://commons.wikimedia.org/wiki/File:Perito_Moreno_Glacier_panorama.jpg",
+          "resolution": "10320x3863",
+          "license": "CC BY-SA 4.0",
+          "decision": "not selected",
+          "reason": "Large five-frame panorama; the selected source gives a better balanced desktop crop."
+        }
+      ]
+    },
+    {
+      "themeId": "quebrada",
+      "intent": "Jujuy mineral bands, high-altitude daylight, rose, ochre and violet shadow.",
+      "selected": "Serranía de Hornocal 03 — Bernard Gagnon",
+      "candidates": [
+        {
+          "title": "Serranía de Hornocal 03",
+          "photographer": "Bernard Gagnon",
+          "location": "Serranía de Hornocal, Jujuy",
+          "source": "https://commons.wikimedia.org/wiki/File:Serran%C3%ADa_de_Hornocal_03.jpg",
+          "resolution": "5184x3456",
+          "license": "CC BY-SA 4.0",
+          "decision": "selected",
+          "reason": "Layered mineral color supports the theme's natural rose/ochre/violet palette."
+        },
+        {
+          "title": "Quebrada de Humahuaca 05",
+          "photographer": "Bernard Gagnon",
+          "location": "Quebrada de Humahuaca, Jujuy",
+          "source": "https://commons.wikimedia.org/wiki/File:Quebrada_de_Humahuaca_05.jpg",
+          "resolution": "5184x2196",
+          "license": "CC BY-SA 4.0",
+          "decision": "not selected",
+          "reason": "Wide mineral scene, but road/valley composition is less color-distinct than Hornocal."
+        },
+        {
+          "title": "Quebrada de Humahuaca 06",
+          "photographer": "Bernard Gagnon",
+          "location": "Quebrada de Humahuaca, Jujuy",
+          "source": "https://commons.wikimedia.org/wiki/File:Quebrada_de_Humahuaca_06.jpg",
+          "resolution": "not recorded in this shortlist",
+          "license": "CC BY-SA 4.0",
+          "decision": "not selected",
+          "reason": "Real Andean landscape; subdued ridges were a weaker match for the theme's mineral color direction."
+        }
+      ]
+    },
+    {
+      "themeId": "cuyo",
+      "intent": "High Cuyo desert and the Aconcagua: snow, arid ridges and thin light, bright enough for a first-class light look.",
+      "selected": "Aconcagua (Mendoza) 2022-11 (1) — Mauricio V. Genta",
+      "candidates": [
+        {
+          "title": "Aconcagua (Mendoza) 2022-11 (1)",
+          "photographer": "Mauricio V. Genta",
+          "location": "Aconcagua Provincial Park, Mendoza",
+          "source": "https://commons.wikimedia.org/wiki/File:Aconcagua_(Mendoza)_2022-11_(1).jpg",
+          "resolution": "6008x4008",
+          "license": "CC BY-SA 4.0",
+          "decision": "selected",
+          "reason": "Snow-capped Aconcagua framed symmetrically by arid ridges at the highest candidate resolution."
+        },
+        {
+          "title": "Laguna de Horcones y Aconcagua",
+          "photographer": "Daniel P. Gauer",
+          "location": "Laguna Horcones, Mendoza",
+          "source": "https://commons.wikimedia.org/wiki/File:Laguna_de_Horcones_y_Aconcagua_(20878146773).jpg",
+          "resolution": "4320x3240",
+          "license": "CC BY 2.0",
+          "decision": "not selected",
+          "reason": "Pleasant valley view, but signage intrudes and the summit reads small."
+        }
+      ]
+    },
+    {
+      "themeId": "iguazu",
+      "intent": "Iguazú up close: white water and basalt wrapped in subtropical green, dark enough for a dark look.",
+      "selected": "Argentina-Iguazu-Close view of waterfall — Güldem Üstün",
+      "candidates": [
+        {
+          "title": "Argentina-Iguazu-Close view of waterfall",
+          "photographer": "Güldem Üstün",
+          "location": "Iguazú National Park, Misiones",
+          "source": "https://commons.wikimedia.org/wiki/File:Argentina-Iguazu-Close_view_of_waterfall_(Explored,_29-07-2015)_-_Flickr_-_ustung.jpg",
+          "resolution": "4000x3000",
+          "license": "CC BY 2.0",
+          "decision": "selected",
+          "reason": "Closest, most powerful framing of the falls; water texture holds up at 2560x1440."
+        },
+        {
+          "title": "J37 872 Garganta del Diablo",
+          "photographer": "Falk2",
+          "location": "Garganta del Diablo, Misiones",
+          "source": "https://commons.wikimedia.org/wiki/File:J37_872_Garganta_del_Diablo.jpg",
+          "resolution": "5820x3880",
+          "license": "CC BY-SA 4.0",
+          "decision": "not selected",
+          "reason": "Grand canyon framing, but the falls read distant next to the close view."
+        }
+      ]
+    },
+    {
+      "themeId": "sierras",
+      "intent": "Sierras de Córdoba highlands: golden grass, rock and long evening light for a warm light look.",
+      "selected": "Quebrada del Condorito panorama — Kevin Jones",
+      "candidates": [
+        {
+          "title": "Quebrada del Condorito panorama",
+          "photographer": "Kevin Jones",
+          "location": "Quebrada del Condorito National Park, Córdoba",
+          "source": "https://commons.wikimedia.org/wiki/File:Quebrada_del_Condorito_panorama.jpg",
+          "resolution": "3888x2282",
+          "license": "CC BY 2.0",
+          "decision": "selected",
+          "reason": "Wide golden highland panorama with layered ridges; the strongest landscape-first Sierras candidate."
+        },
+        {
+          "title": "Paisaje de sierras chicas cordoba",
+          "photographer": "Josefina Lucia Avendaño Isla",
+          "location": "Sierras Chicas, Córdoba",
+          "source": "https://commons.wikimedia.org/wiki/File:Paisaje_de_sierras_chicas_cordoba.jpg",
+          "resolution": "4624x3472",
+          "license": "CC BY-SA 4.0",
+          "decision": "not selected",
+          "reason": "Dirt-road foreground dominates; reads as a snapshot rather than a wallpaper."
+        }
+      ]
+    }
   ]
 }

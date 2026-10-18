@@ -47,7 +47,7 @@ previews, or Hyprland window geometry picker. See
 
 Curated from generic dotfiles material: Hyprland, Niri, Kitty, Alacritty,
 Ghostty, GTK 2/3, Qt6ct, fontconfig, fastfetch, btop, cava, Thunar, CopyQ,
-handlr, git-minus-identity, 21 theme packs (9 Hornero Originals, including
+handlr, git-minus-identity, 24 theme packs (12 Hornero Originals, including
 four semantic-token themes and five wallpaper-led looks, plus 12 other
 curated looks), `lib/hornero`
 implementation libraries and the `hornero-gtk-theme`-family CLI adapters.
@@ -69,7 +69,7 @@ avoid the 100 ms polling cost of its inherited workstation setting.
 ```text
 desktop/    per-application defaults      -> ~/.config/<app>, ~/.gtkrc-2.0
 xdg/        git (no identity) + handlr    -> ~/.config/git, ~/.config/handlr
-profiles/   base desktop profile + 21 theme packs -> ~/.local/share/hornero/…
+profiles/   base desktop profile + 24 theme packs -> ~/.local/share/hornero/…
 shell/      stub note (interactive shell deferred)
 lib/hornero/   appearance/GTK/wallpaper implementation libs -> ~/.local/lib/hornero
 bin/        hornero-gtk-theme-family CLIs    -> ~/.local/bin

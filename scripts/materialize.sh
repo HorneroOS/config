@@ -140,6 +140,9 @@ for entry in "$REPO_ROOT"/assets/wallpapers/argentina/*.jpg; do
     pampa-01.jpg) rel="pampa/pampa-01.jpg" ;;
     patagonia-glacier-01.jpg) rel="patagonia/patagonia-glacier-01.jpg" ;;
     quebrada-mineral-01.jpg) rel="quebrada/quebrada-mineral-01.jpg" ;;
+    cuyo-aconcagua-01.jpg) rel="cuyo/cuyo-aconcagua-01.jpg" ;;
+    iguazu-falls-01.jpg) rel="iguazu/iguazu-falls-01.jpg" ;;
+    sierras-condorito-01.jpg) rel="sierras/sierras-condorito-01.jpg" ;;
     *) echo "error: unregistered Argentina photo asset: $entry" >&2; exit 1 ;;
   esac
   target="$DATA_HOME/hornero/wallpapers/$rel"

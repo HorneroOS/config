@@ -39,7 +39,8 @@ Canonical palette:
 | `icons/hornero-app.svg` | Squircle app icon (launchers, docks, app grids) |
 | `icons/hornero-system.svg` | Roundel system icon (settings, about dialogs) |
 | `favicon.svg` | Small-size optical variant: enlarged bird, no eye detail, heavier branch — use at 16–48 px |
-| `wallpaper/hornero-{dark,light}.svg` + `wallpaper/pampa.svg` | Procedural wallpaper sources (16:9) |
+| `wallpaper/hornero-{dark,light}.svg` | Procedural wallpaper sources (16:9) |
+| `wallpaper/hornero-{dark,light,199x}.png` | Vendored flagship artwork shipped as the theme defaults (16:9) |
 
 All SVGs are hand-authored, well-formed XML, vector-only (no `<image>`,
 no `data:` URIs) and self-contained (no external references).
@@ -66,12 +67,16 @@ their attribution and terms are documented in `profiles/themes/WALLPAPER-CREDITS
 See `docs/WALLPAPERS.md` for the full asset policy. Fresh
 boot shows intentional Hornero visuals through this chain:
 
-1. Source: `assets/brand/wallpaper/hornero-{dark,light}.svg` +
-   `assets/brand/wallpaper/pampa.svg` (procedural, on-palette, 16:9).
+1. Source: `assets/brand/wallpaper/hornero-{dark,light}.svg`
+   (procedural, on-palette, 16:9) plus the vendored flagship artwork
+   `hornero-{dark,light,199x}.png`, which wins at render time. Regional
+   themes (Pampa included) ship licensed photographs instead — see
+   `profiles/themes/WALLPAPER-CREDITS.md`. Simple procedural SVG figures
+   are no longer shipped as wallpapers.
 2. Render on the target machine:
    `scripts/render-brand-assets.sh --wallpapers ~/.local/share/hornero/wallpapers`
    produces `<id>/<id>-01.png` (1920x1080) per flagship theme
-   (`hornero-dark`, `hornero-light`, `pampa`)
+   (`hornero-dark`, `hornero-light`, `hornero-199x`)
    plus HiDPI `...-02-hidpi.png` (2560x1440).
 3. The flagship `theme.json` packs and `wallpapers.manifest.json` point
    `defaultWallpaper` at those PNG names, so the normal resolver picks

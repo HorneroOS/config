@@ -45,6 +45,9 @@ for tid in $OFFICIAL_IDS; do
   wall="$(python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/$tid/theme.json'))['defaultWallpaper'])")"
   case "$wall" in
     "$tid-01.png") pass "$tid defaultWallpaper=$wall" ;;
+    # Pampa is a photo-led flagship: its default is the licensed
+    # regional photograph, not a rendered brand PNG.
+    "pampa-01.jpg") pass "$tid defaultWallpaper=$wall (licensed photo)" ;;
     *) fail "$tid defaultWallpaper=$wall (want $tid-01.png)" ;;
   esac
 done
@@ -58,6 +61,12 @@ bash "$REPO_ROOT/scripts/render-brand-assets.sh" --wallpapers "$WALLS" >/dev/nul
 for tid in $OFFICIAL_IDS; do
   wall="$(python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/$tid/theme.json'))['defaultWallpaper'])")"
   wdir="$(python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/$tid/theme.json'))['wallpaperDir'])")"
+  if [[ "$wall" == *.jpg ]]; then
+    # Photo-led flagships ship the licensed photograph, not a render.
+    [[ -f "$REPO_ROOT/assets/wallpapers/argentina/$wall" ]] \
+      && pass "photo default $wall" || fail "photo default missing: $wall"
+    continue
+  fi
   [[ -f "$WALLS/$wdir/$wall" ]] \
     && pass "rendered $wdir/$wall" || fail "render missing: $wdir/$wall"
 done

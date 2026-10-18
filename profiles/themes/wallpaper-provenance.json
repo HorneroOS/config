@@ -149,51 +149,52 @@
     },
     {
       "id": "pampa",
-      "title": "Laguna de Rocha from above",
-      "place": "Laguna de Rocha, Buenos Aires Province, Argentina",
+      "title": "Caldén silhouette at sunset",
+      "place": "Caldén forest, La Pampa, Argentina",
       "themeId": "pampa",
       "geographicIdentity": "Argentina",
       "artisticIntentPreserved": "Authentic landscape or city atmosphere photographed in Argentina; crop and theme palette retain the existing scene mood without synthesizing content.",
       "aestheticTags": [
-        "aerial",
+        "sunset",
         "grassland",
-        "river"
+        "silhouette",
+        "warm"
       ],
-      "photographer": "Alejandro Barrios",
-      "sourcePage": "https://commons.wikimedia.org/wiki/File:Drone_Laguna_de_rocha.jpg",
-      "originalImageSource": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Drone_Laguna_de_rocha.jpg",
+      "photographer": "Juanedc",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Atardecer_en_el_caldenal_(8280706996).jpg",
+      "originalImageSource": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Atardecer_en_el_caldenal_(8280706996).jpg",
       "originalDimensions": {
-        "width": 4000,
-        "height": 2250
+        "width": 3448,
+        "height": 2298
       },
-      "originalSha256": "3fa907e705f0e9b2ac7f16bb0310f069252415a0f590524d2c4f109e4d3f4cd0",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-      "attribution": "Alejandro Barrios — Laguna de Rocha from above — CC BY-SA 4.0 — https://commons.wikimedia.org/wiki/File:Drone_Laguna_de_rocha.jpg",
-      "modification": "Center-cropped to 16:9 and resized to 2560×1440 using Pillow LANCZOS; no generative modifications. Share-alike obligation applies to modified photo output.",
+      "originalSha256": "7616e3adbef7b0f64920140abd7973cdc57a7a24c0219f806c7675ab95d5d7b5",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "attribution": "Juanedc — Caldén silhouette at sunset — CC BY 2.0 — https://commons.wikimedia.org/wiki/File:Atardecer_en_el_caldenal_(8280706996).jpg",
+      "modification": "Center-cropped to 16:9 and resized to 2560×1440 using Pillow LANCZOS; no generative modifications.",
       "processedFile": "assets/wallpapers/argentina/pampa-01.jpg",
       "processedDimensions": {
         "width": 2560,
         "height": 1440
       },
-      "processedBytes": 1248087,
-      "processedSha256": "8fd7f360b7b93e27dc9b913b726ecf807f4a7a3740e6d3b598be846f4c0e07be",
+      "processedBytes": 926118,
+      "processedSha256": "9a326d77fa4e3fb96514d61d3681b90191a5c51cfcb0f120b8040965606f09a4",
       "crop": {
-        "method": "none",
+        "method": "center-crop-16:9",
         "x": 0,
-        "y": 0,
-        "width": 4000,
-        "height": 2250
+        "y": 179,
+        "width": 3448,
+        "height": 1939
       },
-      "reviewNotes": "Original 4000×2250 JPEG; author-declared own work; coordinates -34.785712,-58.505208.",
+      "reviewNotes": "Original 3448×2298 JPEG; caldén tree silhouette against a saturated pampas sunset; reviewed at 2560×1440.",
       "redistributionStatus": "approved under listed Creative Commons license, attribution/terms included in package",
       "websitePreviewPath": "assets/screenshots/theme-wallpapers/pampa.webp",
-      "websitePreviewSha256": "0afec05752e0344a5d789b93275404bc9690e4fe68424a8fc380c507df6f9cd8",
-      "websitePreviewBytes": 171210,
-      "websitePreview720Sha256": "c5d42388c1febcd6be29185e6c59bf5be0b3f62b208919c154ff50d00a5a63c3",
-      "websitePreview720Bytes": 53166,
-      "websitePreview1280Sha256": "0afec05752e0344a5d789b93275404bc9690e4fe68424a8fc380c507df6f9cd8",
-      "websitePreview1280Bytes": 171210
+      "websitePreview720Sha256": "12986f462f4c76b3268cf3702493a3e0a0be29b847817a1561e505d0f861b7c7",
+      "websitePreview720Bytes": 28882,
+      "websitePreview1280Sha256": "2225111a84b92bc428aca363f3c2439e6f936fa7f3c5ddd916707b3dac560d0a",
+      "websitePreview1280Bytes": 80216,
+      "websitePreviewSha256": "2225111a84b92bc428aca363f3c2439e6f936fa7f3c5ddd916707b3dac560d0a",
+      "websitePreviewBytes": 80216
     },
     {
       "id": "patagonia",
@@ -290,6 +291,153 @@
       "websitePreview720Bytes": 67632,
       "websitePreview1280Sha256": "7b863451b12d8b69cf013f26a5d630175143b09ad67ecac7df4bee6e01512e7b",
       "websitePreview1280Bytes": 225792
+    },
+    {
+      "id": "cuyo",
+      "title": "Aconcagua over the Horcones valley",
+      "place": "Aconcagua Provincial Park, Mendoza, Argentina",
+      "themeId": "cuyo",
+      "geographicIdentity": "Argentina",
+      "artisticIntentPreserved": "Authentic landscape or city atmosphere photographed in Argentina; crop and theme palette retain the existing scene mood without synthesizing content.",
+      "aestheticTags": [
+        "mountain",
+        "andes",
+        "snow",
+        "high-desert"
+      ],
+      "photographer": "Mauricio V. Genta",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Aconcagua_(Mendoza)_2022-11_(1).jpg",
+      "originalImageSource": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Aconcagua_(Mendoza)_2022-11_(1).jpg",
+      "originalDimensions": {
+        "width": 6008,
+        "height": 4008
+      },
+      "originalSha256": "eb192981a5e1078137600f0668683efc0608613f48addaf74e6387ec6980650f",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "attribution": "Mauricio V. Genta — Aconcagua over the Horcones valley — CC BY-SA 4.0 — https://commons.wikimedia.org/wiki/File:Aconcagua_(Mendoza)_2022-11_(1).jpg",
+      "modification": "Center-cropped to 16:9 and resized to 2560×1440 using Pillow LANCZOS; no generative modifications. Share-alike obligation applies to modified photo output.",
+      "processedFile": "assets/wallpapers/argentina/cuyo-aconcagua-01.jpg",
+      "processedDimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "processedBytes": 1041253,
+      "processedSha256": "b4fc739475b56d70cbacd69f918e316d0d4e12838018e094f84ae2eed96d2834",
+      "crop": {
+        "method": "center-crop-16:9",
+        "x": 0,
+        "y": 314,
+        "width": 6008,
+        "height": 3379
+      },
+      "reviewNotes": "Original 6008×4008 JPEG; snow-capped Aconcagua framed by arid Cuyo ridges; reviewed at 2560×1440.",
+      "redistributionStatus": "approved under listed Creative Commons license, attribution/terms included in package",
+      "websitePreviewPath": "assets/screenshots/theme-wallpapers/cuyo.webp",
+      "websitePreview720Sha256": "d21a4863496fe305a735ef7244460ca3c491aedbcc8f70f077b98b0e65929230",
+      "websitePreview720Bytes": 41822,
+      "websitePreview1280Sha256": "30dad06546d97706237bc37fe2c260c5d15bbe733db025d8b74427334b55d9c7",
+      "websitePreview1280Bytes": 123570,
+      "websitePreviewSha256": "30dad06546d97706237bc37fe2c260c5d15bbe733db025d8b74427334b55d9c7",
+      "websitePreviewBytes": 123570
+    },
+    {
+      "id": "iguazu",
+      "title": "Iguazú Falls, close view",
+      "place": "Iguazú National Park, Misiones, Argentina",
+      "themeId": "iguazu",
+      "geographicIdentity": "Argentina",
+      "artisticIntentPreserved": "Authentic landscape or city atmosphere photographed in Argentina; crop and theme palette retain the existing scene mood without synthesizing content.",
+      "aestheticTags": [
+        "waterfall",
+        "jungle",
+        "water",
+        "green"
+      ],
+      "photographer": "Güldem Üstün",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Argentina-Iguazu-Close_view_of_waterfall_(Explored,_29-07-2015)_-_Flickr_-_ustung.jpg",
+      "originalImageSource": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Argentina-Iguazu-Close_view_of_waterfall_(Explored,_29-07-2015)_-_Flickr_-_ustung.jpg",
+      "originalDimensions": {
+        "width": 4000,
+        "height": 3000
+      },
+      "originalSha256": "4e2b3a0347d75265600c0535496e33acd5114712e25b9f84187cac00a86da07e",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "attribution": "Güldem Üstün — Iguazú Falls, close view — CC BY 2.0 — https://commons.wikimedia.org/wiki/File:Argentina-Iguazu-Close_view_of_waterfall_(Explored,_29-07-2015)_-_Flickr_-_ustung.jpg",
+      "modification": "Center-cropped to 16:9 and resized to 2560×1440 using Pillow LANCZOS; no generative modifications.",
+      "processedFile": "assets/wallpapers/argentina/iguazu-falls-01.jpg",
+      "processedDimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "processedBytes": 1153467,
+      "processedSha256": "904e9f1e32ad961d563d21ca278dbb7f2efd6e84f4ea87ca4b785dbb778168b4",
+      "crop": {
+        "method": "center-crop-16:9",
+        "x": 0,
+        "y": 375,
+        "width": 4000,
+        "height": 2250
+      },
+      "reviewNotes": "Original 4000×3000 JPEG; close view of the falls framed by subtropical forest; reviewed at 2560×1440.",
+      "redistributionStatus": "approved under listed Creative Commons license, attribution/terms included in package",
+      "websitePreviewPath": "assets/screenshots/theme-wallpapers/iguazu.webp",
+      "websitePreview720Sha256": "0775b448dfd0b9b61590a56464db3024110cc5041326cafbb08b41f8d87433b4",
+      "websitePreview720Bytes": 62088,
+      "websitePreview1280Sha256": "d17588d5fec4d91bd0455d869dc290f553d0f28b82d64b122c5e9eebdf7b778e",
+      "websitePreview1280Bytes": 180990,
+      "websitePreviewSha256": "d17588d5fec4d91bd0455d869dc290f553d0f28b82d64b122c5e9eebdf7b778e",
+      "websitePreviewBytes": 180990
+    },
+    {
+      "id": "sierras",
+      "title": "Golden hour over Quebrada del Condorito",
+      "place": "Quebrada del Condorito National Park, Córdoba, Argentina",
+      "themeId": "sierras",
+      "geographicIdentity": "Argentina",
+      "artisticIntentPreserved": "Authentic landscape or city atmosphere photographed in Argentina; crop and theme palette retain the existing scene mood without synthesizing content.",
+      "aestheticTags": [
+        "highlands",
+        "golden-hour",
+        "mountain",
+        "grassland"
+      ],
+      "photographer": "Kevin Jones",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Quebrada_del_Condorito_panorama.jpg",
+      "originalImageSource": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Quebrada_del_Condorito_panorama.jpg",
+      "originalDimensions": {
+        "width": 3888,
+        "height": 2282
+      },
+      "originalSha256": "ede40dcd454bc8d7c2649cb197a3d2748a0c4a54e86a03cd9f45ea9ee693097a",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "attribution": "Kevin Jones — Golden hour over Quebrada del Condorito — CC BY 2.0 — https://commons.wikimedia.org/wiki/File:Quebrada_del_Condorito_panorama.jpg",
+      "modification": "Center-cropped to 16:9 and resized to 2560×1440 using Pillow LANCZOS; no generative modifications.",
+      "processedFile": "assets/wallpapers/argentina/sierras-condorito-01.jpg",
+      "processedDimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "processedBytes": 588769,
+      "processedSha256": "2a41b3e5e67165231c644185049da1271fef7e5a8d5d084356d9b792644de2cd",
+      "crop": {
+        "method": "center-crop-16:9",
+        "x": 0,
+        "y": 47,
+        "width": 3888,
+        "height": 2187
+      },
+      "reviewNotes": "Original 3888×2282 JPEG; wide golden highland panorama in the Sierras de Córdoba; reviewed at 2560×1440.",
+      "redistributionStatus": "approved under listed Creative Commons license, attribution/terms included in package",
+      "websitePreviewPath": "assets/screenshots/theme-wallpapers/sierras.webp",
+      "websitePreview720Sha256": "4e9134d75be89e4a57fb457313fa9fd74e57dd35e28b0edfefaf81d8b77a2120",
+      "websitePreview720Bytes": 25226,
+      "websitePreview1280Sha256": "13378ba62d787f1260ef529ec29a74f5acfe5352fab54b0ff69a704d189864a1",
+      "websitePreview1280Bytes": 67874,
+      "websitePreviewSha256": "13378ba62d787f1260ef529ec29a74f5acfe5352fab54b0ff69a704d189864a1",
+      "websitePreviewBytes": 67874
     }
   ]
 }

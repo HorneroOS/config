@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "cuyo",
+  "name": "Cuyo",
+  "collection": "hornero-originals",
+  "collectionOrder": 10,
+  "description": "The Aconcagua and the high Cuyo desert: snow, stone and thin Andean light over Mendoza",
+  "tags": [
+    "argentina",
+    "cuyo",
+    "aconcagua",
+    "andes",
+    "snow",
+    "stone",
+    "light",
+    "nature"
+  ],
+  "darkMode": false,
+  "schemeType": "fidelity",
+  "gtkTheme": "Hornero-Light",
+  "iconTheme": "Papirus",
+  "defaultWallpaper": "cuyo-aconcagua-01.jpg",
+  "wallpaperDir": "cuyo",
+  "gtkPreferDark": false
+}
