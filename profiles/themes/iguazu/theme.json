@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "iguazu",
+  "name": "Iguazú",
+  "collection": "hornero-originals",
+  "collectionOrder": 11,
+  "description": "The Iguazú Falls in close view: white water, basalt and dense subtropical green in Misiones",
+  "tags": [
+    "argentina",
+    "iguazu",
+    "waterfall",
+    "jungle",
+    "green",
+    "dark",
+    "nature"
+  ],
+  "darkMode": true,
+  "schemeType": "expressive",
+  "gtkTheme": "Hornero-Dark",
+  "iconTheme": "Papirus-Dark",
+  "defaultWallpaper": "iguazu-falls-01.jpg",
+  "wallpaperDir": "iguazu",
+  "gtkPreferDark": true
+}

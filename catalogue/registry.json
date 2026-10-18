@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "profiles/themes",
-  "count": 21,
+  "count": 24,
   "entries": [
     {
       "id": "buenos-aires-nocturno",
@@ -65,6 +65,30 @@
       "schemeType": "tonal-spot",
       "defaultWallpaper": "catppuccin-mauve-02.png",
       "wallpaperDir": "catppuccin-mocha"
+    },
+    {
+      "id": "cuyo",
+      "name": "Cuyo",
+      "description": "The Aconcagua and the high Cuyo desert: snow, stone and thin Andean light over Mendoza",
+      "tags": [
+        "argentina",
+        "cuyo",
+        "aconcagua",
+        "andes",
+        "snow",
+        "stone",
+        "light",
+        "nature"
+      ],
+      "mode": "light",
+      "family": "",
+      "version": "",
+      "collection": "hornero-originals",
+      "collectionOrder": 10,
+      "model": "recipe",
+      "schemeType": "fidelity",
+      "defaultWallpaper": "cuyo-aconcagua-01.jpg",
+      "wallpaperDir": "cuyo"
     },
     {
       "id": "everforest",
@@ -226,6 +250,29 @@
       "wallpaperDir": "ibera"
     },
     {
+      "id": "iguazu",
+      "name": "Iguazú",
+      "description": "The Iguazú Falls in close view: white water, basalt and dense subtropical green in Misiones",
+      "tags": [
+        "argentina",
+        "iguazu",
+        "waterfall",
+        "jungle",
+        "green",
+        "dark",
+        "nature"
+      ],
+      "mode": "dark",
+      "family": "",
+      "version": "",
+      "collection": "hornero-originals",
+      "collectionOrder": 11,
+      "model": "recipe",
+      "schemeType": "expressive",
+      "defaultWallpaper": "iguazu-falls-01.jpg",
+      "wallpaperDir": "iguazu"
+    },
+    {
       "id": "landscape",
       "name": "Landscape",
       "description": "Cinematic nature vistas and fantasy scenery",
@@ -308,7 +355,7 @@
     {
       "id": "pampa",
       "name": "Pampa",
-      "description": "An aerial view of the humid pampas: green grassland, river water and soft earth beneath a warm, open sky",
+      "description": "A caldén tree silhouetted against a saturated pampas sunset: grassland green, earth and gold over a warm dark surface",
       "tags": [
         "hornero",
         "pampa",
@@ -393,6 +440,29 @@
       "schemeType": "expressive",
       "defaultWallpaper": "rose-pine-dawn-01.png",
       "wallpaperDir": "rose-pine"
+    },
+    {
+      "id": "sierras",
+      "name": "Sierras",
+      "description": "Golden highlands of the Sierras de Córdoba at Quebrada del Condorito: dry grass, rock and long light",
+      "tags": [
+        "argentina",
+        "sierras",
+        "cordoba",
+        "highlands",
+        "golden",
+        "light",
+        "nature"
+      ],
+      "mode": "light",
+      "family": "",
+      "version": "",
+      "collection": "hornero-originals",
+      "collectionOrder": 12,
+      "model": "recipe",
+      "schemeType": "fidelity",
+      "defaultWallpaper": "sierras-condorito-01.jpg",
+      "wallpaperDir": "sierras"
     },
     {
       "id": "soft-morning",

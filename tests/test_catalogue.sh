@@ -55,9 +55,10 @@ assert fin_del_mundo["schemeType"] == "expressive", "Fin del Mundo should use it
 originals = {
     "hornero-dark", "hornero-light", "pampa", "patagonia", "fin-del-mundo",
     "quebrada", "ibera", "buenos-aires-nocturno", "hornero-199x",
+    "cuyo", "iguazu", "sierras",
 }
 assert {theme_id for theme_id, entry in entries.items() if entry["collection"] == "hornero-originals"} == originals
-assert sorted(entries[theme_id]["collectionOrder"] for theme_id in originals) == list(range(1, 10))
+assert sorted(entries[theme_id]["collectionOrder"] for theme_id in originals) == list(range(1, 13))
 assert all(entries[theme_id]["model"] == "semantic" for theme_id in ("hornero-dark", "hornero-light", "pampa", "hornero-199x"))
 assert all(entries[theme_id]["model"] == "recipe" for theme_id in originals - {"hornero-dark", "hornero-light", "pampa", "hornero-199x"})
 assert {entries[theme_id]["mode"] for theme_id in ("quebrada", "ibera", "buenos-aires-nocturno")} == {"light", "dark"}

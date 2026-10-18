@@ -106,6 +106,21 @@
       "id": "hornero-199x",
       "defaultWallpaper": "hornero-199x-01.png",
       "wallpaperDir": "hornero-199x"
+    },
+    {
+      "id": "cuyo",
+      "defaultWallpaper": "cuyo-aconcagua-01.jpg",
+      "wallpaperDir": "cuyo"
+    },
+    {
+      "id": "iguazu",
+      "defaultWallpaper": "iguazu-falls-01.jpg",
+      "wallpaperDir": "iguazu"
+    },
+    {
+      "id": "sierras",
+      "defaultWallpaper": "sierras-condorito-01.jpg",
+      "wallpaperDir": "sierras"
     }
   ]
 }

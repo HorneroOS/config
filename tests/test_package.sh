@@ -118,9 +118,9 @@ else
   pass "retired dots command wrappers are absent"
 fi
 THEME_COUNT="$(find "$ROOT/usr/share/hornero/themes" -mindepth 2 -maxdepth 2 -name theme.json | wc -l)"
-[[ "$THEME_COUNT" -eq 21 ]] \
-  && pass "all 21 theme packs ship in the package-only catalogue" \
-  || fail "expected 21 theme packs, found $THEME_COUNT"
+[[ "$THEME_COUNT" -eq 24 ]] \
+  && pass "all 24 theme packs ship in the package-only catalogue" \
+  || fail "expected 24 theme packs, found $THEME_COUNT"
 for id in patagonia fin-del-mundo quebrada ibera buenos-aires-nocturno; do
   [[ -f "$ROOT/usr/share/hornero/themes/$id/theme.json" ]] \
     && pass "original theme $id is package-visible" \

@@ -204,14 +204,6 @@
     },
     {
       "repository": "HorneroOS/config",
-      "path": "assets/brand/wallpaper/pampa.svg",
-      "role": "procedural wallpaper source",
-      "origin": "hand-authored vector/procedural source",
-      "license": "MIT",
-      "rightsStatus": "verified in repository LICENSE"
-    },
-    {
-      "repository": "HorneroOS/config",
       "path": "assets/wallpapers/argentina/buenos-aires-nocturno-01.jpg",
       "role": "distributed theme default wallpaper",
       "themeId": "buenos-aires-nocturno",

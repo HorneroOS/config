@@ -3,7 +3,7 @@
 # No repo writes except an explicit --out DIR for previews: procedural
 # brand binaries (SVG renders, icon caches) are generated on the target
 # machine, never vendored. Exception: the photographic flagship
-# wallpapers (assets/brand/wallpaper/hornero-{dark,light}.png) ARE
+# wallpapers (assets/brand/wallpaper/hornero-{dark,light,199x}.png) ARE
 # vendored sources (~2 MB each) and are copied verbatim as the
 # hornero-dark/light defaults; the SVGs remain vector masters.
 # Usage: scripts/render-brand-assets.sh [--out DIR] [--wallpapers DIR]
@@ -85,10 +85,15 @@ for recipe in sorted(themes_dir.glob("*/theme.json")):
     target_dir = out_dir / doc["wallpaperDir"]
     target_dir.mkdir(parents=True, exist_ok=True)
     default = target_dir / doc["defaultWallpaper"]
+    # Photo-led flagships (e.g. Pampa) ship their licensed photograph via
+    # the Argentina photo collection in materialize.sh, not this render.
+    if doc["defaultWallpaper"].endswith(".jpg"):
+        print(f"BRAND-SKIP: photo-led default for {doc['id']}", file=sys.stderr)
+        continue
     hidpi = target_dir / f"{doc['id']}-02-hidpi.png"
-    # Photographic flagship override: vendored PNG wins over the SVG
-    # render for hornero-dark/light (1586x992 source; upscaling on
-    # larger panels is accepted until a 2560px master lands).
+    # Artwork flagship override: vendored PNG wins over the SVG
+    # render for hornero-dark/light/199x (upscaling on larger panels
+    # is accepted until a 2560px master lands).
     photo = svg_dir / f"{doc['id']}.png"
     if photo.is_file():
         shutil.copyfile(photo, default)

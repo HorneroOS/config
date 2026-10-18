@@ -50,11 +50,11 @@ def main() -> int:
             errors.append(f"{ident}: processed file size mismatch")
         if item.get("processedDimensions") != {"width": 2560, "height": 1440}:
             errors.append(f"{ident}: expected 2560x1440 output")
-    if len(data["items"]) != 6:
-        errors.append(f"expected six curated regional photos, got {len(data['items'])}")
+    if len(data["items"]) != 9:
+        errors.append(f"expected nine curated regional photos, got {len(data['items'])}")
     selected = {row["themeId"] for row in candidates.get("themes", [])}
     if selected != {item["themeId"] for item in data["items"]}:
-        errors.append("candidate report selections do not cover the six distributed photos")
+        errors.append("candidate report selections do not cover the nine distributed photos")
     for row in candidates.get("themes", []):
         if not row.get("candidates") or sum(c.get("decision") == "selected" for c in row["candidates"]) != 1:
             errors.append(f"{row.get('themeId')}: candidate report must identify exactly one selected source")

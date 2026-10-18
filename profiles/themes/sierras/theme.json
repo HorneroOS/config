@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "sierras",
+  "name": "Sierras",
+  "collection": "hornero-originals",
+  "collectionOrder": 12,
+  "description": "Golden highlands of the Sierras de Córdoba at Quebrada del Condorito: dry grass, rock and long light",
+  "tags": [
+    "argentina",
+    "sierras",
+    "cordoba",
+    "highlands",
+    "golden",
+    "light",
+    "nature"
+  ],
+  "darkMode": false,
+  "schemeType": "fidelity",
+  "gtkTheme": "Hornero-Light",
+  "iconTheme": "Papirus",
+  "defaultWallpaper": "sierras-condorito-01.jpg",
+  "wallpaperDir": "sierras",
+  "gtkPreferDark": false
+}
