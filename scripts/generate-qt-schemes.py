@@ -174,6 +174,7 @@ def render(
     scheme: dict[str, list[str]],
     collection: str,
     default_wallpaper: str,
+    description: str,
 ) -> str:
     lines = [
         "; qt6ct color scheme — GENERATED, do not hand-edit.",
@@ -181,6 +182,7 @@ def render(
         ";   scripts/generate-qt-schemes.py (regenerate must diff clean).",
         *([f"; Product collection: {collection}."] if collection else []),
         f"; Default wallpaper: {default_wallpaper}.",
+        *([f"; {description}"] if description else []),
         "; Roles follow QPalette::ColorRole order; see the generator",
         "; header for the token mapping.",
         "[ColorScheme]",
@@ -207,6 +209,7 @@ def main() -> int:
                 build_scheme(theme),
                 theme.get("collection", ""),
                 theme["defaultWallpaper"],
+                theme.get("description", ""),
             )
         )
         print(f"wrote {theme_id}.conf")
