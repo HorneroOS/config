@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="Hornero 199X wallpaper">
+  <title>Hornero 199X wallpaper (original procedural artwork)</title>
+  <desc>Original vector artwork by the HorneroOS project: La Plata's diagonal grid over midnight broadcast blue, a signal-orange sun disc behind a hornero nest arch, and phosphor registration marks. No third-party imagery. Render to PNG with scripts/render-brand-assets.sh; never vendor binaries.</desc>
+  <defs>
+    <linearGradient id="h199x-night" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0B1018"/>
+      <stop offset="0.55" stop-color="#142745"/>
+      <stop offset="1" stop-color="#1B335C"/>
+    </linearGradient>
+    <radialGradient id="h199x-sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#F5A76C"/>
+      <stop offset="0.65" stop-color="#F08B43"/>
+      <stop offset="1" stop-color="#427CCD"/>
+    </radialGradient>
+    <pattern id="h199x-grid" width="96" height="96" patternUnits="userSpaceOnUse">
+      <path d="M96 0H0V96" fill="none" stroke="#7FB0E6" stroke-width="1"/>
+    </pattern>
+    <pattern id="h199x-diag" width="192" height="192" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="2" height="192" fill="#F08B43"/>
+    </pattern>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#h199x-night)"/>
+  <rect width="1920" height="1080" fill="url(#h199x-grid)" opacity="0.10"/>
+  <rect width="1920" height="1080" fill="url(#h199x-diag)" opacity="0.07"/>
+  <circle cx="1260" cy="470" r="290" fill="url(#h199x-sun)" opacity="0.92"/>
+  <g fill="none" stroke="#FFF6E6" opacity="0.20">
+    <circle cx="1260" cy="470" r="360" stroke-width="2"/>
+    <circle cx="1260" cy="470" r="440" stroke-width="1.5"/>
+  </g>
+  <path d="M240 880 V620 a300 260 0 0 1 600 0 V880 Z" fill="none" stroke="#91C8A2" stroke-width="6" opacity="0.85"/>
+  <path d="M300 880 V640 a240 205 0 0 1 480 0 V880" fill="none" stroke="#F08B43" stroke-width="3" opacity="0.8"/>
+  <rect x="180" y="880" width="720" height="10" fill="#FFF6E6" opacity="0.65"/>
+  <g fill="#91C8A2" font-family="monospace" font-size="30">
+    <text x="120" y="120">ARG / 199X</text>
+    <text x="150" y="1020" fill="#7FB0E6">LA PLATA — BUENOS AIRES</text>
+  </g>
+  <g stroke="#FFF6E6" stroke-width="3" opacity="0.7">
+    <path d="M1820 80 v50 M1795 105 h50"/>
+    <path d="M100 980 v50 M75 1005 h50"/>
+  </g>
+</svg>

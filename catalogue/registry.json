@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "profiles/themes",
-  "count": 20,
+  "count": 21,
   "entries": [
     {
       "id": "buenos-aires-nocturno",
@@ -129,6 +129,32 @@
       "schemeType": "expressive",
       "defaultWallpaper": "gruvbox-anime-01.jpg",
       "wallpaperDir": "gruvbox"
+    },
+    {
+      "id": "hornero-199x",
+      "name": "Hornero 199X",
+      "description": "Optional Argentine retrofuturism: midnight broadcast blue, signal orange and phosphor green over deep CRT ink — a future imagined in Argentina in the 1990s",
+      "tags": [
+        "hornero",
+        "199x",
+        "retrofuturism",
+        "broadcast",
+        "argentina",
+        "midnight",
+        "orange",
+        "phosphor",
+        "dark",
+        "optional"
+      ],
+      "mode": "dark",
+      "family": "hornero",
+      "version": "1.0.0",
+      "collection": "hornero-originals",
+      "collectionOrder": 9,
+      "model": "semantic",
+      "schemeType": "vibrant",
+      "defaultWallpaper": "hornero-199x-01.png",
+      "wallpaperDir": "hornero-199x"
     },
     {
       "id": "hornero-dark",
