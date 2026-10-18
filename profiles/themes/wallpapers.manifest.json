@@ -101,6 +101,11 @@
       "id": "buenos-aires-nocturno",
       "defaultWallpaper": "buenos-aires-nocturno-01.jpg",
       "wallpaperDir": "buenos-aires-nocturno"
+    },
+    {
+      "id": "hornero-199x",
+      "defaultWallpaper": "hornero-199x-01.png",
+      "wallpaperDir": "hornero-199x"
     }
   ]
 }

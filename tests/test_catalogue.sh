@@ -54,12 +54,12 @@ assert patagonia["schemeType"] == "fidelity", "Patagonia should keep the wallpap
 assert fin_del_mundo["schemeType"] == "expressive", "Fin del Mundo should use its more varied palette"
 originals = {
     "hornero-dark", "hornero-light", "pampa", "patagonia", "fin-del-mundo",
-    "quebrada", "ibera", "buenos-aires-nocturno",
+    "quebrada", "ibera", "buenos-aires-nocturno", "hornero-199x",
 }
 assert {theme_id for theme_id, entry in entries.items() if entry["collection"] == "hornero-originals"} == originals
-assert sorted(entries[theme_id]["collectionOrder"] for theme_id in originals) == list(range(1, 9))
-assert all(entries[theme_id]["model"] == "semantic" for theme_id in ("hornero-dark", "hornero-light", "pampa"))
-assert all(entries[theme_id]["model"] == "recipe" for theme_id in originals - {"hornero-dark", "hornero-light", "pampa"})
+assert sorted(entries[theme_id]["collectionOrder"] for theme_id in originals) == list(range(1, 10))
+assert all(entries[theme_id]["model"] == "semantic" for theme_id in ("hornero-dark", "hornero-light", "pampa", "hornero-199x"))
+assert all(entries[theme_id]["model"] == "recipe" for theme_id in originals - {"hornero-dark", "hornero-light", "pampa", "hornero-199x"})
 assert {entries[theme_id]["mode"] for theme_id in ("quebrada", "ibera", "buenos-aires-nocturno")} == {"light", "dark"}
 print(f"TEST-PASS: {len(ids)} catalogue entries cover every pack")
 print(f"TEST-PASS: {len(originals)} Hornero Originals retain their semantic-or-recipe model")
