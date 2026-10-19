@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-Iguazu
+Comment=Iguazu up close: white water mist, basalt, subtropical green
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-Iguazu
+MetacityTheme=Hornero-Iguazu
+IconTheme=Papirus-Dark
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:

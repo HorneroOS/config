@@ -16,9 +16,85 @@
   ],
   "darkMode": false,
   "schemeType": "fidelity",
-  "gtkTheme": "Hornero-Light",
+  "gtkTheme": "Hornero-Sierras",
   "iconTheme": "Papirus",
   "defaultWallpaper": "sierras-condorito-01.jpg",
   "wallpaperDir": "sierras",
+  "palette": {
+    "background": "#EFEDE4",
+    "surface": "#FFFFFF",
+    "surfaceVariant": "#DFE0CE",
+    "onSurfaceVariant": "#3C4033",
+    "text": "#262A1E",
+    "textMuted": "#5A6046",
+    "primary": "#5F7A2E",
+    "onPrimary": "#FFFFFF",
+    "secondary": "#4E6E7E",
+    "onSecondary": "#FFFFFF",
+    "accent": "#A85E0C",
+    "onAccent": "#FFFFFF",
+    "border": "#C9CCB0",
+    "error": "#B3261E",
+    "onError": "#FFFFFF",
+    "success": "#2F6B3A",
+    "onSuccess": "#FFFFFF"
+  },
+  "components": {
+    "window": {
+      "description": "Application window body text",
+      "background": "#EFEDE4",
+      "foreground": "#262A1E"
+    },
+    "panel": {
+      "description": "Panels, sidebars and header bars",
+      "background": "#FFFFFF",
+      "foreground": "#262A1E"
+    },
+    "card": {
+      "description": "Raised cards and popovers",
+      "background": "#DFE0CE",
+      "foreground": "#3C4033"
+    },
+    "buttonPrimary": {
+      "description": "Primary action",
+      "background": "#5F7A2E",
+      "foreground": "#FFFFFF"
+    },
+    "buttonSecondary": {
+      "description": "Secondary action",
+      "background": "#4E6E7E",
+      "foreground": "#FFFFFF"
+    },
+    "accentBadge": {
+      "description": "Highlights, badges and accents",
+      "background": "#A85E0C",
+      "foreground": "#FFFFFF"
+    },
+    "input": {
+      "description": "Text entries and search fields",
+      "background": "#FFFFFF",
+      "foreground": "#262A1E"
+    },
+    "mutedText": {
+      "description": "Secondary text on surfaces",
+      "background": "#FFFFFF",
+      "foreground": "#5A6046"
+    },
+    "tooltip": {
+      "description": "Tooltips and scrim overlays",
+      "background": "#262A1E",
+      "foreground": "#EFEDE4"
+    },
+    "errorBanner": {
+      "description": "Errors and destructive actions",
+      "background": "#B3261E",
+      "foreground": "#FFFFFF"
+    },
+    "successBanner": {
+      "description": "Confirmations and success states",
+      "background": "#2F6B3A",
+      "foreground": "#FFFFFF"
+    }
+  },
   "gtkPreferDark": false
 }

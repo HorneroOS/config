@@ -6,12 +6,96 @@
   "collection": "hornero-originals",
   "collectionOrder": 5,
   "description": "A still lagoon among the Esteros del Iberá wetlands, where dark water meets dense green growth",
-  "tags": ["argentina", "corrientes", "wetlands", "water", "teal", "green", "dark"],
+  "tags": [
+    "argentina",
+    "corrientes",
+    "wetlands",
+    "water",
+    "teal",
+    "green",
+    "dark"
+  ],
   "darkMode": true,
   "schemeType": "expressive",
-  "gtkTheme": "Hornero-Dark",
+  "gtkTheme": "Hornero-Ibera",
   "iconTheme": "Papirus-Dark",
   "gtkPreferDark": true,
   "defaultWallpaper": "ibera-mist-01.jpg",
-  "wallpaperDir": "ibera"
+  "wallpaperDir": "ibera",
+  "palette": {
+    "background": "#0D1712",
+    "surface": "#14231B",
+    "surfaceVariant": "#1E3325",
+    "onSurfaceVariant": "#C6D0C3",
+    "text": "#EBF3E6",
+    "textMuted": "#AAC4A8",
+    "primary": "#8FC97A",
+    "onPrimary": "#16100A",
+    "secondary": "#2E5F43",
+    "onSecondary": "#FFFFFF",
+    "accent": "#E8B54A",
+    "onAccent": "#1C1008",
+    "border": "#2A4634",
+    "error": "#F28B82",
+    "onError": "#2A1210",
+    "success": "#9CC184",
+    "onSuccess": "#14240F"
+  },
+  "components": {
+    "window": {
+      "description": "Application window body text",
+      "background": "#0D1712",
+      "foreground": "#EBF3E6"
+    },
+    "panel": {
+      "description": "Panels, sidebars and header bars",
+      "background": "#14231B",
+      "foreground": "#EBF3E6"
+    },
+    "card": {
+      "description": "Raised cards and popovers",
+      "background": "#1E3325",
+      "foreground": "#C6D0C3"
+    },
+    "buttonPrimary": {
+      "description": "Primary action",
+      "background": "#8FC97A",
+      "foreground": "#16100A"
+    },
+    "buttonSecondary": {
+      "description": "Secondary action",
+      "background": "#2E5F43",
+      "foreground": "#FFFFFF"
+    },
+    "accentBadge": {
+      "description": "Highlights, badges and accents",
+      "background": "#E8B54A",
+      "foreground": "#1C1008"
+    },
+    "input": {
+      "description": "Text entries and search fields",
+      "background": "#0D1712",
+      "foreground": "#EBF3E6"
+    },
+    "mutedText": {
+      "description": "Secondary text on surfaces",
+      "background": "#14231B",
+      "foreground": "#AAC4A8"
+    },
+    "tooltip": {
+      "description": "Tooltips and scrim overlays",
+      "background": "#070D0A",
+      "foreground": "#EBF3E6"
+    },
+    "errorBanner": {
+      "description": "Errors and destructive actions",
+      "background": "#F28B82",
+      "foreground": "#2A1210"
+    },
+    "successBanner": {
+      "description": "Confirmations and success states",
+      "background": "#9CC184",
+      "foreground": "#14240F"
+    }
+  }
 }

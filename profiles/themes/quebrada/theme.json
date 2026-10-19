@@ -6,12 +6,96 @@
   "collection": "hornero-originals",
   "collectionOrder": 3,
   "description": "The mineral folds of Hornocal in Jujuy: rose, ochre and violet strata under clear Andean light",
-  "tags": ["argentina", "jujuy", "andean", "mineral", "rose", "violet", "light"],
+  "tags": [
+    "argentina",
+    "jujuy",
+    "andean",
+    "mineral",
+    "rose",
+    "violet",
+    "light"
+  ],
   "darkMode": false,
   "schemeType": "fidelity",
-  "gtkTheme": "Hornero-Light",
+  "gtkTheme": "Hornero-Quebrada",
   "iconTheme": "Papirus",
   "gtkPreferDark": false,
   "defaultWallpaper": "quebrada-mineral-01.jpg",
-  "wallpaperDir": "quebrada"
+  "wallpaperDir": "quebrada",
+  "palette": {
+    "background": "#F0E9E2",
+    "surface": "#FFFDF8",
+    "surfaceVariant": "#E4D5C8",
+    "onSurfaceVariant": "#44372D",
+    "text": "#2E2118",
+    "textMuted": "#6B5546",
+    "primary": "#AE4028",
+    "onPrimary": "#FFFFFF",
+    "secondary": "#6553A3",
+    "onSecondary": "#FFFFFF",
+    "accent": "#96690E",
+    "onAccent": "#FFFFFF",
+    "border": "#D3BFA9",
+    "error": "#B3261E",
+    "onError": "#FFFFFF",
+    "success": "#2F6B3A",
+    "onSuccess": "#FFFFFF"
+  },
+  "components": {
+    "window": {
+      "description": "Application window body text",
+      "background": "#F0E9E2",
+      "foreground": "#2E2118"
+    },
+    "panel": {
+      "description": "Panels, sidebars and header bars",
+      "background": "#FFFDF8",
+      "foreground": "#2E2118"
+    },
+    "card": {
+      "description": "Raised cards and popovers",
+      "background": "#E4D5C8",
+      "foreground": "#44372D"
+    },
+    "buttonPrimary": {
+      "description": "Primary action",
+      "background": "#AE4028",
+      "foreground": "#FFFFFF"
+    },
+    "buttonSecondary": {
+      "description": "Secondary action",
+      "background": "#6553A3",
+      "foreground": "#FFFFFF"
+    },
+    "accentBadge": {
+      "description": "Highlights, badges and accents",
+      "background": "#96690E",
+      "foreground": "#FFFFFF"
+    },
+    "input": {
+      "description": "Text entries and search fields",
+      "background": "#FFFDF8",
+      "foreground": "#2E2118"
+    },
+    "mutedText": {
+      "description": "Secondary text on surfaces",
+      "background": "#FFFDF8",
+      "foreground": "#6B5546"
+    },
+    "tooltip": {
+      "description": "Tooltips and scrim overlays",
+      "background": "#2E2118",
+      "foreground": "#F0E9E2"
+    },
+    "errorBanner": {
+      "description": "Errors and destructive actions",
+      "background": "#B3261E",
+      "foreground": "#FFFFFF"
+    },
+    "successBanner": {
+      "description": "Confirmations and success states",
+      "background": "#2F6B3A",
+      "foreground": "#FFFFFF"
+    }
+  }
 }

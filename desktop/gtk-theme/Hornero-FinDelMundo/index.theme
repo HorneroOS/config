@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-FinDelMundo
+Comment=Blue hour over the Beagle Channel: cold water, glacial teal, farol ember
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-FinDelMundo
+MetacityTheme=Hornero-FinDelMundo
+IconTheme=Papirus-Dark
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:

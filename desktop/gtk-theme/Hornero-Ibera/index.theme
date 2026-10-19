@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-Ibera
+Comment=Night lagoon in the Esteros del Ibera: dark water, reed green, dorado dusk
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-Ibera
+MetacityTheme=Hornero-Ibera
+IconTheme=Papirus-Dark
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:

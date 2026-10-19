@@ -182,6 +182,15 @@ _hornero_appearance_sync_recolor() {
 		hornero-dark) tree="Hornero-Dark" ;;
 		hornero-light) tree="Hornero-Light" ;;
 		pampa) tree="Hornero-Pampa" ;;
+		buenos-aires-nocturno) tree="Hornero-Nocturno" ;;
+		fin-del-mundo) tree="Hornero-FinDelMundo" ;;
+		ibera) tree="Hornero-Ibera" ;;
+		iguazu) tree="Hornero-Iguazu" ;;
+		patagonia) tree="Hornero-Patagonia" ;;
+		hornero-199x) tree="Hornero-199X" ;;
+		cuyo) tree="Hornero-Cuyo" ;;
+		quebrada) tree="Hornero-Quebrada" ;;
+		sierras) tree="Hornero-Sierras" ;;
 		*) return 0 ;;
 	esac
 	local src="${XDG_DATA_HOME:-$HOME/.local/share}/themes/$tree/gtk-4.0/recolor.css"

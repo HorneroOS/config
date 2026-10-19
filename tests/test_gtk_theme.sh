@@ -11,7 +11,7 @@ pass() { echo "GTKTEST-PASS: $1"; }
 fail() { echo "GTKTEST-FAIL: $1" >&2; exit 1; }
 
 # --- shipped trees exist, GTK 2 is neither shipped nor claimed ----------------
-for variant in Dark Light; do
+for variant in Dark Light Pampa Nocturno FinDelMundo Ibera Iguazu Patagonia 199X Cuyo Quebrada Sierras; do
   for f in index.theme gtk-3.0/gtk.css gtk-4.0/gtk.css; do
     [[ -f "$THEME_ROOT/Hornero-$variant/$f" ]] \
       || fail "missing Hornero-$variant/$f"
@@ -44,7 +44,7 @@ if "Orchis" in gtk_manager:
 if 'gtk-theme-name="Orchis-Light"' in (root / "desktop/gtk/gtkrc-2.0").read_text():
     err("the GTK2 skeleton must not request the unavailable Orchis theme")
 
-pairs = (("hornero-dark", "Hornero-Dark"), ("hornero-light", "Hornero-Light"))
+pairs = (("hornero-dark", "Hornero-Dark"), ("hornero-light", "Hornero-Light"), ("pampa", "Hornero-Pampa"), ("buenos-aires-nocturno", "Hornero-Nocturno"), ("fin-del-mundo", "Hornero-FinDelMundo"), ("ibera", "Hornero-Ibera"), ("iguazu", "Hornero-Iguazu"), ("patagonia", "Hornero-Patagonia"), ("hornero-199x", "Hornero-199X"), ("cuyo", "Hornero-Cuyo"), ("quebrada", "Hornero-Quebrada"), ("sierras", "Hornero-Sierras"))
 # Every dark pack that previously fell back to stock Adwaita uses the
 # matching first-party GTK surface. Keep the recipe catalogue independent
 # from whether a desktop environment happens to install Adwaita.
@@ -53,12 +53,23 @@ for recipe in sorted(recipe_root.glob("*/theme.json")):
     theme = json.loads(recipe.read_text())
     gtk_theme = theme.get("gtkTheme", "")
     theme_id = recipe.parent.name
-    expected = (
-        "Hornero-Pampa"
-        if theme_id == "pampa"
-        else "Hornero-Dark"
-        if theme.get("darkMode", True)
-        else "Hornero-Light"
+    original_gtk = {
+        "hornero-dark": "Hornero-Dark",
+        "hornero-light": "Hornero-Light",
+        "pampa": "Hornero-Pampa",
+        "buenos-aires-nocturno": "Hornero-Nocturno",
+        "fin-del-mundo": "Hornero-FinDelMundo",
+        "ibera": "Hornero-Ibera",
+        "iguazu": "Hornero-Iguazu",
+        "patagonia": "Hornero-Patagonia",
+        "hornero-199x": "Hornero-199X",
+        "cuyo": "Hornero-Cuyo",
+        "quebrada": "Hornero-Quebrada",
+        "sierras": "Hornero-Sierras",
+    }
+    expected = original_gtk.get(
+        theme_id,
+        "Hornero-Dark" if theme.get("darkMode", True) else "Hornero-Light",
     )
     if gtk_theme != expected:
         err(f"{theme_id}/theme.json gtkTheme={gtk_theme!r}, want {expected!r}")
@@ -160,7 +171,7 @@ else:
 if errors:
     for e in errors: print(f"GTKTEST-FAIL: {e}", file=sys.stderr)
     sys.exit(1)
-print("GTKTEST-PASS: css parses, selectors + palette + wiring verified (both variants, GTK3+GTK4)")
+print("GTKTEST-PASS: css parses, selectors + palette + wiring verified (all variants, GTK3+GTK4)")
 PY
 pass "css parse + selectors + palette fidelity + theme.json wiring"
 
@@ -171,7 +182,7 @@ fi
 pass "GTK theme deliverable MIT-only (no GPL references)"
 
 # --- no identity, secrets, or hardcoded home paths in shipped trees -----------
-if grep -rn '/home/[a-z0-9_.-]*/' "$THEME_ROOT/Hornero-Dark" "$THEME_ROOT/Hornero-Light" 2>/dev/null \
+if grep -rn '/home/[a-z0-9_.-]*/' "$THEME_ROOT"/Hornero-* 2>/dev/null \
     | grep -v '/home/user/' | grep -q .; then
   fail "hardcoded home path in shipped theme tree"
 fi
@@ -181,13 +192,13 @@ pass "no hardcoded home paths in shipped theme trees"
 STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
 bash "$REPO_ROOT/scripts/materialize.sh" --dest "$STAGE" >/dev/null
-for variant in Dark Light; do
+for variant in Dark Light Pampa Nocturno FinDelMundo Ibera Iguazu Patagonia 199X Cuyo Quebrada Sierras; do
   for f in index.theme gtk-3.0/gtk.css gtk-4.0/gtk.css; do
     cmp -s "$THEME_ROOT/Hornero-$variant/$f" "$STAGE/.local/share/themes/Hornero-$variant/$f" \
       || fail "materialized themes/Hornero-$variant/$f differs from source"
   done
 done
-pass "materialize installs byte-exact Hornero-{Dark,Light} to .local/share/themes"
+pass "materialize installs byte-exact Hornero-* trees to .local/share/themes"
 # Dev-only sources must not leak into the user install or the recipe dir.
 for leaked in src build.sh gallery.py README.md; do
   [[ ! -e "$STAGE/.local/share/themes/$leaked" ]] \

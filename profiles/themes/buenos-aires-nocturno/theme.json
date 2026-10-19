@@ -6,12 +6,97 @@
   "collection": "hornero-originals",
   "collectionOrder": 7,
   "description": "A night view of Buenos Aires: layered city lights, deep riverfront shadows and a measured amber glow",
-  "tags": ["argentina", "buenos-aires", "urban", "night", "graphite", "amber", "magenta", "dark"],
+  "tags": [
+    "argentina",
+    "buenos-aires",
+    "urban",
+    "night",
+    "graphite",
+    "amber",
+    "magenta",
+    "dark"
+  ],
   "darkMode": true,
   "schemeType": "vibrant",
-  "gtkTheme": "Hornero-Dark",
+  "gtkTheme": "Hornero-Nocturno",
   "iconTheme": "Papirus-Dark",
   "gtkPreferDark": true,
   "defaultWallpaper": "buenos-aires-nocturno-01.jpg",
-  "wallpaperDir": "buenos-aires-nocturno"
+  "wallpaperDir": "buenos-aires-nocturno",
+  "palette": {
+    "background": "#0C1322",
+    "surface": "#141F36",
+    "surfaceVariant": "#1E2C4A",
+    "onSurfaceVariant": "#C8CEDA",
+    "text": "#EDF2FA",
+    "textMuted": "#A9BCD8",
+    "primary": "#F0A832",
+    "onPrimary": "#16100A",
+    "secondary": "#3E6FB0",
+    "onSecondary": "#FFFFFF",
+    "accent": "#E4572E",
+    "onAccent": "#1C1008",
+    "border": "#2C3E5F",
+    "error": "#F28B82",
+    "onError": "#2A1210",
+    "success": "#9CC184",
+    "onSuccess": "#14240F"
+  },
+  "components": {
+    "window": {
+      "description": "Application window body text",
+      "background": "#0C1322",
+      "foreground": "#EDF2FA"
+    },
+    "panel": {
+      "description": "Panels, sidebars and header bars",
+      "background": "#141F36",
+      "foreground": "#EDF2FA"
+    },
+    "card": {
+      "description": "Raised cards and popovers",
+      "background": "#1E2C4A",
+      "foreground": "#C8CEDA"
+    },
+    "buttonPrimary": {
+      "description": "Primary action",
+      "background": "#F0A832",
+      "foreground": "#16100A"
+    },
+    "buttonSecondary": {
+      "description": "Secondary action",
+      "background": "#3E6FB0",
+      "foreground": "#FFFFFF"
+    },
+    "accentBadge": {
+      "description": "Highlights, badges and accents",
+      "background": "#E4572E",
+      "foreground": "#1C1008"
+    },
+    "input": {
+      "description": "Text entries and search fields",
+      "background": "#0C1322",
+      "foreground": "#EDF2FA"
+    },
+    "mutedText": {
+      "description": "Secondary text on surfaces",
+      "background": "#141F36",
+      "foreground": "#A9BCD8"
+    },
+    "tooltip": {
+      "description": "Tooltips and scrim overlays",
+      "background": "#070A13",
+      "foreground": "#EDF2FA"
+    },
+    "errorBanner": {
+      "description": "Errors and destructive actions",
+      "background": "#F28B82",
+      "foreground": "#2A1210"
+    },
+    "successBanner": {
+      "description": "Confirmations and success states",
+      "background": "#9CC184",
+      "foreground": "#14240F"
+    }
+  }
 }

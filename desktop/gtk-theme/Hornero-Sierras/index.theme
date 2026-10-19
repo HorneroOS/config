@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-Sierras
+Comment=Golden highlands of the Sierras de Cordoba at Condorito
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-Sierras
+MetacityTheme=Hornero-Sierras
+IconTheme=Papirus
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:

@@ -1,0 +1,38 @@
+/* Hornero-FinDelMundo libadwaita recoloring.
+ *
+ * Libadwaita apps ignore gtk.css theme trees and render stock Adwaita
+ * (blue accents) unless the user config redefines the public palette.
+ * This file is installed as ~/.config/gtk-4.0/gtk.css so GTK4/libadwaita
+ * apps pick up the theme accents. Values are wired to
+ * profiles/themes/fin-del-mundo/theme.json and gated by
+ * tests/test_gtk_theme.sh (accent_bg_color == palette.primary, etc.).
+ * Hand-owned alongside the src/ theme; see desktop/gtk-theme/README.md. */
+@define-color accent_bg_color #7FC4C9;
+@define-color accent_fg_color #16100A;
+@define-color accent_color #E8875B;
+@define-color destructive_bg_color #F28B82;
+@define-color destructive_fg_color #2A1210;
+@define-color destructive_color #F28B82;
+@define-color success_bg_color #9CC184;
+@define-color success_fg_color #14240F;
+@define-color success_color #9CC184;
+@define-color warning_bg_color #E8875B;
+@define-color warning_fg_color #1C1008;
+@define-color warning_color #E8875B;
+@define-color error_bg_color #F28B82;
+@define-color error_fg_color #2A1210;
+@define-color error_color #F28B82;
+@define-color window_bg_color #0B1620;
+@define-color window_fg_color #E8F1F5;
+@define-color view_bg_color #0B1620;
+@define-color view_fg_color #E8F1F5;
+@define-color headerbar_bg_color #12222F;
+@define-color headerbar_fg_color #E8F1F5;
+@define-color card_bg_color #1A3040;
+@define-color card_fg_color #C3CED4;
+@define-color dialog_bg_color #12222F;
+@define-color dialog_fg_color #E8F1F5;
+@define-color popover_bg_color #1A3040;
+@define-color popover_fg_color #C3CED4;
+@define-color sidebar_bg_color #12222F;
+@define-color sidebar_fg_color #E8F1F5;

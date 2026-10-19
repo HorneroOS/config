@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-Nocturno
+Comment=Buenos Aires after dark: riverfront midnight, sodium avenues, taxi amber
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-Nocturno
+MetacityTheme=Hornero-Nocturno
+IconTheme=Papirus-Dark
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:

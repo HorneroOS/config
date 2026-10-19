@@ -5,12 +5,96 @@
   "collection": "hornero-originals",
   "collectionOrder": 2,
   "description": "The Perito Moreno Glacier and the wide Patagonian sky, rendered in ice blue, stone and cloud",
-  "tags": ["argentina", "patagonia", "glacier", "basalt", "cyan", "dark", "nature"],
+  "tags": [
+    "argentina",
+    "patagonia",
+    "glacier",
+    "basalt",
+    "cyan",
+    "dark",
+    "nature"
+  ],
   "darkMode": true,
   "schemeType": "fidelity",
-  "gtkTheme": "Hornero-Dark",
+  "gtkTheme": "Hornero-Patagonia",
   "iconTheme": "Papirus-Dark",
   "defaultWallpaper": "patagonia-glacier-01.jpg",
   "wallpaperDir": "patagonia",
+  "palette": {
+    "background": "#0E1720",
+    "surface": "#16222E",
+    "surfaceVariant": "#20303F",
+    "onSurfaceVariant": "#C6D0D7",
+    "text": "#EAF3F8",
+    "textMuted": "#A9C3D4",
+    "primary": "#8FD0E8",
+    "onPrimary": "#16100A",
+    "secondary": "#35648F",
+    "onSecondary": "#FFFFFF",
+    "accent": "#E8A33D",
+    "onAccent": "#1C1008",
+    "border": "#2A4256",
+    "error": "#F28B82",
+    "onError": "#2A1210",
+    "success": "#9CC184",
+    "onSuccess": "#14240F"
+  },
+  "components": {
+    "window": {
+      "description": "Application window body text",
+      "background": "#0E1720",
+      "foreground": "#EAF3F8"
+    },
+    "panel": {
+      "description": "Panels, sidebars and header bars",
+      "background": "#16222E",
+      "foreground": "#EAF3F8"
+    },
+    "card": {
+      "description": "Raised cards and popovers",
+      "background": "#20303F",
+      "foreground": "#C6D0D7"
+    },
+    "buttonPrimary": {
+      "description": "Primary action",
+      "background": "#8FD0E8",
+      "foreground": "#16100A"
+    },
+    "buttonSecondary": {
+      "description": "Secondary action",
+      "background": "#35648F",
+      "foreground": "#FFFFFF"
+    },
+    "accentBadge": {
+      "description": "Highlights, badges and accents",
+      "background": "#E8A33D",
+      "foreground": "#1C1008"
+    },
+    "input": {
+      "description": "Text entries and search fields",
+      "background": "#0E1720",
+      "foreground": "#EAF3F8"
+    },
+    "mutedText": {
+      "description": "Secondary text on surfaces",
+      "background": "#16222E",
+      "foreground": "#A9C3D4"
+    },
+    "tooltip": {
+      "description": "Tooltips and scrim overlays",
+      "background": "#080D12",
+      "foreground": "#EAF3F8"
+    },
+    "errorBanner": {
+      "description": "Errors and destructive actions",
+      "background": "#F28B82",
+      "foreground": "#2A1210"
+    },
+    "successBanner": {
+      "description": "Confirmations and success states",
+      "background": "#9CC184",
+      "foreground": "#14240F"
+    }
+  },
   "gtkPreferDark": true
 }
