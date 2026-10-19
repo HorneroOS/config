@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-Cuyo
+Comment=High Cuyo under the Aconcagua: stone, snow and Malbec shadow
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-Cuyo
+MetacityTheme=Hornero-Cuyo
+IconTheme=Papirus
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:

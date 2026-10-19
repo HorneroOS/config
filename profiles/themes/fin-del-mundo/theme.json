@@ -5,12 +5,96 @@
   "collection": "hornero-originals",
   "collectionOrder": 6,
   "description": "A quiet blue-hour view across the Beagle Channel, with cold water and the last light over Tierra del Fuego",
-  "tags": ["argentina", "tierra-del-fuego", "beagle", "forest", "sea-glass", "copper", "dark"],
+  "tags": [
+    "argentina",
+    "tierra-del-fuego",
+    "beagle",
+    "forest",
+    "sea-glass",
+    "copper",
+    "dark"
+  ],
   "darkMode": true,
   "schemeType": "expressive",
-  "gtkTheme": "Hornero-Dark",
+  "gtkTheme": "Hornero-FinDelMundo",
   "iconTheme": "Papirus-Dark",
   "defaultWallpaper": "beagle-blue-hour-01.jpg",
   "wallpaperDir": "fin-del-mundo",
+  "palette": {
+    "background": "#0B1620",
+    "surface": "#12222F",
+    "surfaceVariant": "#1A3040",
+    "onSurfaceVariant": "#C3CED4",
+    "text": "#E8F1F5",
+    "textMuted": "#A3BCC9",
+    "primary": "#7FC4C9",
+    "onPrimary": "#16100A",
+    "secondary": "#31586E",
+    "onSecondary": "#FFFFFF",
+    "accent": "#E8875B",
+    "onAccent": "#1C1008",
+    "border": "#24404F",
+    "error": "#F28B82",
+    "onError": "#2A1210",
+    "success": "#9CC184",
+    "onSuccess": "#14240F"
+  },
+  "components": {
+    "window": {
+      "description": "Application window body text",
+      "background": "#0B1620",
+      "foreground": "#E8F1F5"
+    },
+    "panel": {
+      "description": "Panels, sidebars and header bars",
+      "background": "#12222F",
+      "foreground": "#E8F1F5"
+    },
+    "card": {
+      "description": "Raised cards and popovers",
+      "background": "#1A3040",
+      "foreground": "#C3CED4"
+    },
+    "buttonPrimary": {
+      "description": "Primary action",
+      "background": "#7FC4C9",
+      "foreground": "#16100A"
+    },
+    "buttonSecondary": {
+      "description": "Secondary action",
+      "background": "#31586E",
+      "foreground": "#FFFFFF"
+    },
+    "accentBadge": {
+      "description": "Highlights, badges and accents",
+      "background": "#E8875B",
+      "foreground": "#1C1008"
+    },
+    "input": {
+      "description": "Text entries and search fields",
+      "background": "#0B1620",
+      "foreground": "#E8F1F5"
+    },
+    "mutedText": {
+      "description": "Secondary text on surfaces",
+      "background": "#12222F",
+      "foreground": "#A3BCC9"
+    },
+    "tooltip": {
+      "description": "Tooltips and scrim overlays",
+      "background": "#060C12",
+      "foreground": "#E8F1F5"
+    },
+    "errorBanner": {
+      "description": "Errors and destructive actions",
+      "background": "#F28B82",
+      "foreground": "#2A1210"
+    },
+    "successBanner": {
+      "description": "Confirmations and success states",
+      "background": "#9CC184",
+      "foreground": "#14240F"
+    }
+  },
   "gtkPreferDark": true
 }

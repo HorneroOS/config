@@ -152,6 +152,16 @@ button.suggested-action {
     border-color: @hornero_primary_active;
 }
 
+/* Labels inside tinted buttons/banners take the on-color, not the
+ * global label ink. */
+button.suggested-action label,
+button.destructive-action label,
+infobar.warning label,
+infobar.error label,
+infobar.question label {
+    color: @hornero_on_primary;
+}
+
 button.suggested-action:hover {
     background-color: @hornero_primary_hover;
 }

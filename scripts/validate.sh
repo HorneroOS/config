@@ -236,7 +236,7 @@ from pathlib import Path
 root = Path(sys.argv[1])
 errors = []
 def err(msg): errors.append(msg)
-for variant in ("Hornero-Dark", "Hornero-Light"):
+for variant in ("Hornero-Dark", "Hornero-Light", "Hornero-Pampa", "Hornero-Nocturno", "Hornero-FinDelMundo", "Hornero-Ibera", "Hornero-Iguazu", "Hornero-Patagonia", "Hornero-199X", "Hornero-Cuyo", "Hornero-Quebrada", "Hornero-Sierras"):
     tdir = root / "desktop/gtk-theme" / variant
     try:
         idx = configparser.ConfigParser(strict=True)

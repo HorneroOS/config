@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-Quebrada
+Comment=Hornocal strata in clear Andean light: rose, ochre and violet mineral
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-Quebrada
+MetacityTheme=Hornero-Quebrada
+IconTheme=Papirus
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:

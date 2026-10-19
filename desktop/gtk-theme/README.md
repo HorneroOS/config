@@ -1,6 +1,6 @@
 # Hornero GTK theme (GTK 3 + GTK 4, MIT-native)
 
-Real `Hornero-Dark` / `Hornero-Light` / `Hornero-Pampa` GTK themes built
+Real Hornero GTK themes — one per Hornero Original pack — built
 from the flagship token palettes
 (`profiles/themes/hornero-dark|light|pampa/theme.json`; dark/light are the
 terracotta/clay/sunset family, pampa is the grassland-night green third
@@ -19,6 +19,15 @@ desktop/gtk-theme/
   Hornero-Dark/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
   Hornero-Light/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
   Hornero-Pampa/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
+  Hornero-Nocturno/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
+  Hornero-FinDelMundo/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
+  Hornero-Ibera/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
+  Hornero-Iguazu/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
+  Hornero-Patagonia/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
+  Hornero-199X/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
+  Hornero-Cuyo/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
+  Hornero-Quebrada/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
+  Hornero-Sierras/{index.theme,gtk-3.0/gtk.css,gtk-4.0/gtk.css}
   gallery.py              # widget-gallery fixture (GTK 4 preferred, GTK 3 fallback)
 ```
 

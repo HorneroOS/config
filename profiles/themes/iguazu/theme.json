@@ -16,9 +16,85 @@
   ],
   "darkMode": true,
   "schemeType": "expressive",
-  "gtkTheme": "Hornero-Dark",
+  "gtkTheme": "Hornero-Iguazu",
   "iconTheme": "Papirus-Dark",
   "defaultWallpaper": "iguazu-falls-01.jpg",
   "wallpaperDir": "iguazu",
+  "palette": {
+    "background": "#101614",
+    "surface": "#18201C",
+    "surfaceVariant": "#232E28",
+    "onSurfaceVariant": "#CAD1CC",
+    "text": "#EFF5F0",
+    "textMuted": "#AEC4B6",
+    "primary": "#5EC8B4",
+    "onPrimary": "#16100A",
+    "secondary": "#2E6B8F",
+    "onSecondary": "#FFFFFF",
+    "accent": "#E86A4E",
+    "onAccent": "#1C1008",
+    "border": "#2E4238",
+    "error": "#F28B82",
+    "onError": "#2A1210",
+    "success": "#9CC184",
+    "onSuccess": "#14240F"
+  },
+  "components": {
+    "window": {
+      "description": "Application window body text",
+      "background": "#101614",
+      "foreground": "#EFF5F0"
+    },
+    "panel": {
+      "description": "Panels, sidebars and header bars",
+      "background": "#18201C",
+      "foreground": "#EFF5F0"
+    },
+    "card": {
+      "description": "Raised cards and popovers",
+      "background": "#232E28",
+      "foreground": "#CAD1CC"
+    },
+    "buttonPrimary": {
+      "description": "Primary action",
+      "background": "#5EC8B4",
+      "foreground": "#16100A"
+    },
+    "buttonSecondary": {
+      "description": "Secondary action",
+      "background": "#2E6B8F",
+      "foreground": "#FFFFFF"
+    },
+    "accentBadge": {
+      "description": "Highlights, badges and accents",
+      "background": "#E86A4E",
+      "foreground": "#1C1008"
+    },
+    "input": {
+      "description": "Text entries and search fields",
+      "background": "#101614",
+      "foreground": "#EFF5F0"
+    },
+    "mutedText": {
+      "description": "Secondary text on surfaces",
+      "background": "#18201C",
+      "foreground": "#AEC4B6"
+    },
+    "tooltip": {
+      "description": "Tooltips and scrim overlays",
+      "background": "#090C0B",
+      "foreground": "#EFF5F0"
+    },
+    "errorBanner": {
+      "description": "Errors and destructive actions",
+      "background": "#F28B82",
+      "foreground": "#2A1210"
+    },
+    "successBanner": {
+      "description": "Confirmations and success states",
+      "background": "#9CC184",
+      "foreground": "#14240F"
+    }
+  },
   "gtkPreferDark": true
 }
