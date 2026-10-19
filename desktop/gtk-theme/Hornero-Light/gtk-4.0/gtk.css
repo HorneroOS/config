@@ -6,10 +6,12 @@
  * with a generated header (see desktop/gtk-theme/build.sh; tests/test_gtk_theme.sh
  * gates that the copies stay in sync via `build.sh --check`).
  *
- * Token provenance: profiles/themes/hornero-light/theme.json (flagship
- * terracotta/clay/sunset ramp). This is a first-class light ramp — deep
- * terracotta #B24827 on warm morning paper — never an inversion of the dark
- * theme. Every @define-color below maps to a palette or components token;
+ * Token provenance: profiles/themes/hornero-light/theme.json. Palette
+ * direction follows the Orchis-Light themes (neutral #F2F2F2/white ramp,
+ * blue #1A73E8 primary, semantic green/red/amber) with hornero orange
+ * badges; hues that carry white text are darkened just enough to pass
+ * this repo's WCAG AA gate. Values only — no Orchis code is copied, this
+ * file remains an original implementation. Never an inverted dark. Every @define-color below maps to a palette or components token;
  * derived interaction shades are precomputed flat hex so the file parses in
  * both the GTK 3 and GTK 4 CSS parsers with no color functions.
  *
@@ -27,49 +29,50 @@
  */
 
 /* ---- Palette: profiles/themes/hornero-light/theme.json ------------------ */
-@define-color theme_bg_color #FAF1E3;
-@define-color theme_base_color #FFFDF7;
-@define-color theme_fg_color #2B1A11;
-@define-color theme_text_color #2B1A11;
-@define-color theme_selected_bg_color #B24827;
+@define-color theme_bg_color #F2F2F2;
+@define-color theme_base_color #FFFFFF;
+@define-color theme_fg_color #212121;
+@define-color theme_text_color #212121;
+@define-color theme_selected_bg_color #1A73E8;
 @define-color theme_selected_fg_color #FFFFFF;
-@define-color theme_tooltip_bg_color #2B1A11;
-@define-color theme_tooltip_fg_color #FAF1E3;
-@define-color insensitive_bg_color #F3E9D7;
-@define-color insensitive_fg_color #B4A191;
-@define-color insensitive_base_color #FAF1E3;
-@define-color theme_unfocused_fg_color #6E5140;
-@define-color theme_unfocused_text_color #6E5140;
-@define-color theme_unfocused_bg_color #FAF1E3;
-@define-color theme_unfocused_base_color #FFFDF7;
-@define-color theme_unfocused_selected_bg_color #D9C2A6;
-@define-color theme_unfocused_selected_fg_color #2B1A11;
-@define-color borders #D9C2A6;
-@define-color unfocused_borders #E7D6BC;
-@define-color warning_color #96590A;
-@define-color error_color #B3261E;
-@define-color success_color #3E6B2F;
-@define-color hornero_surface #FFFDF7;
-@define-color hornero_surface_variant #F1E3CE;
-@define-color hornero_card_fg #4E3423;
+@define-color theme_tooltip_bg_color #212121;
+@define-color theme_tooltip_fg_color #F2F2F2;
+@define-color insensitive_bg_color #EEEEEE;
+@define-color insensitive_fg_color #9E9E9E;
+@define-color insensitive_base_color #F2F2F2;
+@define-color theme_unfocused_fg_color #5F6368;
+@define-color theme_unfocused_text_color #5F6368;
+@define-color theme_unfocused_bg_color #F2F2F2;
+@define-color theme_unfocused_base_color #FFFFFF;
+@define-color theme_unfocused_selected_bg_color #E8EAED;
+@define-color theme_unfocused_selected_fg_color #212121;
+@define-color borders #D9D9D9;
+@define-color unfocused_borders #E4E4E4;
+@define-color warning_color #FFD600;
+@define-color error_color #C62828;
+@define-color success_color #0C7C42;
+@define-color hornero_surface #FFFFFF;
+@define-color hornero_surface_variant #E8EAED;
+@define-color hornero_card_fg #3C4043;
 @define-color hornero_on_success #FFFFFF;
-@define-color hornero_muted #6E5140;
-@define-color hornero_primary #B24827;
-@define-color hornero_primary_hover #A03F21;
-@define-color hornero_primary_active #8E371D;
+@define-color hornero_on_warning #212121;
+@define-color hornero_muted #5F6368;
+@define-color hornero_primary #1A73E8;
+@define-color hornero_primary_hover #1765CC;
+@define-color hornero_primary_active #185ABC;
 @define-color hornero_on_primary #FFFFFF;
-@define-color hornero_secondary #7C4A2C;
-@define-color hornero_accent #96590A;
-@define-color hornero_button_bg #FFFDF7;
-@define-color hornero_button_hover #F7EDDC;
-@define-color hornero_button_active #EDDFC7;
-@define-color hornero_entry_bg #FFFDF7;
-@define-color hornero_headerbar_bg #FFFDF7;
-@define-color hornero_trough #F1E3CE;
-@define-color hornero_link #96590A;
-@define-color hornero_link_visited #7C4A2C;
-@define-color hornero_destructive #B3261E;
-@define-color hornero_destructive_hover #C23228;
+@define-color hornero_secondary #546E7A;
+@define-color hornero_accent #B85C00;
+@define-color hornero_button_bg #FFFFFF;
+@define-color hornero_button_hover #F5F5F5;
+@define-color hornero_button_active #EBEBEB;
+@define-color hornero_entry_bg #FFFFFF;
+@define-color hornero_headerbar_bg #FFFFFF;
+@define-color hornero_trough #E8EAED;
+@define-color hornero_link #1A73E8;
+@define-color hornero_link_visited #546E7A;
+@define-color hornero_destructive #C62828;
+@define-color hornero_destructive_hover #E53935;
 
 /* ---- Base --------------------------------------------------------------- */
 .background,
@@ -148,6 +151,15 @@ button.suggested-action {
     background-color: @hornero_primary;
     color: @hornero_on_primary;
     border-color: @hornero_primary_active;
+}
+
+/* Labels inside tinted buttons/banners must take the on-color, not the
+ * global label ink (dark on clay fails contrast in a light ramp). */
+button.suggested-action label,
+button.destructive-action label,
+infobar.error label,
+infobar.question label {
+    color: @hornero_on_primary;
 }
 
 button.suggested-action:hover {
@@ -341,8 +353,14 @@ progressbar progress {
     border-radius: 8px;
 }
 
+/* GTK 4 gives the progress node no intrinsic height; without this the
+ * fill collapses and only the trough paints. */
+progressbar progress {
+    min-height: 6px;
+}
+
 scale slider {
-    background-color: @theme_fg_color;
+    background-color: @theme_base_color;
     border: 1px solid @borders;
     border-radius: 100%;
     min-width: 16px;
@@ -371,7 +389,8 @@ switch:checked {
 }
 
 switch slider {
-    background-color: @theme_fg_color;
+    background-color: @theme_base_color;
+    border: 1px solid @borders;
     border-radius: 100%;
     min-width: 20px;
     min-height: 20px;
@@ -408,7 +427,11 @@ infobar.info {
 
 infobar.warning {
     background-color: @warning_color;
-    color: @hornero_on_primary;
+    color: @hornero_on_warning;
+}
+
+infobar.warning label {
+    color: @hornero_on_warning;
 }
 
 infobar.question {
