@@ -9,8 +9,14 @@
   "mode": "light",
   "version": "1.0.0",
   "tokensVersion": "1.0.0",
-  "description": "Flagship Hornero light theme: deep terracotta, fired clay and sunset amber on warm morning paper — a first-class light ramp, not an inverted dark",
-  "tags": ["hornero", "flagship", "terracotta", "clay", "sunset", "warm", "light"],
+  "description": "Flagship Hornero light theme: clean Orchis-style neutrals with a varied accent family - blue primary, hornero orange badges, green, red and amber semantics - a first-class light ramp, not an inverted dark",
+  "tags": [
+    "hornero",
+    "flagship",
+    "material",
+    "varied",
+    "light"
+  ],
   "darkMode": false,
   "schemeType": "vibrant",
   "gtkTheme": "Hornero-Light",
@@ -19,78 +25,78 @@
   "defaultWallpaper": "hornero-light-01.png",
   "wallpaperDir": "hornero-light",
   "palette": {
-    "background": "#FAF1E3",
-    "surface": "#FFFDF7",
-    "surfaceVariant": "#F1E3CE",
-    "onSurfaceVariant": "#4E3423",
-    "text": "#2B1A11",
-    "textMuted": "#6E5140",
-    "primary": "#B24827",
+    "background": "#F2F2F2",
+    "surface": "#FFFFFF",
+    "surfaceVariant": "#E8EAED",
+    "onSurfaceVariant": "#3C4043",
+    "text": "#212121",
+    "textMuted": "#5F6368",
+    "primary": "#1A73E8",
     "onPrimary": "#FFFFFF",
-    "secondary": "#7C4A2C",
+    "secondary": "#546E7A",
     "onSecondary": "#FFFFFF",
-    "accent": "#96590A",
+    "accent": "#B85C00",
     "onAccent": "#FFFFFF",
-    "border": "#D9C2A6",
-    "error": "#B3261E",
+    "border": "#D9D9D9",
+    "error": "#C62828",
     "onError": "#FFFFFF",
-    "success": "#3E6B2F",
+    "success": "#0C7C42",
     "onSuccess": "#FFFFFF"
   },
   "components": {
     "window": {
       "description": "Application window body text",
-      "background": "#FAF1E3",
-      "foreground": "#2B1A11"
+      "background": "#F2F2F2",
+      "foreground": "#212121"
     },
     "panel": {
       "description": "Panels, sidebars and header bars",
-      "background": "#FFFDF7",
-      "foreground": "#2B1A11"
+      "background": "#FFFFFF",
+      "foreground": "#212121"
     },
     "card": {
       "description": "Raised cards and popovers",
-      "background": "#F1E3CE",
-      "foreground": "#4E3423"
+      "background": "#E8EAED",
+      "foreground": "#3C4043"
     },
     "buttonPrimary": {
-      "description": "Primary action (deep terracotta)",
-      "background": "#B24827",
+      "description": "Primary action (Orchis blue)",
+      "background": "#1A73E8",
       "foreground": "#FFFFFF"
     },
     "buttonSecondary": {
-      "description": "Secondary action (fired clay)",
-      "background": "#7C4A2C",
+      "description": "Secondary action (blue grey)",
+      "background": "#546E7A",
       "foreground": "#FFFFFF"
     },
     "accentBadge": {
-      "description": "Highlights, badges and sunset accents",
-      "background": "#96590A",
+      "description": "Highlights and badges (hornero orange)",
+      "background": "#B85C00",
       "foreground": "#FFFFFF"
     },
     "input": {
       "description": "Text entries and search fields",
-      "background": "#FFFDF7",
-      "foreground": "#2B1A11"
+      "background": "#FFFFFF",
+      "foreground": "#212121"
     },
     "mutedText": {
       "description": "Secondary text on surfaces",
-      "background": "#FFFDF7",
-      "foreground": "#6E5140"
+      "background": "#FFFFFF",
+      "foreground": "#5F6368"
     },
     "tooltip": {
       "description": "Tooltips and scrim overlays",
-      "background": "#2B1A11",
-      "foreground": "#FAF1E3"
+      "background": "#212121",
+      "foreground": "#F2F2F2"
     },
     "errorBanner": {
       "description": "Errors and destructive actions",
-      "background": "#B3261E",
+      "background": "#C62828",
       "foreground": "#FFFFFF"
     },
     "successBanner": {
       "description": "Confirmations and success states",
-      "background": "#3E6B2F",
+      "background": "#0C7C42",
       "foreground": "#FFFFFF"
     }
   }
