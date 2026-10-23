@@ -85,7 +85,7 @@ cmp -s "$STAGE/.config/ghostty/themes/Hornero Dynamic" \
   && pass "Ghostty system theme fallback" || fail "Ghostty system theme missing/different"
 diff -r "$STAGE/.config/hypr" "$ROOT/etc/skel/.config/hypr" >/dev/null 2>&1 \
   && pass "Hyprland new-user config seed" || fail "Hyprland skel config missing/different"
-[[ -x "$ROOT/etc/skel/.config/hypr/scripts/gaps-interactive.sh" ]] \
+[ -x "$ROOT/etc/skel/.config/hypr/scripts/gaps-interactive.sh" ] \
   && pass "Hyprland new-user helper remains executable" \
   || fail "Hyprland new-user helper is not executable"
 cmp -s "$STAGE/.config/btop/themes/Hornero Dynamic.theme" \

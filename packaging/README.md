@@ -42,8 +42,10 @@ The package intentionally omits `/etc/xdg/Thunar/uca.xml`, which is owned by
 the `thunar` package on Arch. The curated custom actions stay available in the
 user config managed by `~/.dotfiles` at `~/.config/Thunar/uca.xml`.
 
-Only `/etc/xdg`, `/etc/skel`, `/etc/systemd/user`, `/usr/share/hornero`, and
-`/usr/share/themes` (plus the standard license dir) are written.
+Only `/etc/xdg`, `/etc/skel`, `/etc/systemd/user`, `/etc/niri`,
+`/etc/alacritty`, `/usr/share/btop/themes`, `/usr/share/ghostty/themes`,
+`/usr/share/hornero`, and `/usr/share/themes` (plus the standard license dir)
+are written.
 
 `scripts/materialize.sh` user-root behavior is unchanged: it never writes
 `~/.config/hornero/shell.json`. That user file is created by the shell
@@ -96,9 +98,14 @@ before it updates the PKGBUILD or submits it to the AUR.
 # Preview what the package ships (same content as a user install):
 scripts/materialize.sh --dry-run
 
-# New users inherit the Hyprland profile from /etc/skel. Existing users can
-# copy the current system defaults when they want to initialize their config:
-cp -r /etc/xdg/hypr ~/.config/hypr
+# New users inherit the Hyprland profile from /etc/skel. For an existing user
+# without a profile, initialize it from system defaults without replacing an
+# existing config:
+config_home=${XDG_CONFIG_HOME:-"$HOME/.config"}
+if [ ! -e "$config_home/hypr" ]; then
+  mkdir -p "$config_home"
+  cp -r /etc/xdg/hypr "$config_home/"
+fi
 
 # CLI adapters live outside PATH by design; add them explicitly:
 export PATH="/usr/share/hornero/bin:$PATH"
