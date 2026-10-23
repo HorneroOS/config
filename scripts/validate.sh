@@ -202,7 +202,7 @@ done
 while IFS= read -r src; do
   # Relative source paths resolve from hyprland.conf, independent of the
   # display manager's environment and of the user's XDG_CONFIG_HOME.
-  if [[ "$src" != ./hyprland.conf.d/* ]]; then
+  if [[ ! "$src" =~ ^\./hyprland\.conf\.d/[^/]+\.conf$ ]]; then
     echo "VALIDATE-FAIL: hypr source must be relative to hyprland.conf: $src" >&2
     HYPR_FAIL=1; FAIL=1
   elif [[ ! -e "$REPO_ROOT/desktop/hypr/$src" ]]; then
