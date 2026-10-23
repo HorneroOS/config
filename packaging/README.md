@@ -23,7 +23,8 @@ systemd's `/etc/xdg/systemd/user` symlink.
 
 | Staged HOME path (via `materialize.sh`) | Package path                          |
 | --------------------------------------- | ------------------------------------- |
-| `.config/*` (except `systemd/user` and `Thunar/uca.xml`) | `/etc/xdg/*` |
+| `.config/*` (except `hypr`, `systemd/user` and `Thunar/uca.xml`) | `/etc/xdg/*` |
+| `.config/hypr` | `/etc/skel/.config/hypr` (new-user session profile; system fallback also remains under `/etc/xdg/hypr`) |
 | `.config/systemd/user/*.service`        | `/etc/systemd/user/*.service` (system-wide user-unit masks) |
 | `.gtkrc-2.0`                            | `/etc/xdg/gtkrc-2.0` (skeleton; copy to `~/.gtkrc-2.0` to use) |
 | `shell/shell.default.json` (repo file, **not** staged HOME) | `/etc/xdg/hornero/shell.json` (factory default; content owned by `HorneroOS/shell`, synced byte-exact — see `shell/README.md`) |
@@ -41,8 +42,10 @@ The package intentionally omits `/etc/xdg/Thunar/uca.xml`, which is owned by
 the `thunar` package on Arch. The curated custom actions stay available in the
 user config managed by `~/.dotfiles` at `~/.config/Thunar/uca.xml`.
 
-Only `/etc/xdg`, `/etc/systemd/user`, `/usr/share/hornero`, and `/usr/share/themes`
-(plus the standard license dir) are written.
+Only `/etc/xdg`, `/etc/skel`, `/etc/systemd/user`, `/etc/niri`,
+`/etc/alacritty`, `/usr/share/btop/themes`, `/usr/share/ghostty/themes`,
+`/usr/share/hornero`, and `/usr/share/themes` (plus the standard license dir)
+are written.
 
 `scripts/materialize.sh` user-root behavior is unchanged: it never writes
 `~/.config/hornero/shell.json`. That user file is created by the shell
@@ -95,8 +98,14 @@ before it updates the PKGBUILD or submits it to the AUR.
 # Preview what the package ships (same content as a user install):
 scripts/materialize.sh --dry-run
 
-# Copy system defaults into a user (XDG-aware):
-cp -r /etc/xdg/hypr ~/.config/hypr
+# New users inherit the Hyprland profile from /etc/skel. For an existing user
+# without a profile, initialize it from system defaults without replacing an
+# existing config:
+config_home=${XDG_CONFIG_HOME:-"$HOME/.config"}
+if [ ! -e "$config_home/hypr" ]; then
+  mkdir -p "$config_home"
+  cp -r /etc/xdg/hypr "$config_home/"
+fi
 
 # CLI adapters live outside PATH by design; add them explicitly:
 export PATH="/usr/share/hornero/bin:$PATH"
