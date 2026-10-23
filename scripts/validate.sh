@@ -200,13 +200,16 @@ for f in "$REPO_ROOT"/desktop/hypr/hyprland.conf "$REPO_ROOT"/desktop/hypr/hyprl
   fi
 done
 while IFS= read -r src; do
-  # source = $XDG_CONFIG_HOME/hypr/<rel> must exist under desktop/hypr/
-  rel="${src##*/hypr/}"
-  if [[ ! -e "$REPO_ROOT/desktop/hypr/$rel" ]]; then
+  # Relative source paths resolve from hyprland.conf, independent of the
+  # display manager's environment and of the user's XDG_CONFIG_HOME.
+  if [[ "$src" != ./hyprland.conf.d/* ]]; then
+    echo "VALIDATE-FAIL: hypr source must be relative to hyprland.conf: $src" >&2
+    HYPR_FAIL=1; FAIL=1
+  elif [[ ! -e "$REPO_ROOT/desktop/hypr/$src" ]]; then
     echo "VALIDATE-FAIL: hypr source target missing: $src" >&2
     HYPR_FAIL=1; FAIL=1
   fi
-done < <(grep -rhoE "source *= *[^ ]*hypr/[^ ]+" "$REPO_ROOT/desktop/hypr/hyprland.conf" | sed -E 's/.*hypr\///')
+done < <(grep -rhoE "source *= *[^ ]+" "$REPO_ROOT/desktop/hypr/hyprland.conf" | sed -E 's/^source *= *//')
 [[ $HYPR_FAIL -eq 0 ]] && pass "hypr sanity (no templates, balanced, sources resolve)"
 
 # --- Niri config ---------------------------------------------------------------
