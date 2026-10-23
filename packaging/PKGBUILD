@@ -151,6 +151,12 @@ package() {
   install -Dm644 "$stage/.config/cava/themes/Hornero Dynamic" \
     "$pkgdir/etc/skel/.config/cava/themes/Hornero Dynamic"
 
+  # Hyprland's factory config imports modules from the user's XDG config
+  # directory. Seed new accounts with that complete profile so the first
+  # compositor session does not start with missing-source errors.
+  mkdir -p "$pkgdir/etc/skel/.config"
+  cp -a "$stage/.config/hypr" "$pkgdir/etc/skel/.config/"
+
   # Niri reads /etc/niri/config.kdl as its system fallback after the user's
   # XDG config. Keep one source file: materialize.sh also places it in the
   # staged HOME for chezmoi and package-only user setup.
@@ -265,6 +271,7 @@ package() {
     -type f -exec chmod 644 {} +
   chmod 755 "$pkgdir"/usr/share/hornero/bin/hornero-*
   chmod 755 "$pkgdir"/etc/xdg/hypr/scripts/*.sh
+  chmod 755 "$pkgdir"/etc/skel/.config/hypr/scripts/*.sh
 
   # Ship the license alongside the payload for offline inspection.
   install -Dm644 "$repo_root/LICENSE" \
