@@ -119,6 +119,15 @@ the dedicated command is useful when changing terminal defaults:
 scripts/validate-ghostty-config.sh
 ```
 
+Factory GTK settings are generated from `profiles/factory.json` and its
+default theme recipe. After changing that contract, regenerate the static
+settings copied into GTK 3 and GTK 4 config directories:
+
+```sh
+scripts/generate-gtk-settings.py
+scripts/generate-gtk-settings.py --check
+```
+
 Run the temp-HOME materialization test:
 
 ```sh
