@@ -48,6 +48,8 @@ jobs:
         run: python3 tests/test_terminal_themes.py
       - name: Hornero GTK theme (GTK3+GTK4, no GTK2)
         run: tests/test_gtk_theme.sh
+      - name: Factory GTK settings generation
+        run: tests/test_gtk_settings_generation.sh
       - name: CLI flags without which
         run: tests/test_cli_flags.sh
       - name: GTK state keeps no shell mode
