@@ -50,6 +50,11 @@ source = "desktop/studio-audio"
 target = "{config}/hornero/studio-audio"
 description = "Opt-in Studio Low Latency/Advanced policy templates (never active by default)."
 
+[modules.studio-presets]
+source = "desktop/studio-presets"
+target = "{config}/hornero/studio-presets"
+description = "Opt-in Studio application preset templates (data only; never applied over user config)." 
+
 [modules.qt6ct]
 source = "desktop/qt6ct"
 target = "{config}/qt6ct"

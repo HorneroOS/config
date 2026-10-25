@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "description": "Portable, opt-in Studio application preset templates. Templates install as data under ~/.config/hornero/studio-presets; applying one to an application is always an explicit, create-if-absent copy that never overwrites user configuration.",
+  "presets": [
+    {
+      "id": "obs-studio-recording-baseline",
+      "app": "obs-studio",
+      "version": 1,
+      "title": "OBS Studio recording baseline",
+      "description": "1080p30 canvas/output with MKV recording. No stream key, no account data, no hardcoded bitrate: encoder and bitrate stay with OBS defaults and your hardware.",
+      "source": "HorneroOS/config (original template)",
+      "license": "MIT",
+      "strategy": "create-if-absent",
+      "files": [
+        {
+          "template": "obs-studio/basic.ini",
+          "target": ".config/obs-studio/basic/profiles/Hornero Studio/basic.ini"
+        }
+      ]
+    }
+  ]
+}
