@@ -79,6 +79,7 @@ install_dir "desktop/ghostty" "$CONFIG_HOME/ghostty"
 # Advanced are opt-in templates outside pipewire.conf.d (docs/STUDIO-AUDIO.md).
 install_dir "desktop/pipewire" "$CONFIG_HOME/pipewire"
 install_dir "desktop/studio-audio" "$CONFIG_HOME/hornero/studio-audio"
+install_dir "desktop/studio-presets" "$CONFIG_HOME/hornero/studio-presets"
 
 # --- XDG defaults --------------------------------------------------------------
 install_dir "xdg/handlr" "$CONFIG_HOME/handlr"
