@@ -80,6 +80,7 @@ install_dir "desktop/ghostty" "$CONFIG_HOME/ghostty"
 install_dir "desktop/pipewire" "$CONFIG_HOME/pipewire"
 install_dir "desktop/studio-audio" "$CONFIG_HOME/hornero/studio-audio"
 install_dir "desktop/studio-presets" "$CONFIG_HOME/hornero/studio-presets"
+install_dir "desktop/studio-storage" "$CONFIG_HOME/hornero/studio-storage"
 
 # --- XDG defaults --------------------------------------------------------------
 install_dir "xdg/handlr" "$CONFIG_HOME/handlr"
