@@ -53,7 +53,7 @@ description = "Opt-in Studio Low Latency/Advanced policy templates (never active
 [modules.studio-presets]
 source = "desktop/studio-presets"
 target = "{config}/hornero/studio-presets"
-description = "Opt-in Studio application preset templates (data only; never applied over user config)." 
+description = "Opt-in Studio application preset templates (data only; never applied over user config)."
 
 [modules.qt6ct]
 source = "desktop/qt6ct"
