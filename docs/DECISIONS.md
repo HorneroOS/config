@@ -52,6 +52,15 @@ Later product-owned payloads identify their HorneroOS source in the table.
 | Wallpaper binaries | Distributed separately (see manifest note). |
 | `hornero-{color-scheme,wal-reload}` and the wider `hornero-*` fleet | Smart-colors/Quickshell runtime; only the GTK-theme family moves in this pass. |
 
+## Studio audio policy (new authorship, not extraction)
+
+`desktop/pipewire/` ships the Studio Balanced policy (explicit no-override)
+and `desktop/studio-audio/` ships opt-in Low Latency/Advanced templates.
+Mode semantics come from HorneroOS/hornero `studioAudioModes`; no personal
+device settings, REAPER/guitarix session data, or fixed global quantum was
+extracted. Restoration is deleting the installed file. See
+`docs/STUDIO-AUDIO.md`.
+
 ## Tooling decisions
 
 ### Packaged Quickshell module discovery

@@ -75,6 +75,10 @@ install_dir "desktop/thunar" "$CONFIG_HOME/Thunar"
 install_file "desktop/copyq/copyq.conf" "$CONFIG_HOME/copyq/copyq.conf"
 install_dir "desktop/alacritty" "$CONFIG_HOME/alacritty"
 install_dir "desktop/ghostty" "$CONFIG_HOME/ghostty"
+# Studio audio policy: Balanced (no override) is active; Low Latency and
+# Advanced are opt-in templates outside pipewire.conf.d (docs/STUDIO-AUDIO.md).
+install_dir "desktop/pipewire" "$CONFIG_HOME/pipewire"
+install_dir "desktop/studio-audio" "$CONFIG_HOME/hornero/studio-audio"
 
 # --- XDG defaults --------------------------------------------------------------
 install_dir "xdg/handlr" "$CONFIG_HOME/handlr"
