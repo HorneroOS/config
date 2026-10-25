@@ -55,6 +55,11 @@ source = "desktop/studio-presets"
 target = "{config}/hornero/studio-presets"
 description = "Opt-in Studio application preset templates (data only; never applied over user config)."
 
+[modules.studio-storage]
+source = "desktop/studio-storage"
+target = "{config}/hornero/studio-storage"
+description = "Studio storage policy defaults (user-owned vs regenerable locations)."
+
 [modules.qt6ct]
 source = "desktop/qt6ct"
 target = "{config}/qt6ct"

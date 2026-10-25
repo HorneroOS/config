@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "description": "Portable Studio storage policy defaults. Locations are user choices: accept, relocate, or defer. Nothing here repartitions, formats, or deletes anything.",
+  "locations": {
+    "projects": {
+      "default": "~/Studio/Projects",
+      "class": "user-owned",
+      "backup": "include",
+      "autoDelete": false
+    },
+    "assets": {
+      "default": "~/Studio/Assets",
+      "class": "user-owned",
+      "backup": "include",
+      "autoDelete": false
+    },
+    "cache": {
+      "default": "~/.cache/hornero/studio",
+      "class": "regenerable",
+      "backup": "exclude",
+      "autoDelete": "preview-only"
+    },
+    "scratch": {
+      "default": "~/Studio/Scratch",
+      "class": "temporary",
+      "backup": "exclude",
+      "autoDelete": "preview-only"
+    }
+  },
+  "thresholds": {
+    "warnBelowFreePercent": 10,
+    "stopRenderBelowFreePercent": 3
+  },
+  "rules": [
+    "Project and asset media are never auto-deleted, moved, or scanned for telemetry.",
+    "Only cache and scratch entries with a known owner may be proposed for cleanup, always with a preview first.",
+    "No filesystem is formatted, repartitioned, or forced to NOCOW by this policy.",
+    "Changing a location never moves existing files without an explicit, previewed migration."
+  ]
+}
