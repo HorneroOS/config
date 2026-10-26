@@ -248,9 +248,4 @@ for svc in org.knopwob.dunst.service fr.emersion.mako.service org.erikreider.swa
   shadow_dbus_service "$svc"
 done
 
-# hypr helper scripts (Lua) must stay executable after the 644 normalization above
-if [[ $DRY_RUN -eq 0 ]]; then
-  chmod 755 "$CONFIG_HOME"/hypr/scripts/*.lua
-fi
-
 echo "materialized HorneroOS config into $DEST"

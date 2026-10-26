@@ -8,7 +8,7 @@
 -- runtime through horneroctl; animations.lua is the startup default.
 -- Hornero Light is opt-in: uncomment its dofile line below (it was the
 -- commented-out hornero-light.conf source in the legacy entrypoint).
--- luacheck: globals hl
+-- luacheck: globals hl hornero_helpers
 
 local here = debug.getinfo(1, "S").source:match("^@(.*)/[^/]*$") .. "/hyprland.lua.d/"
 
@@ -18,6 +18,7 @@ dofile(here .. "environment.lua")
 dofile(here .. "input.lua")
 dofile(here .. "gestures.lua")
 dofile(here .. "layout.lua")
+hornero_helpers = dofile(here .. "helpers.lua")
 dofile(here .. "keybindings.lua")
 dofile(here .. "keybindings-user.lua")
 dofile(here .. "window-rules.lua")

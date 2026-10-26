@@ -194,8 +194,7 @@ if [[ -e "$REPO_ROOT/desktop/hypr/hyprland.conf" || -d "$REPO_ROOT/desktop/hypr/
   echo "VALIDATE-FAIL: legacy hyprlang config remains under desktop/hypr (hypridle/hyprlock .conf belong to separate apps and are exempt only at the top level)" >&2
   HYPR_FAIL=1; FAIL=1
 fi
-for f in "$REPO_ROOT"/desktop/hypr/hyprland.lua "$REPO_ROOT"/desktop/hypr/hyprland.lua.d/*.lua \
-         "$REPO_ROOT"/desktop/hypr/scripts/*.lua; do
+for f in "$REPO_ROOT"/desktop/hypr/hyprland.lua "$REPO_ROOT"/desktop/hypr/hyprland.lua.d/*.lua; do
   if command -v luac >/dev/null 2>&1; then
     if ! luac -p "$f"; then
       echo "VALIDATE-FAIL: luac -p failed: $f" >&2

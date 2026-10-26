@@ -85,9 +85,9 @@ cmp -s "$STAGE/.config/ghostty/themes/Hornero Dynamic" \
   && pass "Ghostty system theme fallback" || fail "Ghostty system theme missing/different"
 diff -r "$STAGE/.config/hypr" "$ROOT/etc/skel/.config/hypr" >/dev/null 2>&1 \
   && pass "Hyprland new-user config seed" || fail "Hyprland skel config missing/different"
-[ -x "$ROOT/etc/skel/.config/hypr/scripts/gaps-interactive.lua" ] \
-  && pass "Hyprland new-user helper remains executable" \
-  || fail "Hyprland new-user helper is not executable"
+[ -f "$ROOT/etc/skel/.config/hypr/hyprland.lua.d/helpers.lua" ] \
+  && pass "Hyprland helpers module is seeded for new users" \
+  || fail "Hyprland helpers module missing from skel"
 cmp -s "$STAGE/.config/btop/themes/Hornero Dynamic.theme" \
   "$ROOT/usr/share/btop/themes/Hornero Dynamic.theme" \
   && pass "btop system theme fallback" || fail "btop system theme missing/different"
@@ -167,7 +167,6 @@ fi
   && pass "file perms 644/755" || fail "file perms 644/755"
 [[ -x "$ROOT/usr/share/hornero/bin/hornero-gtk-theme" ]] \
   && [[ -x "$ROOT/usr/share/hornero/bin/hornero-snappy-switcher" ]] \
-  && [[ -x "$ROOT/etc/xdg/hypr/scripts/gaps-interactive.lua" ]] \
   && pass "executables preserved" || fail "executables preserved"
 
 # --- installed tree carries no identity or secrets ------------------------------

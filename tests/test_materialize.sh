@@ -23,7 +23,7 @@ check ".config/hypr/hyprland.lua.d/monitors.lua"
 check ".config/hypr/hyprland.lua.d/keybindings.lua"
 check ".config/hypr/hypridle.conf"
 check ".config/hypr/hyprlock.conf"
-check ".config/hypr/scripts/gaps-interactive.lua"
+check ".config/hypr/hyprland.lua.d/helpers.lua"
 # Packaged Quickshell modules are discovered from Qt's system import path.
 # Development overrides must not leak into the normal compositor session.
 if grep -Eq '"(QML2?_IMPORT_PATH|QS_PLUGIN_PATH|HORNERO_LIB_DIR)"' \
@@ -177,8 +177,7 @@ echo "TEST-PASS: no identity in installed git config"
 for f in "$TMP_HOME/.local/bin/hornero-gtk-theme" "$TMP_HOME/.local/bin/hornero-hyprlock-theme" \
          "$TMP_HOME/.local/bin/hornero-appearance" \
          "$TMP_HOME/.local/bin/hornero-night-mode" \
-         "$TMP_HOME/.local/bin/hornero-wallpaper-set" "$TMP_HOME/.local/bin/hornero-wallpaper-current" \
-         "$TMP_HOME/.config/hypr/scripts/gaps-interactive.lua"; do
+         "$TMP_HOME/.local/bin/hornero-wallpaper-set" "$TMP_HOME/.local/bin/hornero-wallpaper-current"; do
   if [[ -x $f ]]; then
     echo "TEST-PASS: executable $f"
   else

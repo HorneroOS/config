@@ -260,7 +260,7 @@ package() {
   printf '%s\n' "$profile_name" > "$pkgdir/usr/share/hornero/HORNERO_PROFILE"
 
   # Permissions mirror scripts/materialize.sh: dirs 755, files 644,
-  # with executables restored for CLI adapters and hypr helpers.
+  # with executables restored for CLI adapters.
   find "$pkgdir/etc/xdg" "$pkgdir/etc/alacritty" "$pkgdir/etc/skel" \
     "$pkgdir/etc/systemd/user" "$pkgdir/usr/share/hornero" "$pkgdir/usr/share/themes" \
     "$pkgdir/usr/share/ghostty/themes" \
@@ -270,8 +270,6 @@ package() {
     "$pkgdir/usr/share/ghostty/themes" \
     -type f -exec chmod 644 {} +
   chmod 755 "$pkgdir"/usr/share/hornero/bin/hornero-*
-  chmod 755 "$pkgdir"/etc/xdg/hypr/scripts/*.lua
-  chmod 755 "$pkgdir"/etc/skel/.config/hypr/scripts/*.lua
 
   # Ship the license alongside the payload for offline inspection.
   install -Dm644 "$repo_root/LICENSE" \

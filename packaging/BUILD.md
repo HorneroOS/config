@@ -62,11 +62,8 @@ pacman metadata dotfiles `.PKGINFO`/`.BUILDINFO`/`.MTREE`).
 /etc/xdg/handlr/handlr.toml
 /etc/xdg/hypr/hypridle.conf
 /etc/xdg/hypr/hyprland.lua
-/etc/xdg/hypr/hyprland.lua.d/*.lua (monitors, autostart, environment, input, gestures, layout, keybindings, keybindings-user, window-rules, window-rules-user, animations + 5 profiles, smart-colors, hornero-light, plugins, static)
+/etc/xdg/hypr/hyprland.lua.d/*.lua (monitors, autostart, environment, input, gestures, layout, helpers, keybindings, keybindings-user, window-rules, window-rules-user, animations + 5 profiles, smart-colors, hornero-light, plugins, static)
 /etc/xdg/hypr/hyprlock.conf
-/etc/xdg/hypr/scripts/gaps-interactive.lua (755)
-/etc/xdg/hypr/scripts/notification-handler.lua (755)
-/etc/xdg/hypr/scripts/smart-float.lua (755)
 /etc/xdg/kitty/kitty.conf
 /etc/xdg/Thunar/accels.scm
 /etc/xdg/Thunar/renamerc

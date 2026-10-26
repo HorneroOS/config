@@ -60,12 +60,22 @@ grep -q 'GNOME_KEYRING_CONTROL' "$HYPR/hyprland.lua.d/environment.lua" \
   || fail "environment lost GNOME_KEYRING_CONTROL"
 echo "TEST-PASS: environment parity (22 static + 2 runtime-derived)"
 
-# Helper scripts are Lua, executable, and parse.
-for s in gaps-interactive smart-float notification-handler; do
-  [[ -x "$HYPR/scripts/$s.lua" ]] || fail "scripts/$s.lua missing or not executable"
-  [[ ! -e "$HYPR/scripts/$s.sh" ]] || fail "legacy scripts/$s.sh still shipped"
-done
-echo "TEST-PASS: hypr helper scripts are executable Lua, no shell helpers remain"
+# Helpers live in-process: no standalone Hyprland scripts remain, and
+# keybindings call the helpers.lua functions directly.
+[[ ! -d "$HYPR/scripts" ]] || fail "standalone desktop/hypr/scripts still shipped"
+[[ -f "$HYPR/hyprland.lua.d/helpers.lua" ]] || fail "hyprland.lua.d/helpers.lua missing"
+grep -q 'hornero_helpers = dofile(here .. "helpers.lua")' "$HYPR/hyprland.lua" \
+  || fail "hyprland.lua does not load helpers.lua"
+grep -q 'helpers.gaps_interactive()' "$HYPR/hyprland.lua.d/keybindings.lua" \
+  || fail "gaps bind does not call helpers.gaps_interactive()"
+grep -q 'helpers.smart_float()' "$HYPR/hyprland.lua.d/keybindings.lua" \
+  || fail "smart-float bind does not call helpers.smart_float()"
+grep -q 'function M.notification_action' "$HYPR/hyprland.lua.d/helpers.lua" \
+  || fail "helpers.lua lost notification_action()"
+if grep -rn 'scripts/' "$HYPR" --include='*.lua'; then
+  fail "Hyprland Lua still invokes a standalone script by path"
+fi
+echo "TEST-PASS: helpers are in-process Lua functions, no standalone scripts remain"
 
 # Real compositor parser, when available (Hyprland 0.56 in CI/dev hosts).
 if command -v Hyprland >/dev/null 2>&1; then

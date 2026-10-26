@@ -198,9 +198,17 @@ def parse_bindings(conf: Path) -> list[dict]:
         parts = [x.strip() for x in key_spec.split("+")]
         key, mods = parts[-1], parts[:-1]
         dm = re.match(r"hl\.dsp\.([A-Za-z_.]+)\((.*)\)\s*(?:,\s*\{.*\})?$", rest, flags=re.S)
-        if not dm:
-            raise ValueError(f"{conf}: unparsable dispatcher: {rest[:60]!r}")
-        dispatcher, args = _legacy(dm.group(1), dm.group(2))
+        if dm:
+            dispatcher, args = _legacy(dm.group(1), dm.group(2))
+        else:
+            # In-process Lua callback binds, e.g.
+            # hl.bind("...", function() helpers.smart_float() end)
+            fm = re.search(r"helpers\.([a-z_]+)\s*\(", rest)
+            if not fm:
+                raise ValueError(f"{conf}: unparsable dispatcher: {rest[:60]!r}")
+            helper = fm.group(1)
+            known = {"gaps_interactive": "gaps-interactive", "smart_float": "smart-float"}
+            dispatcher, args = "exec", known.get(helper, helper.replace("_", "-"))
         flags = ""
         if "repeating = true" in rest:
             flags += "e"
