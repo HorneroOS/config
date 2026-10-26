@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Generate a machine-readable shortcut manifest from keybindings.conf.
+"""Generate a machine-readable shortcut manifest from keybindings.lua.
 
 Reads the authoritative Hyprland bindings
-(desktop/hypr/hyprland.conf.d/keybindings.conf) and emits
+(desktop/hypr/hyprland.lua.d/keybindings.lua) and emits
 `shortcuts.json`:
 
     {"schemaVersion": 1, "source": "<relpath>", "entries": [
@@ -24,22 +24,103 @@ import re
 import sys
 from pathlib import Path
 
-BIND_RE = re.compile(r"^bind([a-z]*)\s*=\s*([^,]*),([^,]*),([^,]+?)(?:,(.*))?$")
-SUBMAP_RE = re.compile(r"^submap\s*=\s*(.*)$")
-VAR_RE = re.compile(r"^\$([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(\S+)\s*$")
-
-
 def slug(text: str) -> str:
     text = text.strip().lower()
+    text = re.sub(r"\.lua$", "", text)
     text = re.sub(r"\.sh$", "", text)
     text = re.sub(r"[^a-z0-9]+", "-", text).strip("-")
     return text or "unnamed"
 
 
-def expand_vars(text: str, variables: dict[str, str]) -> str:
-    for name, value in variables.items():
-        text = text.replace(f"${name}", value)
-    return text
+LUA_BIND_START = re.compile(r"hl\.bind\(")
+SUBMAP_START = re.compile(r'hl\.define_submap\("([^"]+)"')
+
+DIR = {"left": "l", "right": "r", "up": "u", "down": "d"}
+
+
+def _scan_call(text, start):
+    """Return (args_text, end_index) for the call whose '(' is at start-1."""
+    depth = 0
+    i = start - 1
+    in_str = False
+    while i < len(text):
+        c = text[i]
+        if in_str:
+            if c == "\\":
+                i += 2
+                continue
+            if c == '"':
+                in_str = False
+        elif c == '"':
+            in_str = True
+        elif c == "(":
+            depth += 1
+        elif c == ")":
+            depth -= 1
+            if depth == 0:
+                return text[start:i], i
+        i += 1
+    raise ValueError("unbalanced hl.bind call")
+
+
+def _legacy(dsp, inner):
+    """Map an hl.dsp expression to the legacy (dispatcher, args) pair."""
+    inner = inner.strip()
+    if dsp == "exec_cmd":
+        cmd = inner.strip('"')
+        m = re.match(r"hyprctl dispatch ([^,]+), (.+)$", cmd)
+        if m:
+            return m.group(1), m.group(2)
+        return "exec", cmd
+    if dsp == "window.kill":
+        return "killactive", ""
+    if dsp == "window.float":
+        return "togglefloating", ""
+    if dsp == "window.fullscreen":
+        return "fullscreen", "1" if "maximized" in inner else "0"
+    if dsp == "window.pin":
+        return "pin", ""
+    if dsp == "window.center":
+        return "centerwindow", ""
+    if dsp == "window.drag":
+        return "movewindow", ""
+    if dsp == "window.resize":
+        if not inner:
+            return "resizewindow", ""
+        x = re.search(r"x\s*=\s*(-?\d+)", inner)
+        y = re.search(r"y\s*=\s*(-?\d+)", inner)
+        return "resizeactive", f"{x.group(1) if x else 0} {y.group(1) if y else 0}"
+    if dsp == "window.move":
+        ws = re.search(r'workspace\s*=\s*"([^"]+)"', inner)
+        if ws:
+            return ("movetoworkspacesilent" if "follow = false" in inner else "movetoworkspace"), ws.group(1)
+        d = re.search(r'direction\s*=\s*"([^"]+)"', inner)
+        return "movewindow", DIR.get(d.group(1), d.group(1)) if d else ""
+    if dsp == "focus":
+        ws = re.search(r'workspace\s*=\s*"([^"]+)"', inner)
+        if ws:
+            return "workspace", ws.group(1)
+        if "last = true" in inner:
+            return "focuscurrentorlast", ""
+        d = re.search(r'direction\s*=\s*"([^"]+)"', inner)
+        return "movefocus", DIR.get(d.group(1), d.group(1)) if d else ""
+    if dsp == "layout":
+        return "layoutmsg", inner.strip('"')
+    if dsp == "group.next":
+        return "changegroupactive", "f"
+    if dsp == "group.prev":
+        return "changegroupactive", "b"
+    if dsp == "group.toggle":
+        return "togglegroup", ""
+    if dsp == "group.lock_active":
+        return "lockactivegroup", "toggle"
+    if dsp == "workspace.toggle_special":
+        return "togglespecialworkspace", inner.strip('"')
+    if dsp == "submap":
+        return "submap", inner.strip('"')
+    if dsp == "exit":
+        return "exit", ""
+    return dsp, inner.strip('"')
 
 
 def entry_id(dispatcher: str, args: str) -> str:
@@ -94,39 +175,47 @@ def entry_id(dispatcher: str, args: str) -> str:
 
 
 def parse_bindings(conf: Path) -> list[dict]:
+    text = conf.read_text(encoding="utf-8")
     entries: list[dict] = []
-    variables: dict[str, str] = {}
-    submap = ""
-    for lineno, raw in enumerate(conf.read_text(encoding="utf-8").splitlines(), 1):
-        line = raw.split("#", 1)[0].strip()
-        if not line:
-            continue
-        var = VAR_RE.match(line)
-        if var:
-            variables[var.group(1)] = var.group(2)
-            continue
-        sub = SUBMAP_RE.match(line)
-        if sub:
-            submap = sub.group(1).strip()
-            continue
-        m = BIND_RE.match(line)
-        if not m:
-            continue
-        flags, mods_raw, key, dispatcher, args = (
-            m.group(1),
-            m.group(2),
-            m.group(3).strip(),
-            m.group(4).strip(),
-            (m.group(5) or "").strip(),
-        )
-        mods = [
-            expand_vars(x.strip(), variables)
-            for x in mods_raw.split()
-            if x.strip()
-        ]
-        key = expand_vars(key, variables)
-        if not key or not dispatcher:
-            raise ValueError(f"{conf}:{lineno}: unparsable bind: {raw!r}")
+    # Track define_submap spans so binds inside inherit the submap name.
+    submap_spans = []
+    for m in SUBMAP_START.finditer(text):
+        _, end = _scan_call(text, m.start() + len("hl.define_submap("))
+        submap_spans.append((m.start(), end, m.group(1)))
+
+    def submap_at(pos):
+        for s, e, name in submap_spans:
+            if s <= pos <= e:
+                return name
+        return ""
+
+    for m in LUA_BIND_START.finditer(text):
+        args_text, _ = _scan_call(text, m.start() + len("hl.bind("))
+        km = re.match(r'\s*"([^"]+)"\s*,\s*(.*)$', args_text, flags=re.S)
+        if not km:
+            raise ValueError(f"{conf}: unparsable bind at offset {m.start()}")
+        key_spec, rest = km.group(1), km.group(2).strip()
+        parts = [x.strip() for x in key_spec.split("+")]
+        key, mods = parts[-1], parts[:-1]
+        dm = re.match(r"hl\.dsp\.([A-Za-z_.]+)\((.*)\)\s*(?:,\s*\{.*\})?$", rest, flags=re.S)
+        if dm:
+            dispatcher, args = _legacy(dm.group(1), dm.group(2))
+        else:
+            # In-process Lua callback binds, e.g.
+            # hl.bind("...", function() helpers.smart_float() end)
+            fm = re.search(r"helpers\.([a-z_]+)\s*\(", rest)
+            if not fm:
+                raise ValueError(f"{conf}: unparsable dispatcher: {rest[:60]!r}")
+            helper = fm.group(1)
+            known = {"gaps_interactive": "gaps-interactive", "smart_float": "smart-float"}
+            dispatcher, args = "exec", known.get(helper, helper.replace("_", "-"))
+        flags = ""
+        if "repeating = true" in rest:
+            flags += "e"
+        if "locked = true" in rest:
+            flags += "l"
+        if "mouse = true" in rest:
+            flags += "m"
         entries.append(
             {
                 "id": entry_id(dispatcher, args),
@@ -134,11 +223,10 @@ def parse_bindings(conf: Path) -> list[dict]:
                 "key": key,
                 "dispatcher": dispatcher,
                 "args": args,
-                "submap": "" if submap.lower() == "reset" else submap,
+                "submap": submap_at(m.start()),
                 "flags": flags,
             }
         )
-    # Deterministic order for diffable output.
     entries.sort(
         key=lambda e: (e["submap"], e["dispatcher"], e["key"], e["id"], e["flags"])
     )
@@ -151,7 +239,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", default=None, help="Output path")
     args = parser.parse_args(argv)
     root = Path(args.root) if args.root else Path(__file__).resolve().parent.parent
-    conf = root / "desktop" / "hypr" / "hyprland.conf.d" / "keybindings.conf"
+    conf = root / "desktop" / "hypr" / "hyprland.lua.d" / "keybindings.lua"
     if not conf.is_file():
         print(f"SHORTCUTS-FAIL: {conf} not found")
         return 1
@@ -165,7 +253,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     doc = {
         "schemaVersion": 1,
-        "source": "desktop/hypr/hyprland.conf.d/keybindings.conf",
+        "source": "desktop/hypr/hyprland.lua.d/keybindings.lua",
         "entries": entries,
     }
     out = Path(args.out) if args.out else root / "shortcuts.json"

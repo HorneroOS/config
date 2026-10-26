@@ -30,7 +30,7 @@ ships; it does not install btop or Cava.
 
 | Default | Ships as | Lands at |
 |---|---|---|
-| Hyprland borders/groups/shadow (dark) | `desktop/hypr/hyprland.conf.d/colors.conf` + `hyprland.conf` fallbacks | `{config}/hypr/…` → `/etc/xdg/hypr/…` |
+| Hyprland borders/groups/shadow (dark) | `desktop/hypr/hyprland.lua.d/smart-colors.lua` factory palette + `static.lua` fallbacks | `{config}/hypr/…` → `/etc/xdg/hypr/…` |
 | Kitty palette (dark) | `desktop/kitty/hornero-dark.conf`, included by `kitty.conf` | `{config}/kitty/…` → `/etc/xdg/kitty/…` |
 | Alacritty (optional) | `desktop/alacritty/alacritty.toml` imports the active generated palette over a Hornero Dark fallback | `{config}/alacritty/…` → `/etc/alacritty/…` |
 | Ghostty (optional) | `desktop/ghostty/config.ghostty` selects `Hornero Dynamic`; the package seeds new homes and installs a matching system theme fallback | `{config}/ghostty/…`; `/etc/skel/.config/ghostty/…`; `/usr/share/ghostty/themes/…` |
@@ -66,7 +66,7 @@ named readers; verified against the Arch extra repo on 2026-09-13:
 
 `hornero-light` recipes, Kitty's `desktop/kitty/hornero-light.conf`,
 Alacritty's `desktop/alacritty/hornero-light.toml`, and
-`desktop/hypr/hyprland.conf.d/hornero-light.conf` ship as static fallbacks.
+`desktop/hypr/hyprland.lua.d/hornero-light.lua` ship as static fallbacks.
 When Hornero applies an appearance or regenerates wallpaper colors, one
 Material scheme renders native themes for Kitty, Alacritty, Ghostty, btop, and
 Cava. Terminal cursor, selection, surface, and ANSI text pairs pass contrast

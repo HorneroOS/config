@@ -18,16 +18,16 @@ check() {
   fi
 }
 
-check ".config/hypr/hyprland.conf"
-check ".config/hypr/hyprland.conf.d/monitors.conf"
-check ".config/hypr/hyprland.conf.d/keybindings.conf"
+check ".config/hypr/hyprland.lua"
+check ".config/hypr/hyprland.lua.d/monitors.lua"
+check ".config/hypr/hyprland.lua.d/keybindings.lua"
 check ".config/hypr/hypridle.conf"
 check ".config/hypr/hyprlock.conf"
-check ".config/hypr/scripts/gaps-interactive.sh"
+check ".config/hypr/hyprland.lua.d/helpers.lua"
 # Packaged Quickshell modules are discovered from Qt's system import path.
 # Development overrides must not leak into the normal compositor session.
-if grep -Eq '^[[:space:]]*env = (QML2?_IMPORT_PATH|QS_PLUGIN_PATH|HORNERO_LIB_DIR),' \
-    "$TMP_HOME/.config/hypr/hyprland.conf.d/environment.conf"; then
+if grep -Eq '"(QML2?_IMPORT_PATH|QS_PLUGIN_PATH|HORNERO_LIB_DIR)"' \
+    "$TMP_HOME/.config/hypr/hyprland.lua.d/environment.lua"; then
   echo "TEST-FAIL: Hyprland defaults shadow packaged Quickshell modules" >&2
   exit 1
 fi
@@ -177,8 +177,7 @@ echo "TEST-PASS: no identity in installed git config"
 for f in "$TMP_HOME/.local/bin/hornero-gtk-theme" "$TMP_HOME/.local/bin/hornero-hyprlock-theme" \
          "$TMP_HOME/.local/bin/hornero-appearance" \
          "$TMP_HOME/.local/bin/hornero-night-mode" \
-         "$TMP_HOME/.local/bin/hornero-wallpaper-set" "$TMP_HOME/.local/bin/hornero-wallpaper-current" \
-         "$TMP_HOME/.config/hypr/scripts/gaps-interactive.sh"; do
+         "$TMP_HOME/.local/bin/hornero-wallpaper-set" "$TMP_HOME/.local/bin/hornero-wallpaper-current"; do
   if [[ -x $f ]]; then
     echo "TEST-PASS: executable $f"
   else

@@ -16,31 +16,31 @@ fail() { echo "TEST-FAIL: $1" >&2; exit 1; }
 # --- (1) Hyprland semantic integration ---------------------------------------
 # Factory borders/gradient come from the flagship dark tokens (terracotta
 # primary E07856, amber accent F2B749, clay border 6B4E3B), not neon.
-grep -qi "e07856" "$TMP_HOME/.config/hypr/hyprland.conf" \
-  || fail "hyprland.conf missing flagship terracotta active border"
-grep -qi "f2b749" "$TMP_HOME/.config/hypr/hyprland.conf" \
-  || fail "hyprland.conf missing flagship amber gradient stop"
-grep -qi "6b4e3b" "$TMP_HOME/.config/hypr/hyprland.conf" \
-  || fail "hyprland.conf missing clay inactive border"
-grep -qi "0f0b08" "$TMP_HOME/.config/hypr/hyprland.conf" \
-  || fail "hyprland.conf shadow not tinted with flagship scrim"
+grep -qi "e07856" "$TMP_HOME/.config/hypr/hyprland.lua.d/smart-colors.lua" \
+  || fail "hyprland lua missing flagship terracotta active border"
+grep -qi "f2b749" "$TMP_HOME/.config/hypr/hyprland.lua.d/smart-colors.lua" \
+  || fail "hyprland lua missing flagship amber gradient stop"
+grep -qi "6b4e3b" "$TMP_HOME/.config/hypr/hyprland.lua.d/smart-colors.lua" \
+  || fail "hyprland lua missing clay inactive border"
+grep -qi "0f0b08" "$TMP_HOME/.config/hypr/hyprland.lua.d/static.lua" \
+  || fail "hyprland lua shadow not tinted with flagship scrim"
 # No neon-rainbow leftovers (catppuccin mauve/blue placeholders).
-if grep -qi "cba6f7\|89b4fa\|45475a" "$TMP_HOME/.config/hypr/hyprland.conf" \
-    "$TMP_HOME/.config/hypr/hyprland.conf.d/colors.conf"; then
+if grep -qi "cba6f7\|89b4fa\|45475a" "$TMP_HOME/.config/hypr/hyprland.lua.d/smart-colors.lua" \
+    "$TMP_HOME/.config/hypr/hyprland.lua.d/smart-colors.lua"; then
   fail "catppuccin placeholder borders still shipped"
 fi
 pass "hyprland factory borders/shadow are flagship dark, no neon leftovers"
-# Group + groupbar colors present in the sourced colors.conf.
+# Group + groupbar colors present in smart-colors.lua.
 for token in e07856 6b4e3b f2b749 3c2c21 2b1f18; do
-  grep -qi "$token" "$TMP_HOME/.config/hypr/hyprland.conf.d/colors.conf" \
-    || fail "colors.conf missing flagship token $token"
+  grep -qi "$token" "$TMP_HOME/.config/hypr/hyprland.lua.d/smart-colors.lua" \
+    || fail "smart-colors.lua missing flagship token $token"
 done
-pass "hyprland colors.conf carries active/inactive/group/groupbar set"
+pass "hyprland smart-colors.lua carries active/inactive/group/groupbar set"
 # Light fragment ships with the same structure for the documented opt-in.
-[[ -f "$TMP_HOME/.config/hypr/hyprland.conf.d/hornero-light.conf" ]] \
-  || fail "hornero-light.conf not materialized"
-grep -qi "b24827" "$TMP_HOME/.config/hypr/hyprland.conf.d/hornero-light.conf" \
-  || fail "hornero-light.conf missing flagship light primary"
+[[ -f "$TMP_HOME/.config/hypr/hyprland.lua.d/hornero-light.lua" ]] \
+  || fail "hornero-light.lua not materialized"
+grep -qi "b24827" "$TMP_HOME/.config/hypr/hyprland.lua.d/hornero-light.lua" \
+  || fail "hornero-light.lua missing flagship light primary"
 pass "hyprland light fragment materialized with flagship light tokens"
 # Hyprlock Smart Colors override must source the canonical Hornero cache path.
 grep -q "source = ~/.cache/hornero/smart-colors/colors-hyprlock.conf" \
@@ -59,7 +59,7 @@ pass "hyprlock carries no dead date label"
 [[ -f "$TMP_HOME/.config/kitty/hornero-dark.conf" ]] \
   || fail "kitty hornero-dark.conf not materialized"
 [[ -f "$TMP_HOME/.config/kitty/hornero-light.conf" ]] \
-  || fail "kitty hornero-light.conf not materialized"
+  || fail "kitty hornero-light.lua not materialized"
 grep -q "include hornero-dark.conf" "$TMP_HOME/.config/kitty/kitty.conf" \
   || fail "kitty.conf does not include the Hornero Dark factory palette"
 if grep -q "202734\|CBCCC6" "$TMP_HOME/.config/kitty/kitty.conf"; then
@@ -80,8 +80,8 @@ grep -q "^style=Fusion" "$TMP_HOME/.config/qt6ct/qt6ct.conf" \
   || fail "qt6ct.conf does not pin Fusion style"
 grep -q "Papirus-Dark" "$TMP_HOME/.config/qt6ct/qt6ct.conf" \
   || fail "qt6ct.conf missing factory icon theme"
-grep -q "QT_QPA_PLATFORMTHEME,qt6ct" \
-  "$TMP_HOME/.config/hypr/hyprland.conf.d/environment.conf" \
+grep -q '"QT_QPA_PLATFORMTHEME", "qt6ct"' \
+  "$TMP_HOME/.config/hypr/hyprland.lua.d/environment.lua" \
   || fail "hypr environment no longer pins qt6ct platformtheme"
 [[ -f "$REPO_ROOT/docs/QT_DECISION.md" ]] \
   || fail "docs/QT_DECISION.md missing"
@@ -150,12 +150,12 @@ grep -Fq '"controlCenter" "open" "appearance"' "$TMP_HOME/.config/niri/config.kd
 grep -Fq '"terminal-file" "--new-window" "--last-dir"' "$TMP_HOME/.config/niri/config.kdl" \
   || fail "Niri terminal file-manager shortcut does not use the configured terminal"
 grep -Fq 'horneroctl apps terminal-file --new-window --last-dir' \
-  "$TMP_HOME/.config/hypr/hyprland.conf.d/keybindings.conf" \
+  "$TMP_HOME/.config/hypr/hyprland.lua.d/keybindings.lua" \
   || fail "Hyprland terminal file-manager shortcut does not use the configured terminal"
 grep -Fq 'horneroctl apps terminal-file --new-window --path "%f"' "$TMP_HOME/.config/Thunar/uca.xml" \
   || fail "Thunar Yazi action does not use the configured terminal"
-grep -Fq 'match:class = ^(yazi-popup|com\.horneroos\.yazi-popup)$' \
-  "$TMP_HOME/.config/hypr/hyprland.conf.d/window-rules.conf" \
+grep -Fq 'class = "^(yazi-popup|com\\.horneroos\\.yazi-popup)$"' \
+  "$TMP_HOME/.config/hypr/hyprland.lua.d/window-rules.lua" \
   || fail "Yazi popup rule does not recognize Ghostty's GTK application ID"
 grep -Fq 'match app-id=r#"^(yazi-popup|com\.horneroos\.yazi-popup)$"#' \
   "$TMP_HOME/.config/niri/config.kdl" \

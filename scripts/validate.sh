@@ -16,7 +16,7 @@ if command -v shellcheck >/dev/null 2>&1; then
   # fail the build. See docs/DECISIONS.md.
   if shellcheck -S error "$REPO_ROOT"/scripts/*.sh "$REPO_ROOT"/lib/hornero/*.sh \
       "$REPO_ROOT"/lib/hornero/easy-options/*.sh "$REPO_ROOT"/bin/hornero-* \
-      "$REPO_ROOT"/desktop/hypr/scripts/*.sh "$REPO_ROOT"/tests/*.sh; then
+      "$REPO_ROOT"/tests/*.sh; then
     pass "shellcheck"
   else
     fail "shellcheck"
@@ -185,32 +185,34 @@ else
   fail "git config syntax"
 fi
 
-# --- hypr sanity: no templates, braces balance, shipped sources resolve ------------
+# --- hypr sanity: Lua-only config, luac parses, modules resolve -----------------
 HYPR_FAIL=0
 if grep -rn "{{" "$REPO_ROOT/desktop/hypr" 2>/dev/null; then
   fail "hypr chezmoi leftovers"; HYPR_FAIL=1
 fi
-for f in "$REPO_ROOT"/desktop/hypr/hyprland.conf "$REPO_ROOT"/desktop/hypr/hyprland.conf.d/*.conf \
-         "$REPO_ROOT"/desktop/hypr/hypridle.conf "$REPO_ROOT"/desktop/hypr/hyprlock.conf; do
-  open=$(tr -cd '{' < "$f" | wc -c)
-  close=$(tr -cd '}' < "$f" | wc -c)
-  if [[ $open -ne $close ]]; then
-    echo "VALIDATE-FAIL: unbalanced braces in $f ($open vs $close)" >&2
+if [[ -e "$REPO_ROOT/desktop/hypr/hyprland.conf" || -d "$REPO_ROOT/desktop/hypr/hyprland.conf.d" ]]; then
+  echo "VALIDATE-FAIL: legacy hyprlang config remains under desktop/hypr (hypridle/hyprlock .conf belong to separate apps and are exempt only at the top level)" >&2
+  HYPR_FAIL=1; FAIL=1
+fi
+for f in "$REPO_ROOT"/desktop/hypr/hyprland.lua "$REPO_ROOT"/desktop/hypr/hyprland.lua.d/*.lua; do
+  if command -v luac >/dev/null 2>&1; then
+    if ! luac -p "$f"; then
+      echo "VALIDATE-FAIL: luac -p failed: $f" >&2
+      HYPR_FAIL=1; FAIL=1
+    fi
+  fi
+  if grep -qE "hyprland\.conf|scripts/[A-Za-z-]+\.sh" "$f"; then
+    echo "VALIDATE-FAIL: dangling legacy reference in $f" >&2
     HYPR_FAIL=1; FAIL=1
   fi
 done
-while IFS= read -r src; do
-  # Relative source paths resolve from hyprland.conf, independent of the
-  # display manager's environment and of the user's XDG_CONFIG_HOME.
-  if [[ ! "$src" =~ ^\./hyprland\.conf\.d/[^/]+\.conf$ ]]; then
-    echo "VALIDATE-FAIL: hypr source must be relative to hyprland.conf: $src" >&2
-    HYPR_FAIL=1; FAIL=1
-  elif [[ ! -e "$REPO_ROOT/desktop/hypr/$src" ]]; then
-    echo "VALIDATE-FAIL: hypr source target missing: $src" >&2
+while IFS= read -r mod; do
+  if [[ ! -e "$REPO_ROOT/desktop/hypr/hyprland.lua.d/$mod" ]]; then
+    echo "VALIDATE-FAIL: hyprland.lua loads missing module: $mod" >&2
     HYPR_FAIL=1; FAIL=1
   fi
-done < <(grep -rhoE "source *= *[^ ]+" "$REPO_ROOT/desktop/hypr/hyprland.conf" | sed -E 's/^source *= *//')
-[[ $HYPR_FAIL -eq 0 ]] && pass "hypr sanity (no templates, balanced, sources resolve)"
+done < <(grep -oE 'dofile\(here \.\. "[^"]+"\)' "$REPO_ROOT/desktop/hypr/hyprland.lua" | sed -E 's/.*here \.\. "//; s/"\)//')
+[[ $HYPR_FAIL -eq 0 ]] && pass "hypr sanity (Lua-only, luac -p, modules resolve, no legacy refs)"
 
 # --- Niri config ---------------------------------------------------------------
 NIRI_CONFIG="$REPO_ROOT/desktop/niri/config.kdl"

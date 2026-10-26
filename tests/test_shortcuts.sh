@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # test_shortcuts.sh - the shortcut manifest contract.
 #
-# generate-shortcuts.py must parse every bind in keybindings.conf into a
+# generate-shortcuts.py must parse every bind in keybindings.lua into a
 # deterministic shortcuts.json, and every curated Welcome id must resolve
 # to a real binding. If a binding is renamed, this test fails until the
 # curated list (and the shell catalog) is updated: Welcome can never show
@@ -38,7 +38,7 @@ import sys
 with open(sys.argv[1], encoding="utf-8") as fh:
     doc = json.load(fh)
 assert doc["schemaVersion"] == 1, "schemaVersion must be 1"
-assert doc["source"].endswith("keybindings.conf"), "source must name keybindings.conf"
+assert doc["source"].endswith("keybindings.lua"), "source must name keybindings.lua"
 entries = doc["entries"]
 assert len(entries) > 50, f"expected the full binding table, got {len(entries)}"
 for e in entries:

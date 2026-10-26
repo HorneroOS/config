@@ -61,26 +61,9 @@ pacman metadata dotfiles `.PKGINFO`/`.BUILDINFO`/`.MTREE`).
 /etc/xdg/gtkrc-2.0
 /etc/xdg/handlr/handlr.toml
 /etc/xdg/hypr/hypridle.conf
-/etc/xdg/hypr/hyprland.conf
-/etc/xdg/hypr/hyprland.conf.d/animations.conf
-/etc/xdg/hypr/hyprland.conf.d/animations-cozy.conf
-/etc/xdg/hypr/hyprland.conf.d/animations-cyberpunk.conf
-/etc/xdg/hypr/hyprland.conf.d/animations-minimal.conf
-/etc/xdg/hypr/hyprland.conf.d/animations-nature.conf
-/etc/xdg/hypr/hyprland.conf.d/animations-vaporwave.conf
-/etc/xdg/hypr/hyprland.conf.d/autostart.conf
-/etc/xdg/hypr/hyprland.conf.d/colors.conf
-/etc/xdg/hypr/hyprland.conf.d/environment.conf
-/etc/xdg/hypr/hyprland.conf.d/input.conf
-/etc/xdg/hypr/hyprland.conf.d/keybindings.conf
-/etc/xdg/hypr/hyprland.conf.d/layout.conf
-/etc/xdg/hypr/hyprland.conf.d/monitors.conf
-/etc/xdg/hypr/hyprland.conf.d/plugins.conf
-/etc/xdg/hypr/hyprland.conf.d/window-rules.conf
+/etc/xdg/hypr/hyprland.lua
+/etc/xdg/hypr/hyprland.lua.d/*.lua (monitors, autostart, environment, input, gestures, layout, helpers, keybindings, keybindings-user, window-rules, window-rules-user, animations + 5 profiles, smart-colors, hornero-light, plugins, static)
 /etc/xdg/hypr/hyprlock.conf
-/etc/xdg/hypr/scripts/gaps-interactive.sh (755)
-/etc/xdg/hypr/scripts/notification-handler.sh (755)
-/etc/xdg/hypr/scripts/smart-float.sh (755)
 /etc/xdg/kitty/kitty.conf
 /etc/xdg/Thunar/accels.scm
 /etc/xdg/Thunar/renamerc

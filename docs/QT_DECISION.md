@@ -8,7 +8,7 @@ Evidence from this repo (inspected, not assumed):
   defaults`) — **CopyQ is the one shipped Qt app.** Verified on the
   reference host: `copyq 16.0.0` links `libQt6Widgets`/`libQt6Gui`
   (Qt6 Widgets), so it honors `QT_QPA_PLATFORMTHEME`.
-- `desktop/hypr/hyprland.conf.d/window-rules.conf` names `dolphin`, `vlc`,
+- `desktop/hypr/hyprland.lua.d/window-rules.lua` names `dolphin`, `vlc`,
   and `lxqt-config` classes — compatibility float/opacity rules only.
   Neither app ships config or a packaging dependency here; they are
   user-installed, not curated defaults.
@@ -26,7 +26,7 @@ Plasma/KDE component.
 ## Decision: keep `qt6ct`, defer Kvantum, no native palette
 
 - **Keep `QT_QPA_PLATFORMTHEME=qt6ct`** (already pinned in
-  `desktop/hypr/hyprland.conf.d/environment.conf:24`). qt6ct is the
+  `desktop/hypr/hyprland.lua.d/environment.lua`). qt6ct is the
   lightweight configurator for Qt6-under-Wayland in a non-KDE session;
   the shipped `desktop/qt6ct/qt6ct.conf` sets Fusion style, Papirus-Dark
   icons, and the Hornero font stack (Rubik / CaskaydiaCove NF).

@@ -103,7 +103,7 @@ fi
 install_dir "profiles/themes" "$DATA_HOME/hornero/themes"
 
 # --- machine-readable shortcut manifest -> canonical hornero/* --------------
-# Generated from the authoritative keybindings.conf (never hand-edited):
+# Generated from the authoritative keybindings.lua (never hand-edited):
 # the Welcome Center resolves curated shortcut ids against this file.
 if [[ $DRY_RUN -eq 1 ]]; then
   echo "would generate shortcuts -> $DATA_HOME/hornero/shortcuts.json"
@@ -247,10 +247,5 @@ shadow_dbus_service() {
 for svc in org.knopwob.dunst.service fr.emersion.mako.service org.erikreider.swaync.service; do
   shadow_dbus_service "$svc"
 done
-
-# hypr helper scripts must stay executable after the 644 normalization above
-if [[ $DRY_RUN -eq 0 ]]; then
-  chmod 755 "$CONFIG_HOME"/hypr/scripts/*.sh
-fi
 
 echo "materialized HorneroOS config into $DEST"
