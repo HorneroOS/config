@@ -270,8 +270,8 @@ package() {
     "$pkgdir/usr/share/ghostty/themes" \
     -type f -exec chmod 644 {} +
   chmod 755 "$pkgdir"/usr/share/hornero/bin/hornero-*
-  chmod 755 "$pkgdir"/etc/xdg/hypr/scripts/*.sh
-  chmod 755 "$pkgdir"/etc/skel/.config/hypr/scripts/*.sh
+  chmod 755 "$pkgdir"/etc/xdg/hypr/scripts/*.lua
+  chmod 755 "$pkgdir"/etc/skel/.config/hypr/scripts/*.lua
 
   # Ship the license alongside the payload for offline inspection.
   install -Dm644 "$repo_root/LICENSE" \

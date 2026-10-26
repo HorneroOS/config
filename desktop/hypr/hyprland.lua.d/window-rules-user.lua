@@ -1,0 +1,6 @@
+-- User window rules (HorneroOS) — managed by:
+--   horneroctl hypr windows rules add|remove
+-- Rules here are written as hl.window_rule calls and take effect on
+-- Hyprland config reload or restart. The factory window-rules.lua is
+-- never edited. Emptying this file removes all user rules.
+-- luacheck: globals hl

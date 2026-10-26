@@ -68,6 +68,10 @@ jobs:
         run: tests/test_catalogue.sh
       - name: Desktop integration (hypr/kitty/qt/factory)
         run: tests/test_desktop_integration.sh
+      - name: Install lua for Hyprland Lua checks
+        run: sudo apt-get install -y -qq lua5.4
+      - name: Hyprland Lua-only migration (luac, parity, no legacy refs)
+        run: tests/test_hyprland_lua.sh
       - name: Hornero switcher theme adapter
         run: tests/test_snappy_switcher_helper.sh
       - name: YAML lint

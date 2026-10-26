@@ -4,8 +4,8 @@
   "availableThemes": ["hornero-dark", "hornero-light", "pampa"],
   "themeRecipes": "{data}/hornero/themes",
   "compositor": {
-    "config": "{config}/hypr/hyprland.conf.d/colors.conf",
-    "note": "Curated Hornero Dark borders/groups; shadow tint in hyprland.conf decoration block."
+    "config": "{config}/hypr/hyprland.lua.d/smart-colors.lua",
+    "note": "Curated Hornero Dark borders/groups; shadow tint in hyprland.lua.d/static.lua decoration block."
   },
   "terminal": {
     "default": "kitty",

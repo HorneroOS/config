@@ -1,0 +1,8 @@
+-- User Keybinding Overrides
+--
+-- Managed by `horneroctl hardware keyboard rebind` (shell#236) — edit
+-- through the Control Center Keybindings pane or that command, not by
+-- hand, so overrides stay parseable and resettable. Loaded after
+-- keybindings.lua, so its hl.unbind/hl.bind pairs win. The factory
+-- file carries no binds of its own; `rebind reset` empties it again.
+-- luacheck: globals hl

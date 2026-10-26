@@ -10,7 +10,7 @@ Later product-owned payloads identify their HorneroOS source in the table.
 
 | Shipped as | From | Notes |
 |---|---|---|
-| `desktop/hypr/` (main conf, 13 `conf.d` modules, `hypridle.conf`, `hyprlock.conf`, 3 helper scripts) | `home/dot_config/hypr/` | No template vars, no identity. `monitors.conf` is a generic autodetect fallback written for this repo (see excluded row). |
+| `desktop/hypr/` (`hyprland.lua` + 19 `hyprland.lua.d` modules, `hypridle.conf`, `hyprlock.conf`, 3 Lua helper scripts) | `home/dot_config/hypr/` (Lua-only migration) | No template vars, no identity. `monitors.lua` is a generic autodetect fallback written for this repo (see excluded row). The legacy hyprlang `hyprland.conf`/`hyprland.conf.d` tree and the 3 shell helpers were retired in the Lua migration: binds 145/145, window rules 44/44, autostart 20/20, env 24/24 (see `tests/test_hyprland_lua.sh`). `hypridle.conf`/`hyprlock.conf` belong to separate apps and keep their native format. Cross-repo follow-up: `horneroctl` writers in HorneroOS/shell that emitted `keybindings-user.conf`/`window-rules-user.conf` or a hyprlang Smart Colors file must emit the `.lua` overlays / `colors-hyprland.lua` instead. |
 | `desktop/kitty/kitty.conf` | `home/dot_config/kitty/` | Static palette + fonts. The `include ~/.cache/hornero/smart-colors/…` line is a generated-cache hook, benign when absent. |
 | `desktop/alacritty/` | HorneroOS product defaults | Optional terminal configuration with an upstream `/etc/alacritty` package fallback. A generated Material scheme replaces `hornero-colors.toml`; the checked-in fallback keeps Alacritty usable before first palette generation. |
 | `desktop/ghostty/` | HorneroOS product defaults | Optional terminal configuration. Ghostty has no global config lookup, so the package installs a system theme fallback and seeds new users through `/etc/skel`; user materialization remains XDG-native. |
@@ -36,7 +36,7 @@ Later product-owned payloads identify their HorneroOS source in the table.
 | `home/dot_config/gtk-3.0/bookmarks.tmpl` | Embodes a username (`{{ .chezmoi.username }}`) and personal directory layout. |
 | `home/dot_config/git/config.user.tmpl` | Identity (`user.name`/`user.email`). Lives only in the user's own `~/.config/git/config.user`, never here. |
 | `home/dot_config/private_credentials/` | API-key templates. Never curated. |
-| `hyprland.conf.d/monitors.conf` (upstream content) | Machine-specific `eDP-1`/`HDMI-A-5` bindings for one Intel+NVIDIA laptop. Replaced with a generic autodetect fallback; hosts keep fixed layouts out of tree. |
+| `monitors.conf`/`monitors.lua` personal outputs (upstream content) | Machine-specific `eDP-1`/`HDMI-A-5` bindings for one Intel+NVIDIA laptop. Replaced with a generic autodetect fallback; hosts keep fixed layouts out of tree. |
 | `dot_zshrc`, `dot_p10k.zsh`, `dot_zsh_aliases.tmpl`, `dot_zprofile`, `executable_dot_profile`, `executable_dot_xinitrc`, `executable_dot_xprofile`, `dot_zsh/`, `dot_Xresources` | Personal interactive-shell layer → deferred to `shell/` (stub note committed). |
 | `.chezmoi*.tmpl`, `.chezmoiscripts/`, `.chezmoiexternal.toml` | Deploy machinery + identity inputs of the dotfiles repo, not product defaults. |
 | `private_dot_ssh/`, `dot_clamtk/`, `dot_face.create` | Host identity / device-specific. |
