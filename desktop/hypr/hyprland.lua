@@ -1,8 +1,8 @@
 -- HorneroOS — Hyprland Lua configuration (the only Hyprland config;
--- the legacy hyprlang legacy hyprlang config + legacy module tree tree was retired
--- with this migration, mirroring the Lua-only dotfiles migration).
+-- the legacy hyprlang config and module tree were retired with this
+-- migration, mirroring the Lua-only dotfiles migration).
 --
--- Module order mirrors the retired legacy hyprlang config source order, with
+-- Module order mirrors the retired hyprlang config source order, with
 -- the old inline general/decoration/gesture/misc sections living in
 -- static.lua and gestures.lua. Animation profiles stay selectable at
 -- runtime through horneroctl; animations.lua is the startup default.
