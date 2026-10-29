@@ -343,6 +343,15 @@ window-rule {
     open-floating true
 }
 
+// Steam games (app-id steam_app_<appid>) open fullscreen, mirroring the
+// Hyprland steam-games rule. Niri has no special:games workspace, so only
+// the fullscreen intent is shared; compositor-specific placement stays
+// in each compositor's own config.
+window-rule {
+    match app-id=r#"^steam_app.*$"#
+    open-fullscreen true
+}
+
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
 /-window-rule {
