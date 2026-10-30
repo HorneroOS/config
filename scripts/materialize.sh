@@ -82,6 +82,15 @@ install_dir "desktop/studio-audio" "$CONFIG_HOME/hornero/studio-audio"
 install_dir "desktop/studio-presets" "$CONFIG_HOME/hornero/studio-presets"
 install_dir "desktop/studio-storage" "$CONFIG_HOME/hornero/studio-storage"
 
+# --- factory shell baseline (seeded once, never overwritten) -------------
+if [[ $DRY_RUN -eq 1 ]]; then
+  echo "would seed shell/zsh/zshrc -> $DEST/.zshrc (when absent)"
+elif [[ ! -e "$DEST/.zshrc" ]]; then
+  cp "$REPO_ROOT/shell/zsh/zshrc" "$DEST/.zshrc"
+  chmod 644 "$DEST/.zshrc"
+fi
+install_file "desktop/environmentd/10-hornero-editor.conf" "$CONFIG_HOME/environment.d/10-hornero-editor.conf"
+
 # --- XDG defaults --------------------------------------------------------------
 install_dir "xdg/handlr" "$CONFIG_HOME/handlr"
 install_dir "xdg/git" "$CONFIG_HOME/git"
