@@ -1,0 +1,18 @@
+# HorneroOS factory Zsh baseline.
+# Minimal and fast: completion, history, prompt. Your own ~/.zshrc
+# replaces this file entirely; package upgrades never overwrite a
+# user-edited copy seeded at account creation (see materialize.sh).
+autoload -Uz compinit && compinit -C
+HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
+mkdir -p "${HISTFILE:h}"
+HISTSIZE=10000; SAVEHIST=10000
+setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE SHARE_HISTORY
+setopt AUTO_CD INTERACTIVE_COMMENTS
+export EDITOR="${EDITOR:-nano}"
+export VISUAL="${VISUAL:-$EDITOR}"
+PROMPT='%F{208}%n@%m%f %F{214}%~%f %# '
+# Optional integrations activate only when installed.
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+[[ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
