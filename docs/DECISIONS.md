@@ -290,8 +290,9 @@ default because Hornero ships no GTK 2 theme tree.
   pacman conflict. The package ships it at `/usr/share/hornero/bluetooth/main.conf`
   (materialized per-user as data under `~/.config/hornero/bluetooth/`); an
   admin copies it once, after which it is admin-owned and never overwritten.
-  `AutoEnable=true` is explicit (false forces controllers off at boot and
-  never restores `Powered`); `JustWorksRepairing=never`, `AlwaysPairable=false`,
+  `AutoEnable=true` is explicit (it powers on all controllers at boot;
+  it does not restore last `Powered` state — a user power-off persists
+  only via the rfkill soft-block restored by systemd-rfkill); `JustWorksRepairing=never`, `AlwaysPairable=false`,
   bounded discoverable/pairable timeouts, no auto-accept agent and no
   passwordless polkit in this repo. WirePlumber policy ships at both
   `~/.config/wireplumber/` and `/etc/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf`

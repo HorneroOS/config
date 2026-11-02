@@ -38,7 +38,13 @@ install_dir() {
     return
   fi
   mkdir -p "$dest"
-  cp -r "$REPO_ROOT/$src/." "$dest/"
+  if [[ "${3:-}" == "preserve" ]]; then
+    # Seed only missing files: re-running materialize into a real HOME
+    # must not overwrite user-edited copies (new files still arrive).
+    cp -rn "$REPO_ROOT/$src/." "$dest/"
+  else
+    cp -r "$REPO_ROOT/$src/." "$dest/"
+  fi
   find "$dest" -type d -exec chmod 755 {} +
   find "$dest" -type f -exec chmod 644 {} +
 }
@@ -81,8 +87,8 @@ install_dir "desktop/pipewire" "$CONFIG_HOME/pipewire"
 # Bluetooth: WirePlumber policy is user-effective config; the BlueZ
 # main.conf is a factory template staged as data only (BlueZ reads
 # /etc/bluetooth/main.conf, owned by the bluez package — never write it).
-install_dir "desktop/wireplumber" "$CONFIG_HOME/wireplumber"
-install_dir "desktop/bluetooth" "$CONFIG_HOME/hornero/bluetooth"
+install_dir "desktop/wireplumber" "$CONFIG_HOME/wireplumber" preserve
+install_dir "desktop/bluetooth" "$CONFIG_HOME/hornero/bluetooth" preserve
 install_dir "desktop/studio-audio" "$CONFIG_HOME/hornero/studio-audio"
 install_dir "desktop/studio-presets" "$CONFIG_HOME/hornero/studio-presets"
 install_dir "desktop/studio-storage" "$CONFIG_HOME/hornero/studio-storage"

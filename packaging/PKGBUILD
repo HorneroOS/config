@@ -53,6 +53,7 @@ optdepends=(
 # "${srcdir}/config", matching _hornero_repo_root() below and keeping
 # AUR chroot builds identical to local packaging/ builds.
 install=hornero-config.install
+backup=('etc/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf')
 source=("config::git+https://github.com/HorneroOS/config.git")
 sha256sums=('SKIP')
 

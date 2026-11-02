@@ -222,6 +222,16 @@ else
   exit 1
 fi
 
+# Bluetooth/WirePlumber user copies are seeded once, never overwritten
+printf '# user edit\n' >> "$TMP_HOME/.config/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf"
+bash "$REPO_ROOT/scripts/materialize.sh" --dest "$TMP_HOME" >/dev/null
+if grep -q '# user edit' "$TMP_HOME/.config/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf"; then
+  echo "TEST-PASS: user-edited WirePlumber Bluetooth policy kept on rerun"
+else
+  echo "TEST-FAIL: materialize overwrote user-edited WirePlumber Bluetooth policy" >&2
+  exit 1
+fi
+
 # repo-level validation still green
 "$REPO_ROOT/scripts/validate.sh"
 echo "test_materialize.sh: ALL GREEN"

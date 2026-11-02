@@ -330,7 +330,7 @@ cp = configparser.ConfigParser(strict=True); cp.optionxform = str
 try:
     cp.read_string(main.read_text())
     if cp.get("Policy", "AutoEnable", fallback="") != "true":
-        errors.append("main.conf: Policy.AutoEnable must be true (false never restores Powered)")
+        errors.append("main.conf: Policy.AutoEnable must be true")
     if cp.get("General", "JustWorksRepairing", fallback="") != "never":
         errors.append("main.conf: JustWorksRepairing must be never")
     if cp.get("General", "AlwaysPairable", fallback="") != "false":

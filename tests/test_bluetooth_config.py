@@ -20,8 +20,8 @@ def _main() -> configparser.ConfigParser:
 
 def test_bluez_power_persistence_and_pairing_security():
     cp = _main()
-    # AutoEnable=false forces controllers off at boot and never restores
-    # the user's last Powered state; true is the only correct value.
+    # AutoEnable=true powers on all controllers at boot (it does not
+    # restore last Powered state; off-state persists via rfkill).
     assert cp["Policy"]["AutoEnable"] == "true"
     assert cp["General"]["JustWorksRepairing"] == "never"
     assert cp["General"]["AlwaysPairable"] == "false"
@@ -51,11 +51,15 @@ def test_preset_and_install_scriptlet_use_preset_only():
     install = (ROOT / "packaging/hornero-config.install").read_text()
     assert "systemctl preset bluetooth.service" in install
     assert "systemctl enable" not in install
+    # Preset only on first install: re-applying it on upgrade would
+    # re-enable a service an admin disabled.
+    assert "post_upgrade" not in install
     pkgbuild = (ROOT / "packaging/PKGBUILD").read_text()
     assert "install=hornero-config.install" in pkgbuild
     assert "etc/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf" in pkgbuild
     assert "usr/lib/systemd/system-preset/90-hornero-bluetooth.preset" in pkgbuild
     assert "usr/share/hornero/bluetooth/main.conf" in pkgbuild
+    assert "backup=('etc/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf')" in pkgbuild
     # The package must never own BlueZ's path or BlueZ paired-device state.
     assert '"$pkgdir/etc/bluetooth' not in pkgbuild
     assert "/var/lib/bluetooth" not in pkgbuild
@@ -63,8 +67,8 @@ def test_preset_and_install_scriptlet_use_preset_only():
 
 def test_materialize_and_profile_never_write_etc_bluetooth():
     materialize = (ROOT / "scripts/materialize.sh").read_text()
-    assert 'install_dir "desktop/wireplumber" "$CONFIG_HOME/wireplumber"' in materialize
-    assert 'install_dir "desktop/bluetooth" "$CONFIG_HOME/hornero/bluetooth"' in materialize
+    assert 'install_dir "desktop/wireplumber" "$CONFIG_HOME/wireplumber" preserve' in materialize
+    assert 'install_dir "desktop/bluetooth" "$CONFIG_HOME/hornero/bluetooth" preserve' in materialize
     assert '"$CONFIG_HOME/bluetooth"' not in materialize  # never write the system path
     profile = (ROOT / "profiles/base/profile.toml").read_text()
     assert 'source = "desktop/bluetooth"' in profile

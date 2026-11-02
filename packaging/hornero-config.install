@@ -1,15 +1,8 @@
 post_install() {
   # Apply the shipped systemd preset (enable bluetooth.service) instead of
   # enabling the service directly. Preset respects admin policy files.
-  if command -v systemctl >/dev/null 2>&1; then
-    systemctl preset bluetooth.service >/dev/null 2>&1 || true
-  fi
-}
-
-post_upgrade() {
-  # Idempotent: re-applying a preset never re-enables a unit an admin has
-  # disabled through a preset policy file, and never touches paired
-  # devices (/var/lib/bluetooth) or an admin-edited /etc/bluetooth/main.conf.
+  # Only on first install: re-running preset on upgrade would re-enable
+  # a service an admin disabled with `systemctl disable`.
   if command -v systemctl >/dev/null 2>&1; then
     systemctl preset bluetooth.service >/dev/null 2>&1 || true
   fi
