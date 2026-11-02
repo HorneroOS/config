@@ -53,7 +53,13 @@ execs=$(grep -c 'hl\.exec_cmd' "$HYPR/hyprland.lua.d/autostart.lua")
 echo "TEST-PASS: autostart parity 20/20"
 
 envs=$(grep -cE '\{ "[A-Z_]+",' "$HYPR/hyprland.lua.d/environment.lua")
-[[ "$envs" -ge 22 ]] || fail "environment parity: expected >=22 static entries, got $envs"
+[[ "$envs" -ge 20 ]] || fail "environment parity: expected >=20 static entries, got $envs"
+# VA-API driver selection must stay hardware-neutral: forcing
+# LIBVA_DRIVER_NAME=nvidia breaks Intel/AMD/hybrid/VM systems.
+if grep -q '"LIBVA_DRIVER_NAME",' "$HYPR/hyprland.lua.d/environment.lua"; then
+  fail "environment must not force LIBVA_DRIVER_NAME (hardware-neutral VA-API)"
+fi
+echo "TEST-PASS: VA-API driver not forced (hardware-neutral)"
 grep -q 'DBUS_SESSION_BUS_ADDRESS' "$HYPR/hyprland.lua.d/environment.lua" \
   || fail "environment lost DBUS_SESSION_BUS_ADDRESS"
 grep -q 'GNOME_KEYRING_CONTROL' "$HYPR/hyprland.lua.d/environment.lua" \
