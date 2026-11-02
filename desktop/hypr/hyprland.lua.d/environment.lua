@@ -22,8 +22,10 @@ local environment = {
 	{ "XCURSOR_SIZE", "24" },
 	{ "XCURSOR_THEME", "elementary" },
 	{ "_JAVA_AWT_WM_NONREPARENTING", "1" },
-	{ "LIBVA_DRIVER_NAME", "nvidia" },
-	{ "LIBVA_DRIVERS_PATH", "/usr/lib/dri" },
+	-- No LIBVA_DRIVER_NAME override: VA-API must auto-select the driver
+	-- for the actual GPU (Intel/AMD/NVIDIA/hybrid/VM). Forcing "nvidia"
+	-- here broke VA-API on non-NVIDIA systems. Users who need a specific
+	-- driver can set LIBVA_DRIVER_NAME in their own session environment.
 }
 
 for _, entry in ipairs(environment) do
