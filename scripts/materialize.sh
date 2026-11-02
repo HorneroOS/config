@@ -90,6 +90,9 @@ elif [[ ! -e "$DEST/.zshrc" ]]; then
   chmod 644 "$DEST/.zshrc"
 fi
 install_file "desktop/environmentd/10-hornero-editor.conf" "$CONFIG_HOME/environment.d/10-hornero-editor.conf"
+install_file "desktop/environmentd/20-hornero-session.conf" "$CONFIG_HOME/environment.d/20-hornero-session.conf"
+install_file "desktop/xdg/mimeapps.list" "$CONFIG_HOME/mimeapps.list"
+install_file "desktop/xdg/user-dirs.dirs" "$CONFIG_HOME/user-dirs.dirs"
 
 # --- XDG defaults --------------------------------------------------------------
 install_dir "xdg/handlr" "$CONFIG_HOME/handlr"

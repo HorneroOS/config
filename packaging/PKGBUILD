@@ -35,6 +35,16 @@ optdepends=(
   'qt6ct: Qt6 platform-theme defaults under /etc/xdg/qt6ct'
   'papirus-icon-theme: Papirus-Dark factory icons'
   'ttf-material-symbols-variable: Material Symbols shell icon font'
+  'ttf-cascadia-code-nerd: CaskaydiaCove NF factory monospace font'
+  'noto-fonts-cjk: CJK fallback for the factory fontconfig aliases'
+  'noto-fonts-emoji: emoji fallback for the factory fontconfig aliases'
+  'zsh-autosuggestions: optional plugin sourced by the factory zshrc when installed'
+  'zsh-syntax-highlighting: optional plugin sourced by the factory zshrc when installed'
+  'gvfs: Thunar volume and trash integration'
+  'tumbler: Thunar thumbnail service'
+  'ffmpegthumbnailer: video thumbnails for Thunar via tumbler'
+  'thunar-volman: removable-media handling for Thunar'
+  'nm-connection-editor: NetworkManager connection editor'
 )
 # Named "config" (not "$pkgname") so the checkout lands at
 # "${srcdir}/config", matching _hornero_repo_root() below and keeping
@@ -155,6 +165,8 @@ package() {
   install -Dm644 "$stage/.zshrc" "$pkgdir/etc/skel/.zshrc"
   install -Dm644 "$stage/.config/environment.d/10-hornero-editor.conf" \
     "$pkgdir/etc/skel/.config/environment.d/10-hornero-editor.conf"
+  install -Dm644 "$stage/.config/environment.d/20-hornero-session.conf" \
+    "$pkgdir/etc/skel/.config/environment.d/20-hornero-session.conf"
 
   # Hyprland's factory config imports modules from the user's XDG config
   # directory. Seed new accounts with that complete profile so the first

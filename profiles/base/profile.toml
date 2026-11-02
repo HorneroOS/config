@@ -94,6 +94,16 @@ target = "{config}/Thunar"
 source = "desktop/copyq/copyq.conf"
 target = "{config}/copyq/copyq.conf"
 
+[modules.xdg-defaults]
+source = "desktop/xdg"
+target = "{config}"
+description = "XDG default applications (Thunar for directories) and user-dirs; no browser default until a factory browser is chosen."
+
+[modules.environmentd]
+source = "desktop/environmentd"
+target = "{config}/environment.d"
+description = "Factory editor contract and session environment baseline for all session types."
+
 [modules.handlr]
 source = "xdg/handlr"
 target = "{config}/handlr"

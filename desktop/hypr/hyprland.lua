@@ -13,6 +13,7 @@
 local here = debug.getinfo(1, "S").source:match("^@(.*)/[^/]*$") .. "/hyprland.lua.d/"
 
 dofile(here .. "monitors.lua")
+dofile(here .. "monitors-user.lua")
 dofile(here .. "autostart.lua")
 dofile(here .. "environment.lua")
 dofile(here .. "input.lua")
