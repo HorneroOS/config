@@ -260,3 +260,27 @@ default because Hornero ships no GTK 2 theme tree.
   the interface to present every look as a first-class choice. Original
   optional artwork remains listed in `wallpapers.manifest.json` and missing
   media must remain explicit.
+
+- **Factory-defaults audit closure (dotfiles audit gaps, config-owned).**
+  `10-hornero-editor.conf` gains `SUDO_EDITOR=nano` and shipped git
+  defaults use `core.editor=nano` (vim is not in the factory stack).
+  Kitty uses `CaskaydiaCove NF` (the `profiles/factory.json` mono family,
+  also used by qt6ct) instead of Hack Nerd Font; `fonts.conf` adds
+  sans/serif/mono/emoji aliases with Noto CJK/emoji fallbacks.
+  `20-hornero-session.conf` ships the session baseline (XDG dirs,
+  `~/.local/bin` PATH, `TERMINAL=kitty`) for non-Hyprland sessions via
+  environment.d; `${HOME}` expansion was verified against
+  `30-systemd-environment-d-generator`. `mimeapps.list` defaults
+  directories to Thunar and `user-dirs.dirs` ships the standard dirs;
+  no web handler is set because the factory browser is a deferred
+  product decision. Hyprland gains `monitors-user.lua`, loaded after
+  the generic `monitors.lua` fallback like the existing
+  keybindings/window-rules user files. Optional readers/integrations
+  (Cascadia Nerd, Noto CJK/emoji, zsh plugins the factory zshrc already
+  sources when present, Thunar gvfs/tumbler/ffmpegthumbnailer/volman,
+  nm-connection-editor) are PKGBUILD optdepends only — ISO package
+  composition stays owned by HorneroOS/hornero, and no Bluetooth files
+  are added here (that capability is owned by the concurrent
+  `feat/bluetooth-config-defaults` branch; this branch reuses its
+  names and must rebase over it). Elementary cursor package naming was
+  not verified offline, so no cursor package was added.

@@ -139,7 +139,7 @@
   default = upstream
 [core]
   autocrlf = false
-  editor = vim
+  editor = nano
   excludesfile = ~/.config/git/ignore
   attributesFile = ~/.config/git/attributes
 [advice]

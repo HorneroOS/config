@@ -1,0 +1,6 @@
+-- User monitor overrides (HorneroOS).
+-- Put machine-specific hl.monitor calls here; they are loaded after the
+-- generic factory fallback in monitors.lua, so they win on reload.
+-- The factory monitors.lua is never edited per machine. Emptying this
+-- file restores the generic autodetect fallback.
+-- luacheck: globals hl

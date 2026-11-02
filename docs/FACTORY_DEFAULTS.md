@@ -38,6 +38,11 @@ ships; it does not install btop or Cava.
 | Theme recipes + factory record | `profiles/themes/*` + `profiles/factory.json` | `{data}/hornero/…` → `/usr/share/hornero/…` |
 | GTK theme/icons/dark preference | `desktop/gtk/settings.ini` | **config-gtk worker** (recorded in `factory.json` only) |
 | Wallpaper | procedural source `assets/brand/wallpaper/hornero-dark.svg` | rendered into the package at build time; regional photo defaults are shipped as licensed JPEG assets |
+| Editor contract | `desktop/environmentd/10-hornero-editor.conf` (`EDITOR`/`VISUAL`/`SUDO_EDITOR=nano`) + git `core.editor=nano` | `{config}/environment.d/…` → `/etc/skel/.config/environment.d/…` |
+| Session baseline | `desktop/environmentd/20-hornero-session.conf` (XDG dirs, `~/.local/bin` PATH, `TERMINAL=kitty`; no `BROWSER` until a factory browser is chosen) | same environment.d path, all session types |
+| Fonts | Kitty `CaskaydiaCove NF`; `desktop/fontconfig/fonts.conf` sans/serif/mono aliases with Noto CJK/emoji fallbacks | `{config}/kitty`, `{config}/fontconfig` |
+| XDG defaults | `desktop/xdg/mimeapps.list` (Thunar for directories) + `user-dirs.dirs` | `{config}/mimeapps.list`, `{config}/user-dirs.dirs` |
+| Monitor overrides | `desktop/hypr/hyprland.lua.d/monitors-user.lua`, loaded after the generic `monitors.lua` fallback | `{config}/hypr/hyprland.lua.d/monitors-user.lua` |
 
 ## Fonts and icon packages (Arch)
 
