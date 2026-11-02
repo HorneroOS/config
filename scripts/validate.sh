@@ -320,6 +320,45 @@ else
   fail "brand SVGs"
 fi
 
+# --- Bluetooth: BlueZ template + WirePlumber policy + systemd preset --------
+if python3 - "$REPO_ROOT" <<'PY'
+import configparser, re, sys
+from pathlib import Path
+root = Path(sys.argv[1]); errors = []
+main = root/"desktop/bluetooth/main.conf"
+cp = configparser.ConfigParser(strict=True); cp.optionxform = str
+try:
+    cp.read_string(main.read_text())
+    if cp.get("Policy", "AutoEnable", fallback="") != "true":
+        errors.append("main.conf: Policy.AutoEnable must be true")
+    if cp.get("General", "JustWorksRepairing", fallback="") != "never":
+        errors.append("main.conf: JustWorksRepairing must be never")
+    if cp.get("General", "AlwaysPairable", fallback="") != "false":
+        errors.append("main.conf: AlwaysPairable must be false")
+except Exception as e: errors.append(f"{main}: {e}")
+if re.search(r"(?m)^\s*AutoEnable\s*=\s*false", main.read_text()):
+    errors.append("main.conf: AutoEnable=false present")
+wp = (root/"desktop/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf").read_text()
+for needle in ("bluez5.enable-sbc-xq = true", "bluez5.enable-msbc = true",
+               "bluetooth.autoswitch-to-headset-profile = true", "a2dp_sink"):
+    if needle not in wp: errors.append(f"wireplumber bluetooth policy missing: {needle}")
+if "autosuspend" in wp.lower().replace("# no autosuspend property is set here", "") and "bluez5" in wp and re.search(r"autosuspend\s*=\s*(false|0|-1)", wp):
+    errors.append("wireplumber: global autosuspend disable is forbidden")
+codecs = re.search(r"bluez5\.codecs\s*=\s*\[([^\]]+)\]", wp)
+if not codecs or [c.strip() for c in codecs.group(1).split()] != ["ldac","aptx_hd","aptx","sbc_xq","aac","sbc"]:
+    errors.append("wireplumber: codec order must be ldac aptx_hd aptx sbc_xq aac sbc")
+preset = (root/"desktop/systemd/90-hornero-bluetooth.preset").read_text()
+if preset.strip().splitlines()[-1] != "enable bluetooth.service":
+    errors.append("preset must enable bluetooth.service only")
+for e in errors: print("VALIDATE-FAIL: bluetooth", e, file=sys.stderr)
+sys.exit(1 if errors else 0)
+PY
+then
+  pass "Bluetooth (AutoEnable=true, JustWorksRepairing=never, WirePlumber codecs, preset)"
+else
+  fail "Bluetooth config contract"
+fi
+
 # --- personal-data guard ------------------------------------------------------------
 if "$REPO_ROOT/scripts/guard-personal-data.sh"; then
   pass "personal-data guard"

@@ -1,0 +1,7 @@
+# HorneroOS: enable the BlueZ daemon by default on new installs.
+# Applied via `systemctl preset bluetooth.service` (see
+# packaging/hornero-config.install); never enable services directly in
+# scriptlets. Machines without Bluetooth hardware are unaffected beyond an
+# idle daemon, and an admin `systemctl disable bluetooth.service` plus a
+# preset policy file under /etc/systemd/system-preset/ wins over this file.
+enable bluetooth.service

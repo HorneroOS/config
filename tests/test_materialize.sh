@@ -43,6 +43,11 @@ grep -Fq 'niri msg --json outputs' "$TMP_HOME/.config/niri/config.kdl"
 grep -Fq 'horneroctl shell start --yes' "$TMP_HOME/.config/niri/config.kdl"
 grep -q 'Mod+Shift+B.*layoutPicker' "$TMP_HOME/.config/niri/config.kdl"
 check ".config/pipewire/pipewire.conf.d/10-hornero-studio-balanced.conf"
+check ".config/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf"
+check ".config/hornero/bluetooth/main.conf"
+grep -q '^AutoEnable = true$' "$TMP_HOME/.config/hornero/bluetooth/main.conf" \
+  && echo "TEST-PASS: BlueZ template keeps AutoEnable=true" \
+  || { echo "TEST-FAIL: BlueZ template AutoEnable" >&2; exit 1; }
 check ".config/hornero/studio-audio/low-latency.conf"
 check ".config/hornero/studio-audio/advanced.conf"
 check ".config/hornero/studio-presets/presets.json"
@@ -214,6 +219,16 @@ if [[ ! -L "$TMP_HOME/.config/systemd/user/dunst.service" ]]; then
   echo "TEST-PASS: user-authored dunst.service kept"
 else
   echo "TEST-FAIL: user-authored dunst.service replaced" >&2
+  exit 1
+fi
+
+# Bluetooth/WirePlumber user copies are seeded once, never overwritten
+printf '# user edit\n' >> "$TMP_HOME/.config/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf"
+bash "$REPO_ROOT/scripts/materialize.sh" --dest "$TMP_HOME" >/dev/null
+if grep -q '# user edit' "$TMP_HOME/.config/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf"; then
+  echo "TEST-PASS: user-edited WirePlumber Bluetooth policy kept on rerun"
+else
+  echo "TEST-FAIL: materialize overwrote user-edited WirePlumber Bluetooth policy" >&2
   exit 1
 fi
 

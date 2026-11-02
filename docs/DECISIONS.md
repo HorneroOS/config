@@ -284,3 +284,24 @@ default because Hornero ships no GTK 2 theme tree.
   `feat/bluetooth-config-defaults` branch; this branch reuses its
   names and must rebase over it). Elementary cursor package naming was
   not verified offline, so no cursor package was added.
+- **Bluetooth defaults (BlueZ + WirePlumber, 2026).** `desktop/bluetooth/main.conf`
+  is a factory template, not a shipped `/etc/bluetooth/main.conf`: verified
+  `pacman -Ql bluez` (5.87-2) owns that path, so a second owner would be a
+  pacman conflict. The package ships it at `/usr/share/hornero/bluetooth/main.conf`
+  (materialized per-user as data under `~/.config/hornero/bluetooth/`); an
+  admin copies it once, after which it is admin-owned and never overwritten.
+  `AutoEnable=true` is explicit (it powers on all controllers at boot;
+  it does not restore last `Powered` state — a user power-off persists
+  only via the rfkill soft-block restored by systemd-rfkill); `JustWorksRepairing=never`, `AlwaysPairable=false`,
+  bounded discoverable/pairable timeouts, no auto-accept agent and no
+  passwordless polkit in this repo. WirePlumber policy ships at both
+  `~/.config/wireplumber/` and `/etc/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf`
+  (codec order `ldac aptx_hd aptx sbc_xq aac sbc`, mSBC + SBC-XQ on,
+  documented autoswitch-to-headset warning). No global USB autosuspend
+  disable is shipped, and no per-device udev quirk is shipped without a
+  sourced VID:PID justification. Enablement is preset-only:
+  `/usr/lib/systemd/system-preset/90-hornero-bluetooth.preset` plus
+  `packaging/hornero-config.install` running `systemctl preset` (never
+  `systemctl enable`); paired devices in `/var/lib/bluetooth` are never
+  touched. The shell-owned pairing-agent user unit is deferred to the
+  agent workstream (its `ExecStart` binary does not exist in this repo).
