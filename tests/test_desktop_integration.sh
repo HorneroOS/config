@@ -60,6 +60,8 @@ pass "hyprlock carries no dead date label"
   || fail "kitty hornero-dark.conf not materialized"
 [[ -f "$TMP_HOME/.config/kitty/hornero-light.conf" ]] \
   || fail "kitty hornero-light.lua not materialized"
+[[ -f "$TMP_HOME/.config/kitty/hornero-199x.conf" ]] \
+  || fail "kitty hornero-199x.conf not materialized"
 grep -q "include hornero-dark.conf" "$TMP_HOME/.config/kitty/kitty.conf" \
   || fail "kitty.conf does not include the Hornero Dark factory palette"
 if grep -q "202734\|CBCCC6" "$TMP_HOME/.config/kitty/kitty.conf"; then
@@ -67,9 +69,10 @@ if grep -q "202734\|CBCCC6" "$TMP_HOME/.config/kitty/kitty.conf"; then
 fi
 pass "kitty factory default includes hornero-dark, old fallback gone"
 # Terminal readability gate (normals AA, brights large-text floor, R/G/Y
-# distinguishable, ramps stepped) over both shipped palettes.
+# distinguishable, ramps stepped) over every shipped static palette.
 python3 "$REPO_ROOT/scripts/check-terminal-contrast.py" \
   --kitty-dir "$REPO_ROOT/desktop/kitty" \
+  --palettes hornero-dark hornero-light hornero-199x pampa \
   || fail "terminal contrast gate"
 pass "kitty palettes pass readability + distinguishability gate"
 
@@ -92,7 +95,7 @@ fi
 pass "qt6ct factory default + platformtheme pin, kvantum deferred"
 # Generated per-theme palettes ship with the factory defaults and match
 # the generator (drift gate: regenerate must diff clean).
-for _qt in hornero-dark hornero-light pampa; do
+for _qt in hornero-dark hornero-light hornero-199x pampa; do
   [[ -f "$TMP_HOME/.config/qt6ct/colors/$_qt.conf" ]] \
     || fail "qt6ct colors/$_qt.conf not materialized"
   grep -q "^\[ColorScheme\]" "$TMP_HOME/.config/qt6ct/colors/$_qt.conf" \
@@ -105,7 +108,7 @@ done
 _QTDRIFT="$(mktemp -d)"
 python3 "$REPO_ROOT/scripts/generate-qt-schemes.py" --out "$_QTDRIFT" >/dev/null \
   || fail "qt scheme generator exits 0"
-for _qt in hornero-dark hornero-light pampa; do
+for _qt in hornero-dark hornero-light hornero-199x pampa; do
   cmp -s "$_QTDRIFT/$_qt.conf" "$TMP_HOME/.config/qt6ct/colors/$_qt.conf" \
     || fail "qt6ct colors/$_qt.conf drifts from the generator"
 done
@@ -310,6 +313,8 @@ bash -c '
     _hornero_appearance_sync_recolor hornero-light
     cmp -s "$XDG_DATA_HOME/themes/Hornero-Light/gtk-4.0/recolor.css" \
            "$XDG_CONFIG_HOME/gtk-4.0/gtk.css" || exit 12
+    _hornero_appearance_sync_kitty hornero-199x
+    grep -qx "include hornero-199x.conf" "$XDG_CONFIG_HOME/kitty/kitty.conf" || exit 15
     _hornero_appearance_sync_kitty hornero-dark
     grep -qx "include hornero-dark.conf" "$XDG_CONFIG_HOME/kitty/kitty.conf" || exit 13
     _hornero_appearance_sync_recolor hornero-dark
