@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 """generate-qt-schemes.py - derive qt6ct color schemes from canonical theme tokens.
 
-Reads profiles/themes/<id>/theme.json for the official trio
-(hornero-dark, hornero-light, pampa) and writes
+Reads profiles/themes/<id>/theme.json for the official family
+(hornero-dark, hornero-light, hornero-199x, pampa) and writes
 desktop/qt6ct/colors/<id>.conf: a qt6ct [ColorScheme] section with
 active/inactive/disabled lists of 22 #AARRGGBB entries in exact
 QPalette::ColorRole order (WindowText..Accent), as consumed by
@@ -35,7 +35,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 THEMES_DIR = REPO_ROOT / "profiles" / "themes"
 OUT_DIR = REPO_ROOT / "desktop" / "qt6ct" / "colors"
 
-THEMES = ("hornero-dark", "hornero-light", "pampa")
+THEMES = ("hornero-dark", "hornero-light", "hornero-199x", "pampa")
 
 # QPalette::ColorRole order (Qt6): index == enum value, 22 roles.
 ROLES = (
