@@ -26,6 +26,9 @@ systemd's `/etc/xdg/systemd/user` symlink.
 | `.config/*` (except `hypr`, `systemd/user` and `Thunar/uca.xml`) | `/etc/xdg/*` |
 | `.config/hypr` | `/etc/skel/.config/hypr` (new-user session profile; system fallback also remains under `/etc/xdg/hypr`) |
 | `.config/systemd/user/*.service`        | `/etc/systemd/user/*.service` (system-wide user-unit masks) |
+| `.config/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf` | `/etc/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf` |
+| `desktop/bluetooth/main.conf` (repo file) | `/usr/share/hornero/bluetooth/main.conf` (factory template; Arch `bluez` owns `/etc/bluetooth/main.conf`) |
+| `desktop/systemd/90-hornero-bluetooth.preset` (repo file) | `/usr/lib/systemd/system-preset/90-hornero-bluetooth.preset` (applied by `hornero-config.install` via `systemctl preset`) |
 | `.gtkrc-2.0`                            | `/etc/xdg/gtkrc-2.0` (skeleton; copy to `~/.gtkrc-2.0` to use) |
 | `shell/shell.default.json` (repo file, **not** staged HOME) | `/etc/xdg/hornero/shell.json` (factory default; content owned by `HorneroOS/shell`, synced byte-exact — see `shell/README.md`) |
 | `.local/lib/hornero`                       | `/usr/share/hornero/lib/hornero`         |
@@ -42,7 +45,7 @@ The package intentionally omits `/etc/xdg/Thunar/uca.xml`, which is owned by
 the `thunar` package on Arch. The curated custom actions stay available in the
 user config managed by `~/.dotfiles` at `~/.config/Thunar/uca.xml`.
 
-Only `/etc/xdg`, `/etc/skel`, `/etc/systemd/user`, `/etc/niri`,
+Only `/etc/xdg`, `/etc/skel`, `/etc/systemd/user`, `/etc/niri`, `/etc/wireplumber`, `/usr/lib/systemd/system-preset`,
 `/etc/alacritty`, `/usr/share/btop/themes`, `/usr/share/ghostty/themes`,
 `/usr/share/hornero`, and `/usr/share/themes` (plus the standard license dir)
 are written.

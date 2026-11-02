@@ -48,6 +48,7 @@ for entry in "$STAGE"/.config/*; do
     continue
   fi
   [[ "$base" == niri ]] && continue
+  [[ "$base" == wireplumber ]] && continue
   [[ "$base" == alacritty || "$base" == ghostty ]] && continue
   [[ -e "$ROOT/etc/xdg/$base" ]] || fail "installed tree missing /etc/xdg/$base"
 done
@@ -63,7 +64,7 @@ cmp -s "$STAGE/.config/xdg-desktop-portal/niri-portals.conf" \
 # /etc/xdg/hornero/shell.json is sourced from shell/shell.default.json (not
 # the staged HOME) and asserted separately below, so the hornero dir is
 # excluded here; materialize.sh never stages .config/hornero/*.
-diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero --exclude=systemd --exclude=niri --exclude=alacritty --exclude=ghostty --exclude=uca.xml >/dev/null 2>&1 \
+diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero --exclude=systemd --exclude=niri --exclude=alacritty --exclude=ghostty --exclude=uca.xml --exclude=wireplumber >/dev/null 2>&1 \
   && pass "staged .config matches /etc/xdg" \
   || fail "staged .config differs from /etc/xdg"
 [[ -f "$STAGE/.config/Thunar/uca.xml" ]] \
@@ -138,6 +139,19 @@ for cli in "$STAGE"/.local/bin/hornero-*; do
     || fail "bin adapter $(basename "$cli") differs"
 done
 pass "bin adapters"
+cmp -s "$REPO_ROOT/desktop/bluetooth/main.conf" "$ROOT/usr/share/hornero/bluetooth/main.conf" \
+  && pass "BlueZ factory template under /usr/share/hornero/bluetooth" \
+  || fail "BlueZ factory template missing/different"
+cmp -s "$REPO_ROOT/desktop/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf" \
+  "$ROOT/etc/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf" \
+  && pass "WirePlumber Bluetooth policy at /etc/wireplumber" \
+  || fail "WirePlumber Bluetooth policy missing/different"
+cmp -s "$REPO_ROOT/desktop/systemd/90-hornero-bluetooth.preset" \
+  "$ROOT/usr/lib/systemd/system-preset/90-hornero-bluetooth.preset" \
+  && pass "bluetooth.service systemd preset" || fail "bluetooth preset missing/different"
+[[ ! -e "$ROOT/etc/bluetooth/main.conf" && ! -e "$ROOT/etc/xdg/wireplumber" ]] \
+  && pass "package does not own /etc/bluetooth/main.conf or /etc/xdg/wireplumber" \
+  || fail "package owns a forbidden Bluetooth path"
 cmp -s "$REPO_ROOT/profiles/base/profile.toml" "$ROOT/usr/share/hornero/profile.toml" \
   && cmp -s "$REPO_ROOT/profiles/base/profile.toml" "$ROOT/usr/share/hornero/profiles/base/profile.toml" \
   && pass "profile manifests" || fail "profile manifests"
@@ -152,10 +166,10 @@ rm -rf "$STAGE"
 # system-wide user-unit overrides in /etc/systemd/user, and
 # /usr/share, and the pacman metadata dotfiles. Anything else fails.
 if find "$ROOT" -path "$ROOT/.BUILDINFO" -prune -o -path "$ROOT/.PKGINFO" -prune \
-    -o -path "$ROOT/.MTREE" -prune -o -print \
-    | grep -vE "^$ROOT/(etc/xdg|etc/systemd|etc/niri|etc/alacritty|etc/skel|usr/share)(/|$)" | grep -vE "^$ROOT/(etc|usr)$" \
+    -o -path "$ROOT/.MTREE" -prune -o -path "$ROOT/.INSTALL" -prune -o -print \
+    | grep -vE "^$ROOT/(etc/xdg|etc/systemd|etc/niri|etc/alacritty|etc/skel|etc/wireplumber|usr/share|usr/lib/systemd/system-preset|usr/lib/systemd|usr/lib)(/|$)" | grep -vE "^$ROOT/(etc|usr)$" \
     | grep -vE "^$ROOT$" | grep -q .; then
-  fail "files outside /etc/xdg + /etc/alacritty + /etc/skel + /etc/systemd/user + /usr/share"
+  fail "files outside documented prefixes (incl. /etc/wireplumber, system-preset)"
 else
   pass "install prefixes"
 fi

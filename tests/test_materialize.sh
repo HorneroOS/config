@@ -43,6 +43,11 @@ grep -Fq 'niri msg --json outputs' "$TMP_HOME/.config/niri/config.kdl"
 grep -Fq 'horneroctl shell start --yes' "$TMP_HOME/.config/niri/config.kdl"
 grep -q 'Mod+Shift+B.*layoutPicker' "$TMP_HOME/.config/niri/config.kdl"
 check ".config/pipewire/pipewire.conf.d/10-hornero-studio-balanced.conf"
+check ".config/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf"
+check ".config/hornero/bluetooth/main.conf"
+grep -q '^AutoEnable = true$' "$TMP_HOME/.config/hornero/bluetooth/main.conf" \
+  && echo "TEST-PASS: BlueZ template keeps AutoEnable=true" \
+  || { echo "TEST-FAIL: BlueZ template AutoEnable" >&2; exit 1; }
 check ".config/hornero/studio-audio/low-latency.conf"
 check ".config/hornero/studio-audio/advanced.conf"
 check ".config/hornero/studio-presets/presets.json"

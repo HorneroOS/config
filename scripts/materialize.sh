@@ -78,6 +78,11 @@ install_dir "desktop/ghostty" "$CONFIG_HOME/ghostty"
 # Studio audio policy: Balanced (no override) is active; Low Latency and
 # Advanced are opt-in templates outside pipewire.conf.d (docs/STUDIO-AUDIO.md).
 install_dir "desktop/pipewire" "$CONFIG_HOME/pipewire"
+# Bluetooth: WirePlumber policy is user-effective config; the BlueZ
+# main.conf is a factory template staged as data only (BlueZ reads
+# /etc/bluetooth/main.conf, owned by the bluez package — never write it).
+install_dir "desktop/wireplumber" "$CONFIG_HOME/wireplumber"
+install_dir "desktop/bluetooth" "$CONFIG_HOME/hornero/bluetooth"
 install_dir "desktop/studio-audio" "$CONFIG_HOME/hornero/studio-audio"
 install_dir "desktop/studio-presets" "$CONFIG_HOME/hornero/studio-presets"
 install_dir "desktop/studio-storage" "$CONFIG_HOME/hornero/studio-storage"

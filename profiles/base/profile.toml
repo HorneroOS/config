@@ -40,6 +40,16 @@ source = "desktop/xfce4/helpers.rc"
 target = "{config}/xfce4/helpers.rc"
 description = "Hornero default application helpers (Kitty terminal)."
 
+[modules.bluetooth]
+source = "desktop/bluetooth"
+target = "{config}/hornero/bluetooth"
+description = "BlueZ factory main.conf template (data only; admin installs it to /etc/bluetooth, which the bluez package owns)."
+
+[modules.wireplumber]
+source = "desktop/wireplumber"
+target = "{config}/wireplumber"
+description = "WirePlumber Bluetooth policy (A2DP/HFP roles, SBC-XQ/mSBC; packaged also to /etc/wireplumber)."
+
 [modules.pipewire]
 source = "desktop/pipewire"
 target = "{config}/pipewire"
