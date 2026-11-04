@@ -167,6 +167,18 @@ grep -qx 'TerminalEmulator=kitty' "$TMP_HOME/.config/xfce4/helpers.rc" \
   || fail "Exo default terminal is missing from the materialized Hornero profile"
 pass "Niri, Hyprland and Thunar use the package-owned default terminal"
 
+# Both compositors must start a polkit authentication agent (hornero#366):
+# without a registered session agent every pkexec flow fails with
+# "No session for cookie". The polkit-gnome package itself comes from the
+# edition catalogue desktop set; these lines are the config-side contract.
+grep -Fq '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1' \
+  "$TMP_HOME/.config/hypr/hyprland.lua.d/autostart.lua" \
+  || fail "Hyprland autostart does not start the polkit agent"
+grep -Fq 'spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"' \
+  "$TMP_HOME/.config/niri/config.kdl" \
+  || fail "Niri config does not spawn the polkit agent at startup"
+pass "Hyprland and Niri both start the polkit authentication agent"
+
 # Optional terminal configs use their native lookup paths and all share the
 # same dynamic Hornero palette output. Kitty remains Exo's default terminal.
 grep -Fq 'import = ["hornero-dark.toml", "hornero-colors.toml"]' \
