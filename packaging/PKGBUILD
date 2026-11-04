@@ -12,7 +12,12 @@ url="https://github.com/HorneroOS/config"
 license=('MIT' 'CC-BY-2.0' 'CC-BY-SA-4.0')
 # python-materialyoucolor: lib/hornero/generate-m3-colors.py (theme switching via
 # `horneroctl appearance scheme regenerate`); without it every theme set rolls back.
-depends=('bash' 'git' 'python' 'python-materialyoucolor')
+# polkit-gnome: both compositor configs autostart its authentication agent
+# (Hyprland autostart.lua, Niri spawn-at-startup); without it no agent is
+# registered and every pkexec flow fails with "No session for cookie"
+# (hornero#366). Hard dependency so existing installs gain the agent on the
+# next hornero-config update, not only fresh installs via the catalogue.
+depends=('bash' 'git' 'polkit-gnome' 'python' 'python-materialyoucolor')
 makedepends=('librsvg')
 optdepends=(
   'hyprland: compositor defaults under /etc/xdg/hypr'
