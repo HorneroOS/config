@@ -45,8 +45,9 @@ binds=$(grep -c 'hl\.bind' "$HYPR/hyprland.lua.d/keybindings.lua")
 echo "TEST-PASS: bind parity 145/145"
 
 rules=$(grep -c 'hl\.window_rule' "$HYPR/hyprland.lua.d/window-rules.lua")
-[[ "$rules" -eq 44 ]] || fail "window-rule parity: expected 44, got $rules"
-echo "TEST-PASS: window-rule parity 44/44"
+# 44 frozen from the retired tree + ghostty-opacity (all supported terminals).
+[[ "$rules" -eq 45 ]] || fail "window-rule parity: expected 45, got $rules"
+echo "TEST-PASS: window-rule parity 45/45"
 
 execs=$(grep -c 'hl\.exec_cmd' "$HYPR/hyprland.lua.d/autostart.lua")
 [[ "$execs" -eq 20 ]] || fail "autostart parity: expected 20, got $execs"
