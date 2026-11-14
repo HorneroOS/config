@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Contract for scripts/refresh-hypr-entrypoint.py (config#124).
+"""Contract for lib/hornero/refresh-hypr-entrypoint.py (config#124).
 
 Additive-only refresh of a skel-seeded user hyprland.lua: missing
 factory dofile lines are inserted in factory order, user content is
@@ -12,7 +12,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SCRIPT = ROOT / "scripts" / "refresh-hypr-entrypoint.py"
+SCRIPT = ROOT / "lib" / "hornero" / "refresh-hypr-entrypoint.py"
 FACTORY = ROOT / "desktop" / "hypr" / "hyprland.lua"
 
 failures = []
@@ -90,6 +90,13 @@ with tempfile.TemporaryDirectory() as td:
     r = run(FACTORY, tmp / "missing.lua")
     check("missing target exits 1", r.returncode == 1)
     check("missing target prints example", "Example:" in r.stderr)
+
+# The canonical copy lives in lib/hornero so both install paths ship
+# it: materialize (user scope) and the PKGBUILD staging of the same dir.
+materialize = (ROOT / "scripts" / "materialize.sh").read_text()
+check("materialize installs lib/hornero", 'install_dir "lib/hornero"' in materialize)
+pkgbuild = (ROOT / "packaging" / "PKGBUILD").read_text()
+check("PKGBUILD stages lib/hornero payload", ".local/lib/hornero" in pkgbuild)
 
 if failures:
     print(f"{len(failures)} failure(s)", file=sys.stderr)
