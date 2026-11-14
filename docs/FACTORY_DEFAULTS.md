@@ -44,6 +44,14 @@ ships; it does not install btop or Cava.
 | XDG defaults | `desktop/xdg/mimeapps.list` (Thunar for directories) + `user-dirs.dirs` | `{config}/mimeapps.list`, `{config}/user-dirs.dirs` |
 | Monitor overrides | `desktop/hypr/hyprland.lua.d/monitors-user.lua`, loaded after the generic `monitors.lua` fallback | `{config}/hypr/hyprland.lua.d/monitors-user.lua` |
 
+Existing users keep a skel-seeded entrypoint, so new factory `dofile`
+lines never reach them on package upgrade alone.
+`scripts/refresh-hypr-entrypoint.py` closes that gap additively: it
+inserts only the factory module lines a user `hyprland.lua` is
+missing (dry-run diff by default, `--apply` writes with a
+`.pre-refresh` backup), preserves every existing line byte-for-byte,
+and refuses restructured files instead of guessing.
+
 ## Fonts and icon packages (Arch)
 
 Declared in `packaging/PKGBUILD` optdepends so the factory default has
