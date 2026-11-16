@@ -2,7 +2,7 @@
   "_name": "Hornero Right",
   "_description": "Right sidebar — full featured, mirrored reference shell style",
   "_icon": "🏠",
-  "_iconMaterial": "dock_to_right",
+  "_iconMaterial": "layout-sidebar-right",
   "bar": {
     "persistent": true,
     "showOnHover": true,
@@ -52,11 +52,6 @@
           ],
           "end": [
             {
-              "id": "tray",
-              "enabled": true,
-              "options": {}
-            },
-            {
               "id": "clock",
               "enabled": true,
               "options": {}
@@ -65,6 +60,15 @@
               "id": "statusIcons",
               "enabled": true,
               "options": {}
+            },
+            {
+              "id": "tray",
+              "enabled": true,
+              "options": {}
+            },
+            {
+              "id": "extensions",
+              "enabled": true
             },
             {
               "id": "power",
