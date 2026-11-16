@@ -147,7 +147,7 @@ get_theme_snappy_theme() {
 
 	local snappy_theme="" dark_mode="true"
 	snappy_theme="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("snappyTheme", ""))' "$theme_json" 2> /dev/null || true)"
-	dark_mode="$(python3 -c 'import json,sys; print("true" if json.load(open(sys.argv[1], encoding="utf-8")).get("darkMode", True) else "false")' "$theme_json" 2> /dev/null || echo true)"
+	dark_mode="$(python3 -c 'import json,sys; print("false" if json.load(open(sys.argv[1], encoding="utf-8")).get("mode") == "light" else "true")' "$theme_json" 2> /dev/null || echo true)"
 
 	if [[ -n $snappy_theme ]]; then
 		echo "$snappy_theme"

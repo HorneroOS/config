@@ -47,18 +47,21 @@ previews, or Hyprland window geometry picker. See
 
 Curated from generic dotfiles material: Hyprland, Niri, Kitty, Alacritty,
 Ghostty, GTK 2/3, Qt6ct, fontconfig, fastfetch, btop, cava, Thunar, CopyQ,
-handlr, git-minus-identity, 24 theme packs (12 Hornero Originals, including
-four semantic-token themes and five wallpaper-led looks, plus 12 other
-curated looks), `lib/hornero`
+handlr, git-minus-identity, 20 Hornero Signal theme packs (schema v2: the
+Signal Night/Day/High Contrast flagships, nine Hornero Originals and eight
+community ports), `lib/hornero`
 implementation libraries and the `hornero-gtk-theme`-family CLI adapters.
 See `docs/DECISIONS.md` for the full copied / excluded-as-personal /
 deferred accounting.
 
 Kitty remains the default terminal selected by Exo. Alacritty and Ghostty
-receive optional Hornero configurations. The wallpaper-derived Material
-palette also generates native themes for Kitty, Alacritty, Ghostty, btop, and
-Cava, so terminal work, system monitoring, and audio visualization share the
-active desktop look. Optional non-terminal palette integrations are recorded
+receive optional Hornero configurations. Every native theme (GTK 3/4,
+libadwaita, Qt6ct, Kitty, Alacritty, Ghostty, btop, Cava, Hyprland borders,
+hyprlock) is generated from the applied theme's Hornero Signal roles
+(`profiles/themes/tokens.schema.json`, schema v2), so terminal work, system
+monitoring, and audio visualization share the active desktop look.
+Wallpapers never recolour the UI. Factory default: Hornero Signal Night in
+the Cockpit layout, set in IBM Plex. Optional non-terminal palette integrations are recorded
 in `profiles/factory.json` and validated against their packaged configuration
 and renderer outputs.
 The btop default refreshes at the upstream-recommended 2-second interval to
@@ -69,7 +72,7 @@ avoid the 100 ms polling cost of its inherited workstation setting.
 ```text
 desktop/    per-application defaults      -> ~/.config/<app>, ~/.gtkrc-2.0
 xdg/        git (no identity) + handlr    -> ~/.config/git, ~/.config/handlr
-profiles/   base desktop profile + 24 theme packs -> ~/.local/share/hornero/…
+profiles/   base desktop profile + 20 theme packs -> ~/.local/share/hornero/…
 shell/      stub note (interactive shell deferred)
 lib/hornero/   appearance/GTK/wallpaper implementation libs -> ~/.local/lib/hornero
 bin/        hornero-gtk-theme-family CLIs    -> ~/.local/bin
@@ -141,11 +144,11 @@ git config --file ~/.config/git/config.user user.name "Your Name"
 git config --file ~/.config/git/config.user user.email "you@example.com"
 ```
 
-Apply a theme pack (recipes reference wallpaper packs fetched separately):
+Apply a theme (writes the live Signal scheme and every native theme):
 
 ```sh
 export PATH="$HOME/.local/bin:$PATH"
-hornero-gtk-theme theme vapor-dreams
+hornero-appearance theme apply hornero-signal-day
 ```
 
 ## Provenance

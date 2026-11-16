@@ -32,14 +32,17 @@ if grep -q "BROWSER=" "$CFG/environment.d/20-hornero-session.conf"; then
 fi
 pass "session environment baseline (no premature BROWSER)"
 
-# Fonts: kitty uses the factory mono family; fontconfig aliases parse.
-grep -q "^font_family CaskaydiaCove NF" "$CFG/kitty/kitty.conf" \
+# Fonts: kitty and fontconfig use the RFC 0001 §3.3 IBM Plex families.
+grep -q "^font_family IBM Plex Mono$" "$CFG/kitty/kitty.conf" \
   || fail "kitty font_family is not the factory mono family"
 if grep -q "Hack Nerd Font" "$CFG/kitty/kitty.conf"; then
   fail "kitty still references Hack Nerd Font"
 fi
 python3 -c 'import sys, xml.etree.ElementTree as ET; ET.parse(sys.argv[1])' \
   "$CFG/fontconfig/fonts.conf" || fail "fontconfig fonts.conf does not parse"
+grep -q "<family>IBM Plex Sans</family>" "$CFG/fontconfig/fonts.conf" \
+  && grep -q "<family>IBM Plex Mono</family>" "$CFG/fontconfig/fonts.conf" \
+  || fail "fontconfig sans/mono aliases do not prefer IBM Plex"
 grep -q "Noto Sans CJK" "$CFG/fontconfig/fonts.conf" \
   || fail "fontconfig missing CJK fallback"
 grep -q "Noto Color Emoji" "$CFG/fontconfig/fonts.conf" \

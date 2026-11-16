@@ -9,7 +9,8 @@
 ##
 ## Unified wallpaper entrypoint — IPC stub for Quickshell ThemePipeline.
 ## When Quickshell is running, delegates to appearance.setWallpaper via IPC.
-## Falls back to wal + M3 + state sync when QS is not running.
+## Falls back to moving the wallpaper pointer when QS is not running
+## (wallpapers never recolour the UI under Hornero Signal).
 
 set -euo pipefail
 

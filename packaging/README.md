@@ -112,7 +112,7 @@ fi
 
 # CLI adapters live outside PATH by design; add them explicitly:
 export PATH="/usr/share/hornero/bin:$PATH"
-hornero-gtk-theme theme vapor-dreams
+hornero-appearance theme apply hornero-signal-day
 ```
 
 ## License

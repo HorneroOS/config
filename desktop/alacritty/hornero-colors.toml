@@ -1,33 +1,33 @@
-# Initial Hornero Dark fallback. Hornero's wallpaper color pipeline replaces
-# this file with the active Material scheme before importing it.
+# Hornero Signal palette for hornero-signal-night — GENERATED from schema-v2 roles
+# (lib/hornero/signal_render.py); do not hand-edit.
 [colors.primary]
-background = "#1D1410"
-foreground = "#F6E9DB"
+background = "#13171D"
+foreground = "#ECE6DA"
 
 [colors.cursor]
-cursor = "#F2B749"
-text = "#211310"
+cursor = "#F2A33A"
+text = "#1A1205"
 
 [colors.selection]
-background = "#3C2C21"
-text = "#F6E9DB"
+background = "#16303F"
+text = "#CDE8F8"
 
 [colors.normal]
-black = "#2B1F18"
-red = "#E07856"
-green = "#9CC184"
-yellow = "#D9A05F"
-blue = "#7FA3B8"
-magenta = "#C08CA6"
-cyan = "#8FB3A6"
-white = "#E9D3BC"
+black = "#1F252E"
+red = "#F0705A"
+green = "#8BD49A"
+yellow = "#F2A33A"
+blue = "#7EC1EA"
+magenta = "#D49AD8"
+cyan = "#6FCFC4"
+white = "#C9C4B8"
 
 [colors.bright]
-black = "#6B4E3B"
-red = "#F28B82"
-green = "#BFD9AE"
-yellow = "#F2B749"
-blue = "#A9C6DA"
-magenta = "#D8A9BE"
-cyan = "#AECDC3"
-white = "#F6E9DB"
+black = "#66707B"
+red = "#FF9C88"
+green = "#B4EBC0"
+yellow = "#FFC77A"
+blue = "#AEDBF6"
+magenta = "#EAC0EC"
+cyan = "#A2E6DD"
+white = "#ECE6DA"

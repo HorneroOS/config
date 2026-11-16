@@ -1,11 +1,15 @@
 {
-  "$comment": "HorneroOS factory defaults: a fresh boot (or a fresh --dest materialize) lands on Hornero Dark with no user setup and no network fetch. All values here are static files in this repo; nothing is cloned from ulises-jeremias/dotfiles at runtime (that repo is a read-only extraction source, see docs/DECISIONS.md).",
-  "defaultTheme": "hornero-dark",
-  "availableThemes": ["hornero-dark", "hornero-light", "pampa"],
+  "$comment": "HorneroOS factory defaults: a fresh boot (or a fresh --dest materialize) lands on Hornero Signal Night in the Cockpit layout with no user setup and no network fetch. All values here are static files in this repo; nothing is cloned from ulises-jeremias/dotfiles at runtime (that repo is a read-only extraction source, see docs/DECISIONS.md).",
+  "defaultTheme": "hornero-signal-night",
+  "availableThemes": [
+    "hornero-signal-night",
+    "hornero-signal-day",
+    "hornero-signal-contrast"
+  ],
   "themeRecipes": "{data}/hornero/themes",
   "compositor": {
     "config": "{config}/hypr/hyprland.lua.d/smart-colors.lua",
-    "note": "Curated Hornero Dark borders/groups; shadow tint in hyprland.lua.d/static.lua decoration block."
+    "note": "Hornero Signal Night borders/groups (generated from the theme roles); shadow tint in hyprland.lua.d/static.lua decoration block."
   },
   "terminal": {
     "default": "kitty",
@@ -17,11 +21,11 @@
         "package": "kitty",
         "configSource": "desktop/kitty/kitty.conf",
         "configPath": "{config}/kitty/kitty.conf",
-        "configExample": "include ~/.cache/hornero/smart-colors/colors-kitty.conf",
-        "palette": "colors-kitty.conf",
-        "palettePath": "{cache}/hornero/smart-colors/",
+        "configExample": "include hornero-signal-night.conf",
+        "palette": "hornero-signal-night.conf",
+        "palettePath": "{config}/kitty/",
         "detail": "GPU-accelerated, with the Kitty graphics protocol used by Yazi previews.",
-        "note": "A static Hornero Dark or Light palette keeps the terminal readable before the first generated scheme."
+        "note": "Every theme ships a generated <id>.conf palette; applying a theme switches the include line."
       },
       {
         "id": "alacritty",
@@ -30,11 +34,11 @@
         "package": "alacritty",
         "configSource": "desktop/alacritty/alacritty.toml",
         "configPath": "{config}/alacritty/alacritty.toml",
-        "configExample": "import = [\"hornero-dark.toml\", \"hornero-colors.toml\"]",
+        "configExample": "import = [\"hornero-signal-night.toml\", \"hornero-colors.toml\"]",
         "palette": "hornero-colors.toml",
         "palettePath": "{config}/alacritty/",
         "detail": "A compact TOML configuration with live reload; Yazi image previews use the Wayland adapter through Überzug++ where configured.",
-        "note": "The packaged dark/light fallback and generated color file are imported separately, so wallpaper colors can update without replacing your base config."
+        "note": "The packaged night/day palettes and the applied-theme colour file are imported separately, so a theme apply never replaces your base config."
       },
       {
         "id": "ghostty",
@@ -46,11 +50,11 @@
         "configExample": "theme = Hornero Dynamic",
         "palette": "Hornero Dynamic",
         "palettePath": "{config}/ghostty/themes/",
-        "detail": "A native Ghostty theme with a stable name that Hornero can refresh when appearance changes.",
-        "note": "A packaged system fallback is available before Hornero writes the user-level wallpaper palette."
+        "detail": "A native Ghostty theme with a stable name that Hornero refreshes when a theme is applied.",
+        "note": "A packaged system fallback (Signal Night) is available before Hornero writes the user-level theme palette."
       }
     ],
-    "note": "Kitty is the Exo/default terminal. Alacritty and Ghostty are optional curated configurations; wallpaper-derived M3 colors render to each app's native format."
+    "note": "Kitty is the Exo/default terminal. Alacritty and Ghostty are optional curated configurations; every terminal palette is rendered from the applied theme's schema-v2 roles."
   },
   "paletteApplications": [
     {
@@ -64,7 +68,7 @@
       "theme": "Hornero Dynamic",
       "themeSource": "desktop/btop/themes/Hornero Dynamic.theme",
       "themePath": "{config}/btop/themes/Hornero Dynamic.theme",
-      "detail": "A native btop theme generated from the active Hornero wallpaper palette.",
+      "detail": "A native btop theme rendered from the applied Hornero theme's Signal roles.",
       "note": "btop remains an optional application; Hornero Config provides its defaults and theme when installed."
     },
     {
@@ -78,38 +82,43 @@
       "theme": "Hornero Dynamic",
       "themeSource": "desktop/cava/themes/Hornero Dynamic",
       "themePath": "{config}/cava/themes/Hornero Dynamic",
-      "detail": "A native Cava theme generated from the active Hornero wallpaper palette.",
+      "detail": "A native Cava theme rendered from the applied Hornero theme's Signal roles.",
       "note": "Cava remains an optional application; Hornero Config provides its defaults and theme when installed."
     }
   ],
   "qt": {
     "platformTheme": "qt6ct",
     "config": "{config}/qt6ct/qt6ct.conf",
-    "note": "Fusion + Hornero fonts; see docs/QT_DECISION.md."
+    "note": "Fusion + IBM Plex; per-theme colour schemes generated from schema-v2 roles, see docs/QT_DECISION.md."
   },
   "gtk": {
-    "theme": "Hornero-Dark",
+    "theme": "Hornero-Signal",
     "iconTheme": "Papirus-Dark",
     "preferDark": true,
-    "note": "Applied by the config-gtk worker via desktop/gtk/settings.ini; recorded here so fresh-boot-dark is one contract."
+    "font": "IBM Plex Sans 11",
+    "note": "Applied via desktop/gtk/settings.ini (generated from the default theme); recorded here so fresh-boot Signal Night is one contract."
   },
   "fonts": {
-    "sans": "Rubik",
-    "mono": "CaskaydiaCove NF",
-    "material": "Material Symbols Rounded",
+    "sans": "IBM Plex Sans",
+    "mono": "IBM Plex Mono",
+    "display": "IBM Plex Sans Condensed",
     "packages": [
-      "extra/ttf-material-symbols-variable",
+      "extra/ttf-ibm-plex",
       "extra/papirus-icon-theme"
     ],
-    "note": "Material Symbols ships the shell icon font declared in shell/shell.default.json (appearance.font.family.material). Sans/mono families are recorded from shell/shell.default.json; their Arch packaging is AUR-side and documented in docs/FACTORY_DEFAULTS.md."
+    "note": "RFC 0001 §3.3 families, shipped by ttf-ibm-plex (OFL-1.1). The shell bundles its own Hornero Glyphs icon font; no system icon font is required."
   },
   "icons": {
     "theme": "Papirus-Dark",
     "package": "extra/papirus-icon-theme"
   },
   "wallpaper": {
-    "defaultWallpaper": "hornero-dark-01.png",
-    "wallpaperDir": "hornero-dark",
-    "note": "Procedural SVG source is rendered at package staging; the theme applies the raster at /usr/share/hornero/wallpapers/hornero-dark/hornero-dark-01.png."
+    "defaultWallpaper": "hornero-signal-night-01.png",
+    "wallpaperDir": "hornero-signal-night",
+    "note": "Procedural SVG source (assets/brand/wallpaper/hornero-signal-night.svg) is rendered at package staging to /usr/share/hornero/wallpapers/hornero-signal-night/. Wallpapers never recolour the UI."
+  },
+  "shellLayout": {
+    "preset": "cockpit",
+    "note": "RFC 0001 §5: Cockpit (top rail act, bottom strip know) is the factory layout; the preset payload is profiles/shell-presets/cockpit.json synced from HorneroOS/shell."
   }
 }

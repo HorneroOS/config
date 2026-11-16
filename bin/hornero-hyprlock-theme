@@ -1,27 +1,30 @@
 #!/usr/bin/env bash
 
-## Copyright (C) 2019-2025 Ulises Jeremias Cornejo Fandos
+## Copyright (C) 2019-2026 Ulises Jeremias Cornejo Fandos
 ## Licensed under MIT.
 ##
-## Generate hyprlock color overrides from Hornero's current generated palette.
+## Refresh the hyprlock colour variables from the live Hornero Signal scheme
+## (${XDG_STATE_HOME}/hornero/signal/scheme.json). desktop/hypr/hyprlock.conf
+## sources the output before declaring its widgets, so only variables change.
 ## User materialization takes precedence over the read-only system package.
 
 set -euo pipefail
 
-_lib_candidates=("$HOME/.local/lib/hornero" "/usr/share/hornero/lib/hornero")
-for _lib in "${_lib_candidates[@]}"; do
-  if [[ -f "$_lib/wallpaper-resolver.sh" ]]; then
-    # shellcheck source=/dev/null
-    source "$_lib/wallpaper-resolver.sh"
+HORNERO_STATE_DIR="${HORNERO_STATE_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}/hornero}"
+HORNERO_CACHE_DIR="${HORNERO_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/hornero}"
+HORNERO_SIGNAL_SCHEME="${HORNERO_SIGNAL_SCHEME:-$HORNERO_STATE_DIR/signal/scheme.json}"
+OUTPUT_FILE="${HORNERO_HYPRLOCK_COLORS:-$HORNERO_CACHE_DIR/smart-colors/colors-hyprlock.conf}"
+
+renderer=""
+for lib in "$HOME/.local/lib/hornero" "/usr/share/hornero/lib/hornero"; do
+  if [[ -f $lib/signal_render.py ]]; then
+    renderer="$lib/signal_render.py"
     break
   fi
 done
-
-HORNERO_CACHE_DIR="${HORNERO_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/hornero}"
-HORNERO_STATE_DIR="${HORNERO_STATE_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}/hornero}"
-HORNERO_SCHEME_FILE="${HORNERO_SCHEME_FILE:-$HORNERO_CACHE_DIR/smart-colors/scheme.json}"
-HORNERO_WALLPAPER_POINTER_FILE="${HORNERO_WALLPAPER_POINTER_FILE:-$HORNERO_STATE_DIR/wallpaper/path}"
-SCHEME_FILE="$HORNERO_SCHEME_FILE"
-SMART_COLORS_DIR="$(dirname "$HORNERO_SCHEME_FILE")"
-OUTPUT_FILE="${SMART_COLORS_DIR}/colors-hyprlock.conf"
-WALLPAPER_POINTER="$HORNERO_WALLPAPER_POINTER_FILE"
+[[ -n $renderer ]] || { echo "hornero-hyprlock-theme: signal_render.py not found" >&2; exit 1; }
+[[ -f $HORNERO_SIGNAL_SCHEME ]] || {
+  echo "hornero-hyprlock-theme: no live scheme at $HORNERO_SIGNAL_SCHEME (apply a theme first)" >&2
+  exit 1
+}
+python3 "$renderer" --theme "$HORNERO_SIGNAL_SCHEME" --hyprlock-output "$OUTPUT_FILE"

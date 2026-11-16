@@ -10,7 +10,7 @@ mkdir -p "$HOME_TEST/.local/lib/hornero" "$HOME_TEST/.local/share/hornero/themes
 	"$TMP/bin" "$TMP/config"
 cp "$ROOT/lib/hornero/snappy-switcher-manager.sh" "$HOME_TEST/.local/lib/hornero/"
 cat > "$HOME_TEST/.local/share/hornero/themes/patagonia/theme.json" <<'EOF'
-{"id":"patagonia","name":"Patagonia","darkMode":true,"snappyTheme":"patagonia.ini"}
+{"id":"patagonia","name":"Patagonia","mode":"dark","snappyTheme":"patagonia.ini"}
 EOF
 cat > "$TMP/bin/snappy-switcher" <<'EOF'
 #!/usr/bin/env bash

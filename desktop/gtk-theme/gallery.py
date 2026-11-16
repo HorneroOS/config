@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
-"""Hornero GTK widget gallery — visual fixture for the Hornero-Dark/Light themes.
+"""Hornero GTK widget gallery — visual fixture for the Hornero Signal themes.
 
 Covers every widget family the theme styles: window, headerbar, buttons
 (normal / suggested-action / destructive-action / flat / link), entry,
@@ -16,8 +16,8 @@ available and falls back to GTK 3, and exits 2 with a clear message when no
 Gtk bindings exist (headless CI) instead of failing the suite.
 
 Usage:
-    python3 desktop/gtk-theme/gallery.py [--theme Hornero-Dark]
-    GTK_THEME=Hornero-Light python3 desktop/gtk-theme/gallery.py
+    python3 desktop/gtk-theme/gallery.py [--theme Hornero-Signal]
+    GTK_THEME=Hornero-Signal-Day python3 desktop/gtk-theme/gallery.py
 
 The window auto-closes after ~3 seconds: the fixture is a render smoke test,
 never an interactive session, so suites cannot block on it.
@@ -121,7 +121,7 @@ def build_gtk3(Gtk, theme):
 
 
 def main(argv):
-    theme = "Hornero-Dark"
+    theme = "Hornero-Signal"
     for i, arg in enumerate(argv):
         if arg == "--theme" and i + 1 < len(argv):
             theme = argv[i + 1]

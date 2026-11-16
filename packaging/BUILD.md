@@ -62,7 +62,7 @@ pacman metadata dotfiles `.PKGINFO`/`.BUILDINFO`/`.MTREE`).
 /etc/xdg/handlr/handlr.toml
 /etc/xdg/hypr/hypridle.conf
 /etc/xdg/hypr/hyprland.lua
-/etc/xdg/hypr/hyprland.lua.d/*.lua (monitors, autostart, environment, input, gestures, layout, helpers, keybindings, keybindings-user, window-rules, window-rules-user, animations + 5 profiles, smart-colors, hornero-light, plugins, static)
+/etc/xdg/hypr/hyprland.lua.d/*.lua (monitors, autostart, environment, input, gestures, layout, helpers, keybindings, keybindings-user, window-rules, window-rules-user, animations + 5 profiles, smart-colors, signal-day, plugins, static)
 /etc/xdg/hypr/hyprlock.conf
 /etc/xdg/kitty/kitty.conf
 /etc/xdg/Thunar/accels.scm
@@ -75,26 +75,16 @@ pacman metadata dotfiles `.PKGINFO`/`.BUILDINFO`/`.MTREE`).
 /usr/share/hornero/lib/hornero/apply-appearance.sh
 /usr/share/hornero/lib/hornero/hornero-scripts.sh
 /usr/share/hornero/lib/hornero/easy-options/easyoptions.sh
-/usr/share/hornero/lib/hornero/generate-m3-colors.py
 /usr/share/hornero/lib/hornero/gtk-theme-manager.sh
 /usr/share/hornero/lib/hornero/list-themes.py
 /usr/share/hornero/lib/hornero/logging.sh
-/usr/share/hornero/lib/hornero/python-m3.sh
+/usr/share/hornero/lib/hornero/signal_render.py
+/usr/share/hornero/lib/hornero/signal_theme.py
 /usr/share/hornero/lib/hornero/snappy-switcher-manager.sh
 /usr/share/hornero/lib/hornero/wallpaper-resolver.sh
 /usr/share/hornero/profile.toml
 /usr/share/hornero/profiles/base/profile.toml
-/usr/share/hornero/themes/catppuccin-latte/theme.json
-/usr/share/hornero/themes/catppuccin-mocha/theme.json
-/usr/share/hornero/themes/everforest/theme.json
-/usr/share/hornero/themes/gruvbox/theme.json
-/usr/share/hornero/themes/landscape/theme.json
-/usr/share/hornero/themes/monochrome/theme.json
-/usr/share/hornero/themes/neon-city/theme.json
-/usr/share/hornero/themes/nord-dreams/theme.json
-/usr/share/hornero/themes/rose-pine/theme.json
-/usr/share/hornero/themes/soft-morning/theme.json
-/usr/share/hornero/themes/vapor-dreams/theme.json
+/usr/share/hornero/themes/<theme-id>/theme.json (20 schema-v2 themes, see catalogue/registry.json)
 /usr/share/hornero/themes/wallpapers.manifest.json
 /usr/share/hornero/themes/warm-sunset/theme.json
 /usr/share/licenses/hornero-config/LICENSE

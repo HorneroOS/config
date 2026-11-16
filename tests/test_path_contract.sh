@@ -16,35 +16,35 @@ mkdir -p "$XDG_CACHE_HOME" "$XDG_STATE_HOME" "$XDG_DATA_HOME" "$HOME"
 pass() { echo "TEST-PASS: $1"; }
 fail() { echo "TEST-FAIL: $1" >&2; exit 1; }
 
-# --- hornero-hyprlock-theme: hornero-only inputs -> canonical writes ----------------
-mkdir -p "$XDG_CACHE_HOME/hornero/smart-colors" "$XDG_STATE_HOME/hornero/wallpaper"
+# --- hornero-hyprlock-theme: live Signal scheme -> canonical cache write --------
+mkdir -p "$HOME/.local/lib" "$XDG_STATE_HOME/hornero/wallpaper"
+ln -s "$REPO_ROOT/lib/hornero" "$HOME/.local/lib/hornero"
 echo "/tmp/hx-probe-wallpaper.png" >"$XDG_STATE_HOME/hornero/wallpaper/path"
 touch /tmp/hx-probe-wallpaper.png
-cat >"$XDG_CACHE_HOME/hornero/smart-colors/scheme.json" <<'EOF'
-{"mode": "dark", "colours": {"primary": "#ffb0ca", "surface": "#191114", "onSurface": "#efdfe2", "background": "#191114", "onSurfaceVariant": "#d5c2c6", "outline": "#9e8c91", "secondary": "#e6b8c2", "error": "#ff5370"}}
-EOF
+python3 "$REPO_ROOT/lib/hornero/signal_theme.py" scheme \
+  "$REPO_ROOT/profiles/themes/hornero-signal-night/theme.json" >/dev/null \
+  || fail "signal_theme.py scheme writes the live scheme"
+[[ -f $XDG_STATE_HOME/hornero/signal/scheme.json ]] \
+  || fail "live scheme is not at \$XDG_STATE_HOME/hornero/signal/scheme.json"
+pass "live Signal scheme lands at the contract path"
 
-"$REPO_ROOT/bin/hornero-hyprlock-theme" --wallpaper /tmp/hx-probe-wallpaper.png >/dev/null \
-  || fail "hyprlock-theme exits 0 on hornero-only inputs"
-[[ -f $XDG_CACHE_HOME/hornero/smart-colors/colors-hyprlock.conf ]] \
-  || fail "hyprlock-theme writes canonical hornero output"
-grep -q "ffb0ca" "$XDG_CACHE_HOME/hornero/smart-colors/colors-hyprlock.conf" \
-  || fail "hyprlock-theme output carries scheme colours"
-# The generated override IS the effective lock-screen content, and it
-# carries no date label by design: hyprlock renders $TIME12/$USER but
-# neither $DATE (literal) nor cmd[] output (empty across four VM-proven
-# formats), so a date label would be dead UI.
-if grep -q 'text = \$DATE\|text = cmd' \
-  "$XDG_CACHE_HOME/hornero/smart-colors/colors-hyprlock.conf"; then
-  fail "generated hyprlock override carries a dead date label"
+"$REPO_ROOT/bin/hornero-hyprlock-theme" >/dev/null \
+  || fail "hyprlock-theme exits 0 on the live Signal scheme"
+OUT="$XDG_CACHE_HOME/hornero/smart-colors/colors-hyprlock.conf"
+[[ -f $OUT ]] || fail "hyprlock-theme writes canonical hornero output"
+grep -q '^\$hs_signal = rgba(f2a33aff)$' "$OUT" \
+  || fail "hyprlock-theme output carries the scheme's signal role"
+# The sourced override holds variables only; widgets (and the deliberate
+# absence of a dead $DATE/cmd[] label) live in desktop/hypr/hyprlock.conf.
+if grep -q '{' "$OUT"; then
+  fail "hyprlock override declares widgets (must be variables only)"
 fi
-pass "hyprlock-theme carries no dead date label"
-[[ -f $XDG_CACHE_HOME/hornero/smart-colors/colors-hyprlock.conf ]] \
-  || fail "hyprlock-theme did not write into the Hornero cache"
-pass "hyprlock-theme writes into the Hornero cache"
+if grep -q 'text = \$DATE\|text = cmd' "$REPO_ROOT/desktop/hypr/hyprlock.conf"; then
+  fail "hyprlock.conf carries a dead date label"
+fi
+pass "hyprlock-theme writes variables only into the Hornero cache"
 # hornero-appearance doctor reports the generated output. Only the
-# hyprlock line is asserted: whole-doctor health depends on unrelated
-# host state (wallpaper pointer, materialyoucolor python).
+# hyprlock line is asserted: whole-doctor health depends on host state.
 doctor_out="$("$REPO_ROOT/bin/hornero-appearance" doctor 2>/dev/null || true)"
 echo "$doctor_out" | grep -q "^hyprlock.conf  : [1-9][0-9]* bytes" \
   || fail "doctor misses the canonical colors-hyprlock.conf: $(echo "$doctor_out" | grep '^hyprlock.conf' || echo '(no line)')"

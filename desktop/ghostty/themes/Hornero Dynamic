@@ -1,23 +1,24 @@
-# Hornero Dynamic is the package fallback; the user cache is refreshed from wallpaper colors.
-palette = 0=#2B1F18
-palette = 1=#E07856
-palette = 2=#9CC184
-palette = 3=#D9A05F
-palette = 4=#7FA3B8
-palette = 5=#C08CA6
-palette = 6=#8FB3A6
-palette = 7=#E9D3BC
-palette = 8=#6B4E3B
-palette = 9=#F28B82
-palette = 10=#BFD9AE
-palette = 11=#F2B749
-palette = 12=#A9C6DA
-palette = 13=#D8A9BE
-palette = 14=#AECDC3
-palette = 15=#F6E9DB
-background = #1D1410
-foreground = #F6E9DB
-cursor-color = #F2B749
-cursor-text = #211310
-selection-background = #3C2C21
-selection-foreground = #F6E9DB
+# Hornero Signal palette for hornero-signal-night — GENERATED from schema-v2 roles
+# (lib/hornero/signal_render.py); do not hand-edit.
+palette = 0=#1F252E
+palette = 1=#F0705A
+palette = 2=#8BD49A
+palette = 3=#F2A33A
+palette = 4=#7EC1EA
+palette = 5=#D49AD8
+palette = 6=#6FCFC4
+palette = 7=#C9C4B8
+palette = 8=#66707B
+palette = 9=#FF9C88
+palette = 10=#B4EBC0
+palette = 11=#FFC77A
+palette = 12=#AEDBF6
+palette = 13=#EAC0EC
+palette = 14=#A2E6DD
+palette = 15=#ECE6DA
+background = #13171D
+foreground = #ECE6DA
+cursor-color = #F2A33A
+cursor-text = #1A1205
+selection-background = #16303F
+selection-foreground = #CDE8F8

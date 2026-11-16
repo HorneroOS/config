@@ -61,13 +61,13 @@ def err(msg): errors.append(msg)
 for f in sorted((root/"profiles"/"themes").rglob("*.json")):
     try: json.loads(f.read_text())
     except Exception as e: err(f"{f}: {e}")
-# theme.json schema minimum
+# theme.json: schema v2 (structure + contrast) is gated by check-contrast.py
+# below; here only the directory/id contract.
 for f in sorted((root/"profiles"/"themes").glob("*"+"/theme.json")):
     try:
         d = json.loads(f.read_text())
-        for k in ("schemaVersion","id","name","defaultWallpaper","wallpaperDir"):
-            if k not in d: err(f"{f}: missing key {k}")
-        if d["id"] != f.parent.name: err(f"{f}: id mismatch with directory")
+        if d.get("schemaVersion") != 2: err(f"{f}: schemaVersion must be 2")
+        if d.get("id") != f.parent.name: err(f"{f}: id mismatch with directory")
     except Exception as e: err(f"{f}: {e}")
 
 # JSONC: fastfetch (strip // and /* */ comments)
@@ -82,8 +82,8 @@ except Exception as e: err(f"{ff}: {e}")
 # TOML: handlr + base profile
 for f in (root/"xdg"/"handlr"/"handlr.toml", root/"profiles"/"base"/"profile.toml",
           root/"desktop"/"alacritty"/"alacritty.toml",
-          root/"desktop"/"alacritty"/"hornero-dark.toml",
-          root/"desktop"/"alacritty"/"hornero-light.toml",
+          root/"desktop"/"alacritty"/"hornero-signal-night.toml",
+          root/"desktop"/"alacritty"/"hornero-signal-day.toml",
           root/"desktop"/"alacritty"/"hornero-colors.toml"):
     try: tomllib.loads(f.read_text())
     except Exception as e: err(f"{f}: {e}")
@@ -241,7 +241,10 @@ from pathlib import Path
 root = Path(sys.argv[1])
 errors = []
 def err(msg): errors.append(msg)
-for variant in ("Hornero-Dark", "Hornero-Light", "Hornero-Pampa", "Hornero-Nocturno", "Hornero-FinDelMundo", "Hornero-Ibera", "Hornero-Iguazu", "Hornero-Patagonia", "Hornero-199X", "Hornero-Cuyo", "Hornero-Quebrada", "Hornero-Sierras"):
+trees = sorted(p.name for p in (root / "desktop/gtk-theme").glob("Hornero-*") if p.is_dir())
+if "Hornero-Signal" not in trees or "Hornero-Signal-Day" not in trees:
+    err("Hornero-Signal and Hornero-Signal-Day GTK trees are required")
+for variant in trees:
     tdir = root / "desktop/gtk-theme" / variant
     try:
         idx = configparser.ConfigParser(strict=True)
@@ -271,17 +274,34 @@ then
 else
   pass "GTK theme (gtk.css parse + index.theme)"
 fi
-if bash "$REPO_ROOT/desktop/gtk-theme/build.sh" --check >/dev/null 2>&1; then
-  pass "GTK theme outputs in sync with src/"
+if python3 "$REPO_ROOT/scripts/generate-appearance.py" --check; then
+  pass "generated appearance files (GTK/Qt/kitty/alacritty/ghostty/btop/cava/hypr/hyprlock) match schema-v2 themes"
 else
-  fail "GTK theme outputs drifted from src/ (run desktop/gtk-theme/build.sh)"
+  fail "generated appearance files drifted (run scripts/generate-appearance.py)"
 fi
 
-# --- appearance contrast (WCAG AA, fails the build on violation) ------------------
+# --- theme schema v2 + contrast (WCAG AA, fails the build on violation) ----------
 if python3 "$REPO_ROOT/scripts/check-contrast.py" --themes-dir "$REPO_ROOT/profiles/themes"; then
-  pass "appearance contrast (WCAG AA)"
+  pass "theme schema v2 + contrast (WCAG AA)"
 else
-  fail "appearance contrast (WCAG AA)"
+  fail "theme schema v2 + contrast (WCAG AA)"
+fi
+
+# --- Hornero Signal: no Material / M3 machinery in shipped first-party files -----
+# Historical records (DECISIONS changelog, wallpaper audits), the tests that
+# assert these names are rejected, and the byte-synced HorneroOS/shell
+# payload (owned and scanned upstream) are exempt.
+if material_hits="$(cd "$REPO_ROOT" && git grep -n -I -i -E \
+    'materialyoucolor|material[ _-]?symbols|material ?you|material design|\bm3[a-z_]*\b|schemeType|tonal-spot|surfaceContainer|onSurfaceVariant' \
+    -- . ':!docs/DECISIONS.md' ':!profiles/themes/dotfiles-wallpaper-audit.json' \
+    ':!profiles/themes/organization-wallpaper-inventory.json' ':!profiles/themes/wallpaper-candidates.json' \
+    ':!shell/shell.default.json' ':!profiles/shell-presets' ':!scripts/validate.sh' \
+    ':!tests/test_contrast.sh' ':!tests/test_catalogue.sh' ':!tests/test_desktop_integration.sh' \
+    2>/dev/null)"; then
+  echo "$material_hits" >&2
+  fail "Material/M3 references remain in first-party files"
+else
+  pass "no Material/M3 references in first-party files"
 fi
 
 # --- brand SVGs: well-formed XML, vector-only, self-contained ----------------------
@@ -293,7 +313,7 @@ errors = []
 required = ["logo.svg", "logo-symbolic.svg", "logo-mono.svg", "logo-dark.svg",
             "logo-light.svg", "wordmark.svg", "favicon.svg",
             "icons/hornero-app.svg", "icons/hornero-system.svg",
-            "wallpaper/hornero-dark.svg", "wallpaper/hornero-light.svg"]
+            "wallpaper/hornero-signal-night.svg", "wallpaper/hornero-signal-day.svg"]
 for rel in required:
     if not (brand / rel).is_file():
         errors.append(f"missing required brand asset: {rel}")
@@ -366,16 +386,16 @@ else
   fail "personal-data guard"
 fi
 
-# --- packaged runtime deps: every shipped helper's imports are declared -----------
-# generate-m3-colors.py imports materialyoucolor; without the dependency a
-# package-only install cannot switch theme (found by Hornero QA, Preview 13).
-if [[ -f "$REPO_ROOT/lib/hornero/generate-m3-colors.py" ]]; then
-  if grep -Eq "^depends=\(.*'python-materialyoucolor'" "$REPO_ROOT/packaging/PKGBUILD"; then
-    pass "PKGBUILD declares python-materialyoucolor (M3 scheme helper)"
+# --- packaged runtime deps: the shipped helpers and defaults are satisfiable ------
+# signal_render.py runs on the system python at apply time; every shipped
+# default names IBM Plex, so the font package is a hard dependency.
+for dep in python ttf-ibm-plex; do
+  if grep -Eq "^depends=\(.*'$dep'" "$REPO_ROOT/packaging/PKGBUILD"; then
+    pass "PKGBUILD depends declares $dep"
   else
-    fail "PKGBUILD depends lacks python-materialyoucolor (lib/hornero/generate-m3-colors.py)"
+    fail "PKGBUILD depends lacks $dep"
   fi
-fi
+done
 
 if [[ $FAIL -ne 0 ]]; then
   echo "validate.sh: FAIL" >&2

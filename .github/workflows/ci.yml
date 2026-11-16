@@ -37,16 +37,16 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install lint tools
-        run: pip install pre-commit yamllint
+        run: pip install pre-commit yamllint jsonschema
       - name: AUR package tag contract
         run: PYTHONPATH=. python3 tests/test_aur_release_stamp.py
       - name: Config syntax + personal-data guard
         run: scripts/validate.sh
-      - name: Appearance contrast (WCAG AA)
+      - name: Hornero Signal theme schema v2 + contrast (WCAG AA)
         run: tests/test_contrast.sh
-      - name: Native terminal palette renderers
-        run: python3 tests/test_terminal_themes.py
-      - name: Hornero GTK theme (GTK3+GTK4, no GTK2)
+      - name: Hornero Signal renderers (terminals, Qt, GTK, Hypr, hyprlock, live scheme)
+        run: python3 tests/test_signal_render.py
+      - name: Hornero Signal GTK theme (GTK3+GTK4, no GTK2)
         run: tests/test_gtk_theme.sh
       - name: Factory GTK settings generation
         run: tests/test_gtk_settings_generation.sh

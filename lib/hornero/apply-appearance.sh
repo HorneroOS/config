@@ -1,6 +1,9 @@
 # shellcheck shell=bash
 # Shared appearance apply pipeline (QS-down / CLI fallback).
-# Theme packs are apply-once recipes — this never writes a "current theme" id.
+# A theme apply renders every native format from the theme's schema-v2
+# roles (lib/hornero/signal_render.py) and writes the live Signal scheme the
+# shell watches. Wallpaper changes only move the wallpaper; they never
+# recolour anything (RFC 0001).
 
 # All persisted appearance state uses the Hornero XDG roots.
 HORNERO_THEMES_DIR="${HORNERO_THEMES_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/hornero/themes}"
@@ -9,10 +12,10 @@ HORNERO_STATE_DIR="${HORNERO_STATE_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}/ho
 HORNERO_CACHE_DIR="${HORNERO_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/hornero}"
 HORNERO_WALLPAPER_POINTER_FILE="${HORNERO_WALLPAPER_POINTER_FILE:-$HORNERO_STATE_DIR/wallpaper/path}"
 HORNERO_SCHEME_STATE_FILE="${HORNERO_SCHEME_STATE_FILE:-$HORNERO_STATE_DIR/scheme/state.json}"
-HORNERO_SCHEME_FILE="${HORNERO_SCHEME_FILE:-$HORNERO_CACHE_DIR/smart-colors/scheme.json}"
-HORNERO_M3_SCRIPT="${HORNERO_M3_SCRIPT:-$HOME/.local/lib/hornero/generate-m3-colors.py}"
+HORNERO_SIGNAL_SCHEME="${HORNERO_SIGNAL_SCHEME:-$HORNERO_STATE_DIR/signal/scheme.json}"
+HORNERO_SMART_COLORS_DIR="${HORNERO_SMART_COLORS_DIR:-$HORNERO_CACHE_DIR/smart-colors}"
 HORNERO_PICTURES_WALLPAPERS="${HORNERO_PICTURES_WALLPAPERS:-$HOME/Pictures/Wallpapers}"
-HORNERO_HYPRLOCK_COLORS="${HORNERO_HYPRLOCK_COLORS:-$HORNERO_CACHE_DIR/smart-colors/colors-hyprlock.conf}"
+HORNERO_HYPRLOCK_COLORS="${HORNERO_HYPRLOCK_COLORS:-$HORNERO_SMART_COLORS_DIR/colors-hyprlock.conf}"
 
 _hornero_appearance_resolve_theme_json() {
   printf '%s\n' "$HORNERO_THEMES_DIR/${1:-}/theme.json"
@@ -23,8 +26,15 @@ _hornero_appearance_resolve_state_file() {
 _hornero_appearance_pointer_for_write() {
   printf '%s\n' "$HORNERO_WALLPAPER_POINTER_FILE"
 }
-_hornero_appearance_scheme_for_write() {
-  printf '%s\n' "$HORNERO_SCHEME_FILE"
+_hornero_appearance_lib_dir() {
+  local dir
+  for dir in "$HOME/.local/lib/hornero" "/usr/share/hornero/lib/hornero"; do
+    if [[ -f $dir/signal_render.py ]]; then
+      printf '%s\n' "$dir"
+      return 0
+    fi
+  done
+  return 1
 }
 
 _hornero_appearance_json_get() {
@@ -56,18 +66,8 @@ _hornero_appearance_write_pointer() {
 	printf '%s\n' "$path" > "$target"
 }
 
-_hornero_appearance_normalize_scheme_type() {
-	local raw="${1:-tonal-spot}"
-	raw=$(printf '%s' "$raw" | tr '[:upper:]' '[:lower:]' | tr '_' '-' | tr -d ' ')
-	case "$raw" in
-		vibrant | expressive | fidelity | content | neutral | monochrome) printf '%s\n' "$raw" ;;
-		tonalspot | tonal-spot) printf 'tonal-spot\n' ;;
-		*) printf 'tonal-spot\n' ;;
-	esac
-}
-
-# Resolve gtk-application-prefer-dark independently of shell darkMode when possible.
-# Priority: theme.json gtkPreferDark → Light/Dark in gtk theme name → shell mode.
+# Resolve gtk-application-prefer-dark from the theme mode (schema v2 has no
+# separate GTK flag; an explicit legacy gtkPreferDark is still honoured).
 _hornero_appearance_resolve_gtk_prefer() {
 	local config_json="${1:-}"
 	local dark_mode="${2:-dark}"
@@ -164,9 +164,17 @@ _hornero_appearance_sync_kitty() {
 	local kitty_dir="${XDG_CONFIG_HOME:-$HOME/.config}/kitty"
 	local variant="$kitty_dir/${theme_id}.conf"
 	[[ -f $kitty_dir/kitty.conf && -f $variant ]] || return 0
-	if grep -qE '^include (hornero-(dark|light|199x)|pampa)\.conf$' "$kitty_dir/kitty.conf"; then
-		sed -i -E "s#^include (hornero-(dark|light|199x)|pampa)[.]conf\$#include ${theme_id}.conf#" "$kitty_dir/kitty.conf"
-	fi
+	# Every theme ships a generated <id>.conf next to kitty.conf; swap the
+	# one include line that names a shipped palette (user includes stay).
+	local line name
+	while IFS= read -r line; do
+		name="${line#include }"
+		name="${name%.conf}"
+		if [[ -f $kitty_dir/$name.conf && -f $HORNERO_THEMES_DIR/$name/theme.json ]]; then
+			sed -i "s#^include ${name}[.]conf\$#include ${theme_id}.conf#" "$kitty_dir/kitty.conf"
+			break
+		fi
+	done < <(grep -E '^include [a-z0-9-]+\.conf$' "$kitty_dir/kitty.conf" || true)
 	pkill -SIGUSR1 -x kitty > /dev/null 2>&1 || true
 }
 
@@ -174,25 +182,13 @@ _hornero_appearance_sync_kitty() {
 # ignore gtk.css theme trees (stock Adwaita blue accents) unless
 # ~/.config/gtk-4.0/gtk.css redefines the public palette; the per-variant
 # recolor.css files ship in the installed theme trees and are test-gated
-# against theme.json (tests/test_gtk_theme.sh).
+# against theme.json (tests/test_gtk_theme.sh). The tree is the theme's
+# gtkTheme, so every schema-v2 theme recolours libadwaita.
 _hornero_appearance_sync_recolor() {
 	local theme_id="${1:-}"
 	local tree=""
-	case "$theme_id" in
-		hornero-dark) tree="Hornero-Dark" ;;
-		hornero-light) tree="Hornero-Light" ;;
-		pampa) tree="Hornero-Pampa" ;;
-		buenos-aires-nocturno) tree="Hornero-Nocturno" ;;
-		fin-del-mundo) tree="Hornero-FinDelMundo" ;;
-		ibera) tree="Hornero-Ibera" ;;
-		iguazu) tree="Hornero-Iguazu" ;;
-		patagonia) tree="Hornero-Patagonia" ;;
-		hornero-199x) tree="Hornero-199X" ;;
-		cuyo) tree="Hornero-Cuyo" ;;
-		quebrada) tree="Hornero-Quebrada" ;;
-		sierras) tree="Hornero-Sierras" ;;
-		*) return 0 ;;
-	esac
+	tree="$(_hornero_appearance_json_get "$HORNERO_THEMES_DIR/$theme_id/theme.json" gtkTheme "")"
+	[[ -n $tree ]] || return 0
 	local src="${XDG_DATA_HOME:-$HOME/.local/share}/themes/$tree/gtk-4.0/recolor.css"
 	local dest="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-4.0/gtk.css"
 	[[ -f $src ]] || return 0
@@ -203,7 +199,7 @@ _hornero_appearance_sync_recolor() {
 # Point qt6ct at the theme's generated palette. Qt6 Widgets apps read
 # ~/.config/qt6ct/qt6ct.conf through QT_QPA_PLATFORMTHEME=qt6ct; the
 # per-theme colors/<id>.conf files are generated from canonical tokens
-# (scripts/generate-qt-schemes.py) and materialized with the rest of
+# (scripts/generate-appearance.py) and materialized with the rest of
 # desktop/qt6ct. Line-edit preserves the file's comments (no INI
 # rewrite). Graceful no-op when the scheme is absent (uncurated theme).
 _hornero_appearance_sync_qt() {
@@ -287,84 +283,32 @@ _hornero_appearance_resolve_gtk_color_scheme() {
 	fi
 }
 
-_hornero_appearance_run_palette() {
-	local wallpaper="$1"
-	local scheme_type="$2"
-	local dark_mode="$3"
-
-	if ! command -v wal > /dev/null 2>&1; then
-		echo "apply-appearance: wal not found" >&2
-		return 1
-	fi
-	# Drop any prior wal→image symlink before wal runs; echoing a path through
-	# that symlink would truncate the wallpaper file itself.
-	mkdir -p "$HOME/.cache/wal"
-	rm -f "$HOME/.cache/wal/wal"
-	if [[ $dark_mode == "light" ]]; then
-		wal -i "$wallpaper" -q -l || return 1
-	else
-		wal -i "$wallpaper" -q || return 1
-	fi
-
-	_hornero_appearance_write_pointer "$wallpaper"
-	rm -f "$HOME/.cache/wal/wal"
-	printf '%s\n' "$wallpaper" > "$HOME/.cache/wal/wal"
-
-	[[ -f $HORNERO_M3_SCRIPT ]] || {
-		echo "apply-appearance: missing generate-m3-colors.py" >&2
+# Render the theme's native formats and the live scheme. Every output is
+# rendered and validated before any file is replaced (signal_render.py).
+_hornero_appearance_render_theme() {
+	local config_json="$1"
+	local lib
+	lib="$(_hornero_appearance_lib_dir)" || {
+		echo "apply-appearance: signal_render.py not found" >&2
 		return 1
 	}
-	# Prefer system Python with materialyoucolor over pyenv shims on PATH.
-	# shellcheck source=/dev/null
-	source "${HOME}/.local/lib/hornero/python-m3.sh" 2> /dev/null || true
-	local scheme_out
-	scheme_out="$(_hornero_appearance_scheme_for_write)"
-	mkdir -p "$(dirname "$scheme_out")"
-	local terminal_args=(
-		--kitty-output "${XDG_CACHE_HOME:-$HOME/.cache}/hornero/smart-colors/colors-kitty.conf"
-		--alacritty-output "${XDG_CONFIG_HOME:-$HOME/.config}/alacritty/hornero-colors.toml"
-		--ghostty-output "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes/Hornero Dynamic"
-		--btop-output "${XDG_CONFIG_HOME:-$HOME/.config}/btop/themes/Hornero Dynamic.theme"
-		--cava-output "${XDG_CONFIG_HOME:-$HOME/.config}/cava/themes/Hornero Dynamic"
-	)
-	if declare -f hornero_run_m3_colors > /dev/null 2>&1; then
-		hornero_run_m3_colors \
-			--image "$wallpaper" \
-			--scheme-type "$scheme_type" \
-			--mode "$dark_mode" \
-			--output "$scheme_out" \
-			"${terminal_args[@]}" || return 1
-	elif command -v hornero-m3-colors > /dev/null 2>&1; then
-		hornero-m3-colors \
-			--image "$wallpaper" \
-			--scheme-type "$scheme_type" \
-			--mode "$dark_mode" \
-			--output "$scheme_out" \
-			"${terminal_args[@]}" || return 1
-	else
-		python3 "$HORNERO_M3_SCRIPT" \
-			--image "$wallpaper" \
-			--scheme-type "$scheme_type" \
-			--mode "$dark_mode" \
-			--output "$scheme_out" \
-			"${terminal_args[@]}" || return 1
-	fi
-	# Alacritty watches files when live_config_reload is enabled. Ghostty's
-	# GTK app needs SIGUSR2 to reload a regenerated named theme; use its user
-	# service when active, then fall back to signaling ordinary app instances.
+	local config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+	python3 "$lib/signal_render.py" --theme "$config_json" \
+		--scheme-output "$HORNERO_SIGNAL_SCHEME" \
+		--alacritty-output "${XDG_CONFIG_HOME:-$HOME/.config}/alacritty/hornero-colors.toml" \
+		--ghostty-output "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes/Hornero Dynamic" \
+		--btop-output "${XDG_CONFIG_HOME:-$HOME/.config}/btop/themes/Hornero Dynamic.theme" \
+		--cava-output "${XDG_CONFIG_HOME:-$HOME/.config}/cava/themes/Hornero Dynamic" \
+		--hyprland-output "$HORNERO_SMART_COLORS_DIR/colors-hyprland.lua" \
+		--hyprlock-output "$HORNERO_HYPRLOCK_COLORS" > /dev/null || return 1
+	[[ -d $config_home ]] || return 0
+	# Alacritty live-reloads its imports. Ghostty's GTK app needs SIGUSR2 to
+	# reload a rewritten named theme; prefer its user service when active.
 	if command -v systemctl > /dev/null 2>&1 && \
 		systemctl --user is-active --quiet app-com.mitchellh.ghostty.service; then
 		systemctl --user reload app-com.mitchellh.ghostty.service > /dev/null 2>&1 || true
 	else
 		pkill -USR2 -x ghostty > /dev/null 2>&1 || true
-	fi
-
-	if command -v hornero-color-scheme > /dev/null 2>&1; then
-		hornero-color-scheme sync-state > /dev/null 2>&1 || return 1
-	fi
-	_hornero_appearance_sync_gtk_color_scheme "$dark_mode"
-	if command -v hornero-hyprlock-theme > /dev/null 2>&1; then
-		hornero-hyprlock-theme > /dev/null 2>&1 || true
 	fi
 	if command -v hyprctl > /dev/null 2>&1; then
 		hyprctl reload > /dev/null 2>&1 || true
@@ -388,32 +332,29 @@ hornero_apply_theme() {
 		return 1
 	}
 
-	local scheme_type dark_mode_raw dark_mode gtk_theme icon_theme theme_name wallpaper_dir default_wp wallpaper
-	scheme_type="$(_hornero_appearance_normalize_scheme_type "$(_hornero_appearance_json_get "$config_json" schemeType tonal-spot)")"
-	dark_mode_raw="$(_hornero_appearance_json_get "$config_json" darkMode true)"
-	if [[ $dark_mode_raw == "false" ]]; then
-		dark_mode="light"
-	else
-		dark_mode="dark"
-	fi
-	gtk_fallback="Hornero-Dark"
-	[[ $dark_mode == "light" ]] && gtk_fallback="Hornero-Light"
-	gtk_theme="$(_hornero_appearance_json_get "$config_json" gtkTheme "$gtk_fallback")"
-	icon_theme="$(_hornero_appearance_json_get "$config_json" iconTheme Numix-Circle)"
+	local mode gtk_theme icon_theme theme_name wallpaper_dir default_wp wallpaper color_only
+	mode="$(_hornero_appearance_json_get "$config_json" mode dark)"
+	[[ $mode == "light" ]] || mode="dark"
+	gtk_theme="$(_hornero_appearance_json_get "$config_json" gtkTheme "")"
+	icon_theme="$(_hornero_appearance_json_get "$config_json" iconTheme Papirus-Dark)"
 	theme_name="$(_hornero_appearance_json_get "$config_json" name "$theme_id")"
 	wallpaper_dir="$(_hornero_appearance_json_get "$config_json" wallpaperDir "$theme_id")"
 	default_wp="$(_hornero_appearance_json_get "$config_json" defaultWallpaper "")"
+	color_only="$(_hornero_appearance_json_get "$config_json" colorOnly false)"
 
 	wallpaper="$(_hornero_appearance_resolve_theme_wallpaper "$theme_id" "$wallpaper_dir" "$default_wp" "$wallpaper_override" || true)"
-	[[ -n ${wallpaper:-} && -f $wallpaper ]] || {
+	if [[ -z ${wallpaper:-} || ! -f $wallpaper ]] && [[ $color_only != "true" ]]; then
 		echo "hornero_apply_theme: no wallpaper for theme $theme_id" >&2
 		return 1
-	}
+	fi
 
-	_hornero_appearance_run_palette "$wallpaper" "$scheme_type" "$dark_mode" || return 1
+	_hornero_appearance_render_theme "$config_json" || return 1
+	[[ -n ${wallpaper:-} && -f $wallpaper ]] && _hornero_appearance_write_pointer "$wallpaper"
+	local dark_mode="$mode"
 
 	local gtk_policy
 	gtk_policy="$(_hornero_appearance_resolve_gtk_color_scheme "$config_json" "$dark_mode" "$gtk_theme")"
+	_hornero_appearance_sync_gtk_color_scheme
 
 	if command -v hornero-gtk-theme > /dev/null 2>&1; then
 		if [[ -n $gtk_theme && $gtk_theme != "auto" ]]; then
@@ -452,7 +393,8 @@ hornero_apply_theme() {
 	return 0
 }
 
-# Wallpaper-only: live mode/flavour from scheme state.
+# Wallpaper-only: move the wallpaper pointer. The palette stays the applied
+# theme's (Hornero Signal never derives colours from the wallpaper).
 hornero_apply_wallpaper_only() {
 	local wallpaper="${1:-}"
 	wallpaper="$(readlink -f "$wallpaper" 2> /dev/null || true)"
@@ -460,15 +402,8 @@ hornero_apply_wallpaper_only() {
 		echo "hornero_apply_wallpaper_only: wallpaper not found" >&2
 		return 1
 	}
-
-	local scheme_type="tonal-spot" dark_mode="dark"
-	local state_file
-	state_file="$(_hornero_appearance_resolve_state_file)"
-	if [[ -f $state_file ]]; then
-		scheme_type="$(_hornero_appearance_normalize_scheme_type "$(_hornero_appearance_json_get "$state_file" flavour tonal-spot)")"
-		dark_mode="$(_hornero_appearance_json_get "$state_file" mode dark)"
-		[[ $dark_mode == "light" || $dark_mode == "dark" ]] || dark_mode="dark"
+	_hornero_appearance_write_pointer "$wallpaper"
+	if command -v hornero-hyprlock-theme > /dev/null 2>&1; then
+		hornero-hyprlock-theme > /dev/null 2>&1 || true
 	fi
-
-	_hornero_appearance_run_palette "$wallpaper" "$scheme_type" "$dark_mode"
 }

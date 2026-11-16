@@ -1,5 +1,7 @@
 -- Lua equivalent of the non-generated inline Hyprland settings and
--- debug.conf. Theme-generated border and shadow colors remain separate.
+-- debug.conf. Theme-generated border and shadow colors live in
+-- smart-colors.lua (Hornero Signal roles). Signal geometry: 1 px borders,
+-- 5 px corners, matte windows (no blur-behind glass, RFC 0001 §3.5).
 
 -- luacheck: globals hl
 
@@ -7,7 +9,7 @@ hl.config({
 	general = {
 		gaps_in = 6,
 		gaps_out = 18,
-		border_size = 2,
+		border_size = 1,
 		layout = "scrolling",
 		allow_tearing = false,
 		resize_on_border = true,
@@ -15,12 +17,12 @@ hl.config({
 		hover_icon_on_border = true,
 	},
 	decoration = {
-		rounding = 12,
+		rounding = 5,
 		active_opacity = 1.0,
-		inactive_opacity = 0.95,
+		inactive_opacity = 1.0,
 		fullscreen_opacity = 1.0,
 		blur = {
-			enabled = true,
+			enabled = false,
 			size = 8,
 			passes = 3,
 			new_optimizations = true,
@@ -35,8 +37,8 @@ hl.config({
 		shadow = {
 			enabled = true,
 			range = 12,
-			render_power = 2,
-			color = "rgba(0f0b082e)",
+			render_power = 3,
+			offset = "0 4",
 			scale = 1.0,
 		},
 		dim_inactive = true,

@@ -32,9 +32,9 @@
 ##     color-scheme <policy>   Set GTK color-scheme policy
 ##                             (follow|default|prefer-light|prefer-dark|light|dark)
 ##     sync-color-scheme       Re-apply persisted GTK color-scheme policy
-##     detect [wallpaper]      Detect optimal theme for wallpaper
+##     detect                  Show the GTK theme of the applied Signal theme
 ##     theme [theme-id]        Apply GTK theme from appearance theme pack
-##     auto                    Auto-detect and apply optimal theme
+##     auto                    Apply the GTK theme of the applied Signal theme
 ##     icons                   List installed icon themes
 ##     info <theme>            Show information about a theme
 ##
@@ -43,12 +43,12 @@
 ##     @script.name -q -p current
 ##     @script.name -q -p current-icon
 ##     @script.name -q -p current-color-scheme
-##     @script.name apply Hornero-Dark Papirus-Dark prefer-dark
+##     @script.name apply Hornero-Signal Papirus-Dark prefer-dark
 ##     @script.name set-icons Papirus-Dark
 ##     @script.name color-scheme prefer-light
 ##     @script.name color-scheme follow
-##     @script.name theme vapor-dreams
-##     @script.name detect ~/Pictures/wallpaper.jpg
+##     @script.name theme hornero-signal-day
+##     @script.name detect
 ##     @script.name auto
 
 set -euo pipefail
@@ -316,43 +316,13 @@ cmd_sync_color_scheme() {
 	fi
 }
 
-# Function to detect optimal theme
+# Report the GTK theme that matches the applied Hornero Signal theme
+# (wallpapers never select or recolour the GTK theme).
 cmd_detect() {
-	local wallpaper_path="${1:-}"
-
-	if [[ -z $wallpaper_path ]]; then
-		if [[ -f $HOME/.local/lib/hornero/wallpaper-resolver.sh ]]; then
-			# shellcheck source=/dev/null
-			source "$HOME/.local/lib/hornero/wallpaper-resolver.sh"
-			wallpaper_path="$(hornero_current_wallpaper 2>/dev/null || true)"
-		fi
-		if [[ -z ${wallpaper_path:-} ]]; then
-			echo -e "${RED}❌ No wallpaper specified and no current wallpaper found${NC}"
-			return 1
-		fi
-	fi
-
-	if [[ ! -f $wallpaper_path ]]; then
-		echo -e "${RED}❌ Wallpaper file not found: $wallpaper_path${NC}"
-		return 1
-	fi
-
-	echo -e "${BLUE}🔍 Analyzing wallpaper:${NC} $(basename "$wallpaper_path")"
-
 	local theme_info
-	theme_info=$(detect_optimal_gtk_theme "$wallpaper_path")
-	local detected_theme="${theme_info%:*}"
-	local prefer_dark="${theme_info#*:}"
-
-	echo -e "${GREEN}🎯 Detected optimal theme:${NC} $detected_theme"
-	echo -e "${GREEN}🌙 Dark preference:${NC} $prefer_dark"
-
-	# Ask if user wants to apply
-	read -p "Apply this theme? (y/N): " -n 1 -r
-	echo
-	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		cmd_apply "$detected_theme" "Numix-Circle" "$prefer_dark"
-	fi
+	theme_info=$(detect_optimal_gtk_theme)
+	echo -e "${GREEN}🎯 GTK theme for the applied Signal theme:${NC} ${theme_info%:*}"
+	echo -e "${GREEN}🌙 Dark preference:${NC} ${theme_info#*:}"
 }
 
 # Function to apply theme-pack GTK settings
@@ -371,7 +341,7 @@ cmd_theme_pack() {
 
 # Function to auto-detect and apply
 cmd_auto() {
-	echo -e "${BLUE}🤖 Auto-detecting optimal GTK theme...${NC}"
+	echo -e "${BLUE}🤖 Following the applied Hornero Signal theme...${NC}"
 	cmd_theme_pack ""
 }
 

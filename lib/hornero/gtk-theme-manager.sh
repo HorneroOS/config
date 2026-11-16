@@ -17,11 +17,6 @@
 
 set -euo pipefail
 
-# Source smart colors for theme detection
-if [[ -f "$HOME/.local/lib/hornero/smart-colors.sh" ]]; then
-	source "$HOME/.local/lib/hornero/smart-colors.sh"
-fi
-
 # GTK configuration paths
 readonly GTK2_CONFIG="$HOME/.gtkrc-2.0"
 readonly GTK3_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-3.0/settings.ini"
@@ -105,9 +100,9 @@ apply_gtk_theme() {
 		effective_scheme="$(effective_gtk_color_scheme "${3:-follow}")"
 		if [[ $effective_scheme == "prefer-light" ]] ||
 			[[ $effective_scheme == "default" && $(read_live_shell_mode) == "light" ]]; then
-			fallback_theme="Hornero-Light"
+			fallback_theme="Hornero-Signal-Day"
 		else
-			fallback_theme="Hornero-Dark"
+			fallback_theme="Hornero-Signal"
 		fi
 		if is_gtk_theme_installed "$fallback_theme"; then
 			gtk_theme="$fallback_theme"
@@ -244,11 +239,16 @@ normalize_gtk_color_scheme() {
 	esac
 }
 
+# Shell mode = the applied theme's mode, read from the live Hornero Signal
+# scheme (written by theme apply); legacy state.json only as a fallback.
 read_live_shell_mode() {
 	local mode="dark"
 	local state_file
+	local signal_scheme="${HORNERO_SIGNAL_SCHEME:-${XDG_STATE_HOME:-$HOME/.local/state}/hornero/signal/scheme.json}"
 	state_file="$(_gtk_resolve_state_for_read)"
-	if [[ -f $state_file ]]; then
+	if [[ -f $signal_scheme ]]; then
+		mode="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("mode", "dark"))' "$signal_scheme" 2> /dev/null || echo dark)"
+	elif [[ -f $state_file ]]; then
 		mode="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("mode", "dark"))' "$state_file" 2> /dev/null || echo dark)"
 	fi
 	if [[ $mode == "light" || $mode == "dark" ]]; then
@@ -294,12 +294,9 @@ except Exception:
 if not isinstance(data, dict):
     data = {}
 data["gtkColorScheme"] = policy
-data.setdefault("name", "dynamic")
-data.setdefault("flavour", "tonal-spot")
-data.setdefault("variant", "tonalspot")
-# No setdefault for "mode": shell mode is owned by the shell pipeline
-# (`hornero-color-scheme sync-state`). A defaulted dark went stale on first
-# write and broke later light applies (see tests/test_gtk_state.sh).
+# No "mode" here: the applied theme owns mode (live Signal scheme). A
+# defaulted dark went stale on first write and broke later light applies
+# (see tests/test_gtk_state.sh).
 path.parent.mkdir(parents=True, exist_ok=True)
 path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
 PY
@@ -400,61 +397,27 @@ get_current_gtk_color_scheme() {
 	read_live_gtk_color_scheme
 }
 
-# Function to detect optimal GTK theme based on wallpaper colors
+# The GTK theme follows the applied Hornero Signal theme, never the
+# wallpaper (RFC 0001). Prints "<gtk-theme>:<prefer-dark true|false>".
 detect_optimal_gtk_theme() {
-	local wallpaper_path="$1"
-	local detected_theme="Hornero-Light"
-	local prefer_dark="false"
-
-	# First, try to use pywal's background color to determine if theme should be dark or light
-	if [[ -f "$HOME/.cache/wal/colors" ]]; then
-		log "INFO" "Analyzing pywal colors for optimal theme selection"
-
-		# Read background color from pywal
-		local bg_color
-		bg_color=$(head -n 1 "$HOME/.cache/wal/colors" | tr -d '#')
-
-		if [[ -n $bg_color ]]; then
-			# Convert hex to RGB and calculate brightness
-			local r=$((16#${bg_color:0:2}))
-			local g=$((16#${bg_color:2:2}))
-			local b=$((16#${bg_color:4:2}))
-			local brightness=$((r + g + b))
-
-			# If background is dark (low brightness), suggest dark theme
-			if [[ $brightness -lt 384 ]]; then # 384 = 128 * 3 (threshold for dark)
-				log "INFO" "Dark background detected (brightness: $brightness), suggesting dark theme"
-				detected_theme="Hornero-Dark"
-				prefer_dark="true"
-			else
-				log "INFO" "Light background detected (brightness: $brightness), suggesting light theme"
-				detected_theme="Hornero-Light"
-				prefer_dark="false"
-			fi
-		fi
-	elif command -v hornero-smart-colors > /dev/null 2>&1; then
-		# Fallback: use smart-colors to analyze current theme
-		log "INFO" "Using smart-colors to analyze current theme"
-
-		# Check if current theme is light or dark using smart-colors logic
-		if hornero-smart-colors --analyze 2> /dev/null | grep -q "light theme\|bright"; then
-			log "INFO" "Light theme detected, suggesting light GTK theme"
-			detected_theme="Hornero-Light"
-			prefer_dark="false"
-		else
-			log "INFO" "Dark theme detected, suggesting dark GTK theme"
-			detected_theme="Hornero-Dark"
-			prefer_dark="true"
-		fi
-	else
-		log "WARN" "No color analysis available, using default light theme"
+	local signal_scheme="${HORNERO_SIGNAL_SCHEME:-${XDG_STATE_HOME:-$HOME/.local/state}/hornero/signal/scheme.json}"
+	local theme_id="" gtk_theme="" mode
+	mode="$(read_live_shell_mode)"
+	if [[ -f $signal_scheme ]]; then
+		theme_id="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("id", ""))' "$signal_scheme" 2> /dev/null || true)"
 	fi
-
-	log "INFO" "Detected optimal theme: $detected_theme (dark: $prefer_dark)"
-	echo "$detected_theme:$prefer_dark"
+	if [[ -n $theme_id && -f "$(_gtk_resolve_theme_json "$theme_id")" ]]; then
+		gtk_theme="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("gtkTheme", ""))' "$(_gtk_resolve_theme_json "$theme_id")" 2> /dev/null || true)"
+	fi
+	if [[ -z $gtk_theme ]]; then
+		if [[ $mode == "light" ]]; then gtk_theme="Hornero-Signal-Day"; else gtk_theme="Hornero-Signal"; fi
+	fi
+	local prefer_dark="true"
+	[[ $mode == "light" ]] && prefer_dark="false"
+	log "INFO" "GTK theme for the applied Signal theme: $gtk_theme (dark: $prefer_dark)"
+	echo "$gtk_theme:$prefer_dark"
 }
 
-# Normalize prefer-dark to a real GTK boolean string (true/false).
 normalize_prefer_dark() {
 	case "${1:-auto}" in
 		true | 1 | yes | dark) echo "true" ;;
@@ -468,30 +431,11 @@ apply_theme_gtk_theme() {
 	local theme_id="${1:-}"
 
 	if [[ -z $theme_id ]]; then
-		log "WARN" "No theme specified, using wallpaper-based detection"
-		local wallpaper=""
-		if [[ -f "$HOME/.local/lib/hornero/wallpaper-resolver.sh" ]]; then
-			# shellcheck source=/dev/null
-			source "$HOME/.local/lib/hornero/wallpaper-resolver.sh"
-			wallpaper="$(hornero_current_wallpaper 2> /dev/null || true)"
-		fi
-		# Never readlink ~/.cache/wal/wal — it is a text path file, not an image symlink.
-		if [[ -n $wallpaper && -f $wallpaper ]]; then
-			local theme_info
-			theme_info=$(detect_optimal_gtk_theme "$wallpaper")
-			local gtk_theme="${theme_info%:*}"
-			local prefer_dark
-			prefer_dark="$(normalize_prefer_dark "${theme_info#*:}")"
-			apply_gtk_theme "$gtk_theme" "Numix-Circle" "$prefer_dark"
-		else
-			local mode
-			mode="$(read_live_shell_mode)"
-			if [[ $mode == "light" ]]; then
-				apply_gtk_theme "Hornero-Light" "Numix-Circle" "false"
-			else
-				apply_gtk_theme "Hornero-Dark" "Numix-Circle" "true"
-			fi
-		fi
+		log "INFO" "No theme specified, following the applied Signal theme"
+		local theme_info prefer_dark
+		theme_info="$(detect_optimal_gtk_theme)"
+		prefer_dark="$(normalize_prefer_dark "${theme_info#*:}")"
+		apply_gtk_theme "${theme_info%:*}" "Papirus-Dark" "$prefer_dark"
 		return
 	fi
 
@@ -512,20 +456,12 @@ apply_theme_gtk_theme() {
 import json, sys
 data = json.load(open(sys.argv[1], encoding="utf-8"))
 gtk = data.get("gtkTheme") or "auto"
-icon = data.get("iconTheme") or "Numix-Circle"
+icon = data.get("iconTheme") or "Papirus-Dark"
 scheme = data.get("gtkColorScheme")
 if scheme:
     prefer = str(scheme)
-elif "gtkPreferDark" in data and data["gtkPreferDark"] is not None:
-    prefer = "prefer-dark" if data["gtkPreferDark"] else "prefer-light"
 else:
-    gtk_lc = str(gtk).lower()
-    if "light" in gtk_lc:
-        prefer = "prefer-light"
-    elif "dark" in gtk_lc:
-        prefer = "prefer-dark"
-    else:
-        prefer = "prefer-dark" if data.get("darkMode", True) else "prefer-light"
+    prefer = "prefer-light" if data.get("mode") == "light" else "prefer-dark"
 print(gtk)
 print(icon)
 print(prefer)
@@ -540,23 +476,10 @@ PY
 	fi
 
 	if [[ -z $gtk_theme ]] || [[ $gtk_theme == "auto" ]]; then
-		local wal_wallpaper=""
-		if [[ -f "$HOME/.local/lib/hornero/wallpaper-resolver.sh" ]]; then
-			# shellcheck source=/dev/null
-			source "$HOME/.local/lib/hornero/wallpaper-resolver.sh"
-			wal_wallpaper="$(hornero_current_wallpaper 2> /dev/null || true)"
-		fi
-		# Prefer wallpaper-resolver (handles text wal pointer + state pointer).
-		if [[ -n $wal_wallpaper && -f $wal_wallpaper ]]; then
-			local theme_info
-			theme_info=$(detect_optimal_gtk_theme "$wal_wallpaper")
-			gtk_theme="${theme_info%:*}"
+		if [[ $color_scheme == "prefer-light" ]]; then
+			gtk_theme="Hornero-Signal-Day"
 		else
-			if [[ $color_scheme == "prefer-dark" ]]; then
-				gtk_theme="Hornero-Dark"
-			else
-				gtk_theme="Hornero-Light"
-			fi
+			gtk_theme="Hornero-Signal"
 		fi
 	fi
 

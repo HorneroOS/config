@@ -1,100 +1,76 @@
 {
-  "schemaVersion": 1,
+  "$schema": "../tokens.schema.json",
+  "schemaVersion": 2,
   "id": "iguazu",
   "name": "Iguazú",
-  "collection": "hornero-originals",
-  "collectionOrder": 11,
-  "description": "The Iguazú Falls in close view: white water, basalt and dense subtropical green in Misiones",
+  "description": "The Iguazú Falls in close view: wet-basalt surfaces, white-water ink, subtropical phosphor and a mist-celeste cue",
   "tags": [
     "argentina",
     "iguazu",
     "waterfall",
     "jungle",
+    "basalt",
     "green",
-    "dark",
-    "nature"
+    "dark"
   ],
-  "darkMode": true,
-  "schemeType": "expressive",
+  "collection": "hornero-originals",
+  "collectionOrder": 8,
+  "mode": "dark",
   "gtkTheme": "Hornero-Iguazu",
   "iconTheme": "Papirus-Dark",
   "defaultWallpaper": "iguazu-falls-01.jpg",
   "wallpaperDir": "iguazu",
   "palette": {
-    "background": "#101614",
-    "surface": "#18201C",
-    "surfaceVariant": "#232E28",
-    "onSurfaceVariant": "#CAD1CC",
-    "text": "#EFF5F0",
-    "textMuted": "#AEC4B6",
-    "primary": "#5EC8B4",
-    "onPrimary": "#16100A",
-    "secondary": "#2E6B8F",
-    "onSecondary": "#FFFFFF",
-    "accent": "#E86A4E",
-    "onAccent": "#1C1008",
-    "border": "#2E4238",
-    "error": "#F28B82",
-    "onError": "#2A1210",
-    "success": "#9CC184",
-    "onSuccess": "#14240F"
+    "ground": "#0A100E",
+    "sunken": "#0E1512",
+    "base": "#111916",
+    "panel": "#16201C",
+    "raised": "#1D2924",
+    "lifted": "#26342E",
+    "ink": "#E9F0EC",
+    "inkMuted": "#A5B6AE",
+    "inkFaint": "#6E8078",
+    "rule": "#29372F",
+    "ruleStrong": "#6C8074",
+    "signal": "#E5A23F",
+    "onSignal": "#1B1308",
+    "signalWell": "#37321D",
+    "onSignalWell": "#F3D5A9",
+    "cue": "#7DCBE6",
+    "onCue": "#0F181C",
+    "cueWell": "#24393B",
+    "onCueWell": "#C4E8F4",
+    "phosphor": "#7FD49B",
+    "onPhosphor": "#0F1913",
+    "phosphorWell": "#253B2E",
+    "onPhosphorWell": "#C5ECD2",
+    "alert": "#EF7B66",
+    "onAlert": "#1D0F0C",
+    "alertWell": "#392B24",
+    "onAlertWell": "#F8C4BA",
+    "inverse": "#E9F0EC",
+    "onInverse": "#16201C",
+    "inverseSignal": "#896126",
+    "scrim": "#000000",
+    "shadow": "#000000",
+    "focus": "#7DCBE6"
   },
-  "components": {
-    "window": {
-      "description": "Application window body text",
-      "background": "#101614",
-      "foreground": "#EFF5F0"
-    },
-    "panel": {
-      "description": "Panels, sidebars and header bars",
-      "background": "#18201C",
-      "foreground": "#EFF5F0"
-    },
-    "card": {
-      "description": "Raised cards and popovers",
-      "background": "#232E28",
-      "foreground": "#CAD1CC"
-    },
-    "buttonPrimary": {
-      "description": "Primary action",
-      "background": "#5EC8B4",
-      "foreground": "#16100A"
-    },
-    "buttonSecondary": {
-      "description": "Secondary action",
-      "background": "#2E6B8F",
-      "foreground": "#FFFFFF"
-    },
-    "accentBadge": {
-      "description": "Highlights, badges and accents",
-      "background": "#E86A4E",
-      "foreground": "#1C1008"
-    },
-    "input": {
-      "description": "Text entries and search fields",
-      "background": "#101614",
-      "foreground": "#EFF5F0"
-    },
-    "mutedText": {
-      "description": "Secondary text on surfaces",
-      "background": "#18201C",
-      "foreground": "#AEC4B6"
-    },
-    "tooltip": {
-      "description": "Tooltips and scrim overlays",
-      "background": "#090C0B",
-      "foreground": "#EFF5F0"
-    },
-    "errorBanner": {
-      "description": "Errors and destructive actions",
-      "background": "#F28B82",
-      "foreground": "#2A1210"
-    },
-    "successBanner": {
-      "description": "Confirmations and success states",
-      "background": "#9CC184",
-      "foreground": "#14240F"
-    }
-  },
-  "gtkPreferDark": true
+  "terminal": [
+    "#1D2924",
+    "#EF7B66",
+    "#7FD49B",
+    "#E5A23F",
+    "#7DCBE6",
+    "#C49FD0",
+    "#5EC8B4",
+    "#A5B6AE",
+    "#617669",
+    "#F4A394",
+    "#A5E1B9",
+    "#EDBE79",
+    "#A4DBEE",
+    "#D6BCDE",
+    "#8ED8CA",
+    "#E9F0EC"
+  ]
 }

@@ -1,3 +1,7 @@
+> **Historical (pre-Hornero Signal).** The `hornero-dark`/`hornero-light` packs
+> named below were replaced by `hornero-signal-night` (`Papirus-Dark`) and
+> `hornero-signal-day` (`Papirus`); the icon decisions carried over.
+
 # Icon-base recommendation
 
 Evaluation of third-party icon-base candidates for HorneroOS, against

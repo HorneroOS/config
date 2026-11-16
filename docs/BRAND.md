@@ -1,92 +1,116 @@
-# HorneroOS brand identity
+# HorneroOS brand identity — Hornero Signal
 
-Canonical vector identity for HorneroOS: warm clay, sunset and earth tones
-with a rufous-hornero bird mark. Explicitly NOT a Garuda-style dragon and
-NOT generic cyberpunk neon.
+HorneroOS speaks one visual language, **Hornero Signal**
+([RFC 0001](https://github.com/HorneroOS/docs/blob/main/development/rfc-0001-hornero-signal.md)):
+a contemporary engineering workstation from an alternate 1990s Argentina —
+broadcast control rooms, oscilloscope bezels, test cards, technical drawing
+sheets and the 45° diagonal of La Plata — executed with modern restraint.
+The rufous-hornero bird mark stays the project's signature. Explicitly not
+Material, not a Garuda-style dragon, not generic neon.
 
-## Direction
+## Principles (RFC 0001 §2)
 
-A hornero (rufous hornero, the ovenbird) silhouette perched on a branch,
-set against a setting-sun disc. The mark references the bird the project
-is named after and the mud-oven nest it builds (the arch/contour motif
-reused in the wallpapers). Palette is taken from the flagship
-`hornero-dark` / `hornero-light` token ramps so the identity always matches
-the default desktop (`pampa`, the grassland-night third flagship, reuses
-the same bird mark and arch/contour motif in its own green-and-gold ramp).
+1. **Work first.** Chrome is quiet and matte. Amber `signal` means
+   live / active / primary; celeste `cue` means focus / selection /
+   information. Accents are signals, never decoration.
+2. **Instrument, not toy.** Hairline rules, small radii (3/5/8 px), tabular
+   numerals, segmented meters, labelled channels. No pills-everywhere, no
+   bounce, no glass, no neon gradients.
+3. **Legible at a glance.** Every text role passes WCAG AA (4.5:1) on every
+   surface it is used on; control boundaries pass 3:1. Enforced for every
+   shipped theme by `scripts/check-contrast.py`.
+4. **One language everywhere.** Shell, extensions, GTK/Qt apps, terminals,
+   compositor, lock, greeter, installer and website map from the same roles.
 
-Canonical palette:
+Signature details: Plex Mono uppercase **eyebrows** (`01 · AUDIO`), the
+2×10 px `signal` **registration tick** on the active panel, the 2–3 px
+**on-air bar** for active strips and tabs, **segmented meters**, and the
+La Plata **diagonal** — only on brand surfaces (lock, greeter, installer,
+website hero, wallpapers), never inside controls.
 
-| Role             | Dark surface | Light surface |
+## Palette roles
+
+The token contract is `profiles/themes/tokens.schema.json` (schema v2);
+`lib/hornero/signal_theme.py` validates it and every generator maps from
+these roles only. Flagship values (RFC 0001 §3.2 with amendment 2):
+
+| Role | Use | Signal Night | Signal Day |
+|---|---|---|---|
+| `ground` | Desktop, lock background | `#0C0F13` | `#E6E1D5` |
+| `sunken` | Inputs, tracks, wells | `#101419` | `#DCD6C8` |
+| `base` | Bars, window body | `#13171D` | `#F2EEE5` |
+| `panel` | Cards, popouts, menus | `#181D24` | `#F7F4EE` |
+| `raised` | Hover/selected rows | `#1F252E` | `#FBF9F5` |
+| `lifted` | Tooltips, pressed | `#283039` | `#FFFFFF` |
+| `ink` / `inkMuted` / `inkFaint` | Text tiers | `#ECE6DA` `#A8ABAD` `#737980` | `#1B1E22` `#4E545B` `#7A8086` |
+| `rule` / `ruleStrong` | Hairlines / control boundaries | `#2C333C` `#707A85` | `#D3CCBD` `#736D62` |
+| `signal` (+`on`, `Well`, `onWell`) | Primary, live, active (amber) | `#F2A33A` | `#8F4B00` |
+| `glow` (optional) | Live-signal emphasis; defaults to `signal` | `#FFB650` | `#8F4B00` |
+| `cue` / `focus` | Focus ring, selection, info (celeste) | `#7EC1EA` | `#1A5F88` |
+| `phosphor` | Healthy, connected | `#8BD49A` | `#256A3B` |
+| `alert` | Destructive, error | `#F0705A` | `#A8341C` |
+| `inverse` / `onInverse` / `inverseSignal` | Snackbars | `#ECE6DA` `#181D24` `#8A5200` | `#1B1E22` `#F2EEE5` `#F2A33A` |
+
+**Signal High Contrast** keeps the roles with a `#000000` ground, `#FFFFFF`
+ink and rules, `#FFC247` signal and `#8FD3FF` cue. Hornero Originals
+(Patagonia, Quebrada, Iberá, Fin del Mundo, Buenos Aires Nocturno, Pampa,
+Cuyo, Iguazú, Sierras) are regional palettes in the same spirit: instrument
+surfaces tinted by place, one warm signal, a celeste cue.
+
+## Typography (RFC 0001 §3.3)
+
+| Family | Font | Use |
 |---|---|---|
-| Sunset amber     | `#F2B749` | `#F2B749` |
-| Ember terracotta | `#E07856` | `#B24827` |
-| Fired clay       | `#D9A05F` | `#7C4A2C` |
-| Night adobe      | `#1D1410` | — |
-| Morning paper    | — | `#FAF1E3` |
-| Cream text       | `#F6E9DB` | — |
-| Adobe text       | — | `#2B1A11` |
+| `sans` | IBM Plex Sans | UI text (GTK `gtk-font-name`, Qt `general`) |
+| `mono` | IBM Plex Mono | Readouts, numerals, eyebrows, code, terminals |
+| `display` | IBM Plex Sans Condensed | Clock, lock, large headings |
+
+Shipped by Arch `extra/ttf-ibm-plex` (OFL-1.1), a hard dependency of
+`hornero-config`. Numbers always use tabular figures. The shell's icons are
+Hornero Glyphs (Tabler-derived, MIT), bundled by HorneroOS/shell.
 
 ## Files (`assets/brand/`)
 
+The bird mark is unchanged; its colours are bound to Signal roles (sun disc
+`glow` → `signal` → Day `signal`, bird in Day `ink`, light-ground bird in
+Night `ink`).
+
 | File | Use |
 |---|---|
-| `logo.svg` | Canonical full-color mark (transparent ground) |
-| `logo-dark.svg` | Cream bird for dark backgrounds |
-| `logo-light.svg` | Deep-adobe bird for light backgrounds (same art as canonical) |
-| `logo-symbolic.svg` | Single-color `currentColor` mark, bird knocked out (panels, tray) |
-| `logo-mono.svg` | Pure-black mark (print, engraving, single ink) |
-| `wordmark.svg` | `HORNERO OS` wordmark (`currentColor` + terracotta `OS`); set in the local system sans, weight 800 |
-| `icons/hornero-app.svg` | Squircle app icon (launchers, docks, app grids) |
-| `icons/hornero-system.svg` | Roundel system icon (settings, about dialogs) |
-| `favicon.svg` | Small-size optical variant: enlarged bird, no eye detail, heavier branch — use at 16–48 px |
-| `wallpaper/hornero-{dark,light}.svg` | Procedural wallpaper sources (16:9) |
-| `wallpaper/hornero-{dark,light,199x}.png` | Vendored flagship artwork shipped as the theme defaults (16:9) |
+| `logo.svg` | Canonical full-colour mark (transparent ground) |
+| `logo-dark.svg` | Ink-cream bird for dark backgrounds |
+| `logo-light.svg` | Ink-black bird for light backgrounds (same art as canonical) |
+| `logo-symbolic.svg` | Single-colour `currentColor` mark (panels, tray) |
+| `logo-mono.svg` | Pure-black mark (print, single ink) |
+| `wordmark.svg` | `HORNERO OS` wordmark (`currentColor` + signal `OS`) |
+| `icons/hornero-app.svg` | Squircle app icon |
+| `icons/hornero-system.svg` | Roundel system icon |
+| `favicon.svg` | Small-size optical variant for 16–48 px |
+| `wallpaper/hornero-signal-{night,day}.svg` | Procedural Signal wallpapers drawn from the theme roles: drafting grid, La Plata diagonal in `signal`, `cue` registration marks, ruler scale |
 
-All SVGs are hand-authored, well-formed XML, vector-only (no `<image>`,
-no `data:` URIs) and self-contained (no external references).
-`scripts/validate.sh` enforces all three; `scripts/render-brand-assets.sh`
-validates and renders PNGs.
+All SVGs are hand-authored, well-formed XML, vector-only and
+self-contained; `scripts/validate.sh` enforces this and
+`scripts/render-brand-assets.sh` validates and renders PNGs.
 
 ## Fastfetch
 
-`desktop/fastfetch/hornero.txt` is the ASCII mark (perched bird on a sun
-disc + wordmark). It ships with the fastfetch defaults via materialize and
-renders with e.g.:
+`desktop/fastfetch/hornero.txt` is the ASCII mark. The shipped config
+colours it and its keys with ANSI names, so it follows the applied theme's
+terminal palette (yellow = `signal`, blue = `cue`, green = `phosphor`).
 
-```
-fastfetch --logo-type file \
-  --logo ~/.config/fastfetch/hornero.txt \
-  --logo-color-1 yellow --logo-color-2 red
-```
+## Wallpapers
 
-## Wallpaper solution (no vendored binaries)
-
-Flagship SVG sources remain procedural and render at install time. The six
-licensed Argentina photo defaults are shipped separately as optimized JPEGs;
-their attribution and terms are documented in `profiles/themes/WALLPAPER-CREDITS.md`.
-See `docs/WALLPAPERS.md` for the full asset policy. Fresh
-boot shows intentional Hornero visuals through this chain:
-
-1. Source: `assets/brand/wallpaper/hornero-{dark,light}.svg`
-   (procedural, on-palette, 16:9) plus the vendored flagship artwork
-   `hornero-{dark,light,199x}.png`, which wins at render time. Regional
-   themes (Pampa included) ship licensed photographs instead — see
-   `profiles/themes/WALLPAPER-CREDITS.md`. Simple procedural SVG figures
-   are no longer shipped as wallpapers.
-2. Render on the target machine:
-   `scripts/render-brand-assets.sh --wallpapers ~/.local/share/hornero/wallpapers`
-   produces `<id>/<id>-01.png` (1920x1080) per flagship theme
-   (`hornero-dark`, `hornero-light`, `hornero-199x`)
-   plus HiDPI `...-02-hidpi.png` (2560x1440).
-3. The flagship `theme.json` packs and `wallpapers.manifest.json` point
-   `defaultWallpaper` at those PNG names, so the normal resolver picks
-   them up once rendered.
-4. Missing-file behavior is unchanged: `bin/hornero-wallpaper-set` exits 1
-   with `Error: wallpaper file not found` and the empty state stays the
-   fallback until packs are rendered or fetched.
+Wallpapers never recolour the UI. Signal Night/Day (and High Contrast,
+which reuses Night) render from the procedural SVGs on the target machine:
+`scripts/render-brand-assets.sh --wallpapers <dir>` produces
+`<wallpaperDir>/<wallpaperDir>-01.png` (1920×1080) and `-02-hidpi.png`
+(2560×1440). The nine Hornero Originals ship licensed Argentine photographs
+whose attribution and licences are in `profiles/themes/WALLPAPER-CREDITS.md`
+and `profiles/themes/wallpaper-provenance.json`; see `docs/WALLPAPERS.md`.
+The retired Hornero Dark/Light/199X artwork is no longer shipped.
 
 ## Size recognizability
 
 Rendered with `scripts/render-brand-assets.sh` and inspected at
 16/24/32/48/64/128/256/512 px. The full mark reads down to ~32 px; below
-that use `favicon.svg`, whose enlarged silhouette stays legible at 16 px.
+that use `favicon.svg`.
