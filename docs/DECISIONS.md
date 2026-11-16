@@ -11,8 +11,8 @@ Later product-owned payloads identify their HorneroOS source in the table.
 | Shipped as | From | Notes |
 |---|---|---|
 | `desktop/hypr/` (`hyprland.lua` + 19 `hyprland.lua.d` modules, `hypridle.conf`, `hyprlock.conf`, 3 Lua helper scripts) | `home/dot_config/hypr/` (Lua-only migration) | No template vars, no identity. `monitors.lua` is a generic autodetect fallback written for this repo (see excluded row). The legacy hyprlang `hyprland.conf`/`hyprland.conf.d` tree and the 3 shell helpers were retired in the Lua migration: binds 145/145, window rules 44/44, autostart 20/20, env 24/24 (see `tests/test_hyprland_lua.sh`). `hypridle.conf`/`hyprlock.conf` belong to separate apps and keep their native format. Cross-repo follow-up: `horneroctl` writers in HorneroOS/shell that emitted `keybindings-user.conf`/`window-rules-user.conf` or a hyprlang Smart Colors file must emit the `.lua` overlays / `colors-hyprland.lua` instead. |
-| `desktop/kitty/kitty.conf` | `home/dot_config/kitty/` | Static palette + fonts. The `include ~/.cache/hornero/smart-colors/…` line is a generated-cache hook, benign when absent. |
-| `desktop/alacritty/` | HorneroOS product defaults | Optional terminal configuration with an upstream `/etc/alacritty` package fallback. A generated Material scheme replaces `hornero-colors.toml`; the checked-in fallback keeps Alacritty usable before first palette generation. |
+| `desktop/kitty/kitty.conf` | `home/dot_config/kitty/` | Fonts (IBM Plex Mono) + one `include <theme-id>.conf` line; the per-theme palettes are generated (see "Hornero Signal" below). |
+| `desktop/alacritty/` | HorneroOS product defaults | Optional terminal configuration with an upstream `/etc/alacritty` package fallback. Applying a theme renders `hornero-colors.toml` from its Signal roles; the checked-in Signal Night fallback keeps Alacritty usable before the first apply. |
 | `desktop/ghostty/` | HorneroOS product defaults | Optional terminal configuration. Ghostty has no global config lookup, so the package installs a system theme fallback and seeds new users through `/etc/skel`; user materialization remains XDG-native. |
 | `desktop/gtk/settings.ini` | `home/dot_config/gtk-3.0/settings.ini` | Static theme/font/cursor defaults. |
 | `desktop/gtk/gtkrc-2.0` | `home/dot_gtkrc-2.0` | Byte-identical. The `include "/home/user/.gtkrc-2.0.mine"` line is upstream's generic LXAppearance override hook, not a real user path. |
@@ -122,7 +122,9 @@ Notes: `sss/`, `wpg/`, and `xfce4/` keep their existing deferred status
 unchanged (outside this pass's row list). Existing tables above are
 untouched; this section only adds verdicts.
 
-## Flagship appearance tokens (new authorship, not extraction)
+## Flagship appearance tokens (new authorship, not extraction) — superseded
+
+> Superseded by "Hornero Signal" below (2026-11-16). Kept as history.
 
 `profiles/themes/hornero-dark/` + `hornero-light/` are original HorneroOS
 flagship themes (terracotta/clay/sunset-warm family), not copies from
@@ -305,3 +307,54 @@ default because Hornero ships no GTK 2 theme tree.
   `systemctl enable`); paired devices in `/var/lib/bluetooth` are never
   touched. The shell-owned pairing-agent user unit is deferred to the
   agent workstream (its `ExecStart` binary does not exist in this repo).
+
+## Hornero Signal — theme schema v2 (RFC 0001, 2026-11-16, breaking)
+
+Design authority: RFC 0001 (HorneroOS/docs, amendments 1–2) and mission
+HorneroOS/.github#28. Intentional breaking redesign with no compatibility
+layer.
+
+- **Schema v2.** `profiles/themes/tokens.schema.json` (2.0.0): `palette`
+  carries exactly the RFC §3.1 roles (plus the optional `glow`, amendment 2),
+  `terminal` is 16 ANSI colours, metadata is `id`/`name`/`mode`/`gtkTheme`/
+  `iconTheme`/`defaultWallpaper`/`wallpaperDir` (+ optional `description`,
+  `tags`, `collection`, `collectionOrder`, `colorOnly`, `version`). Removed:
+  `schemeType`, `darkMode`, `gtkPreferDark`, `family`, `tokensVersion`,
+  `components` and every Material role. `lib/hornero/signal_theme.py`
+  validates structure and WCAG (text roles ≥ 4.5:1 on sunken/base/panel/
+  raised, on-pairs ≥ 4.5:1, `ruleStrong` ≥ 3:1 on base/panel/lifted,
+  terminal readability) and writes the live scheme
+  (`$XDG_STATE_HOME/hornero/signal/scheme.json`).
+- **Themes.** Added `hornero-signal-night` (factory default),
+  `hornero-signal-day`, `hornero-signal-contrast` with RFC §3.2 values.
+  Ported to v2 with newly authored Signal palettes: the nine Hornero
+  Originals and `landscape`; community ports `catppuccin-mocha`,
+  `catppuccin-latte`, `nord-dreams`, `gruvbox`, `rose-pine`, `everforest`,
+  `monochrome` keep their canonical surfaces/accents, nudged only where AA
+  required it. Removed: `hornero-dark`, `hornero-light`, `hornero-199x`
+  (replaced by the Signal flagships; their vendored artwork is not reused and
+  was deleted), `neon-city`, `vapor-dreams` (neon/synthwave ricing contradicts
+  "no neon gradients"), `soft-morning`, `warm-sunset` (wallpaper-seeded M3
+  looks with no palette of their own and no Hornero character).
+- **Generators.** `scripts/generate-appearance.py` + `lib/hornero/
+  signal_render.py` derive every shipped file from roles only: GTK trees
+  (`Hornero-Signal`, `-Day`, `-Contrast`, one per Original) from
+  `desktop/gtk-theme/src/signal.css`, libadwaita recolour, qt6ct schemes,
+  Kitty/Alacritty/Ghostty/btop/Cava, Hyprland borders, hyprlock. Replaced
+  `desktop/gtk-theme/build.sh` + per-theme `src/*.css`,
+  `scripts/generate-qt-schemes.py`, `scripts/check-terminal-contrast.py`,
+  `lib/hornero/terminal_themes.py`, `generate-m3-colors.py`, `python-m3.sh`.
+- **Runtime.** A theme apply renders the live scheme and native themes from
+  roles; wallpaper changes only move the wallpaper. Kitty switches its
+  `include <id>.conf` line (the wallpaper `colors-kitty.conf` cache include
+  is gone). `colors-hyprlock.conf` carries hyprlang variables only and is
+  sourced before `hyprlock.conf` declares widgets.
+- **Defaults/packaging.** Fonts IBM Plex Sans/Mono/Sans Condensed
+  (`ttf-ibm-plex`, hard depend); dropped `python-materialyoucolor`,
+  `ttf-material-symbols-variable` and `ttf-cascadia-code-nerd` (Rubik was
+  never a package dependency). `profiles/factory.json` records
+  `shellLayout.preset = cockpit`. `shell/shell.default.json` and
+  `profiles/shell-presets/` stay byte-synced from HorneroOS/shell (owned
+  there).
+- **Brand.** The bird mark is unchanged; its token-bound colours moved to
+  Signal roles; new procedural `hornero-signal-{night,day}.svg` wallpapers.

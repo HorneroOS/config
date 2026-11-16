@@ -1,10 +1,11 @@
-# Hornero Dark fallback; regenerated from the active wallpaper palette.
+# Hornero Signal palette for hornero-signal-night — GENERATED from schema-v2 roles
+# (lib/hornero/signal_render.py); do not hand-edit.
 [color]
-background = '#1D1410'
-foreground = '#F6E9DB'
+background = '#13171D'
+foreground = '#ECE6DA'
 gradient = 1
 gradient_count = 4
-gradient_color_1 = '#3C2C21'
-gradient_color_2 = '#E07856'
-gradient_color_3 = '#D9A05F'
-gradient_color_4 = '#F2B749'
+gradient_color_1 = '#8BD49A'
+gradient_color_2 = '#7EC1EA'
+gradient_color_3 = '#F2A33A'
+gradient_color_4 = '#F0705A'

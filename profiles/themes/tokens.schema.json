@@ -1,50 +1,57 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://hornero.os/config/tokens.schema.json",
-  "title": "HorneroOS semantic appearance tokens",
-  "description": "Versioned semantic token model for HorneroOS theme packs. Recipe fields (id, name, darkMode, schemeType, gtkTheme, iconTheme, gtkPreferDark, defaultWallpaper, wallpaperDir) may be enriched with family, mode, version, palette, and WCAG-AA-checked component tokens. The optional collection field groups product-authored visual looks without changing their palette model.",
-  "version": "1.0.0",
+  "title": "HorneroOS Hornero Signal theme (schema v2)",
+  "description": "A Hornero Signal theme pack: the RFC 0001 §3.1 colour roles in `palette`, a 16-colour ANSI `terminal` palette and apply metadata (GTK/icon theme, wallpaper). Contrast rules (WCAG AA text 4.5:1 on sunken/base/panel/raised, on*-pairs 4.5:1, ruleStrong 3:1 on base/panel/lifted) are enforced by scripts/check-contrast.py, which shares lib/hornero/signal_theme.py with every generator.",
+  "version": "2.0.0",
   "type": "object",
+  "additionalProperties": false,
   "required": [
     "schemaVersion",
     "id",
     "name",
-    "family",
     "mode",
-    "version",
-    "tokensVersion",
-    "darkMode",
-    "schemeType",
+    "palette",
+    "terminal",
     "gtkTheme",
     "iconTheme",
-    "gtkPreferDark",
     "defaultWallpaper",
-    "wallpaperDir",
-    "palette",
-    "components"
+    "wallpaperDir"
   ],
   "properties": {
+    "$schema": {
+      "type": "string"
+    },
     "schemaVersion": {
-      "const": 1
+      "const": 2
     },
     "id": {
       "type": "string",
-      "pattern": "^[a-z0-9-]+$"
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
     },
     "name": {
       "type": "string",
       "minLength": 1
     },
+    "description": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
     "collection": {
-      "enum": ["hornero-originals"]
+      "enum": [
+        "hornero-signal",
+        "hornero-originals"
+      ]
     },
     "collectionOrder": {
       "type": "integer",
       "minimum": 1
-    },
-    "family": {
-      "type": "string",
-      "minLength": 1
     },
     "mode": {
       "enum": [
@@ -56,24 +63,6 @@
       "type": "string",
       "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
-    "tokensVersion": {
-      "type": "string",
-      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
-    },
-    "darkMode": {
-      "type": "boolean"
-    },
-    "schemeType": {
-      "enum": [
-        "tonal-spot",
-        "vibrant",
-        "expressive",
-        "fidelity",
-        "content",
-        "neutral",
-        "monochrome"
-      ]
-    },
     "gtkTheme": {
       "type": "string",
       "minLength": 1
@@ -81,9 +70,6 @@
     "iconTheme": {
       "type": "string",
       "minLength": 1
-    },
-    "gtkPreferDark": {
-      "type": "boolean"
     },
     "defaultWallpaper": {
       "type": "string",
@@ -93,56 +79,168 @@
       "type": "string",
       "minLength": 1
     },
+    "colorOnly": {
+      "type": "boolean",
+      "description": "The theme applies colours without requiring its wallpaper media to be installed."
+    },
     "palette": {
       "type": "object",
+      "additionalProperties": false,
       "required": [
-        "background",
-        "surface",
-        "surfaceVariant",
-        "onSurfaceVariant",
-        "text",
-        "textMuted",
-        "primary",
-        "onPrimary",
-        "secondary",
-        "onSecondary",
-        "accent",
-        "onAccent"
+        "ground",
+        "sunken",
+        "base",
+        "panel",
+        "raised",
+        "lifted",
+        "ink",
+        "inkMuted",
+        "inkFaint",
+        "rule",
+        "ruleStrong",
+        "signal",
+        "onSignal",
+        "signalWell",
+        "onSignalWell",
+        "cue",
+        "onCue",
+        "cueWell",
+        "onCueWell",
+        "phosphor",
+        "onPhosphor",
+        "phosphorWell",
+        "onPhosphorWell",
+        "alert",
+        "onAlert",
+        "alertWell",
+        "onAlertWell",
+        "inverse",
+        "onInverse",
+        "inverseSignal",
+        "scrim",
+        "shadow",
+        "focus"
       ],
-      "additionalProperties": {
-        "$ref": "#/$defs/hexColor"
+      "properties": {
+        "ground": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "sunken": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "base": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "panel": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "raised": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "lifted": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "ink": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "inkMuted": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "inkFaint": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "rule": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "ruleStrong": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "signal": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onSignal": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "signalWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onSignalWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "cue": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onCue": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "cueWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onCueWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "phosphor": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onPhosphor": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "phosphorWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onPhosphorWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "alert": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onAlert": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "alertWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onAlertWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "inverse": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onInverse": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "inverseSignal": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "scrim": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "shadow": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "focus": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "glow": {
+          "$ref": "#/$defs/hexColor",
+          "description": "Optional (RFC 0001 amendment 2): live-signal emphasis; consumers default to `signal` when absent."
+        }
       }
     },
-    "components": {
-      "type": "object",
-      "minProperties": 1,
-      "additionalProperties": {
-        "$ref": "#/$defs/textPair"
-      }
+    "terminal": {
+      "type": "array",
+      "minItems": 16,
+      "maxItems": 16,
+      "items": {
+        "$ref": "#/$defs/hexColor"
+      },
+      "description": "ANSI colours 0-15 (term0…term15); background is palette.base, foreground palette.ink."
     }
   },
   "$defs": {
     "hexColor": {
       "type": "string",
-      "pattern": "^#[0-9a-fA-F]{6}$"
-    },
-    "textPair": {
-      "type": "object",
-      "required": [
-        "background",
-        "foreground"
-      ],
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "background": {
-          "$ref": "#/$defs/hexColor"
-        },
-        "foreground": {
-          "$ref": "#/$defs/hexColor"
-        }
-      }
+      "pattern": "^#[0-9A-F]{6}$"
     }
   }
 }

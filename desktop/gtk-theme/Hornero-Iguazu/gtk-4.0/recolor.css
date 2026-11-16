@@ -1,38 +1,35 @@
-/* Hornero-Iguazu libadwaita recoloring.
- *
- * Libadwaita apps ignore gtk.css theme trees and render stock Adwaita
- * (blue accents) unless the user config redefines the public palette.
- * This file is installed as ~/.config/gtk-4.0/gtk.css so GTK4/libadwaita
- * apps pick up the theme accents. Values are wired to
- * profiles/themes/iguazu/theme.json and gated by
- * tests/test_gtk_theme.sh (accent_bg_color == palette.primary, etc.).
- * Hand-owned alongside the src/ theme; see desktop/gtk-theme/README.md. */
-@define-color accent_bg_color #5EC8B4;
-@define-color accent_fg_color #16100A;
-@define-color accent_color #E86A4E;
-@define-color destructive_bg_color #F28B82;
-@define-color destructive_fg_color #2A1210;
-@define-color destructive_color #F28B82;
-@define-color success_bg_color #9CC184;
-@define-color success_fg_color #14240F;
-@define-color success_color #9CC184;
-@define-color warning_bg_color #E86A4E;
-@define-color warning_fg_color #1C1008;
-@define-color warning_color #E86A4E;
-@define-color error_bg_color #F28B82;
-@define-color error_fg_color #2A1210;
-@define-color error_color #F28B82;
-@define-color window_bg_color #101614;
-@define-color window_fg_color #EFF5F0;
-@define-color view_bg_color #101614;
-@define-color view_fg_color #EFF5F0;
-@define-color headerbar_bg_color #18201C;
-@define-color headerbar_fg_color #EFF5F0;
-@define-color card_bg_color #232E28;
-@define-color card_fg_color #CAD1CC;
-@define-color dialog_bg_color #18201C;
-@define-color dialog_fg_color #EFF5F0;
-@define-color popover_bg_color #232E28;
-@define-color popover_fg_color #CAD1CC;
-@define-color sidebar_bg_color #18201C;
-@define-color sidebar_fg_color #EFF5F0;
+/* Hornero-Iguazu libadwaita recolouring — GENERATED from schema-v2 roles of
+ * profiles/themes/iguazu/theme.json (scripts/generate-appearance.py).
+ * Installed as ~/.config/gtk-4.0/gtk.css; public named colours only. */
+@define-color accent_bg_color #E5A23F;
+@define-color accent_fg_color #1B1308;
+@define-color accent_color #E5A23F;
+@define-color destructive_bg_color #EF7B66;
+@define-color destructive_fg_color #1D0F0C;
+@define-color destructive_color #EF7B66;
+@define-color success_bg_color #7FD49B;
+@define-color success_fg_color #0F1913;
+@define-color success_color #7FD49B;
+@define-color warning_bg_color #E5A23F;
+@define-color warning_fg_color #1B1308;
+@define-color warning_color #E5A23F;
+@define-color error_bg_color #EF7B66;
+@define-color error_fg_color #1D0F0C;
+@define-color error_color #EF7B66;
+@define-color window_bg_color #111916;
+@define-color window_fg_color #E9F0EC;
+@define-color view_bg_color #16201C;
+@define-color view_fg_color #E9F0EC;
+@define-color headerbar_bg_color #111916;
+@define-color headerbar_fg_color #E9F0EC;
+@define-color headerbar_border_color #29372F;
+@define-color sidebar_bg_color #0E1512;
+@define-color sidebar_fg_color #E9F0EC;
+@define-color card_bg_color #16201C;
+@define-color card_fg_color #E9F0EC;
+@define-color dialog_bg_color #16201C;
+@define-color dialog_fg_color #E9F0EC;
+@define-color popover_bg_color #16201C;
+@define-color popover_fg_color #E9F0EC;
+@define-color thumbnail_bg_color #1D2924;
+@define-color thumbnail_fg_color #E9F0EC;

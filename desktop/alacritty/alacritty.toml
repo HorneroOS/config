@@ -1,7 +1,7 @@
-# HorneroOS Alacritty defaults. Keep color values in the imports below so
-# generated wallpaper colors can override the static Hornero fallback.
+# HorneroOS Alacritty defaults. Colour values live in the imports below:
+# the packaged Signal Night palette, then the applied theme's palette.
 [general]
-import = ["hornero-dark.toml", "hornero-colors.toml"]
+import = ["hornero-signal-night.toml", "hornero-colors.toml"]
 live_config_reload = true
 
 [window]

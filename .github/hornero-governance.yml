@@ -1,8 +1,8 @@
 # Repo policy for the HorneroOS deterministic PR-governance engine.
 # Merged over safe defaults; see HorneroOS/.github governance/danger.
 #
-# The qt6ct color schemes are GENERATED from the theme sources below
-# (scripts/generate-qt-schemes.py; regenerate must diff clean).
+# Native theme files are GENERATED from the schema-v2 theme sources below
+# (scripts/generate-appearance.py; regenerate must diff clean).
 
 version: 1
 kind: config
@@ -11,12 +11,14 @@ visual_paths:
   - "desktop/**"
   - "**/*.svg"
 generated_paths:
-  - source: "profiles/themes/hornero-dark/theme.json"
-    derivative: "desktop/qt6ct/colors/hornero-dark.conf"
-  - source: "profiles/themes/hornero-light/theme.json"
-    derivative: "desktop/qt6ct/colors/hornero-light.conf"
-  - source: "profiles/themes/pampa/theme.json"
-    derivative: "desktop/qt6ct/colors/pampa.conf"
+  - source: "profiles/themes/hornero-signal-night/theme.json"
+    derivative: "desktop/qt6ct/colors/hornero-signal-night.conf"
+  - source: "profiles/themes/hornero-signal-day/theme.json"
+    derivative: "desktop/qt6ct/colors/hornero-signal-day.conf"
+  - source: "profiles/themes/hornero-signal-night/theme.json"
+    derivative: "desktop/gtk-theme/Hornero-Signal/gtk-4.0/gtk.css"
+  - source: "profiles/themes/hornero-signal-day/theme.json"
+    derivative: "desktop/gtk-theme/Hornero-Signal-Day/gtk-4.0/gtk.css"
 policies:
   large_threshold: 800
   forbidden_paths:

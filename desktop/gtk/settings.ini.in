@@ -2,7 +2,7 @@
 gtk-application-prefer-dark-theme={{ gtkPreferDark }}
 gtk-theme-name={{ gtkTheme }}
 gtk-icon-theme-name={{ iconTheme }}
-gtk-font-name=sans 11
+gtk-font-name={{ font }}
 gtk-cursor-theme-name=elementary
 gtk-cursor-theme-size=24
 gtk-toolbar-style=GTK_TOOLBAR_ICONS

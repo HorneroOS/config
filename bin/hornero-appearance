@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-## hornero-appearance: Appearance manager (wallpaper, scheme, theme packs, GTK).
+## hornero-appearance: Appearance manager (Hornero Signal themes, wallpaper, GTK).
 ## Copyright (C) 2019-2026 Ulises Jeremias Cornejo Fandos
 ## Licensed under MIT.
 ##
-## Theme packs are apply-once recipes — there is no sticky "current theme".
+## A theme apply writes the live Signal scheme the shell watches
+## (${XDG_STATE_HOME}/hornero/signal/scheme.json). Wallpapers never recolour.
 
 set -euo pipefail
 
@@ -17,12 +18,12 @@ HORNERO_THEMES_DIR="${HORNERO_THEMES_DIR:-$_HORNERO_DATA_BASE/hornero/themes}"
 HORNERO_STATE_DIR="${HORNERO_STATE_DIR:-$_HORNERO_STATE_BASE/hornero}"
 HORNERO_CACHE_DIR="${HORNERO_CACHE_DIR:-$_HORNERO_CACHE_BASE/hornero}"
 HORNERO_SCHEME_STATE_FILE="${HORNERO_SCHEME_STATE_FILE:-$HORNERO_STATE_DIR/scheme/state.json}"
-HORNERO_SCHEME_FILE="${HORNERO_SCHEME_FILE:-$HORNERO_CACHE_DIR/smart-colors/scheme.json}"
+HORNERO_SIGNAL_SCHEME="${HORNERO_SIGNAL_SCHEME:-$HORNERO_STATE_DIR/signal/scheme.json}"
 HORNERO_WALLPAPER_POINTER="${HORNERO_WALLPAPER_POINTER:-$HORNERO_STATE_DIR/wallpaper/path}"
 HORNERO_HYPRLOCK_COLORS="${HORNERO_HYPRLOCK_COLORS:-$HORNERO_CACHE_DIR/smart-colors/colors-hyprlock.conf}"
 
 _appearance_resolve_state_file() { printf '%s\n' "$HORNERO_SCHEME_STATE_FILE"; }
-_appearance_resolve_scheme_file() { printf '%s\n' "$HORNERO_SCHEME_FILE"; }
+_appearance_resolve_scheme_file() { printf '%s\n' "$HORNERO_SIGNAL_SCHEME"; }
 _appearance_resolve_hyprlock_colors() { printf '%s\n' "$HORNERO_HYPRLOCK_COLORS"; }
 _appearance_resolve_pointer() {
   printf '%s\n' "${HORNERO_WALLPAPER_POINTER_FILE:-$HORNERO_WALLPAPER_POINTER}"
@@ -164,17 +165,24 @@ EOF
 	esac
 }
 
+_appearance_scheme_field() {
+	python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get(sys.argv[2], ""))' "$1" "$2" 2>/dev/null || true
+}
+
 cmd_status() {
-	local wallpaper="" mode="" flavour="" gtk_theme="" icon_theme="" gtk_color_scheme=""
+	local wallpaper="" theme="" mode="" gtk_theme="" icon_theme="" gtk_color_scheme=""
 	if command -v hornero-wallpaper-current >/dev/null 2>&1; then
 		wallpaper="$(hornero-wallpaper-current 2>/dev/null || true)"
 	fi
-	local state_file
+	local scheme state_file
+	scheme="$(_appearance_resolve_scheme_file)"
+	if [[ -f $scheme ]]; then
+		theme="$(_appearance_scheme_field "$scheme" id)"
+		mode="$(_appearance_scheme_field "$scheme" mode)"
+	fi
 	state_file="$(_appearance_resolve_state_file)"
 	if [[ -f $state_file ]]; then
-		flavour="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("flavour", ""))' "$state_file" 2>/dev/null || true)"
-		mode="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("mode", ""))' "$state_file" 2>/dev/null || true)"
-		gtk_color_scheme="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("gtkColorScheme", "") or "follow")' "$state_file" 2>/dev/null || true)"
+		gtk_color_scheme="$(_appearance_scheme_field "$state_file" gtkColorScheme)"
 	fi
 	[[ -n $gtk_color_scheme ]] || gtk_color_scheme="follow"
 	if [[ -f ${XDG_CONFIG_HOME:-$HOME/.config}/gtk-3.0/settings.ini ]]; then
@@ -185,17 +193,17 @@ cmd_status() {
 	fi
 
 	if [[ ${1:-} == "--json" ]]; then
-		printf '{"wallpaper":%s,"mode":%s,"flavour":%s,"gtkTheme":%s,"iconTheme":%s,"gtkColorScheme":%s}\n' \
-			"$(json_escape "${wallpaper:-}")" \
+		printf '{"theme":%s,"mode":%s,"wallpaper":%s,"gtkTheme":%s,"iconTheme":%s,"gtkColorScheme":%s}\n' \
+			"$(json_escape "${theme:-}")" \
 			"$(json_escape "${mode:-}")" \
-			"$(json_escape "${flavour:-}")" \
+			"$(json_escape "${wallpaper:-}")" \
 			"$(json_escape "${gtk_theme:-}")" \
 			"$(json_escape "${icon_theme:-}")" \
 			"$(json_escape "${gtk_color_scheme:-}")"
 	else
-		echo "wallpaper      : ${wallpaper:-}"
+		echo "theme          : ${theme:-}"
 		echo "mode           : ${mode:-}"
-		echo "flavour        : ${flavour:-}"
+		echo "wallpaper      : ${wallpaper:-}"
 		echo "gtkTheme       : ${gtk_theme:-}"
 		echo "iconTheme      : ${icon_theme:-}"
 		echo "gtkColorScheme : ${gtk_color_scheme:-}"
@@ -209,14 +217,6 @@ cmd_set_wallpaper() {
 		exit 1
 	}
 	hornero-wallpaper-set "$wallpaper"
-}
-
-cmd_set_variant() {
-	hornero-color-scheme variant "${1:-}"
-}
-
-cmd_set_mode() {
-	hornero-color-scheme mode "${1:-}"
 }
 
 cmd_set_gtk() {
@@ -274,147 +274,47 @@ cmd_sync() {
 			_wait_appearance_ipc || exit 1
 		fi
 	fi
-	hornero-color-scheme sync-state >/dev/null 2>&1 || true
 }
 
 cmd_doctor() {
-	local ok=0
-	local scheme_flavour="" state_flavour="" scheme_mode="" state_mode=""
-	local pointer="" resolved="" wal_target=""
-
-	local scheme_file state_file
-	scheme_file="$(_appearance_resolve_scheme_file)"
-	state_file="$(_appearance_resolve_state_file)"
-	if [[ -f $scheme_file ]]; then
-		scheme_flavour="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("flavour", ""))' "$scheme_file" 2>/dev/null || true)"
-		scheme_mode="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("mode", ""))' "$scheme_file" 2>/dev/null || true)"
-	fi
-	if [[ -f $state_file ]]; then
-		state_flavour="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("flavour", ""))' "$state_file" 2>/dev/null || true)"
-		state_mode="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("mode", ""))' "$state_file" 2>/dev/null || true)"
-	fi
-
-	pointer="$(_appearance_resolve_pointer)"
-	local pointer_val=""
-	[[ -f $pointer ]] && pointer_val="$(head -n 1 "$pointer" | tr -d '\r')"
+	local ok=0 scheme pointer_val="" resolved="" hyprlock_conf hyprlock_bytes=0
+	scheme="$(_appearance_resolve_scheme_file)"
+	hyprlock_conf="$(_appearance_resolve_hyprlock_colors)"
+	pointer_val="$(cat "$(_appearance_resolve_pointer)" 2>/dev/null | head -n1 || true)"
 	if command -v hornero-wallpaper-current >/dev/null 2>&1; then
 		resolved="$(hornero-wallpaper-current 2>/dev/null || true)"
 	fi
-	if [[ -L $HOME/.cache/wal/wal ]]; then
-		wal_target="$(readlink -f "$HOME/.cache/wal/wal" 2>/dev/null || true)"
-	elif [[ -f $HOME/.cache/wal/wal ]]; then
-		wal_target="$(head -n 1 "$HOME/.cache/wal/wal" | tr -d '\r')"
-		wal_target="$(readlink -f "$wal_target" 2>/dev/null || true)"
-	fi
-
-	echo "=== hornero-appearance doctor ==="
-	echo "scheme.flavour : ${scheme_flavour:-"(missing)"}"
-	echo "state.flavour  : ${state_flavour:-"(missing)"}"
-	echo "scheme.mode    : ${scheme_mode:-"(missing)"}"
-	echo "state.mode     : ${state_mode:-"(missing)"}"
-	local hyprlock_conf="$(_appearance_resolve_hyprlock_colors)"
-	local hyprlock_bytes=0
 	[[ -f $hyprlock_conf ]] && hyprlock_bytes="$(wc -c <"$hyprlock_conf" | tr -d ' ')"
-	local gtk_theme_ini="" gtk_prefer_dark="" gtk_color_scheme="" gtk_color_policy=""
-	if [[ -f ${XDG_CONFIG_HOME:-$HOME/.config}/gtk-3.0/settings.ini ]]; then
-		gtk_theme_ini="$(grep -E '^gtk-theme-name=' "${XDG_CONFIG_HOME:-$HOME/.config}/gtk-3.0/settings.ini" 2>/dev/null | head -n1 | cut -d= -f2- || true)"
-		gtk_prefer_dark="$(grep -E '^gtk-application-prefer-dark-theme=' "${XDG_CONFIG_HOME:-$HOME/.config}/gtk-3.0/settings.ini" 2>/dev/null | head -n1 | cut -d= -f2- || true)"
-	fi
-	if command -v gsettings >/dev/null 2>&1; then
-		gtk_color_scheme="$(gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null | tr -d "'\"" || true)"
-	fi
-	if [[ -f $state_file ]]; then
-		gtk_color_policy="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("gtkColorScheme", "") or "follow")' "$state_file" 2>/dev/null || true)"
-	fi
-	[[ -n $gtk_color_policy ]] || gtk_color_policy="follow"
+	local lib="${HOME}/.local/lib/hornero"
+	[[ -f $lib/signal_theme.py ]] || lib="/usr/share/hornero/lib/hornero"
 
+	echo "signal.scheme  : $scheme"
+	echo "scheme.theme   : $(_appearance_scheme_field "$scheme" id)"
+	echo "scheme.mode    : $(_appearance_scheme_field "$scheme" mode)"
 	echo "wallpaper.ptr  : ${pointer_val:-"(missing)"}"
 	echo "wallpaper.res  : ${resolved:-"(missing)"}"
-	echo "wal.target     : ${wal_target:-"(missing)"}"
-	echo "hyprlock.conf  : ${hyprlock_bytes} bytes"
-	echo "gtk.theme.ini  : ${gtk_theme_ini:-"(missing)"}"
-	echo "gtk.preferDark : ${gtk_prefer_dark:-"(missing)"}"
-	echo "gtk.colorPolicy: ${gtk_color_policy}"
-	echo "gtk.colorScheme: ${gtk_color_scheme:-"(missing)"}"
+	echo "hyprlock.conf  : ${hyprlock_bytes} bytes ($hyprlock_conf)"
 
-	if [[ -n $scheme_flavour && -n $state_flavour && $scheme_flavour != "$state_flavour" ]]; then
-		echo "FAIL: scheme flavour != state flavour ($scheme_flavour vs $state_flavour)" >&2
+	if [[ ! -f $scheme ]]; then
+		echo "FAIL: live Signal scheme missing (run: hornero-appearance theme apply hornero-signal-night)" >&2
+		ok=1
+	elif [[ -f $lib/signal_render.py ]] && ! python3 "$lib/signal_render.py" --theme "$scheme" \
+		--hyprlock-output /dev/null >/dev/null 2>&1; then
+		echo "FAIL: live Signal scheme does not satisfy schema v2 + contrast rules" >&2
 		ok=1
 	fi
-	if [[ -n $scheme_mode && -n $state_mode && $scheme_mode != "$state_mode" ]]; then
-		echo "FAIL: scheme mode != state mode ($scheme_mode vs $state_mode)" >&2
-		ok=1
-	fi
-	if [[ -z $pointer_val ]]; then
-		echo "FAIL: wallpaper pointer missing" >&2
-		ok=1
-	elif [[ ! -f $pointer_val ]]; then
+	if [[ -n $pointer_val && ! -f $pointer_val ]]; then
 		echo "FAIL: wallpaper pointer does not exist: $pointer_val" >&2
 		ok=1
 	fi
-	if [[ -n $pointer_val && -n $resolved && $pointer_val != "$resolved" ]]; then
-		local ptr_real res_real
-		ptr_real="$(readlink -f "$pointer_val" 2>/dev/null || true)"
-		res_real="$(readlink -f "$resolved" 2>/dev/null || true)"
-		if [[ -n $ptr_real && -n $res_real && $ptr_real != "$res_real" ]]; then
+	if [[ -n $pointer_val && -n $resolved ]]; then
+		if [[ "$(readlink -f "$pointer_val" 2>/dev/null || true)" != "$(readlink -f "$resolved" 2>/dev/null || true)" ]]; then
 			echo "FAIL: pointer != hornero-wallpaper-current ($pointer_val vs $resolved)" >&2
 			ok=1
 		fi
 	fi
-	if [[ -n $pointer_val && -f $pointer_val ]]; then
-		local ptr_real wal_real
-		ptr_real="$(readlink -f "$pointer_val" 2>/dev/null || true)"
-		if [[ -L $HOME/.cache/wal/wal ]]; then
-			wal_real="$(readlink -f "$HOME/.cache/wal/wal" 2>/dev/null || true)"
-		elif [[ -f $HOME/.cache/wal/wal ]]; then
-			wal_real="$(head -n 1 "$HOME/.cache/wal/wal" | tr -d '\r')"
-			wal_real="$(readlink -f "$wal_real" 2>/dev/null || true)"
-		fi
-		if [[ -z ${wal_real:-} ]]; then
-			echo "FAIL: ~/.cache/wal/wal missing or broken" >&2
-			ok=1
-		elif [[ -n $ptr_real && $ptr_real != "$wal_real" ]]; then
-			echo "FAIL: wal target != wallpaper pointer ($wal_real vs $ptr_real)" >&2
-			ok=1
-		fi
-	fi
-	if [[ ! -f $hyprlock_conf || ${hyprlock_bytes:-0} -eq 0 ]]; then
-		echo "FAIL: colors-hyprlock.conf missing or empty" >&2
-		ok=1
-	fi
-	# shellcheck source=/dev/null
-	source "${HOME}/.local/lib/hornero/python-m3.sh" 2>/dev/null || true
-	local m3_py=""
-	if declare -f hornero_python_m3 >/dev/null 2>&1; then
-		m3_py="$(hornero_python_m3 2>/dev/null || true)"
-	fi
-	echo "m3.python      : ${m3_py:-"(missing)"}"
-	if [[ -z $m3_py ]]; then
-		echo "FAIL: no Python with materialyoucolor (install python-materialyoucolor; pyenv shims alone are not enough)" >&2
-		ok=1
-	fi
-	# GTK color-scheme is independent of shell mode unless policy is follow.
-	# Light GTK + dark palette is intentional for many theme packs.
-	if [[ $gtk_color_policy == "follow" ]]; then
-		if [[ -n $state_mode && -n $gtk_prefer_dark ]]; then
-			if [[ $state_mode == "dark" && $gtk_prefer_dark == "false" ]]; then
-				echo "WARN: GTK prefer-dark=false while follow-policy mode is dark" >&2
-			elif [[ $state_mode == "light" && $gtk_prefer_dark == "true" ]]; then
-				echo "WARN: GTK prefer-dark=true while follow-policy mode is light" >&2
-			fi
-		fi
-		if [[ -n $state_mode && -n $gtk_color_scheme ]]; then
-			if [[ $state_mode == "dark" && $gtk_color_scheme != "prefer-dark" ]]; then
-				echo "WARN: gsettings color-scheme=$gtk_color_scheme while follow-policy mode is dark" >&2
-			elif [[ $state_mode == "light" && $gtk_color_scheme != "prefer-light" ]]; then
-				echo "WARN: gsettings color-scheme=$gtk_color_scheme while follow-policy mode is light" >&2
-			fi
-		fi
-	fi
-	if [[ -n $wal_target && -f $wal_target ]]; then
-		if ! file -b --mime-type "$wal_target" 2>/dev/null | grep -q '^image/'; then
-			echo "WARN: wal target is not an image: $wal_target" >&2
-		fi
+	if [[ ${hyprlock_bytes:-0} -eq 0 ]]; then
+		echo "WARN: colors-hyprlock.conf missing; hyprlock uses the factory Signal Night values" >&2
 	fi
 
 	if [[ $ok -eq 0 ]]; then
@@ -428,8 +328,6 @@ cmd_doctor() {
 case "${cmd:-}" in
 theme) cmd_theme "$@" ;;
 status) cmd_status "${1:-}" ;;
-set-variant) cmd_set_variant "${1:-}" ;;
-set-mode) cmd_set_mode "${1:-}" ;;
 set-wallpaper) cmd_set_wallpaper "${1:-}" ;;
 set-gtk) cmd_set_gtk "${1:-}" ;;
 set-gtk-color-scheme) cmd_set_gtk_color_scheme "${1:-}" ;;
@@ -443,8 +341,6 @@ Usage: hornero-appearance <command> [args]
 Commands:
   status [--json]
   theme list|show <id>|apply <id> [--wallpaper <path>]
-  set-variant <variant>
-  set-mode <dark|light>
   set-wallpaper <path>
   set-gtk <theme>
   set-gtk-color-scheme <follow|default|prefer-light|prefer-dark>

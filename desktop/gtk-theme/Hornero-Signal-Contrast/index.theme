@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-Signal-Contrast
+Comment=Hornero Signal GTK theme generated from hornero-signal-contrast
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-Signal-Contrast
+MetacityTheme=Hornero-Signal-Contrast
+IconTheme=Papirus-Dark
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:

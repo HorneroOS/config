@@ -13,7 +13,7 @@ fail() { echo "BRANDTEST-FAIL: $1" >&2; FAIL=1; }
 # --- 1. required sources present --------------------------------------------------
 for rel in logo.svg logo-symbolic.svg logo-mono.svg logo-dark.svg logo-light.svg \
     wordmark.svg favicon.svg icons/hornero-app.svg icons/hornero-system.svg \
-    wallpaper/hornero-dark.svg wallpaper/hornero-light.svg; do
+    wallpaper/hornero-signal-night.svg wallpaper/hornero-signal-day.svg; do
   [[ -f "$REPO_ROOT/assets/brand/$rel" ]] \
     && pass "source $rel" || fail "source missing: $rel"
 done
@@ -33,27 +33,25 @@ trap 'rm -rf "$STAGE"' EXIT
 bash "$REPO_ROOT/scripts/materialize.sh" --dest "$STAGE" >/dev/null
 [[ -f "$STAGE/.local/share/hornero/brand/logo.svg" ]] \
   && pass "staged hornero/brand/logo.svg" || fail "brand not staged"
-[[ -f "$STAGE/.local/share/hornero/brand/wallpaper/hornero-dark.svg" ]] \
+[[ -f "$STAGE/.local/share/hornero/brand/wallpaper/hornero-signal-night.svg" ]] \
   && pass "staged wallpaper source" || fail "wallpaper source not staged"
 [[ -f "$STAGE/.config/fastfetch/hornero.txt" ]] \
   && pass "staged fastfetch mark" || fail "fastfetch mark not staged"
 
-# --- 4. flagship recipes point at rendered PNG names ------------------------------
-# Official themes (family==hornero) are discovered so new packs join automatically.
-OFFICIAL_IDS="$(python3 -c "import json,glob;print(' '.join(sorted(json.load(open(p))['id'] for p in glob.glob('$REPO_ROOT/profiles/themes/*/theme.json') if json.load(open(p)).get('family')=='hornero')))")"
+# --- 4. Signal recipes point at rendered PNG names ---------------------------------
+# Hornero Signal themes are discovered so new flagships join automatically.
+OFFICIAL_IDS="$(python3 -c "import json,glob;print(' '.join(sorted(json.load(open(p))['id'] for p in glob.glob('$REPO_ROOT/profiles/themes/*/theme.json') if json.load(open(p)).get('collection')=='hornero-signal')))")"
+[[ -n $OFFICIAL_IDS ]] || fail "no hornero-signal themes found"
 for tid in $OFFICIAL_IDS; do
   wall="$(python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/$tid/theme.json'))['defaultWallpaper'])")"
-  case "$wall" in
-    "$tid-01.png") pass "$tid defaultWallpaper=$wall" ;;
-    # Pampa is a photo-led flagship: its default is the licensed
-    # regional photograph, not a rendered brand PNG.
-    "pampa-01.jpg") pass "$tid defaultWallpaper=$wall (licensed photo)" ;;
-    *) fail "$tid defaultWallpaper=$wall (want $tid-01.png)" ;;
-  esac
+  wdir="$(python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/$tid/theme.json'))['wallpaperDir'])")"
+  [[ "$wall" == "$wdir-01.png" && -f "$REPO_ROOT/assets/brand/wallpaper/$wdir.svg" ]] \
+    && pass "$tid defaultWallpaper=$wdir/$wall (procedural Signal source)" \
+    || fail "$tid defaultWallpaper=$wall has no assets/brand/wallpaper/$wdir.svg source"
 done
-python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/hornero-light/theme.json'))['iconTheme'])" \
+python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/hornero-signal-day/theme.json'))['iconTheme'])" \
   | grep -qx "Papirus" \
-  && pass "light iconTheme=Papirus" || fail "light iconTheme is not Papirus"
+  && pass "day iconTheme=Papirus" || fail "day iconTheme is not Papirus"
 
 # --- 5. wallpaper render produces the referenced PNGs ------------------------------
 WALLS="$(mktemp -d)"

@@ -6,8 +6,8 @@
 -- the old inline general/decoration/gesture/misc sections living in
 -- static.lua and gestures.lua. Animation profiles stay selectable at
 -- runtime through horneroctl; animations.lua is the startup default.
--- Hornero Light is opt-in: uncomment its dofile line below (it was the
--- commented-out hornero-light.conf source in the legacy entrypoint).
+-- Hornero Signal Day borders are opt-in: uncomment the signal-day.lua
+-- dofile line below (applying a theme regenerates the border cache instead).
 -- luacheck: globals hl hornero_helpers
 
 local here = debug.getinfo(1, "S").source:match("^@(.*)/[^/]*$") .. "/hyprland.lua.d/"
@@ -26,6 +26,6 @@ dofile(here .. "window-rules.lua")
 dofile(here .. "window-rules-user.lua")
 dofile(here .. "animations.lua")
 dofile(here .. "smart-colors.lua")
--- dofile(here .. "hornero-light.lua") -- opt-in Hornero Light variant
+-- dofile(here .. "signal-day.lua") -- opt-in Hornero Signal Day borders
 dofile(here .. "plugins.lua")
 dofile(here .. "static.lua")

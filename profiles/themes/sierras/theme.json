@@ -1,100 +1,75 @@
 {
-  "schemaVersion": 1,
+  "$schema": "../tokens.schema.json",
+  "schemaVersion": 2,
   "id": "sierras",
   "name": "Sierras",
-  "collection": "hornero-originals",
-  "collectionOrder": 12,
-  "description": "Golden highlands of the Sierras de Córdoba at Quebrada del Condorito: dry grass, rock and long light",
+  "description": "The golden Sierras de Córdoba: dry-grass paper, a deep golden signal, highland-olive phosphor and a condor-sky cue",
   "tags": [
     "argentina",
     "sierras",
     "cordoba",
     "highlands",
     "golden",
-    "light",
-    "nature"
+    "light"
   ],
-  "darkMode": false,
-  "schemeType": "fidelity",
+  "collection": "hornero-originals",
+  "collectionOrder": 9,
+  "mode": "light",
   "gtkTheme": "Hornero-Sierras",
   "iconTheme": "Papirus",
   "defaultWallpaper": "sierras-condorito-01.jpg",
   "wallpaperDir": "sierras",
   "palette": {
-    "background": "#EFEDE4",
-    "surface": "#FFFFFF",
-    "surfaceVariant": "#DFE0CE",
-    "onSurfaceVariant": "#3C4033",
-    "text": "#262A1E",
-    "textMuted": "#5A6046",
-    "primary": "#5F7A2E",
-    "onPrimary": "#FFFFFF",
-    "secondary": "#4E6E7E",
-    "onSecondary": "#FFFFFF",
-    "accent": "#A85E0C",
-    "onAccent": "#FFFFFF",
-    "border": "#C9CCB0",
-    "error": "#B3261E",
-    "onError": "#FFFFFF",
-    "success": "#2F6B3A",
-    "onSuccess": "#FFFFFF"
+    "ground": "#E7E0CC",
+    "sunken": "#DDD5BF",
+    "base": "#F3EDDD",
+    "panel": "#F7F3E7",
+    "raised": "#FBF8F0",
+    "lifted": "#FFFFFF",
+    "ink": "#1E1D17",
+    "inkMuted": "#514E40",
+    "inkFaint": "#807C6C",
+    "rule": "#D6CEB6",
+    "ruleStrong": "#857D66",
+    "signal": "#815100",
+    "onSignal": "#FFFFFF",
+    "signalWell": "#EBE1D1",
+    "onSignalWell": "#392400",
+    "cue": "#1D6189",
+    "onCue": "#FFFFFF",
+    "cueWell": "#D7E3EB",
+    "onCueWell": "#0C293A",
+    "phosphor": "#3B6622",
+    "onPhosphor": "#FFFFFF",
+    "phosphorWell": "#DCE4D8",
+    "onPhosphorWell": "#192B0E",
+    "alert": "#A7331F",
+    "onAlert": "#FFFFFF",
+    "alertWell": "#F0DAD7",
+    "onAlertWell": "#44150C",
+    "inverse": "#1E1D17",
+    "onInverse": "#F3EDDD",
+    "inverseSignal": "#B69459",
+    "scrim": "#000000",
+    "shadow": "#000000",
+    "focus": "#1D6189"
   },
-  "components": {
-    "window": {
-      "description": "Application window body text",
-      "background": "#EFEDE4",
-      "foreground": "#262A1E"
-    },
-    "panel": {
-      "description": "Panels, sidebars and header bars",
-      "background": "#FFFFFF",
-      "foreground": "#262A1E"
-    },
-    "card": {
-      "description": "Raised cards and popovers",
-      "background": "#DFE0CE",
-      "foreground": "#3C4033"
-    },
-    "buttonPrimary": {
-      "description": "Primary action",
-      "background": "#5F7A2E",
-      "foreground": "#FFFFFF"
-    },
-    "buttonSecondary": {
-      "description": "Secondary action",
-      "background": "#4E6E7E",
-      "foreground": "#FFFFFF"
-    },
-    "accentBadge": {
-      "description": "Highlights, badges and accents",
-      "background": "#A85E0C",
-      "foreground": "#FFFFFF"
-    },
-    "input": {
-      "description": "Text entries and search fields",
-      "background": "#FFFFFF",
-      "foreground": "#262A1E"
-    },
-    "mutedText": {
-      "description": "Secondary text on surfaces",
-      "background": "#FFFFFF",
-      "foreground": "#5A6046"
-    },
-    "tooltip": {
-      "description": "Tooltips and scrim overlays",
-      "background": "#262A1E",
-      "foreground": "#EFEDE4"
-    },
-    "errorBanner": {
-      "description": "Errors and destructive actions",
-      "background": "#B3261E",
-      "foreground": "#FFFFFF"
-    },
-    "successBanner": {
-      "description": "Confirmations and success states",
-      "background": "#2F6B3A",
-      "foreground": "#FFFFFF"
-    }
-  },
-  "gtkPreferDark": false
+  "terminal": [
+    "#1E1D17",
+    "#A9341F",
+    "#3E6B24",
+    "#8F5A00",
+    "#1F6690",
+    "#7D3E6E",
+    "#1A6766",
+    "#857D66",
+    "#514E40",
+    "#762416",
+    "#2B4B19",
+    "#643F00",
+    "#164765",
+    "#582B4D",
+    "#124847",
+    "#807C6C"
+  ]
 }

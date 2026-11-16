@@ -1,7 +1,22 @@
 {
   "provenance": "HorneroOS/config profiles/themes plus licensed assets in assets/wallpapers/argentina/",
-  "note": "Theme metadata is shipped with the config package. Procedural flagship wallpapers and the six attributed Argentina photo defaults ship under /usr/share/hornero/wallpapers/<wallpaperDir>/. Optional user collections remain in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/. If a referenced optional image is absent, the theme remains available and the Shell explains that wallpaper media is missing.",
+  "note": "Theme metadata is shipped with the config package. Procedural Hornero Signal wallpapers and the nine attributed Argentina photo defaults ship under /usr/share/hornero/wallpapers/<wallpaperDir>/. Optional user collections remain in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/. If a referenced optional image is absent, the theme remains available and the Shell explains that wallpaper media is missing.",
   "themes": [
+    {
+      "id": "hornero-signal-night",
+      "defaultWallpaper": "hornero-signal-night-01.png",
+      "wallpaperDir": "hornero-signal-night"
+    },
+    {
+      "id": "hornero-signal-day",
+      "defaultWallpaper": "hornero-signal-day-01.png",
+      "wallpaperDir": "hornero-signal-day"
+    },
+    {
+      "id": "hornero-signal-contrast",
+      "defaultWallpaper": "hornero-signal-night-01.png",
+      "wallpaperDir": "hornero-signal-night"
+    },
     {
       "id": "catppuccin-latte",
       "defaultWallpaper": "catppuccin-latte-01.png",
@@ -33,11 +48,6 @@
       "wallpaperDir": "monochrome"
     },
     {
-      "id": "neon-city",
-      "defaultWallpaper": "neon-city-01.jpg",
-      "wallpaperDir": "neon-city"
-    },
-    {
       "id": "nord-dreams",
       "defaultWallpaper": "nord-aurora-01.png",
       "wallpaperDir": "nord-dreams"
@@ -46,31 +56,6 @@
       "id": "rose-pine",
       "defaultWallpaper": "rose-pine-dawn-01.png",
       "wallpaperDir": "rose-pine"
-    },
-    {
-      "id": "soft-morning",
-      "defaultWallpaper": "morning-lake-2.jpg",
-      "wallpaperDir": "soft-morning"
-    },
-    {
-      "id": "vapor-dreams",
-      "defaultWallpaper": "vapor-dreams-01.jpg",
-      "wallpaperDir": "vapor-dreams"
-    },
-    {
-      "id": "warm-sunset",
-      "defaultWallpaper": "warm-sunset-05.jpg",
-      "wallpaperDir": "warm-sunset"
-    },
-    {
-      "id": "hornero-dark",
-      "defaultWallpaper": "hornero-dark-01.png",
-      "wallpaperDir": "hornero-dark"
-    },
-    {
-      "id": "hornero-light",
-      "defaultWallpaper": "hornero-light-01.png",
-      "wallpaperDir": "hornero-light"
     },
     {
       "id": "pampa",
@@ -101,11 +86,6 @@
       "id": "buenos-aires-nocturno",
       "defaultWallpaper": "buenos-aires-nocturno-01.jpg",
       "wallpaperDir": "buenos-aires-nocturno"
-    },
-    {
-      "id": "hornero-199x",
-      "defaultWallpaper": "hornero-199x-01.png",
-      "wallpaperDir": "hornero-199x"
     },
     {
       "id": "cuyo",

@@ -2,13 +2,11 @@
 # render-brand-assets.sh - validate HorneroOS brand SVGs and render PNGs.
 # No repo writes except an explicit --out DIR for previews: procedural
 # brand binaries (SVG renders, icon caches) are generated on the target
-# machine, never vendored. Exception: the photographic flagship
-# wallpapers (assets/brand/wallpaper/hornero-{dark,light,199x}.png) ARE
-# vendored sources (~2 MB each) and are copied verbatim as the
-# hornero-dark/light defaults; the SVGs remain vector masters.
+# machine, never vendored. The Hornero Signal wallpapers
+# (assets/brand/wallpaper/<wallpaperDir>.svg) are drawn from the theme roles.
 # Usage: scripts/render-brand-assets.sh [--out DIR] [--wallpapers DIR]
 #   --out DIR        write recognizability PNGs (default: mktemp, kept on stdout)
-#   --wallpapers DIR render hornero-dark/light PNGs at 1920x1080 + 2560x1440
+#   --wallpapers DIR render the Signal wallpapers at 1920x1080 + 2560x1440
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -70,40 +68,29 @@ rsvg-convert -w 512 "$BRAND"/wordmark.svg -o "$OUT/wordmark-512.png"
 echo "BRAND-PASS: recognizability PNGs in $OUT"
 
 # --- 3. wallpaper PNGs (procedural SVG -> local raster, never vendored) ------------
-# Official themes (family==hornero) are discovered from the recipe tree so
-# adding a theme pack never requires touching this script.
+# Hornero Signal themes are discovered from the recipe tree so adding a
+# theme never requires touching this script; themes sharing a wallpaperDir
+# (Signal High Contrast reuses Night) render it once.
 if [[ -n $WALLPAPERS_DIR ]]; then
   python3 - "$REPO_ROOT/profiles/themes" "$BRAND/wallpaper" "$WALLPAPERS_DIR" <<'PY'
-import json, shutil, subprocess, sys
+import json, subprocess, sys
 from pathlib import Path
 themes_dir, svg_dir, out_dir = (Path(a) for a in sys.argv[1:4])
 rendered = []
+done = set()
 for recipe in sorted(themes_dir.glob("*/theme.json")):
     doc = json.loads(recipe.read_text(encoding="utf-8"))
-    if doc.get("family") != "hornero":
+    if doc.get("collection") != "hornero-signal" or doc["wallpaperDir"] in done:
         continue
+    done.add(doc["wallpaperDir"])
+    svg = svg_dir / f"{doc['wallpaperDir']}.svg"
+    if not svg.is_file():
+        print(f"BRAND-FAIL: no Signal wallpaper SVG for {doc['id']} ({svg.name})", file=sys.stderr)
+        sys.exit(1)
     target_dir = out_dir / doc["wallpaperDir"]
     target_dir.mkdir(parents=True, exist_ok=True)
     default = target_dir / doc["defaultWallpaper"]
-    # Photo-led flagships (e.g. Pampa) ship their licensed photograph via
-    # the Argentina photo collection in materialize.sh, not this render.
-    if doc["defaultWallpaper"].endswith(".jpg"):
-        print(f"BRAND-SKIP: photo-led default for {doc['id']}", file=sys.stderr)
-        continue
-    hidpi = target_dir / f"{doc['id']}-02-hidpi.png"
-    # Artwork flagship override: vendored PNG wins over the SVG
-    # render for hornero-dark/light/199x (upscaling on larger panels
-    # is accepted until a 2560px master lands).
-    photo = svg_dir / f"{doc['id']}.png"
-    if photo.is_file():
-        shutil.copyfile(photo, default)
-        shutil.copyfile(photo, hidpi)
-        rendered.append(str(default.relative_to(out_dir)) + " (photo)")
-        continue
-    svg = svg_dir / f"{doc['id']}.svg"
-    if not svg.is_file():
-        print(f"BRAND-SKIP: no flagship SVG for {doc['id']}", file=sys.stderr)
-        continue
+    hidpi = target_dir / f"{doc['wallpaperDir']}-02-hidpi.png"
     subprocess.run(["rsvg-convert", "-w", "1920", "-h", "1080", str(svg),
                     "-o", str(default)], check=True)
     subprocess.run(["rsvg-convert", "-w", "2560", "-h", "1440", str(svg),

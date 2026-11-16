@@ -26,7 +26,7 @@ from pathlib import Path
 
 doc = json.load(open(sys.argv[1], encoding="utf-8"))
 root = Path(sys.argv[2])
-assert doc["schemaVersion"] == 1, "schemaVersion must be 1"
+assert doc["schemaVersion"] == 2, "schemaVersion must be 2"
 packs = sorted(p.parent.name for p in (root / "profiles/themes").glob("*/theme.json"))
 ids = [e["id"] for e in doc["entries"]]
 assert ids == packs, f"registry ids {ids} != pack dirs {packs}"
@@ -48,21 +48,24 @@ for item in wallpaper_refs:
     assert item["wallpaperDir"] == entry["wallpaperDir"], f"{item['id']}: wallpaper directory drift"
     assert item["defaultWallpaper"] == entry["defaultWallpaper"], f"{item['id']}: default wallpaper drift"
 
-patagonia = entries["patagonia"]
-fin_del_mundo = entries["fin-del-mundo"]
-assert patagonia["schemeType"] == "fidelity", "Patagonia should keep the wallpaper palette close to its source"
-assert fin_del_mundo["schemeType"] == "expressive", "Fin del Mundo should use its more varied palette"
+signal = {"hornero-signal-night", "hornero-signal-day", "hornero-signal-contrast"}
+assert {i for i, e in entries.items() if e["collection"] == "hornero-signal"} == signal
+assert [entries[i]["collectionOrder"] for i in
+        ("hornero-signal-night", "hornero-signal-day", "hornero-signal-contrast")] == [1, 2, 3]
 originals = {
-    "hornero-dark", "hornero-light", "pampa", "patagonia", "fin-del-mundo",
-    "quebrada", "ibera", "buenos-aires-nocturno", "hornero-199x",
-    "cuyo", "iguazu", "sierras",
+    "patagonia", "quebrada", "ibera", "fin-del-mundo", "buenos-aires-nocturno",
+    "pampa", "cuyo", "iguazu", "sierras",
 }
-assert {theme_id for theme_id, entry in entries.items() if entry["collection"] == "hornero-originals"} == originals
-assert sorted(entries[theme_id]["collectionOrder"] for theme_id in originals) == list(range(1, 13))
-assert all(entries[theme_id]["model"] == "semantic" for theme_id in ("hornero-dark", "hornero-light", "pampa", "hornero-199x"))
-assert all(entries[theme_id]["model"] == "recipe" for theme_id in originals - {"hornero-dark", "hornero-light", "pampa", "hornero-199x"})
-assert {entries[theme_id]["mode"] for theme_id in ("quebrada", "ibera", "buenos-aires-nocturno")} == {"light", "dark"}
+assert {i for i, e in entries.items() if e["collection"] == "hornero-originals"} == originals
+assert sorted(entries[i]["collectionOrder"] for i in originals) == list(range(1, 10))
+assert {entries[i]["mode"] for i in originals} == {"light", "dark"}
+removed = {"hornero-dark", "hornero-light", "hornero-199x", "neon-city",
+           "vapor-dreams", "soft-morning", "warm-sunset"}
+assert not removed & set(entries), f"retired themes still shipped: {removed & set(entries)}"
+for entry in doc["entries"]:
+    assert set(entry["swatch"]) == {"base", "panel", "ink", "signal", "cue"}
+    assert "schemeType" not in entry and "model" not in entry, "M3-era catalogue keys"
 print(f"TEST-PASS: {len(ids)} catalogue entries cover every pack")
-print(f"TEST-PASS: {len(originals)} Hornero Originals retain their semantic-or-recipe model")
+print(f"TEST-PASS: {len(signal)} Signal flagships + {len(originals)} Hornero Originals, retired packs absent")
 print(f"TEST-PASS: wallpaper manifest covers {len(wallpaper_ids)} packs without drift")
 EOF

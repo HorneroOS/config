@@ -70,14 +70,7 @@ def _gtk_color_scheme(data: dict) -> str:
         return "prefer-dark"
     if raw in {"auto", "apps"}:
         return "default"
-    if "gtkPreferDark" in data and data["gtkPreferDark"] is not None:
-        return "prefer-dark" if data["gtkPreferDark"] else "prefer-light"
-    gtk = str(data.get("gtkTheme") or "").lower()
-    if "light" in gtk:
-        return "prefer-light"
-    if "dark" in gtk:
-        return "prefer-dark"
-    return "prefer-dark" if data.get("darkMode", True) else "prefer-light"
+    return "prefer-light" if data.get("mode") == "light" else "prefer-dark"
 
 
 def load_theme(theme_dir: Path, walls_roots: Path) -> dict | None:
@@ -110,22 +103,13 @@ def load_theme(theme_dir: Path, walls_roots: Path) -> dict | None:
         "colorOnly": bool(data.get("colorOnly", False)),
         "description": data.get("description") or "",
         "tags": data.get("tags") or [],
-        "darkMode": bool(data.get("darkMode", True)),
-        "schemeType": data.get("schemeType") or "tonal-spot",
-        "gtkTheme": data.get("gtkTheme")
-        or ("Hornero-Dark" if data.get("darkMode", True) else "Hornero-Light"),
-        "iconTheme": data.get("iconTheme") or "Numix-Circle",
-        "gtkPreferDark": (
-            bool(data["gtkPreferDark"])
-            if "gtkPreferDark" in data and data["gtkPreferDark"] is not None
-            else (
-                False
-                if "light" in str(data.get("gtkTheme") or "").lower()
-                else True
-                if "dark" in str(data.get("gtkTheme") or "").lower()
-                else bool(data.get("darkMode", True))
-            )
-        ),
+        "mode": "light" if data.get("mode") == "light" else "dark",
+        "gtkTheme": data.get("gtkTheme") or "Hornero-Signal",
+        "iconTheme": data.get("iconTheme") or "Papirus-Dark",
+        "swatch": {
+            role: (data.get("palette") or {}).get(role, "")
+            for role in ("base", "panel", "ink", "signal", "cue")
+        },
         "gtkColorScheme": _gtk_color_scheme(data),
         "defaultWallpaper": default,
         "wallpaperDir": wallpaper_dir,

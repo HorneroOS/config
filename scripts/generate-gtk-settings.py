@@ -22,7 +22,11 @@ def render(root: Path) -> str:
         "iconTheme": gtk["iconTheme"],
         "gtkPreferDark": gtk["preferDark"],
     }
-    actual = {key: recipe[key] for key in expected}
+    actual = {
+        "gtkTheme": recipe["gtkTheme"],
+        "iconTheme": recipe["iconTheme"],
+        "gtkPreferDark": recipe["mode"] == "dark",
+    }
     if actual != expected:
         raise ValueError(
             f"{recipe_path.relative_to(root)} does not match profiles/factory.json: "
@@ -35,6 +39,7 @@ def render(root: Path) -> str:
         "gtkTheme": gtk["theme"],
         "iconTheme": gtk["iconTheme"],
         "gtkPreferDark": str(gtk["preferDark"]).lower(),
+        "font": gtk["font"],
     }
     for key, value in values.items():
         template = template.replace("{{ " + key + " }}", value)

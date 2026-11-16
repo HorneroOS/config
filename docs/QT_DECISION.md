@@ -13,8 +13,8 @@ Evidence from this repo (inspected, not assumed):
   Neither app ships config or a packaging dependency here; they are
   user-installed, not curated defaults.
 - `HorneroOS/shell` (Quickshell) is QtQuick/QML and self-themed from the
-  generated M3 scheme (`lib/hornero/generate-m3-colors.py`); it does not
-  consume a Widgets platform theme. It is owned by `HorneroOS/shell`,
+  live Hornero Signal scheme (schema-v2 roles); it does not consume a
+  Widgets platform theme. It is owned by `HorneroOS/shell`,
   not this repo.
 - Everything else curated here (Thunar, pavucontrol references,
   polkit-gnome agent, nm/blueman applets) is GTK.
@@ -29,7 +29,7 @@ Plasma/KDE component.
   `desktop/hypr/hyprland.lua.d/environment.lua`). qt6ct is the
   lightweight configurator for Qt6-under-Wayland in a non-KDE session;
   the shipped `desktop/qt6ct/qt6ct.conf` sets Fusion style, Papirus-Dark
-  icons, and the Hornero font stack (Rubik / CaskaydiaCove NF).
+  icons, and IBM Plex Sans / IBM Plex Mono (RFC 0001 §3.3).
 - **Defer Kvantum.** Garuda's Dr460nized uses Kvantum because it is a KDE
   Plasma (KWin) desktop whose Sweet look needs Kvantum's SVG engine and
   translucency (`kvantum-dark` Qt application style next to Sweet GTK;
@@ -46,12 +46,12 @@ Plasma/KDE component.
   `QPalette::ColorRole` order) selected via `color_scheme_path` +
   `custom_palette=true` in `qt6ct.conf`. So each official theme ships a
   generated scheme (`desktop/qt6ct/colors/<id>.conf`, produced by
-  `scripts/generate-qt-schemes.py` from the canonical theme tokens),
-  and applying a theme points qt6ct at it (`_hornero_appearance_sync_qt`). The
-  factory default stays `custom_palette=false` (stock Fusion until a
-  theme is applied). Inactive mirrors active; disabled dims text roles
-  toward Window; Highlight/HighlightedText carry the theme primary pair
-  (contrast-gated ≥ 4.5:1 by the generator).
+  `scripts/generate-appearance.py` from the schema-v2 roles), and applying
+  a theme points qt6ct at it (`_hornero_appearance_sync_qt`). The factory
+  default points at the packaged Signal Night scheme. Inactive mirrors
+  active; disabled uses `inkFaint`. Highlight/HighlightedText carry the
+  celeste `cue`/`onCue` pair (selection) and Accent carries the amber
+  `signal` (RFC 0001 §2), both contrast-gated by `scripts/check-contrast.py`.
 - **No `qt5ct` file.** The shipped Qt app is Qt6; Qt5 theming is out of
   scope until a Qt5 app is curated.
 
@@ -60,9 +60,10 @@ Plasma/KDE component.
 - `desktop/qt6ct/qt6ct.conf` (installed to `{config}/qt6ct` via the
   `[modules.qt6ct]` row — flows into `/etc/xdg/qt6ct` through the generic
   PKGBUILD loop).
-- `desktop/qt6ct/colors/{hornero-dark,hornero-light,pampa}.conf`
-  (generated, drift-tested).
-- `scripts/generate-qt-schemes.py` (canonical tokens → QPalette roles).
+- `desktop/qt6ct/colors/<theme-id>.conf` for every theme (generated,
+  drift-tested).
+- `lib/hornero/signal_render.py` `render_qt6ct` (Signal roles → QPalette
+  roles), driven by `scripts/generate-appearance.py`.
 - `_hornero_appearance_sync_qt` in `lib/hornero/apply-appearance.sh` (per-theme
   `color_scheme_path` + `custom_palette=true`, comment-preserving).
 - `QT_QPA_PLATFORMTHEME=qt6ct` pin left untouched (pre-existing evidence,

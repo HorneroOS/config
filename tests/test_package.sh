@@ -73,7 +73,7 @@ diff -r "$STAGE/.config" "$ROOT/etc/xdg" --exclude=gtkrc-2.0 --exclude=hornero -
 [[ ! -e "$ROOT/etc/xdg/Thunar/uca.xml" ]] \
   && pass "package leaves Thunar-owned system uca.xml untouched" \
   || fail "package conflicts with Thunar-owned system uca.xml"
-for file in alacritty.toml hornero-dark.toml hornero-light.toml hornero-colors.toml; do
+for file in alacritty.toml hornero-signal-night.toml hornero-signal-day.toml hornero-colors.toml; do
   cmp -s "$STAGE/.config/alacritty/$file" "$ROOT/etc/alacritty/$file" \
     && pass "Alacritty system fallback $file" \
     || fail "Alacritty system fallback missing/different: $file"
@@ -124,10 +124,12 @@ else
   pass "retired dots command wrappers are absent"
 fi
 THEME_COUNT="$(find "$ROOT/usr/share/hornero/themes" -mindepth 2 -maxdepth 2 -name theme.json | wc -l)"
-[[ "$THEME_COUNT" -eq 24 ]] \
-  && pass "all 24 theme packs ship in the package-only catalogue" \
-  || fail "expected 24 theme packs, found $THEME_COUNT"
-for id in patagonia fin-del-mundo quebrada ibera buenos-aires-nocturno; do
+EXPECTED_THEMES="$(find "$REPO_ROOT/profiles/themes" -mindepth 2 -maxdepth 2 -name theme.json | wc -l)"
+[[ "$THEME_COUNT" -eq "$EXPECTED_THEMES" ]] \
+  && pass "all $EXPECTED_THEMES theme packs ship in the package-only catalogue" \
+  || fail "expected $EXPECTED_THEMES theme packs, found $THEME_COUNT"
+for id in hornero-signal-night hornero-signal-day hornero-signal-contrast \
+    patagonia fin-del-mundo quebrada ibera buenos-aires-nocturno; do
   [[ -f "$ROOT/usr/share/hornero/themes/$id/theme.json" ]] \
     && pass "original theme $id is package-visible" \
     || fail "original theme $id missing from package"

@@ -1,4 +1,4 @@
-# HorneroOS keeps one theme name stable; M3 writes the selected wallpaper
+# HorneroOS keeps one theme name stable; applying a theme writes its Signal
 # palette into the user theme directory, which takes precedence over fallback.
 theme = Hornero Dynamic
 background-opacity = 0.88

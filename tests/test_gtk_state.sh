@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 # test_gtk_state.sh - the GTK layer must never invent shell `mode`.
 # hornero-gtk-theme persists its own gtkColorScheme policy in
-# scheme/state.json, but shell `mode` is owned by the shell pipeline
-# (`hornero-color-scheme sync-state`). A defaulted mode=dark went stale on the
-# first write and poisoned every later light apply: `horneroctl
-# appearance theme set hornero-light` then correctly refused the split
-# state (mode dark vs want light). Fails (nonzero exit) on any violation.
+# scheme/state.json, but `mode` belongs to the applied theme (the live
+# Hornero Signal scheme). A defaulted mode=dark went stale on the first
+# write and poisoned every later light apply (e.g. hornero-signal-day). Fails (nonzero exit) on any violation.
 # Usage: tests/test_gtk_state.sh
 set -euo pipefail
 

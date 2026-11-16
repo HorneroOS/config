@@ -3,8 +3,8 @@
 
 Reads every curated theme pack and emits `catalogue/registry.json`:
 
-    {"schemaVersion": 1, "source": "<relpath>", "entries": [
-      {"id": "neon-city", "name": "Neon City", "mode": "dark", ...}, ...]}
+    {"schemaVersion": 2, "source": "<relpath>", "entries": [
+      {"id": "hornero-signal-night", "name": "Hornero Signal Night", "mode": "dark", ...}, ...]}
 
 The registry is the offline cache contract: store-style surfaces render
 from this file without touching the packs, and wallpapers stay
@@ -27,13 +27,12 @@ def entry(pack: dict) -> dict:
         "name": pack.get("name", pack["id"]),
         "description": pack.get("description", ""),
         "tags": pack.get("tags", []),
-        "mode": "dark" if pack.get("darkMode", True) else "light",
-        "family": pack.get("family", ""),
-        "version": pack.get("version", pack.get("tokensVersion", "")),
+        "mode": pack["mode"],
+        "version": pack.get("version", ""),
         "collection": pack.get("collection", ""),
         "collectionOrder": pack.get("collectionOrder", 0),
-        "model": "semantic" if pack.get("family") else "recipe",
-        "schemeType": pack.get("schemeType", ""),
+        "gtkTheme": pack["gtkTheme"],
+        "swatch": {role: pack["palette"][role] for role in ("base", "panel", "ink", "signal", "cue")},
         "defaultWallpaper": pack.get("defaultWallpaper", ""),
         "wallpaperDir": pack.get("wallpaperDir", ""),
     }
@@ -47,7 +46,7 @@ def build(root: Path) -> dict:
         entries.append(entry(pack))
     entries.sort(key=lambda e: e["id"])
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "source": "profiles/themes",
         "count": len(entries),
         "entries": entries,
