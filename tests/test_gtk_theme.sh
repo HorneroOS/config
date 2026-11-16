@@ -195,7 +195,14 @@ pass "no dev-only leaks, no double ownership with hornero/themes recipes"
 
 # --- gallery fixture: renders where Gtk exists, skips cleanly headless -------
 # timeout(1) bounds the run: a broken display must fail fast, never hang CI.
-if timeout 30s python3 "$THEME_ROOT/gallery.py" --theme Hornero-Signal >/tmp/hx-gallery.log 2>&1; then
+# The fixture never touches a live desktop unless explicitly requested with
+# HORNERO_GALLERY_DISPLAY=1: by default it runs with no display and a private
+# runtime dir, so running the suite on a workstation cannot open windows.
+gallery_env=(env -u DISPLAY -u WAYLAND_DISPLAY XDG_RUNTIME_DIR="$(mktemp -d)")
+if [[ "${HORNERO_GALLERY_DISPLAY:-0}" == "1" ]]; then
+  gallery_env=(env)
+fi
+if timeout 30s "${gallery_env[@]}" python3 "$THEME_ROOT/gallery.py" --theme Hornero-Signal >/tmp/hx-gallery.log 2>&1; then
   pass "gallery fixture renders (Gtk available)"
 else
   rc=$?
