@@ -1,8 +1,11 @@
 # HorneroOS config
 
-Curated, reusable desktop defaults for Hornero OS: compositor, terminal,
-GTK, fonts, and common desktop applications — plus the theme packs and
-helper libraries that apply them. Extracted (never moved) from the generic
+Curated, reusable desktop defaults for the HorneroOS workstation family
+(Desktop, Studio, Gaming): compositor, terminal, GTK, Qt, fonts, and common
+desktop applications — plus the
+[Hornero Signal](https://github.com/HorneroOS/docs/blob/main/development/rfc-0001-hornero-signal.md)
+token schema, theme packs, brand assets, and the helper libraries that apply
+them. Extracted (never moved) from the generic
 parts of [ulises-jeremias/dotfiles](https://github.com/ulises-jeremias/dotfiles).
 
 ## What this repo owns
@@ -32,9 +35,9 @@ that in CI.
 
 HorneroOS Desktop is Wayland-first. Hyprland remains the supported session.
 Niri 26.04 has a passing single-output Hornero QA baseline covering Shell
-startup, workspace/window state and switching, Launcher, Hornero Light,
-package wallpaper discovery, Appearance, Layout Picker, lock/unlock,
-screencast portal presence, and screenshot capture. Niri remains experimental
+startup, workspace/window state and switching, Launcher, a theme change
+(Hornero Light, recorded before Hornero Signal), package wallpaper
+discovery, Appearance, Layout Picker, lock/unlock, screencast portal presence, and screenshot capture. Niri remains experimental
 while multiple outputs, HiDPI, actual OBS capture, notifications, recovery,
 and the broader Shell surface matrix are validated. The defaults include
 Niri's upstream 26.04 configuration, Hornero Shell startup, Hornero shortcuts,
@@ -61,7 +64,9 @@ hyprlock) is generated from the applied theme's Hornero Signal roles
 (`profiles/themes/tokens.schema.json`, schema v2), so terminal work, system
 monitoring, and audio visualization share the active desktop look.
 Wallpapers never recolour the UI. Factory default: Hornero Signal Night in
-the Cockpit layout, set in IBM Plex. Optional non-terminal palette integrations are recorded
+the Cockpit layout, set in IBM Plex (`ttf-ibm-plex`, a hard package
+dependency alongside `bash`, `git`, `polkit-gnome` and `python`).
+Optional non-terminal palette integrations are recorded
 in `profiles/factory.json` and validated against their packaged configuration
 and renderer outputs.
 The btop default refreshes at the upstream-recommended 2-second interval to
