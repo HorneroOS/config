@@ -1,0 +1,4 @@
+{
+  "metadata": {"package": "hornero-profile-desktop"},
+  "edition": {"edition": "desktop", "title": "Desktop", "role": "daily", "maturity": "preview", "packageSets": ["base"]}
+}
