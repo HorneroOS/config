@@ -174,7 +174,7 @@ class NegativeFixtures(unittest.TestCase):
         self.assertRejected(lambda d: d["clearInk"].pop("light"), "clearInk")
         self.assertRejected(lambda d: d["clearInk"]["dark"].pop("halo"), "clearInk.dark")
         self.assertRejected(lambda d: d["clearInk"]["dark"].update(ink="#abc"), "clearInk.dark.ink")
-        self.assertRejected(lambda d: d["palette"].update(m3primary="#000000"), "non-Signal keys")
+        self.assertRejected(lambda d: d["palette"].update(accent="#000000"), "non-Signal keys")
         self.assertRejected(lambda d: d["terminal"].pop(), "exactly 16")
 
     def test_gates(self) -> None:

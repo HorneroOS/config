@@ -255,6 +255,10 @@ package() {
   cp -a "$stage/.local/bin"/hornero-* "$pkgdir/usr/share/hornero/bin/"
   mkdir -p "$pkgdir/usr/share/hornero/themes"
   cp -a "$stage/.local/share/hornero/themes/." "$pkgdir/usr/share/hornero/themes/"
+  # Hornero Chromatic: first-party app templates rendered by horneroctl
+  # (/usr/share/hornero/chromatic/templates/*.json + *.tmpl).
+  mkdir -p "$pkgdir/usr/share/hornero/chromatic"
+  cp -a "$stage/.local/share/hornero/chromatic/." "$pkgdir/usr/share/hornero/chromatic/"
   # Layout presets are authored by HorneroOS/shell and copied into this
   # package from the pinned source recorded in shell/shell-presets.source.
   # Ship them as a read-only system catalogue so horneroctl and the Shell work

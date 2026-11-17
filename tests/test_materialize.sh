@@ -107,6 +107,14 @@ else
   echo "TEST-FAIL: expected $expected theme packs in hornero/themes, found $count" >&2
   exit 1
 fi
+if [[ -f "$TMP_HOME/.local/share/hornero/themes/contrast-gates.json" \
+  && -f "$TMP_HOME/.local/share/hornero/chromatic/templates/kitty.json" \
+  && -f "$TMP_HOME/.local/share/hornero/chromatic/templates/kitty.conf.tmpl" ]]; then
+  echo "TEST-PASS: gate table and Chromatic templates materialized"
+else
+  echo "TEST-FAIL: missing contrast-gates.json or chromatic templates in hornero/" >&2
+  exit 1
+fi
 if [[ -f "$TMP_HOME/.local/share/hornero/themes/wallpapers.manifest.json" ]]; then
   echo "TEST-PASS: theme manifest in hornero/themes"
 else
