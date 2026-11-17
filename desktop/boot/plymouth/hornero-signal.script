@@ -1,0 +1,130 @@
+// Hornero Signal - Plymouth script theme (HorneroOS/config desktop/boot/plymouth).
+//
+// Design (RFC 0001, signal-visual-language): matte ground, the hornero mark,
+// a Plex Mono eyebrow with the registration tick, and a 24-segment meter whose
+// lit segments are the only thing that ever changes. No fades, no easing, no
+// pulsing: the splash is already the reduced-motion variant. Everything is a
+// prerendered PNG: the script draws no text, so it needs no fonts of its own
+// (plymouth's own label plugin ships with the plymouth initcpio hook as usual).
+// Assets are authored at 2x and scaled to the screen height.
+//
+// Colours: ground #0C0F13 (hornero-signal-night role `ground`).
+
+Window.SetBackgroundTopColor(0.047, 0.059, 0.075);
+Window.SetBackgroundBottomColor(0.047, 0.059, 0.075);
+
+SEGMENTS = 24;
+MAX_BULLETS = 32;
+
+screen_w = Window.GetWidth();
+screen_h = Window.GetHeight();
+
+// s = screen height / 1080 reference; assets are 2x, so scale by s / 2.
+s = screen_h / 1080;
+if (s < 0.5) s = 0.5;
+k = s / 2;
+
+fun scaled(name) {
+  img = Image(name);
+  return img.Scale(Math.Int(img.GetWidth() * k + 0.5), Math.Int(img.GetHeight() * k + 0.5));
+}
+
+mark_img = scaled("mark.png");
+eyebrow_img = scaled("eyebrow.png");
+passphrase_img = scaled("passphrase.png");
+on_img = scaled("segment-on.png");
+off_img = scaled("segment-off.png");
+bullet_img = scaled("bullet.png");
+
+seg_w = on_img.GetWidth();
+seg_h = on_img.GetHeight();
+seg_gap = Math.Int(6 * s + 0.5);
+meter_w = SEGMENTS * seg_w + (SEGMENTS - 1) * seg_gap;
+
+// Vertical stack centred slightly above the middle of the screen.
+gap_a = Math.Int(32 * s);
+gap_b = Math.Int(56 * s);
+stack_h = mark_img.GetHeight() + gap_a + eyebrow_img.GetHeight() + gap_b + seg_h;
+top = Math.Int(screen_h * 0.46 - stack_h / 2);
+
+mark_sprite = Sprite(mark_img);
+mark_sprite.SetPosition(Math.Int((screen_w - mark_img.GetWidth()) / 2), top, 10);
+
+eyebrow_y = top + mark_img.GetHeight() + gap_a;
+eyebrow_sprite = Sprite(eyebrow_img);
+eyebrow_sprite.SetPosition(Math.Int((screen_w - eyebrow_img.GetWidth()) / 2), eyebrow_y, 10);
+
+meter_y = eyebrow_y + eyebrow_img.GetHeight() + gap_b;
+meter_x = Math.Int((screen_w - meter_w) / 2);
+lit = 0;
+seg_sprite = [];
+for (i = 0; i < SEGMENTS; i++) {
+  seg_sprite[i] = Sprite(off_img);
+  seg_sprite[i].SetPosition(meter_x + i * (seg_w + seg_gap), meter_y, 10);
+}
+
+fun draw_meter() {
+  for (i = 0; i < SEGMENTS; i++) {
+    if (i < lit) seg_sprite[i].SetImage(on_img);
+    else seg_sprite[i].SetImage(off_img);
+  }
+}
+
+fun set_lit(n) {
+  if (n > SEGMENTS) n = SEGMENTS;
+  if (n > lit) {
+    lit = n;
+    draw_meter();
+  }
+}
+
+// Real progress from plymouthd (based on the previous boot's duration).
+fun boot_progress(time, progress) {
+  set_lit(Math.Int(progress * SEGMENTS + 0.5));
+}
+Plymouth.SetBootProgressFunction(boot_progress);
+
+// First boot has no recorded duration: step the meter once per half second up
+// to 20 of 24 segments so the screen never looks frozen. Still discrete steps.
+ticks = 0;
+fun refresh() {
+  ticks++;
+  fallback = Math.Int(ticks / 25);
+  if (fallback > 20) fallback = 20;
+  set_lit(fallback);
+}
+Plymouth.SetRefreshFunction(refresh);
+
+// Disk passphrase prompt: eyebrow plus one block per typed character.
+pass_sprite = Sprite(passphrase_img);
+pass_y = meter_y + seg_h + gap_b;
+pass_sprite.SetPosition(Math.Int((screen_w - passphrase_img.GetWidth()) / 2), pass_y, 10);
+pass_sprite.SetOpacity(0);
+bullet_sprite = [];
+for (i = 0; i < MAX_BULLETS; i++) {
+  bullet_sprite[i] = Sprite(bullet_img);
+  bullet_sprite[i].SetOpacity(0);
+}
+bullet_y = pass_y + passphrase_img.GetHeight() + Math.Int(16 * s);
+
+fun display_password(prompt, bullets) {
+  pass_sprite.SetOpacity(1);
+  if (bullets > MAX_BULLETS) bullets = MAX_BULLETS;
+  row_w = bullets * seg_w + (bullets - 1) * seg_gap;
+  x0 = Math.Int((screen_w - row_w) / 2);
+  for (i = 0; i < MAX_BULLETS; i++) {
+    if (i < bullets) {
+      bullet_sprite[i].SetPosition(x0 + i * (seg_w + seg_gap), bullet_y, 10);
+      bullet_sprite[i].SetOpacity(1);
+    } else {
+      bullet_sprite[i].SetOpacity(0);
+    }
+  }
+}
+Plymouth.SetDisplayPasswordFunction(display_password);
+
+fun display_normal() {
+  pass_sprite.SetOpacity(0);
+  for (i = 0; i < MAX_BULLETS; i++) bullet_sprite[i].SetOpacity(0);
+}
+Plymouth.SetDisplayNormalFunction(display_normal);

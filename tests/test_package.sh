@@ -159,6 +159,18 @@ cmp -s "$REPO_ROOT/profiles/base/profile.toml" "$ROOT/usr/share/hornero/profile.
   && pass "profile manifests" || fail "profile manifests"
 [[ $(cat "$ROOT/usr/share/hornero/HORNERO_PROFILE") == "base" ]] \
   && pass "HORNERO_PROFILE=base" || fail "HORNERO_PROFILE record"
+for f in theme.txt background.png mark.png select_c.png plex-sans-regular-18.pf2; do
+  [[ -f "$ROOT/usr/share/grub/themes/hornero-signal/$f" ]] \
+    && pass "GRUB theme file $f ships" || fail "GRUB theme file $f missing"
+done
+for f in hornero-signal.plymouth hornero-signal.script mark.png segment-on.png; do
+  [[ -f "$ROOT/usr/share/plymouth/themes/hornero-signal/$f" ]] \
+    && pass "Plymouth theme file $f ships" || fail "Plymouth theme file $f missing"
+done
+[[ -x "$ROOT/usr/share/hornero/bin/hornero-boot-theme" ]] \
+  && pass "hornero-boot-theme ships executable" || fail "hornero-boot-theme missing"
+grep -q '^depends=.*plymouth' "$PKGDIR/PKGBUILD" \
+  && fail "plymouth must stay optional, not a hard dependency" || pass "plymouth is not a hard dependency"
 cmp -s "$REPO_ROOT/LICENSE" "$ROOT/usr/share/licenses/hornero-config/LICENSE" \
   && pass "license shipped" || fail "license shipped"
 rm -rf "$STAGE"

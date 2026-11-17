@@ -46,6 +46,8 @@ optdepends=(
   'papirus-icon-theme: Papirus-Dark factory icons'
   'noto-fonts-cjk: CJK fallback for the factory fontconfig aliases'
   'noto-fonts-emoji: emoji fallback for the factory fontconfig aliases'
+  'grub: themed boot menu (run hornero-boot-theme apply --grub; theme files ship inert without it)'
+  'plymouth: themed boot splash (run hornero-boot-theme apply --plymouth; optional, boot is unchanged without it)'
   'zsh-autosuggestions: optional plugin sourced by the factory zshrc when installed'
   'zsh-syntax-highlighting: optional plugin sourced by the factory zshrc when installed'
   'gvfs: Thunar volume and trash integration'
@@ -304,6 +306,17 @@ package() {
   cp -a "$stage/.local/share/hornero/wallpapers/." \
     "$pkgdir/usr/share/hornero/wallpapers/"
 
+
+  # Boot themes (GRUB menu + Plymouth splash). Shipped inert at their
+  # canonical theme paths; nothing edits boot configuration at install time.
+  # `hornero-boot-theme apply` (bin/) enables them, and only when grub /
+  # plymouth are installed. Plymouth is optional: no dependency is added.
+  bash "$repo_root/scripts/render-boot-assets.sh" --out "$srcdir/boot-assets"
+  install -dm755 "$pkgdir/usr/share/grub/themes" "$pkgdir/usr/share/plymouth/themes"
+  cp -a "$srcdir/boot-assets/grub/hornero-signal" "$pkgdir/usr/share/grub/themes/hornero-signal"
+  cp -a "$srcdir/boot-assets/plymouth/hornero-signal" "$pkgdir/usr/share/plymouth/themes/hornero-signal"
+  find "$pkgdir/usr/share/grub/themes/hornero-signal" "$pkgdir/usr/share/plymouth/themes/hornero-signal" \
+    -type d -exec chmod 755 {} + -o -type f -exec chmod 644 {} +
 
   # Profile manifests plus the resolved selection record.
   install -Dm644 "$repo_root/$profile_src" \

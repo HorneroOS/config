@@ -380,3 +380,16 @@ the bird mark rasterised to half-blocks from `assets/brand/logo.svg` with
 two colour slots: `$1` sun disc = yellow (signal) and `$2` bird = default
 foreground (readable on Day and Night). Colours are ANSI only; gate:
 `tests/test_fastfetch.sh`.
+## Boot experience (GRUB + Plymouth themes)
+
+* **Where**: `desktop/boot/` (sources), `scripts/render-boot-assets.sh`,
+  `bin/hornero-boot-theme`, `docs/BOOT.md`. Shipped inert at
+  `/usr/share/grub/themes/hornero-signal` and
+  `/usr/share/plymouth/themes/hornero-signal`.
+* **Plymouth is optional**: only an `optdepends`, never a hard dependency; the
+  tool skips it when absent. Rationale: initramfs hook changes and encrypted-root
+  prompts are risky, boot must stay unchanged by default.
+* **Binary policy**: PNGs are rendered at build time from SVG (like wallpapers);
+  the three `.pf2` fonts are committed (derived from OFL IBM Plex) to avoid a
+  `grub` makedepend.
+* **Always Signal Night**: boot cannot follow user themes or Chromatic palettes.

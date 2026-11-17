@@ -1,0 +1,220 @@
+#!/usr/bin/env bash
+# hornero-boot-theme - enable the Hornero Signal GRUB and Plymouth themes.
+#
+# Usage: hornero-boot-theme <status|apply|remove> [--grub] [--plymouth]
+#          [--root DIR] [--dry-run] [--no-rebuild] [--allow-encrypted]
+#
+# The hornero-config package ships both themes inertly:
+#   /usr/share/grub/themes/hornero-signal       (copied to /boot/grub/themes
+#                                               because GRUB cannot read /usr
+#                                               on an encrypted root)
+#   /usr/share/plymouth/themes/hornero-signal   (plymouth is optional)
+# This tool is the only thing that edits boot configuration. It is
+# idempotent, keeps one backup of mkinitcpio.conf, and does nothing for a
+# component whose package (grub / plymouth) is absent. With no component flag
+# it handles whatever is installed. --root DIR runs against a directory tree
+# (tests, image builds) and never invokes grub-mkconfig or mkinitcpio.
+# Needs root unless --root or --dry-run is used.
+set -euo pipefail
+
+ACTION=""
+DO_GRUB=0
+DO_PLY=0
+ROOT=""
+DRY=0
+REBUILD=1
+ALLOW_ENC=0
+THEME=hornero-signal
+MARK="# hornero-boot-theme"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    status|apply|remove) ACTION="$1"; shift ;;
+    --grub) DO_GRUB=1; shift ;;
+    --plymouth) DO_PLY=1; shift ;;
+    --root) ROOT="${2:?--root needs a directory}"; ROOT="${ROOT%/}"; shift 2 ;;
+    --dry-run) DRY=1; shift ;;
+    --no-rebuild) REBUILD=0; shift ;;
+    --allow-encrypted) ALLOW_ENC=1; shift ;;
+    -h|--help) sed -n '2,19p' "${BASH_SOURCE[0]}"; exit 0 ;;
+    *) echo "error: unknown argument: $1" >&2; exit 2 ;;
+  esac
+done
+[[ -n $ACTION ]] || { echo "error: expected status, apply or remove" >&2; exit 2; }
+
+# ANSI colour only on a terminal; status words always carry a glyph and a word.
+if [[ -t 1 && -z ${NO_COLOR:-} ]]; then
+  C_OK=$'\e[32m'; C_WARN=$'\e[33m'; C_DIM=$'\e[90m'; C_OFF=$'\e[0m'
+else
+  C_OK=""; C_WARN=""; C_DIM=""; C_OFF=""
+fi
+say() { printf '%s\n' "$*"; }
+ok() { printf '%s✓ OK  %s %s\n' "$C_OK" "$C_OFF" "$*"; }
+warn() { printf '%s! WARN%s %s\n' "$C_WARN" "$C_OFF" "$*"; }
+skip() { printf '%s· SKIP%s %s\n' "$C_DIM" "$C_OFF" "$*"; }
+eyebrow() { printf '%s%s%s\n' "$C_DIM" "$*" "$C_OFF"; }
+
+P() { printf '%s%s' "$ROOT" "$1"; }
+GRUB_DEFAULT_FILE="$(P /etc/default/grub)"
+MKINIT_CONF="$(P /etc/mkinitcpio.conf)"
+GRUB_SRC="$(P /usr/share/grub/themes/$THEME)"
+GRUB_DEST="$(P /boot/grub/themes/$THEME)"
+PLY_SRC="$(P /usr/share/plymouth/themes/$THEME)"
+PLY_CONF="$(P /etc/plymouth/plymouthd.conf)"
+
+if [[ $ACTION != status && $DRY -eq 0 && -z $ROOT && $EUID -ne 0 ]]; then
+  echo "error: apply/remove edit /etc and /boot; run as root (or use --root/--dry-run)" >&2
+  exit 1
+fi
+
+run() { # run <description> <cmd...>
+  if [[ $DRY -eq 1 ]]; then say "would: $*"; else "$@"; fi
+}
+
+# Replace or append a KEY=VALUE line tagged with the marker. Idempotent.
+set_kv() { # set_kv <file> <key> <value>
+  local file="$1" key="$2" value="$3" tmp
+  if [[ $DRY -eq 1 ]]; then say "would set $key=$value in ${file#"$ROOT"}"; return 0; fi
+  tmp="$(mktemp)"
+  if grep -qE "^${key}=.*${MARK}\$" "$file"; then
+    # Already ours: rewrite in place so repeated applies keep line order.
+    awk -v k="$key" -v line="${key}=${value} ${MARK}" -v m="$MARK" \
+      'index($0, k "=") == 1 && substr($0, length($0) - length(m) + 1) == m { print line; next } { print }' \
+      "$file" > "$tmp"
+  else
+    grep -v -E "^${key}=" "$file" > "$tmp" || true
+    printf '%s=%s %s\n' "$key" "$value" "$MARK" >> "$tmp"
+  fi
+  cat "$tmp" > "$file"; rm -f "$tmp"
+}
+
+unset_kv() { # remove lines this tool added
+  local file="$1" key="$2" tmp
+  [[ -f $file ]] || return 0
+  if [[ $DRY -eq 1 ]]; then say "would remove $key from ${file#"$ROOT"}"; return 0; fi
+  tmp="$(mktemp)"
+  grep -v -E "^${key}=.*${MARK}\$" "$file" > "$tmp" || true
+  cat "$tmp" > "$file"; rm -f "$tmp"
+}
+
+cmdline_has() { grep -E '^GRUB_CMDLINE_LINUX_DEFAULT=' "$GRUB_DEFAULT_FILE" | grep -qw "$1"; }
+
+cmdline_edit() { # cmdline_edit add|del <word>
+  local mode="$1" word="$2"
+  if [[ $DRY -eq 1 ]]; then say "would $mode kernel parameter '$word'"; return 0; fi
+  if [[ $mode == add ]]; then
+    cmdline_has "$word" || sed -i -E "/^GRUB_CMDLINE_LINUX_DEFAULT=/ { s/([\"'])\$/ ${word}\1/; s/=([\"']) /=\1/ }" "$GRUB_DEFAULT_FILE"
+  else
+    sed -i -E "/^GRUB_CMDLINE_LINUX_DEFAULT=/ s/(^|[\" ])${word}( |[\"'])/\1\2/; /^GRUB_CMDLINE_LINUX_DEFAULT=/ s/  +/ /g; /^GRUB_CMDLINE_LINUX_DEFAULT=/ s/=([\"']) /=\1/; /^GRUB_CMDLINE_LINUX_DEFAULT=/ s/ ([\"'])\$/\1/" "$GRUB_DEFAULT_FILE"
+  fi
+}
+
+grub_present() { [[ -f $GRUB_DEFAULT_FILE ]]; }
+# plymouth counts as installed when plymouthd exists under the root; tests may
+# set HORNERO_BOOT_THEME_ASSUME_PLYMOUTH=1 for a tree without the binary.
+ply_present() { [[ -x $(P /usr/bin/plymouthd) || -n ${HORNERO_BOOT_THEME_ASSUME_PLYMOUTH:-} ]]; }
+grub_applied() { [[ -f $GRUB_DEST/theme.txt ]] && grep -q -E "^GRUB_THEME=.*${MARK}\$" "$GRUB_DEFAULT_FILE" 2>/dev/null; }
+ply_applied() { grep -q -E '^Theme=hornero-signal$' "$PLY_CONF" 2>/dev/null && grep -qE '^HOOKS=.*\bplymouth\b' "$MKINIT_CONF" 2>/dev/null; }
+
+encrypted_root() {
+  [[ -s $(P /etc/crypttab) ]] && grep -qvE '^\s*(#|$)' "$(P /etc/crypttab)" && return 0
+  grep -qE '^HOOKS=.*\b(encrypt|sd-encrypt)\b' "$MKINIT_CONF" 2>/dev/null
+}
+
+# --- status ----------------------------------------------------------------------
+do_status() {
+  eyebrow "HORNEROOS · BOOT THEME"
+  [[ -f $GRUB_SRC/theme.txt ]] && ok "grub theme packaged" || warn "grub theme not packaged (hornero-config missing or old)"
+  [[ -f $PLY_SRC/$THEME.plymouth ]] && ok "plymouth theme packaged" || warn "plymouth theme not packaged (hornero-config missing or old)"
+  if ! grub_present; then skip "grub not configured here (no /etc/default/grub)"
+  elif grub_applied; then ok "grub theme applied ($GRUB_DEST)"
+  else skip "grub theme not applied (run: hornero-boot-theme apply --grub)"; fi
+  if ! ply_present; then skip "plymouth not installed (optional: pacman -S plymouth)"
+  elif ply_applied; then ok "plymouth theme applied"
+  else skip "plymouth theme not applied (run: hornero-boot-theme apply --plymouth)"; fi
+}
+
+# --- grub ------------------------------------------------------------------------
+grub_apply() {
+  grub_present || { skip "grub: ${GRUB_DEFAULT_FILE#"$ROOT"} not found, nothing to theme"; return 0; }
+  [[ -f $GRUB_SRC/theme.txt ]] || { warn "grub: theme is not packaged at ${GRUB_SRC#"$ROOT"}"; return 1; }
+  run mkdir -p "$(dirname "$GRUB_DEST")"
+  run rm -rf "$GRUB_DEST"
+  run cp -r "$GRUB_SRC" "$GRUB_DEST"
+  set_kv "$GRUB_DEFAULT_FILE" GRUB_THEME "\"/boot/grub/themes/$THEME/theme.txt\""
+  grep -qE '^GRUB_GFXMODE=' "$GRUB_DEFAULT_FILE" || set_kv "$GRUB_DEFAULT_FILE" GRUB_GFXMODE "auto"
+  grep -qE '^GRUB_GFXPAYLOAD_LINUX=' "$GRUB_DEFAULT_FILE" || set_kv "$GRUB_DEFAULT_FILE" GRUB_GFXPAYLOAD_LINUX "keep"
+  if [[ -z $ROOT && $REBUILD -eq 1 ]] && command -v grub-mkconfig >/dev/null 2>&1; then
+    run grub-mkconfig -o /boot/grub/grub.cfg
+  fi
+  ok "grub theme applied"
+}
+
+grub_remove() {
+  grub_present || return 0
+  unset_kv "$GRUB_DEFAULT_FILE" GRUB_THEME
+  unset_kv "$GRUB_DEFAULT_FILE" GRUB_GFXMODE
+  unset_kv "$GRUB_DEFAULT_FILE" GRUB_GFXPAYLOAD_LINUX
+  run rm -rf "$GRUB_DEST"
+  if [[ -z $ROOT && $REBUILD -eq 1 ]] && command -v grub-mkconfig >/dev/null 2>&1; then
+    run grub-mkconfig -o /boot/grub/grub.cfg
+  fi
+  ok "grub theme removed"
+}
+
+# --- plymouth --------------------------------------------------------------------
+ply_apply() {
+  ply_present || { skip "plymouth: not installed (optional), boot stays on the text console"; return 0; }
+  [[ -f $PLY_SRC/$THEME.plymouth ]] || { warn "plymouth: theme is not packaged at ${PLY_SRC#"$ROOT"}"; return 1; }
+  [[ -f $MKINIT_CONF ]] || { warn "plymouth: ${MKINIT_CONF#"$ROOT"} not found"; return 1; }
+  if encrypted_root && [[ $ALLOW_ENC -eq 0 ]]; then
+    warn "plymouth: encrypted root detected; the passphrase prompt through plymouth is untested here"
+    warn "plymouth: re-run with --allow-encrypted after testing in a disposable VM"
+    return 1
+  fi
+  grep -qE '^HOOKS=.*\b(udev|systemd)\b' "$MKINIT_CONF" || { warn "plymouth: HOOKS has no udev/systemd entry, refusing to guess"; return 1; }
+  if ! grep -qE '^HOOKS=.*\bplymouth\b' "$MKINIT_CONF"; then
+    [[ -f $MKINIT_CONF.hornero-bak || $DRY -eq 1 ]] || cp "$MKINIT_CONF" "$MKINIT_CONF.hornero-bak"
+    if [[ $DRY -eq 1 ]]; then say "would insert 'plymouth' after udev/systemd in HOOKS"
+    else sed -i -E '/^HOOKS=/ s/\b(udev|systemd)\b/\1 plymouth/' "$MKINIT_CONF"; fi
+  fi
+  run mkdir -p "$(dirname "$PLY_CONF")"
+  if [[ $DRY -eq 1 ]]; then say "would write Theme=$THEME to ${PLY_CONF#"$ROOT"}"
+  else printf '[Daemon]\nTheme=%s\nShowDelay=0\n' "$THEME" > "$PLY_CONF"; fi
+  if grub_present; then
+    cmdline_has quiet || cmdline_edit add quiet
+    cmdline_has splash || cmdline_edit add splash
+  fi
+  if [[ -z $ROOT && $REBUILD -eq 1 ]]; then
+    if command -v mkinitcpio >/dev/null 2>&1; then run mkinitcpio -P; fi
+    if grub_present && command -v grub-mkconfig >/dev/null 2>&1; then run grub-mkconfig -o /boot/grub/grub.cfg; fi
+  fi
+  ok "plymouth theme applied"
+}
+
+ply_remove() {
+  if [[ -f $MKINIT_CONF ]] && grep -qE '^HOOKS=.*\bplymouth\b' "$MKINIT_CONF"; then
+    if [[ $DRY -eq 1 ]]; then say "would remove 'plymouth' from HOOKS"
+    else sed -i -E '/^HOOKS=/ s/ ?\bplymouth\b//' "$MKINIT_CONF"; fi
+  fi
+  if grep -qE '^Theme=hornero-signal$' "$PLY_CONF" 2>/dev/null; then run rm -f "$PLY_CONF"; fi
+  if grub_present && cmdline_has splash; then cmdline_edit del splash; fi
+  if [[ -z $ROOT && $REBUILD -eq 1 ]]; then
+    if command -v mkinitcpio >/dev/null 2>&1; then run mkinitcpio -P; fi
+    if grub_present && command -v grub-mkconfig >/dev/null 2>&1; then run grub-mkconfig -o /boot/grub/grub.cfg; fi
+  fi
+  ok "plymouth theme removed"
+}
+
+if [[ $DO_GRUB -eq 0 && $DO_PLY -eq 0 ]]; then DO_GRUB=1; DO_PLY=1; fi
+case "$ACTION" in
+  status) do_status ;;
+  apply)
+    rc=0
+    if [[ $DO_GRUB -eq 1 ]]; then grub_apply || rc=1; fi
+    if [[ $DO_PLY -eq 1 ]]; then ply_apply || rc=1; fi
+    exit "$rc" ;;
+  remove)
+    if [[ $DO_GRUB -eq 1 ]]; then grub_remove; fi
+    if [[ $DO_PLY -eq 1 ]]; then ply_remove; fi ;;
+esac
