@@ -111,7 +111,7 @@ is recorded in both the verdict and the shipped-payload table above.
 | private_credentials | `home/dot_config/private_credentials/` (2 password-manager-backed key templates) | EXCLUDE | API-key templates resolved from a password manager; never curated, never shipped. Confirms the existing excluded row. |
 | wallpaper-binaries | `home/dot_local/share/hornero/wallpapers/` (~45M at the audited dotfiles revision) | PARTIAL / AUDIT | Personal optional collections are not copied or redistributed. Six Argentina defaults are separately sourced, license-verified photos maintained by HorneroOS/config and shipped by its AUR package. Full classification and hashes: `profiles/themes/dotfiles-wallpaper-audit.json`. |
 | shell-presets | `home/dot_local/share/hornero/shell-presets/` (15 layout JSON files) | ADOPT-COPY | Quickshell-owned source remains `HorneroOS/shell`; the Config package and materialized user catalogue now carry a byte-synced copy pinned in `shell/shell-presets.source`. Dotfiles can retire its duplicate after that package is installed. |
-| shell-stub | `dot_zshrc`, `dot_p10k.zsh`, aliases, profile, xinitrc, xprofile, `dot_zsh/`, `dot_Xresources` | KEEP-DEFERRED | Owner `HorneroOS/config` shell design pass (see `shell/README.md`): prompt choice, plugin surface, and POSIX-vs-zsh scope are undecided. No generic default invented here. |
+| shell-stub | `dot_zshrc`, `dot_p10k.zsh`, aliases, profile, xinitrc, xprofile, `dot_zsh/`, `dot_Xresources` | PARTIAL | The personal layer stays out. The generic factory `shell/zsh/zshrc` is the supported default: plain zsh, **no prompt framework** (no powerlevel10k/starship dependency), Signal prompt (`user@host` muted, path `cue`, `✗ status` in `alert` only after a failure, `%` in `signal`) from ANSI palette names only, plain under `NO_COLOR`/`TERM=dumb`, ASCII fallback outside UTF-8. Plugins/direnv/zoxide stay optional. Gate: `tests/test_zsh_prompt.sh`. Aliases, profile and plugin manager remain undecided. |
 | profiles | `profiles/base`, `HORNERO_PROFILE=desktop` / `developer` (packaging matrix) | KEEP-DEFERRED | Owner `HorneroOS/config`. `desktop` and `developer` stay aliases of `base` (the packaging test asserts byte-identical trees) until a real divergence is wanted; no profile invented in this pass. |
 
 Triage counts: ADOPT-COPY 3 (tmux, yazi, shell-presets) / EXCLUDE 7 (lxqt, guitarix,
@@ -369,3 +369,14 @@ cards (not packaged); `tests/test_brand.sh` rejects the pre-Signal hexes and
 live `<text>` in the wordmark and checks the cards against their generator.
 The "Brand identity P2" and "Flagship appearance tokens" sections above are
 history; the current palette is Hornero Signal (docs/BRAND.md).
+
+## Fastfetch (Signal)
+
+`desktop/fastfetch/config.jsonc` + `hornero.txt` follow the Signal language:
+plain-text mono keys (no Nerd Font private-use glyphs, so it renders in any
+terminal font), one signal-amber tick per `SYSTEM` / `DESKTOP` / `HARDWARE`
+eyebrow, values in the default foreground, an ANSI palette strip. The logo is
+the bird mark rasterised to half-blocks from `assets/brand/logo.svg` with
+two colour slots: `$1` sun disc = yellow (signal) and `$2` bird = default
+foreground (readable on Day and Night). Colours are ANSI only; gate:
+`tests/test_fastfetch.sh`.
