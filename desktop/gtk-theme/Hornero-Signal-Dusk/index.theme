@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-Signal-Dusk
+Comment=Hornero Signal GTK theme generated from hornero-signal-dusk
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-Signal-Dusk
+MetacityTheme=Hornero-Signal-Dusk
+IconTheme=Papirus-Dark
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:
