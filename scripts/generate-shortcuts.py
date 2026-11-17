@@ -112,7 +112,7 @@ def _legacy(dsp, inner):
         return "changegroupactive", "b"
     if dsp == "group.toggle":
         return "togglegroup", ""
-    if dsp == "group.lock_active":
+    if dsp in ("group.lock", "group.lock_active"):
         return "lockactivegroup", "toggle"
     if dsp == "workspace.toggle_special":
         return "togglespecialworkspace", inner.strip('"')
