@@ -43,4 +43,22 @@ if grep -q '"mode"' "$STATE"; then
 fi
 pass "policy updates across writes, mode stays absent"
 
+# `ensure` (first session): applies once when no GTK theme was ever chosen,
+# never when one was, and always leaves a marker so later choices stick.
+BIN="$T_HOME/bin"; mkdir -p "$BIN"
+printf '#!/bin/sh\nprintf "%%s" "${FAKE_DCONF_GTK_THEME:-}"\n' >"$BIN/dconf"; chmod +x "$BIN/dconf"
+MARK="$T_HOME/.local/state/hornero/gtk-theme-initialised"
+out="$(HOME="$T_HOME" PATH="$BIN:$PATH" bash "$REPO_ROOT/bin/hornero-gtk-theme" ensure 2>&1 || true)"
+grep -q "Following the applied Hornero Signal theme" <<<"$out" || fail "ensure did not apply on an unset GTK theme: $out"
+[[ -f $MARK ]] || fail "ensure left no first-session marker"
+pass "ensure applies the Signal GTK theme once on an unset theme and records it"
+out="$(HOME="$T_HOME" PATH="$BIN:$PATH" bash "$REPO_ROOT/bin/hornero-gtk-theme" ensure 2>&1 || true)"
+[[ -z $out ]] || fail "ensure acted twice: $out"
+pass "ensure is a no-op once initialised"
+rm -f "$MARK"
+out="$(HOME="$T_HOME" PATH="$BIN:$PATH" FAKE_DCONF_GTK_THEME="'Some-User-Theme'" bash "$REPO_ROOT/bin/hornero-gtk-theme" ensure 2>&1 || true)"
+[[ -z $out ]] || fail "ensure overrode a chosen GTK theme: $out"
+[[ -f $MARK ]] || fail "ensure left no marker when a theme was already chosen"
+pass "ensure never overrides a GTK theme that was already chosen"
+
 echo "test_gtk_state.sh: ALL GREEN"

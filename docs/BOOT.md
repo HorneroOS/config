@@ -74,12 +74,19 @@ are 14-18 px in GRUB with text contrast >= 7:1 (`inkMuted`/`ink` on `ground`).
 * Live-ISO syslinux: real syslinux 6.04 `vesamenu.c32` under SeaBIOS in QEMU
   with the exact `syslinux.cfg` and `splash.png` (installer repo).
 * Plymouth: `tests/test_boot_theme.py` validates descriptor, assets and that the
-  script is static; real `plymouthd` 26.134 loaded and executed the theme script
-  in a throwaway initramfs under QEMU (it reached the sprite layer, so the script
-  parses), but **no rendered Plymouth frame was captured**: the minimal
-  harness (no udev, simpledrm) never took the screen over, and the stock
-  `spinner` theme behaved identically. A real boot of an installed image with
-  `hornero-boot-theme apply --plymouth` is still owed.
+  script is static. A real `plymouthd` 26.134 (Arch `plymouth` package,
+  signature checked, installed into the disposable QA VM from the shell
+  image) rendered the theme on a real DRM display (virtio-gpu, 1280x800):
+  logo, eyebrow and 24-segment meter at about one quarter and at 20/24
+  progress, and the disk-passphrase prompt with one block per typed
+  character. The frames were captured and inspected. Two harness details
+  matter for anyone repeating it: the guest kernel command line carries
+  `console=ttyS0`, which makes plymouth force the text splash, so pass
+  `plymouth.ignore-serial-consoles` (`plymouthd --kernel-command-line=...`);
+  and the compositor session must be stopped first so plymouth can take the
+  DRM master. This is a **running-session** render, not an initramfs boot: a
+  real boot of an installed image with `hornero-boot-theme apply --plymouth`
+  (initramfs hook, early KMS handover, encrypted root) is still owed.
 * Not exercised anywhere: encrypted-root passphrase prompt, HiDPI scaling,
   Secure Boot chains.
 

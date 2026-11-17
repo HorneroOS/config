@@ -65,3 +65,10 @@ hornero-appearance theme apply hornero-signal-day   # full theme apply
 hornero-gtk-theme apply Hornero-Signal Papirus-Dark prefer-dark
 python3 desktop/gtk-theme/gallery.py --theme Hornero-Signal
 ```
+
+GTK 3 on Wayland reads the theme name from gsettings, not from
+`settings.ini`, so a session in which nothing ever applied a theme shows stock
+Adwaita. The Hyprland autostart therefore runs `hornero-gtk-theme -q ensure`:
+it applies the Signal GTK theme once, only when no GTK theme was chosen yet,
+and records `$XDG_STATE_HOME/hornero/gtk-theme-initialised` so a later choice
+(or a later reset) is never overridden at login.
