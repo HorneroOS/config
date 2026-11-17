@@ -25,7 +25,7 @@ user's chosen theme or Hornero Chromatic palette.
   Plex Mono) so builds and the initramfs need no fonts.
 * `desktop/boot/grub/fonts/*.pf2` - IBM Plex (OFL-1.1) converted with
   `grub-mkfont` (committed binary, a few KB each; regenerate with
-  `grub-mkfont --range=0x20-0x7e,0xa0-0xff,0x2022-0x2022,0x2026-0x2026,0x2190-0x2193 -s <px> <ttf>`),
+  `grub-mkfont --range=0x20-0x7e,0xa0-0xff,0x2022-0x2022,0x2026-0x2026 -s <px> <ttf>`),
   so the package needs no `grub` makedepend.
 * `scripts/render-boot-assets.sh --out DIR` renders PNGs with `rsvg-convert`
   (already a makedepend) and stages `grub/`, `plymouth/` and `iso/splash.png`.
@@ -64,7 +64,7 @@ change over time is the meter lighting whole segments (24; plymouthd's boot
 progress, or one step per 0.5 s up to 20/24 on a first boot without a recorded
 duration). A typed disk passphrase shows one block per character, never the
 text. Status is conveyed by position and count, not by colour alone. Text sizes
-are 12-18 px in GRUB with text contrast >= 7:1 (`inkMuted`/`ink` on `ground`).
+are 14-18 px in GRUB with text contrast >= 7:1 (`inkMuted`/`ink` on `ground`).
 
 ## Not covered
 

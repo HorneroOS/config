@@ -2,7 +2,8 @@
 # Colours are the hornero-signal-night roles (RFC 0001): ground #0C0F13,
 # ink #ECE6DA, inkMuted #A8ABAD, raised #1F252E, signal #F2A33A.
 # Layout is proportional; fonts are IBM Plex pf2 files in this directory.
-# No animation, no blur: GRUB draws static frames.
+# No animation, no blur: GRUB draws static frames. The pf2 fonts are loaded by
+# grub-mkconfig (00_header emits loadfont for every *.pf2 beside the theme).
 
 desktop-color: "#0C0F13"
 desktop-image: "background.png"
@@ -41,7 +42,7 @@ terminal-border: "0"
     item_spacing = 6
     icon_width = 0
     icon_height = 0
-    item_icon_space = 0
+    item_icon_space = 14
     selected_item_pixmap_style = "select_*.png"
     scrollbar = false
 }
@@ -53,7 +54,7 @@ terminal-border: "0"
     width = 60%
     height = 20
     text = "AUTO BOOT IN %d S"
-    font = "IBM Plex Mono Medium Regular 12"
+    font = "IBM Plex Mono Medium Regular 14"
     color = "#A8ABAD"
     align = "left"
 }
@@ -63,8 +64,8 @@ terminal-border: "0"
     top = 90%
     width = 84%
     height = 20
-    text = "↑ ↓ SELECT  ·  ENTER BOOT  ·  E EDIT  ·  C COMMAND LINE"
-    font = "IBM Plex Mono Medium Regular 12"
+    text = "UP/DOWN SELECT  ·  ENTER BOOT  ·  E EDIT  ·  C COMMAND LINE"
+    font = "IBM Plex Mono Medium Regular 14"
     color = "#A8ABAD"
     align = "left"
 }
