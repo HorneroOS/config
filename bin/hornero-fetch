@@ -1,0 +1,189 @@
+#!/usr/bin/env bash
+# hornero-fetch: HorneroOS front door for fastfetch (MIT).
+#
+#   hornero-fetch [options] [fastfetch args...]   render the HorneroOS card
+#   hornero-fetch fact <name>                     print one fast, local fact
+#
+# What it adds on top of `fastfetch -c <config>`:
+#   * picks the logo for the terminal: full art, compact art, image, or none;
+#   * resolves the fastfetch config the same way fastfetch does, with a user
+#     override file (see "Customising" below);
+#   * serves the HorneroOS-only rows (edition, mode, layout, theme, build) from
+#     local state files in a few milliseconds. No network, no horneroctl call,
+#     no hostname or address unless you opt in.
+#
+# Options (each also settable in the user file, see below):
+#   --logo auto|ansi|mini|image|none   logo style (default auto)
+#   --image PATH                       image for --logo image (any PNG/JPEG)
+#   --identity                         show user@host in the title (off by default)
+#   --config PATH                      use this fastfetch config instead
+#   -h, --help
+#
+# auto = full ANSI art when the terminal is >= 90 columns, compact art from 60,
+# no logo below that. Image logos are never chosen by auto: ask for them with
+# --logo image (kitty graphics protocol: kitty, ghostty, wezterm; falls back to
+# ANSI art in terminals without it, e.g. alacritty).
+#
+# Customising (precedence: command line > environment > user file > default):
+#   file  ${XDG_CONFIG_HOME:-~/.config}/hornero/fastfetch.conf, key=value lines:
+#           logo=auto|ansi|mini|image|none     env HORNERO_FETCH_LOGO
+#           image=/path/to/picture.png         env HORNERO_FETCH_IMAGE
+#           identity=0|1                       env HORNERO_FETCH_IDENTITY
+#           config=/path/to/config.jsonc       env HORNERO_FETCH_CONFIG
+#   Your own ~/.config/fastfetch/config.jsonc is always honoured first.
+#
+# Privacy: facts are read from the Hornero state files of the current user;
+# nothing is sent anywhere and nothing is written except the image cache below.
+set -euo pipefail
+
+STATE="${XDG_STATE_HOME:-$HOME/.local/state}/hornero"
+CONF_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/hornero/fastfetch.conf"
+CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/hornero/fastfetch"
+
+json_str() { # <file> <key>: first string value of "key" in a JSON file
+  [[ -r $1 ]] || return 0
+  sed -n -E 's/.*"'"$2"'"[[:space:]]*:[[:space:]]*"([^"]*)".*/\1/p' "$1" 2>/dev/null | head -n1 || true
+}
+
+pkg_version() { # <package>: installed version from the pacman local db, no fork
+  local d
+  for d in "${HORNERO_PACMAN_DB:-/var/lib/pacman/local}/$1"-[0-9]*; do
+    [[ -d $d ]] || continue
+    d="${d##*/}"; d="${d#"$1"-}"; printf '%s\n' "${d%-*}"
+    return 0
+  done
+}
+
+fact() {
+  local v
+  case "${1:-}" in
+    edition)
+      local f="${HORNERO_SYSTEM_PROFILE_FILE:-/usr/lib/hornero/system-profile.json}"
+      v="$(json_str "$f" title)"
+      [[ -n $v ]] || return 0
+      local m; m="$(json_str "$f" maturity)"
+      printf '%s%s\n' "$v" "${m:+ ($m)}" ;;
+    mode)
+      v="$(json_str "$STATE/experience.json" mode)"
+      [[ -n $v ]] || return 0
+      local l=""
+      [[ -r $STATE/current-shell-preset ]] && IFS= read -r l <"$STATE/current-shell-preset" || true
+      printf '%s%s\n' "$v" "${l:+ / $l}" ;;
+    theme)
+      v="$(json_str "$STATE/signal/scheme.json" id)"
+      [[ -n $v ]] || return 0
+      local m; m="$(json_str "$STATE/signal/scheme.json" mode)"
+      printf '%s%s\n' "$v" "${m:+ ($m)}" ;;
+    chroma)
+      local s="$STATE/chromatic/state.json"
+      [[ -r $s ]] && grep -q '"active":true' "$s" || return 0
+      v="$(json_str "$s" variant)"
+      printf 'wallpaper%s\n' "${v:+ / $v}" ;;
+    build)
+      local sh ctl out=""
+      sh="$(pkg_version hornero-shell)"; ctl="$(pkg_version horneroctl-bin)"
+      [[ -n $sh ]] && out="shell $sh"
+      if [[ -n $ctl ]]; then ctl="${ctl/_preview/-p}"; out="${out:+$out / }ctl $ctl"; fi
+      [[ -z $out ]] || printf '%s\n' "$out" ;;
+    release)
+      local c b
+      c="$(pkg_version hornero-config)"
+      b="$(sed -n -E 's/^BUILD_ID="?([^"]*)"?$/\1/p' "${HORNERO_OS_RELEASE:-/etc/os-release}" 2>/dev/null | head -n1 || true)"
+      printf '%s%s\n' "${b:-rolling}" "${c:+ / config $c}" ;;
+    banner)
+      printf '\033[1mHORNERO OS\033[0m  \033[90m%s\033[0m\n' "$(fact release)" ;;
+    identity)
+      [[ ${HORNERO_FETCH_IDENTITY:-0} == 1 ]] || return 0
+      printf '%s@%s\n' "${USER:-$(id -un)}" "$(uname -n)" ;;
+    *) echo "hornero-fetch: unknown fact '${1:-}' (edition mode theme chroma build release banner identity)" >&2; return 2 ;;
+  esac
+}
+
+if [[ ${1:-} == fact ]]; then
+  fact "${2:-}"
+  exit $?
+fi
+
+usage() { sed -n '2,/^set -euo/p' "$0" | sed '$d' | sed -E 's/^# ?//'; }
+
+# ---- knobs -----------------------------------------------------------------
+logo="auto" image="" identity=0 config=""
+if [[ -r $CONF_FILE ]]; then
+  while IFS='=' read -r k v; do
+    [[ $k =~ ^[[:space:]]*# || -z ${k// /} ]] && continue
+    k="${k//[[:space:]]/}"; v="${v%%#*}"; v="${v#"${v%%[![:space:]]*}"}"; v="${v%"${v##*[![:space:]]}"}"
+    case "$k" in
+      logo) logo="$v" ;; image) image="$v" ;; identity) identity="$v" ;; config) config="$v" ;;
+    esac
+  done <"$CONF_FILE"
+fi
+logo="${HORNERO_FETCH_LOGO:-$logo}"; image="${HORNERO_FETCH_IMAGE:-$image}"
+identity="${HORNERO_FETCH_IDENTITY:-$identity}"; config="${HORNERO_FETCH_CONFIG:-$config}"
+
+args=()
+while (($#)); do
+  case "$1" in
+    --logo) logo="${2:?--logo needs a value}"; shift 2 ;;
+    --image) image="${2:?--image needs a path}"; shift 2 ;;
+    --identity) identity=1; shift ;;
+    --config) config="${2:?--config needs a path}"; shift 2 ;;
+    -h|--help) usage; exit 0 ;;
+    *) args+=("$1"); shift ;;
+  esac
+done
+case "$logo" in auto|ansi|mini|image|none) ;; *) echo "hornero-fetch: bad --logo '$logo'" >&2; exit 2 ;; esac
+command -v fastfetch >/dev/null 2>&1 || { echo "hornero-fetch: fastfetch is not installed" >&2; exit 127; }
+
+# ---- config ----------------------------------------------------------------
+if [[ -z $config ]]; then
+  for c in "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/config.jsonc" /etc/xdg/fastfetch/config.jsonc; do
+    [[ -r $c ]] && { config="$c"; break; }
+  done
+fi
+[[ -n $config ]] || { echo "hornero-fetch: no fastfetch config found" >&2; exit 1; }
+dir="$(dirname "$config")"
+
+# ---- terminal --------------------------------------------------------------
+cols="${COLUMNS:-}"
+[[ -n $cols ]] || cols="$( { { stty size </dev/tty; } 2>/dev/null || true; } | awk '{print $2}')"
+[[ $cols =~ ^[0-9]+$ ]] || cols=80
+
+kitty_graphics() {
+  [[ -n ${KITTY_WINDOW_ID:-} || ${TERM:-} == xterm-kitty || ${TERM:-} == xterm-ghostty \
+     || ${TERM_PROGRAM:-} == ghostty || ${TERM_PROGRAM:-} == WezTerm ]]
+}
+
+if [[ $logo == auto ]]; then
+  if ((cols >= 90)); then logo=ansi; elif ((cols >= 60)); then logo=mini; else logo=none; fi
+fi
+
+if [[ $logo == image ]]; then
+  if ! kitty_graphics; then
+    logo=ansi; ((cols >= 90)) || logo=mini   # alacritty & co: no image protocol
+  elif [[ -z $image ]]; then
+    svg="$dir/art/hornero-nest.svg"
+    png="$CACHE/hornero-nest.png"
+    if [[ -r $svg ]] && command -v rsvg-convert >/dev/null 2>&1; then
+      if [[ ! -s $png || $svg -nt $png ]]; then
+        mkdir -p "$CACHE"; rsvg-convert -w 544 -h 640 "$svg" -o "$png" 2>/dev/null || rm -f "$png"
+      fi
+      [[ -s $png ]] && image="$png"
+    fi
+    [[ -n $image ]] || { logo=ansi; ((cols >= 90)) || logo=mini; }
+  elif [[ ! -r $image ]]; then
+    echo "hornero-fetch: image '$image' not readable, using ANSI art" >&2
+    logo=ansi; ((cols >= 90)) || logo=mini
+  fi
+fi
+
+[[ -t 1 || ${HORNERO_FETCH_ASSUME_TTY:-0} == 1 ]] || logo=none   # pipes and files get the plain rows, no art (ASSUME_TTY is a test hook)
+ff=(fastfetch -c "$config")
+case "$logo" in
+  ansi) ff+=(--logo-type file-raw --logo "$dir/hornero.txt" --logo-padding-left 1 --logo-padding-right 2) ;;
+  mini) ff+=(--logo-type file-raw --logo "$dir/hornero-mini.txt" --logo-padding-left 1 --logo-padding-right 2) ;;
+  image) ff+=(--logo-type kitty-direct --logo "$image" --logo-width 34 --logo-height 18 --logo-preserve-aspect-ratio true --logo-padding-left 1 --logo-padding-right 2) ;;
+  none) ff+=(--logo none) ;;
+esac
+((cols >= 60)) || ff+=(--percent-type 1)   # narrow: plain percentages, no bars
+export HORNERO_FETCH_IDENTITY="$identity"
+exec "${ff[@]}" "${args[@]}"

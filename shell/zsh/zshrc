@@ -24,6 +24,14 @@ else
   PROMPT="%F{8}%n@%m%f %F{4}%~%f%(?.. %B%F{1}${_hornero_fail}%?%f%b) %B%F{3}%#%f%b "
   unset _hornero_fail
 fi
+# `fastfetch` with no arguments shows the HorneroOS card through hornero-fetch
+# (terminal-aware logo, user knobs; docs/FASTFETCH.md). Any argument, or
+# HORNERO_FETCH=0, runs the real fastfetch untouched.
+if (( $+commands[hornero-fetch] && $+commands[fastfetch] )); then
+  fastfetch() {
+    if (( $# == 0 )) && [[ "${HORNERO_FETCH-}" != 0 ]]; then command hornero-fetch; else command fastfetch "$@"; fi
+  }
+fi
 # Optional integrations activate only when installed.
 command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"

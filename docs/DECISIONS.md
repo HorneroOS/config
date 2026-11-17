@@ -370,16 +370,22 @@ live `<text>` in the wordmark and checks the cards against their generator.
 The "Brand identity P2" and "Flagship appearance tokens" sections above are
 history; the current palette is Hornero Signal (docs/BRAND.md).
 
-## Fastfetch (Signal)
+## Fastfetch (Signal Bezel Calido)
 
-`desktop/fastfetch/config.jsonc` + `hornero.txt` follow the Signal language:
-plain-text mono keys (no Nerd Font private-use glyphs, so it renders in any
-terminal font), one signal-amber tick per `SYSTEM` / `DESKTOP` / `HARDWARE`
-eyebrow, values in the default foreground, an ANSI palette strip. The logo is
-the bird mark rasterised to half-blocks from `assets/brand/logo.svg` with
-two colour slots: `$1` sun disc = yellow (signal) and `$2` bird = default
-foreground (readable on Day and Night). Colours are ANSI only; gate:
+The first Signal fastfetch (a sun disc plus a blocky bird, `$1`/`$2` colour
+slots, `user@host` title) was rejected on sight: the bird read as a crow and
+the card leaked the hostname. Rebuilt as an original rufous hornero on its
+clay-oven nest with a lit doorway and an aerial (the Nest of the Javi
+direction), drawn as pixel art in `desktop/fastfetch/art/*.pix` and generated
+into half-block ANSI by `scripts/gen-fastfetch-logo.py` (full 34x18 cells,
+compact 20x9). Colours are 16-colour SGR roles only, so Signal themes and
+Hornero Chromatic repaint it. `bin/hornero-fetch` adds terminal-aware logo
+choice, an optional kitty-protocol image logo (swappable path for the new Javi
+art), the user override file and the HorneroOS rows (edition, mode, layout,
+theme, Chromatic, build) from local state files. No Nerd Font glyphs, no
+network, no hostname by default. Details: `docs/FASTFETCH.md`; gate:
 `tests/test_fastfetch.sh`.
+
 ## Boot experience (GRUB + Plymouth themes)
 
 * **Where**: `desktop/boot/` (sources), `scripts/render-boot-assets.sh`,

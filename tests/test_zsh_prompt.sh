@@ -37,4 +37,13 @@ plain="$(render 3 LANG=en_US.UTF-8 TERM=xterm NO_COLOR=1)"
 [[ "$plain" != *$'\x1b'* ]] || fail "NO_COLOR prompt must contain no escapes"
 [[ "$plain" == *"x3"* ]] || fail "NO_COLOR prompt must still show failure status"
 pass "failure status carries glyph + code; ASCII + NO_COLOR fallbacks"
+# fastfetch routing: bare -> hornero-fetch, with args or HORNERO_FETCH=0 -> real binary
+mkdir -p "$T/bin"
+printf '#!/bin/sh\necho hornero-fetch\n' >"$T/bin/hornero-fetch"; printf '#!/bin/sh\necho real-fastfetch "$@"\n' >"$T/bin/fastfetch"
+chmod +x "$T/bin/hornero-fetch" "$T/bin/fastfetch"
+ff() { env -i HOME="$T" XDG_STATE_HOME="$T/state" PATH="$T/bin:$PATH" "$@" zsh -fc "source '$RC' 2>/dev/null; fastfetch ${ARGS-}" 2>/dev/null; }
+[[ "$(ff)" == "hornero-fetch" ]] || fail "bare fastfetch must route to hornero-fetch"
+[[ "$(ARGS='--pipe' ff)" == "real-fastfetch --pipe" ]] || fail "fastfetch with arguments must run the real binary"
+[[ "$(ff HORNERO_FETCH=0)" == "real-fastfetch" ]] || fail "HORNERO_FETCH=0 must bypass the card"
+pass "bare fastfetch routes to hornero-fetch; arguments and HORNERO_FETCH=0 bypass it"
 echo "ZSHPROMPT-PASS"
