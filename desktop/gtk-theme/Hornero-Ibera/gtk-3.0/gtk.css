@@ -527,8 +527,14 @@ check:checked {
     -gtk-icon-source: -gtk-icontheme("object-select-symbolic");
 }
 
-radio:checked {
-    -gtk-icon-source: -gtk-icontheme("media-record-symbolic");
+/* Mixed (tri-state) value: :indeterminate in both GTK 3.24 and GTK 4
+ * (:inconsistent is deprecated and warns). */
+check:indeterminate,
+radio:indeterminate {
+    background-color: @hs_signal;
+    border-color: @hs_signal;
+    color: @hs_on_signal;
+    -gtk-icon-source: -gtk-icontheme("list-remove-symbolic");
 }
 
 /* ---- Banners ------------------------------------------------------------ */

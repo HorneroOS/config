@@ -35,6 +35,8 @@
 ##     detect                  Show the GTK theme of the applied Signal theme
 ##     theme [theme-id]        Apply GTK theme from appearance theme pack
 ##     auto                    Apply the GTK theme of the applied Signal theme
+##     ensure                  First session only: apply the Signal GTK theme when
+##                             no GTK theme was ever chosen, then never again
 ##     icons                   List installed icon themes
 ##     info <theme>            Show information about a theme
 ##
@@ -345,6 +347,25 @@ cmd_auto() {
 	cmd_theme_pack ""
 }
 
+# First-session guard. A fresh session has no gsettings gtk-theme, so GTK 3 on
+# Wayland falls back to stock Adwaita and ignores the generated settings.ini.
+# `ensure` applies the Signal GTK theme exactly once, and only when nothing has
+# chosen a theme yet; a theme chosen by `apply` or by the user is never touched,
+# and the marker keeps later resets of that choice from being undone at login.
+cmd_ensure() {
+	local marker="${XDG_STATE_HOME:-$HOME/.local/state}/hornero/gtk-theme-initialised"
+	[[ -f $marker ]] && return 0
+	local chosen=""
+	if command -v dconf >/dev/null 2>&1; then
+		chosen="$(dconf read /org/gnome/desktop/interface/gtk-theme 2>/dev/null || true)"
+	fi
+	mkdir -p "$(dirname "$marker")"
+	if [[ -z $chosen ]]; then
+		cmd_auto || true
+	fi
+	: >"$marker"
+}
+
 # Function to list icon themes
 cmd_icons() {
 	local use_plain=false
@@ -531,6 +552,9 @@ main() {
 		;;
 	"auto" | "automatic")
 		cmd_auto
+		;;
+	"ensure")
+		cmd_ensure
 		;;
 	"icons" | "icon")
 		cmd_icons "${cmd_args[@]}"
