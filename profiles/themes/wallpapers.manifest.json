@@ -18,6 +18,11 @@
       "wallpaperDir": "hornero-signal-night"
     },
     {
+      "id": "hornero-signal-dusk",
+      "defaultWallpaper": "hornero-signal-night-01.png",
+      "wallpaperDir": "hornero-signal-night"
+    },
+    {
       "id": "catppuccin-latte",
       "defaultWallpaper": "catppuccin-latte-01.png",
       "wallpaperDir": "catppuccin-latte"

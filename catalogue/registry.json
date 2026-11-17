@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "source": "profiles/themes",
-  "count": 20,
+  "count": 21,
   "entries": [
     {
       "id": "buenos-aires-nocturno",
@@ -242,6 +242,35 @@
       },
       "defaultWallpaper": "hornero-signal-day-01.png",
       "wallpaperDir": "hornero-signal-day"
+    },
+    {
+      "id": "hornero-signal-dusk",
+      "name": "Hornero Signal Dusk",
+      "description": "Warm cozy hackerpunk night: charcoal-aubergine panels lit like a workshop lamp, cream ink, copper-amber signal, cyan cue and phosphor green; the same Signal roles and gates as Night",
+      "tags": [
+        "hornero",
+        "signal",
+        "flagship",
+        "cozy",
+        "warm",
+        "copper",
+        "cyan",
+        "dark"
+      ],
+      "mode": "dark",
+      "version": "",
+      "collection": "hornero-signal",
+      "collectionOrder": 4,
+      "gtkTheme": "Hornero-Signal-Dusk",
+      "swatch": {
+        "base": "#201A19",
+        "panel": "#27201E",
+        "ink": "#F1E6D2",
+        "signal": "#F29A4A",
+        "cue": "#74C6E8"
+      },
+      "defaultWallpaper": "hornero-signal-night-01.png",
+      "wallpaperDir": "hornero-signal-night"
     },
     {
       "id": "hornero-signal-night",

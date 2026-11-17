@@ -48,10 +48,10 @@ for item in wallpaper_refs:
     assert item["wallpaperDir"] == entry["wallpaperDir"], f"{item['id']}: wallpaper directory drift"
     assert item["defaultWallpaper"] == entry["defaultWallpaper"], f"{item['id']}: default wallpaper drift"
 
-signal = {"hornero-signal-night", "hornero-signal-day", "hornero-signal-contrast"}
+signal = {"hornero-signal-night", "hornero-signal-day", "hornero-signal-contrast", "hornero-signal-dusk"}
 assert {i for i, e in entries.items() if e["collection"] == "hornero-signal"} == signal
 assert [entries[i]["collectionOrder"] for i in
-        ("hornero-signal-night", "hornero-signal-day", "hornero-signal-contrast")] == [1, 2, 3]
+        ("hornero-signal-night", "hornero-signal-day", "hornero-signal-contrast", "hornero-signal-dusk")] == [1, 2, 3, 4]
 originals = {
     "patagonia", "quebrada", "ibera", "fin-del-mundo", "buenos-aires-nocturno",
     "pampa", "cuyo", "iguazu", "sierras",

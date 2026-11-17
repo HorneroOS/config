@@ -1,0 +1,35 @@
+/* Hornero-Signal-Dusk libadwaita recolouring — GENERATED from schema-v2 roles of
+ * profiles/themes/hornero-signal-dusk/theme.json (scripts/generate-appearance.py).
+ * Installed as ~/.config/gtk-4.0/gtk.css; public named colours only. */
+@define-color accent_bg_color #F29A4A;
+@define-color accent_fg_color #1C1006;
+@define-color accent_color #F29A4A;
+@define-color destructive_bg_color #F2705E;
+@define-color destructive_fg_color #1E0905;
+@define-color destructive_color #F2705E;
+@define-color success_bg_color #93D79B;
+@define-color success_fg_color #07170C;
+@define-color success_color #93D79B;
+@define-color warning_bg_color #F29A4A;
+@define-color warning_fg_color #1C1006;
+@define-color warning_color #F29A4A;
+@define-color error_bg_color #F2705E;
+@define-color error_fg_color #1E0905;
+@define-color error_color #F2705E;
+@define-color window_bg_color #201A19;
+@define-color window_fg_color #F1E6D2;
+@define-color view_bg_color #27201E;
+@define-color view_fg_color #F1E6D2;
+@define-color headerbar_bg_color #201A19;
+@define-color headerbar_fg_color #F1E6D2;
+@define-color headerbar_border_color #3A302C;
+@define-color sidebar_bg_color #1A1514;
+@define-color sidebar_fg_color #F1E6D2;
+@define-color card_bg_color #27201E;
+@define-color card_fg_color #F1E6D2;
+@define-color dialog_bg_color #27201E;
+@define-color dialog_fg_color #F1E6D2;
+@define-color popover_bg_color #27201E;
+@define-color popover_fg_color #F1E6D2;
+@define-color thumbnail_bg_color #302826;
+@define-color thumbnail_fg_color #F1E6D2;
