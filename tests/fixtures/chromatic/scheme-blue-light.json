@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 2,
+  "id": "hornero-chromatic",
+  "mode": "light",
+  "palette": {
+    "ground": "#D7E3EF",
+    "sunken": "#CBD8E6",
+    "base": "#E2F0FF",
+    "panel": "#EDF6FF",
+    "raised": "#F5FAFF",
+    "lifted": "#FCFEFF",
+    "rule": "#BBCFE4",
+    "ruleStrong": "#5D7084",
+    "ink": "#221D17",
+    "inkMuted": "#56534F",
+    "inkFaint": "#827F7B",
+    "signal": "#005DA3",
+    "cue": "#8B4500",
+    "phosphor": "#006947",
+    "alert": "#A92C3F",
+    "signalWell": "#CEE6FF",
+    "onSignalWell": "#072A4A",
+    "onSignal": "#FDFDFD",
+    "cueWell": "#FCDCC7",
+    "onCueWell": "#421E00",
+    "onCue": "#FDFDFD",
+    "phosphorWell": "#CAEDDA",
+    "onPhosphorWell": "#00321F",
+    "onPhosphor": "#FDFDFD",
+    "alertWell": "#FFD8D8",
+    "onAlertWell": "#49141A",
+    "onAlert": "#FDFDFD",
+    "inverse": "#221D17",
+    "onInverse": "#EDF6FF",
+    "inverseSignal": "#81BBF7",
+    "scrim": "#000000",
+    "shadow": "#000000",
+    "focus": "#8B4500"
+  },
+  "terminal": [
+    "#131E2A",
+    "#9D3340",
+    "#006F4B",
+    "#6B5E00",
+    "#135DAA",
+    "#764297",
+    "#006B74",
+    "#887E74",
+    "#4A545D",
+    "#78222D",
+    "#005337",
+    "#4F4500",
+    "#054582",
+    "#582E74",
+    "#004F56",
+    "#847F7A"
+  ],
+  "chromatic": {
+    "version": 1,
+    "engine": "1.0.0",
+    "algorithm": 1,
+    "fingerprint": "sha256:0000000000000000000000000000000000000000000000000000000000000001",
+    "request": {
+      "source": "seed",
+      "variant": "vibrant",
+      "mode": "light",
+      "contrast": "standard",
+      "surfaceDepth": "standard",
+      "chroma": 1.0,
+      "hueShift": 0
+    },
+    "resolved": {
+      "mode": "light",
+      "variant": "vibrant",
+      "contrast": "standard"
+    },
+    "seeds": [
+      "#005DA3"
+    ],
+    "sourceKey": null
+  },
+  "minSurfaceAlpha": {
+    "sunken": 0.8,
+    "base": 0.82,
+    "panel": 0.86,
+    "raised": 0.86,
+    "lifted": 0.88
+  },
+  "clearInk": {
+    "light": {
+      "ink": "#10131A",
+      "inkMuted": "#2A2F3A",
+      "signal": "#7A2447",
+      "alert": "#9A2418",
+      "halo": "#F5F2EE"
+    },
+    "dark": {
+      "ink": "#F4F7FA",
+      "inkMuted": "#C9D0D8",
+      "signal": "#FFA0C4",
+      "alert": "#FF9083",
+      "halo": "#0A0C10"
+    }
+  }
+}

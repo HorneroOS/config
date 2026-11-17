@@ -126,6 +126,10 @@ fi
 # Rows 1+8: installed theme.json recipes + wallpapers.manifest.json.
 install_dir "profiles/themes" "$DATA_HOME/hornero/themes"
 
+# --- Hornero Chromatic app templates (rendered by horneroctl) -------------------
+# Manifests + *.tmpl for GTK 3/4, qt5ct/qt6ct, kitty, foot, fuzzel, neovim, zed.
+install_dir "share/hornero/chromatic" "$DATA_HOME/hornero/chromatic"
+
 # --- machine-readable shortcut manifest -> canonical hornero/* --------------
 # Generated from the authoritative keybindings.lua (never hand-edited):
 # the Welcome Center resolves curated shortcut ids against this file.

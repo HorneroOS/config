@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hornero.os/config/chromatic-template.schema.json",
+  "title": "Hornero Chromatic template manifest",
+  "description": "One manifest per template (RFC 0002 \u00a712.2). The template file is relative to the manifest directory. `output` may only start with ${XDG_CONFIG_HOME}, ${XDG_CACHE_HOME}, ${XDG_DATA_HOME} or ~/ and must stay under them after symlink resolution. `adapter` names a fixed reload hook and is honoured for first-party manifests only. `requires` is a directory (same prefixes) that must exist for the template to render, so apps the user does not have are never given files. Grammar: {{ role }}, {{ role.hex|bare|rgb|r|g|b }}, {{ role.rgba A }}, {{ termN }}, {{ mode }}, {{ id }}, {{#dark}}..{{/dark}}, {{#light}}..{{/light}}; nothing else.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "name",
+    "template",
+    "output",
+    "when"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "template": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]+$",
+      "description": "File name in the manifest directory (no path separators)."
+    },
+    "output": {
+      "type": "string",
+      "pattern": "^(\\$\\{XDG_CONFIG_HOME\\}|\\$\\{XDG_CACHE_HOME\\}|\\$\\{XDG_DATA_HOME\\}|~)/[^\\0]+$"
+    },
+    "when": {
+      "enum": [
+        "chromatic",
+        "always"
+      ]
+    },
+    "adapter": {
+      "enum": [
+        "kitty",
+        "gtk3",
+        "gtk4",
+        "qt6ct",
+        "qt5ct"
+      ]
+    },
+    "requires": {
+      "type": "string",
+      "pattern": "^(\\$\\{XDG_CONFIG_HOME\\}|\\$\\{XDG_CACHE_HOME\\}|\\$\\{XDG_DATA_HOME\\}|~)/[^\\0]+$"
+    }
+  }
+}

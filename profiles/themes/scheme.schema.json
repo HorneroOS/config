@@ -1,0 +1,357 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hornero.os/config/scheme.schema.json",
+  "title": "HorneroOS live Signal scheme (schema v2)",
+  "description": "The live scheme document the shell watches ($XDG_STATE_HOME/hornero/signal/scheme.json): roles + terminal, plus three optional additive blocks written only for Hornero Chromatic (RFC 0002 §8.1): `chromatic`, `minSurfaceAlpha`, `clearInk`. Curated themes write the document without them. Gate thresholds: contrast-gates.json; checks: lib/hornero/signal_theme.py validate --scheme.",
+  "version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "mode",
+    "palette",
+    "terminal"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 2
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "`hornero-chromatic` is reserved for the generated palette and requires the `chromatic` block."
+    },
+    "mode": {
+      "enum": [
+        "dark",
+        "light"
+      ]
+    },
+    "palette": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ground",
+        "sunken",
+        "base",
+        "panel",
+        "raised",
+        "lifted",
+        "ink",
+        "inkMuted",
+        "inkFaint",
+        "rule",
+        "ruleStrong",
+        "signal",
+        "onSignal",
+        "signalWell",
+        "onSignalWell",
+        "cue",
+        "onCue",
+        "cueWell",
+        "onCueWell",
+        "phosphor",
+        "onPhosphor",
+        "phosphorWell",
+        "onPhosphorWell",
+        "alert",
+        "onAlert",
+        "alertWell",
+        "onAlertWell",
+        "inverse",
+        "onInverse",
+        "inverseSignal",
+        "scrim",
+        "shadow",
+        "focus"
+      ],
+      "properties": {
+        "ground": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "sunken": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "base": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "panel": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "raised": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "lifted": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "ink": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "inkMuted": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "inkFaint": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "rule": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "ruleStrong": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "signal": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onSignal": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "signalWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onSignalWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "cue": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onCue": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "cueWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onCueWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "phosphor": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onPhosphor": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "phosphorWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onPhosphorWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "alert": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onAlert": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "alertWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onAlertWell": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "inverse": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "onInverse": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "inverseSignal": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "scrim": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "shadow": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "focus": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "glow": {
+          "$ref": "#/$defs/hexColor",
+          "description": "Optional (RFC 0001 amendment 2): live-signal emphasis; consumers default to `signal` when absent."
+        }
+      }
+    },
+    "terminal": {
+      "type": "array",
+      "minItems": 16,
+      "maxItems": 16,
+      "items": {
+        "$ref": "#/$defs/hexColor"
+      },
+      "description": "ANSI colours 0-15 (term0…term15); background is palette.base, foreground palette.ink."
+    },
+    "chromatic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "engine",
+        "algorithm",
+        "fingerprint",
+        "request",
+        "resolved"
+      ],
+      "properties": {
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "engine": {
+          "type": "string",
+          "minLength": 1
+        },
+        "algorithm": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fingerprint": {
+          "$ref": "#/$defs/sha256OrNull"
+        },
+        "request": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "resolved": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "variant",
+            "contrast"
+          ],
+          "properties": {
+            "mode": {
+              "enum": [
+                "dark",
+                "light"
+              ]
+            },
+            "variant": {
+              "enum": [
+                "balanced",
+                "vibrant",
+                "expressive",
+                "faithful",
+                "muted",
+                "monochrome",
+                "high-contrast",
+                "neon"
+              ]
+            },
+            "contrast": {
+              "enum": [
+                "standard",
+                "boosted",
+                "maximum"
+              ]
+            }
+          }
+        },
+        "seeds": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/hexColor"
+          }
+        },
+        "sourceKey": {
+          "$ref": "#/$defs/sha256OrNull"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      }
+    },
+    "minSurfaceAlpha": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Smallest opacity per translucent surface at which ink/inkMuted still pass the gate over the wallpaper's extremes. Signal.layer() uses max(user opacity, value).",
+      "properties": {
+        "sunken": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 1.0
+        },
+        "base": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 1.0
+        },
+        "panel": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 1.0
+        },
+        "raised": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 1.0
+        },
+        "lifted": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 1.0
+        }
+      }
+    },
+    "clearInk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "light",
+        "dark"
+      ],
+      "description": "Cockpit Clear foreground sets per polarity; foregrounds only, never a fill.",
+      "properties": {
+        "light": {
+          "$ref": "#/$defs/clearInkSet"
+        },
+        "dark": {
+          "$ref": "#/$defs/clearInkSet"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "hexColor": {
+      "type": "string",
+      "pattern": "^#[0-9A-F]{6}$"
+    },
+    "sha256OrNull": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "clearInkSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ink",
+        "inkMuted",
+        "signal",
+        "alert",
+        "halo"
+      ],
+      "properties": {
+        "ink": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "inkMuted": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "signal": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "alert": {
+          "$ref": "#/$defs/hexColor"
+        },
+        "halo": {
+          "$ref": "#/$defs/hexColor"
+        }
+      }
+    }
+  }
+}
