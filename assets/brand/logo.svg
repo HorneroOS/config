@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="HorneroOS logo">
   <title>HorneroOS primary logo</title>
-  <desc>Rufous-hornero bird silhouette perched on a branch over a setting-sun disc. Warm clay, sunset amber and ember terracotta.</desc>
+  <desc>Rufous-hornero bird silhouette perched on a branch over a setting-sun disc. Signal amber sun disc, ink-black bird (Hornero Signal palette).</desc>
   <defs>
     <linearGradient id="hornero-sun" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#FFB650"/>
