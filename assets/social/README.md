@@ -12,7 +12,7 @@ These files are not packaged (`assets/brand` is; `assets/social` is not).
 GitHub exposes no REST or GraphQL endpoint to set a repository social preview,
 so each image is uploaded in the web UI: repository **Settings > General >
 Social preview > Edit > Upload an image**. For the organization avatar use
-`assets/brand/icons/hornero-system.svg` rendered to PNG (Settings > Profile).
+`org-avatar.png` (500x500, from `icons/hornero-system.svg`; Settings > Profile). The current avatar is a pixel-art hornero on a pre-Signal clay palette; swapping it is the maintainer's call.
 
 | Repository | File |
 |---|---|
