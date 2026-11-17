@@ -82,7 +82,7 @@ Night `ink`).
 | `logo-light.svg` | Ink-black bird for light backgrounds (same art as canonical) |
 | `logo-symbolic.svg` | Single-colour `currentColor` mark (panels, tray) |
 | `logo-mono.svg` | Pure-black mark (print, single ink) |
-| `wordmark.svg` | `HORNERO OS` wordmark (`currentColor` + signal `OS`) |
+| `wordmark.svg` | `HORNERO OS` wordmark in IBM Plex Sans Condensed Bold, outlined to paths (`currentColor` + signal `OS`; the amber `OS` is decorative, use `logo-symbolic.svg` when a single colour must pass AA on a light ground) |
 | `icons/hornero-app.svg` | Squircle app icon |
 | `icons/hornero-system.svg` | Roundel system icon |
 | `favicon.svg` | Small-size optical variant for 16–48 px |
@@ -114,3 +114,21 @@ The retired Hornero Dark/Light/199X artwork is no longer shipped.
 Rendered with `scripts/render-brand-assets.sh` and inspected at
 16/24/32/48/64/128/256/512 px. The full mark reads down to ~32 px; below
 that use `favicon.svg`.
+
+## Where the mark may appear
+
+The bird is the signature, not a chrome element. Large on brand surfaces only
+(lock, greeter, installer, website hero, social previews, boot); in the
+workstation UI it stays a 16-32 px identifier (OS icon in a bar, About tile,
+Welcome header) on an `inverse` or `panel` tile. Never tile or watermark it
+behind controls.
+
+## Social previews and copies
+
+`assets/social/` holds the 1280x640 repository cards (generated, see its
+README for the manual upload steps; GitHub has no API for this). Other
+repositories vendor copies of the marks (shell `assets/logo.svg`, installer
+`image/calamares/branding/hornero/`, website `public/favicon.svg` and
+`src/assets/brand/`). A vendored copy must be byte-identical to the matching
+file here, or a documented derivative; re-copy from this directory when the
+mark changes.

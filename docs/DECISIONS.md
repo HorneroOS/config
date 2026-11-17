@@ -358,3 +358,14 @@ layer.
   there).
 - **Brand.** The bird mark is unchanged; its token-bound colours moved to
   Signal roles; new procedural `hornero-signal-{night,day}.svg` wallpapers.
+
+## Brand audit 2026-11 (Signal)
+
+`wordmark.svg` is now outlined IBM Plex Sans Condensed Bold (it previously
+depended on Inter/DejaVu being installed and used a pre-Signal accent);
+descriptions of the logo/app/system icons no longer mention the retired
+clay/terracotta palette; `assets/social/` adds generated 1280x640 repository
+cards (not packaged); `tests/test_brand.sh` rejects the pre-Signal hexes and
+live `<text>` in the wordmark and checks the cards against their generator.
+The "Brand identity P2" and "Flagship appearance tokens" sections above are
+history; the current palette is Hornero Signal (docs/BRAND.md).

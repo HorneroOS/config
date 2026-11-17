@@ -77,6 +77,31 @@ else
   pass "missing wallpaper still errors cleanly"
 fi
 
+# --- 6b. Signal-only colours, outlined wordmark, social previews ------------------
+# Pre-Signal clay/terracotta hexes must not return to the brand sources.
+if grep -rliE '#(E07856|B24827|F2B749|2B1A11|7C4A2C|FFFDF7|F6E9DB|E89A55)' "$REPO_ROOT/assets/brand" "$REPO_ROOT/assets/social" 2>/dev/null | grep -q .; then
+  fail "pre-Signal clay/terracotta colour found in brand or social sources"
+else
+  pass "brand sources carry Signal colours only"
+fi
+# The wordmark is outlined so it renders without IBM Plex installed.
+if grep -q "<text" "$REPO_ROOT/assets/brand/wordmark.svg"; then
+  fail "wordmark.svg has live <text> (must be outlined paths)"
+else
+  pass "wordmark.svg is outlined (font-independent)"
+fi
+# Social previews: committed SVGs match the generator; every SVG has its PNG.
+python3 "$REPO_ROOT/scripts/render-social-previews.py" --check \
+  && pass "social preview SVGs match generator" || fail "social preview SVGs stale"
+for svg in "$REPO_ROOT"/assets/social/*.svg; do
+  png="${svg%.svg}.png"
+  if [[ -f $png ]] && [[ "$(python3 -c "import struct,sys;d=open(sys.argv[1],'rb').read(24);print(*struct.unpack('>II',d[16:24]))" "$png")" == "1280 640" ]]; then
+    pass "$(basename "$png") is 1280x640"
+  else
+    fail "$(basename "$png") missing or not 1280x640"
+  fi
+done
+
 # --- 7. fastfetch mark renders ------------------------------------------------------
 if command -v fastfetch >/dev/null 2>&1; then
   if fastfetch --logo-type file --logo "$REPO_ROOT/desktop/fastfetch/hornero.txt" \

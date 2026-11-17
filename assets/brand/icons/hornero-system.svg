@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="HorneroOS system icon">
   <title>HorneroOS system icon</title>
-  <desc>Amber hornero on a deep-adobe roundel for system components, settings and about dialogs.</desc>
+  <desc>Amber hornero on a Signal ground roundel for system components, settings and about dialogs.</desc>
   <circle cx="128" cy="128" r="118" fill="#1B1E22"/>
   <circle cx="128" cy="128" r="118" fill="none" stroke="#FFB650" stroke-width="6" opacity="0.6"/>
   <g transform="translate(128,130) scale(0.78) translate(-128,-132)">

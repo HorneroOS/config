@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="horneroos.com social preview">
+  <title>horneroos.com social preview</title>
+  <desc>Hornero Signal Night card: bird mark, mono eyebrow, title, on-air bar and the 45 degree La Plata diagonal.</desc>
+  <rect width="1280" height="640" fill="#0C0F13"/>
+  <rect x="24" y="24" width="1232" height="592" fill="#13171D" stroke="#2C333C" stroke-width="1"/>
+  <clipPath id="frame"><rect x="24" y="24" width="1232" height="592"/></clipPath>
+  <g clip-path="url(#frame)" fill="none">
+    <path d="M640,640 L1280,0" stroke="#F2A33A" stroke-width="2" opacity="0.7"/>
+    <path d="M700,640 L1340,0" stroke="#707A85" stroke-width="1" opacity="0.5"/>
+    <path d="M760,640 L1400,0" stroke="#2C333C" stroke-width="1"/>
+    <path d="M580,640 L1220,0" stroke="#2C333C" stroke-width="1"/>
+  </g>
+  <g transform="translate(872,160) scale(1.2)">
+    <defs>
+    <linearGradient id="hornero-sun-dark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFB650"/>
+      <stop offset="0.55" stop-color="#F2A33A"/>
+      <stop offset="1" stop-color="#F2A33A"/>
+    </linearGradient>
+  </defs>
+  <circle cx="128" cy="124" r="86" fill="url(#hornero-sun-dark)"/>
+  <g fill="#ECE6DA">
+    <path d="M100,168 L52,206 L70,212 L114,180 Z"/>
+    <ellipse cx="124" cy="140" rx="34" ry="42" transform="rotate(-12 124 140)"/>
+    <circle cx="140" cy="92" r="24"/>
+    <path d="M160,85 C169,88 180,93 189,100 L160,105 Z"/>
+    <rect x="111" y="176" width="7" height="22" rx="3.5"/>
+    <rect x="129" y="174" width="7" height="23" rx="3.5"/>
+  </g>
+  <path d="M36,200 C90,188 166,188 220,200" fill="none" stroke="#ECE6DA" stroke-width="13" stroke-linecap="round"/>
+  <circle cx="146" cy="88" r="5.5" fill="#8F4B00"/>
+  </g>
+  <rect x="72" y="86" width="2" height="10" fill="#F2A33A"/>
+  <text x="86" y="96" font-family="IBM Plex Mono, monospace" font-size="20" letter-spacing="2.4" fill="#A8ABAD">WEBSITE · HORNEROOS.COM</text>
+  <text x="72" y="320" font-family="IBM Plex Sans Condensed, sans-serif" font-size="96" font-weight="600" fill="#ECE6DA">horneroos.com</text>
+  <rect x="72" y="352" width="96" height="4" fill="#F2A33A"/>
+  <text x="72" y="430" font-family="IBM Plex Sans, sans-serif" font-size="28" fill="#A8ABAD">The official site, product showcase</text><text x="72" y="470" font-family="IBM Plex Sans, sans-serif" font-size="28" fill="#A8ABAD">and documentation portal.</text>
+  <text x="72" y="568" font-family="IBM Plex Mono, monospace" font-size="18" letter-spacing="2.4" fill="#707A85">HORNEROOS.COM</text>
+</svg>
