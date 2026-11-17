@@ -71,7 +71,8 @@ def text_svg(font, text, size, tracking, color, tick):
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
         f'viewBox="0 0 {width} {height}">\n'
         f"  <title>{text}</title>\n"
-        f"  {tick_el}\n  {body}\n</svg>\n"
+        + (f"  {tick_el}\n" if tick_el else "")
+        + f"  {body}\n</svg>\n"
     )
 
 
