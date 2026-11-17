@@ -10,7 +10,20 @@ setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE SHARE_HISTORY
 setopt AUTO_CD INTERACTIVE_COMMENTS
 export EDITOR="${EDITOR:-nano}"
 export VISUAL="${VISUAL:-$EDITOR}"
-PROMPT='%F{208}%n@%m%f %F{214}%~%f %# '
+# Signal prompt: plain zsh, no framework. ANSI palette names only, so it follows
+# the applied terminal theme (3 = signal amber, 4 = cue celeste, 8 = muted ink,
+# 1 = alert). State is never colour alone: a failed command shows "✗ <status>"
+# (ASCII "x" outside UTF-8 locales). NO_COLOR or TERM=dumb gives a plain prompt.
+if [[ -n "${NO_COLOR-}" || "${TERM-}" == dumb ]]; then
+  PROMPT='%n@%m %~ %(?..x%? )%# '
+else
+  case "${LC_ALL:-${LC_CTYPE:-${LANG-}}}" in
+    *[Uu][Tt][Ff]-8*|*[Uu][Tt][Ff]8*) _hornero_fail='✗' ;;
+    *) _hornero_fail='x' ;;
+  esac
+  PROMPT="%F{8}%n@%m%f %F{4}%~%f%(?.. %B%F{1}${_hornero_fail}%?%f%b) %B%F{3}%#%f%b "
+  unset _hornero_fail
+fi
 # Optional integrations activate only when installed.
 command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"

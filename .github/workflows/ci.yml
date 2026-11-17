@@ -64,6 +64,12 @@ jobs:
         run: tests/test_shell_presets_sync.sh
       - name: Materialization into temp HOME
         run: tests/test_materialize.sh
+      - name: Signal fastfetch defaults
+        run: tests/test_fastfetch.sh
+      - name: Signal zsh prompt
+        run: |
+          sudo apt-get install -y --no-install-recommends zsh
+          tests/test_zsh_prompt.sh
       - name: Shortcut manifest contract
         run: tests/test_shortcuts.sh
       - name: Optional plugins never break a plugin-less session

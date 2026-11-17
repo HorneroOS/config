@@ -1,7 +1,8 @@
-# shell/ — deferred
+# shell/
 
-Interactive shell configuration (zsh, p10k, aliases, profile, xinitrc) is
-**deliberately not extracted** in this initial pass.
+The factory prompt lives in `shell/zsh/zshrc` (plain zsh Signal prompt, see
+`docs/DECISIONS.md`). The rest of the personal interactive-shell layer (zsh,
+p10k, aliases, profile, xinitrc) is **deliberately not extracted**.
 
 Rationale: the dotfiles shell layer (`dot_zshrc`, `dot_p10k.zsh`,
 `dot_zsh_aliases.tmpl`, `executable_dot_profile`, `executable_dot_xinitrc`,
