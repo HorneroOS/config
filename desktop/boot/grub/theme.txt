@@ -1,0 +1,70 @@
+# Hornero Signal - GRUB theme (HorneroOS/config desktop/boot/grub).
+# Colours are the hornero-signal-night roles (RFC 0001): ground #0C0F13,
+# ink #ECE6DA, inkMuted #A8ABAD, raised #1F252E, signal #F2A33A.
+# Layout is proportional; fonts are IBM Plex pf2 files in this directory.
+# No animation, no blur: GRUB draws static frames.
+
+desktop-color: "#0C0F13"
+desktop-image: "background.png"
+desktop-image-scale-method: "crop"
+title-text: ""
+terminal-font: "IBM Plex Mono Regular 14"
+terminal-left: "8%"
+terminal-top: "10%"
+terminal-width: "84%"
+terminal-height: "80%"
+terminal-border: "0"
+
++ image {
+    left = 8%
+    top = 9%
+    file = "mark.png"
+}
+
++ image {
+    left = 8%+72
+    top = 9%+18
+    file = "eyebrow.png"
+}
+
++ boot_menu {
+    left = 8%
+    top = 24%
+    width = 46%
+    height = 54%
+    item_font = "IBM Plex Sans Regular 18"
+    item_color = "#A8ABAD"
+    selected_item_font = "IBM Plex Sans Regular 18"
+    selected_item_color = "#ECE6DA"
+    item_height = 44
+    item_padding = 16
+    item_spacing = 6
+    icon_width = 0
+    icon_height = 0
+    item_icon_space = 0
+    selected_item_pixmap_style = "select_*.png"
+    scrollbar = false
+}
+
++ label {
+    id = "__timeout__"
+    left = 8%
+    top = 84%
+    width = 60%
+    height = 20
+    text = "AUTO BOOT IN %d S"
+    font = "IBM Plex Mono Medium Regular 12"
+    color = "#A8ABAD"
+    align = "left"
+}
+
++ label {
+    left = 8%
+    top = 90%
+    width = 84%
+    height = 20
+    text = "↑ ↓ SELECT  ·  ENTER BOOT  ·  E EDIT  ·  C COMMAND LINE"
+    font = "IBM Plex Mono Medium Regular 12"
+    color = "#A8ABAD"
+    align = "left"
+}

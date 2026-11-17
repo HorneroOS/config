@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Hornero Signal
+Description=HorneroOS boot splash: bird mark, mono eyebrow, segmented progress meter. Static, no GPU effects.
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/hornero-signal
+ScriptFile=/usr/share/plymouth/themes/hornero-signal/hornero-signal.script

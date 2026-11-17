@@ -70,6 +70,8 @@ jobs:
         run: |
           sudo apt-get install -y --no-install-recommends zsh
           tests/test_zsh_prompt.sh
+      - name: Boot themes (GRUB, Plymouth, ISO splash)
+        run: python3 tests/test_boot_theme.py
       - name: Shortcut manifest contract
         run: tests/test_shortcuts.sh
       - name: Optional plugins never break a plugin-less session
