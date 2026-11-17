@@ -66,6 +66,23 @@ duration). A typed disk passphrase shows one block per character, never the
 text. Status is conveyed by position and count, not by colour alone. Text sizes
 are 14-18 px in GRUB with text contrast >= 7:1 (`inkMuted`/`ink` on `ground`).
 
+## Verification (what was and was not seen)
+
+* GRUB: a real GRUB 2.16 (x86_64-efi, built with `grub-mkstandalone`) booted
+  under OVMF in QEMU with the rendered theme; the frame was captured and
+  inspected (selection bar, Plex Sans items, mono eyebrow/timeout/help).
+* Live-ISO syslinux: real syslinux 6.04 `vesamenu.c32` under SeaBIOS in QEMU
+  with the exact `syslinux.cfg` and `splash.png` (installer repo).
+* Plymouth: `tests/test_boot_theme.py` validates descriptor, assets and that the
+  script is static; real `plymouthd` 26.134 loaded and executed the theme script
+  in a throwaway initramfs under QEMU (it reached the sprite layer, so the script
+  parses), but **no rendered Plymouth frame was captured**: the minimal
+  harness (no udev, simpledrm) never took the screen over, and the stock
+  `spinner` theme behaved identically. A real boot of an installed image with
+  `hornero-boot-theme apply --plymouth` is still owed.
+* Not exercised anywhere: encrypted-root passphrase prompt, HiDPI scaling,
+  Secure Boot chains.
+
 ## Not covered
 
 * UEFI live ISO boots through systemd-boot, which cannot be themed beyond its

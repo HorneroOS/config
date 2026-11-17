@@ -94,7 +94,7 @@ try:
     check(bool(images) and all((ply / n).is_file() for n in images), f"Plymouth script images exist ({sorted(images)})")
     check(not re.search(r"Math\.(Sin|Cos|Tan)|SetOpacity\(\s*[a-z_]*\s*[*/]", script),
           "Plymouth script has no easing/pulsing (static, reduced-motion safe)")
-    check("Image.Text" not in script, "Plymouth script needs no font or label plugin")
+    check("Image.Text" not in script, "Plymouth script draws no text (prerendered images only)")
 finally:
     shutil.rmtree(out, ignore_errors=True)
 

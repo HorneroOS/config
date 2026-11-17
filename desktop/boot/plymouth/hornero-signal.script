@@ -4,8 +4,9 @@
 // a Plex Mono eyebrow with the registration tick, and a 24-segment meter whose
 // lit segments are the only thing that ever changes. No fades, no easing, no
 // pulsing: the splash is already the reduced-motion variant. Everything is a
-// prerendered PNG, so nothing depends on fonts or label plugins inside the
-// initramfs. Assets are authored at 2x and scaled to the screen height.
+// prerendered PNG: the script draws no text, so it needs no fonts of its own
+// (plymouth's own label plugin ships with the plymouth initcpio hook as usual).
+// Assets are authored at 2x and scaled to the screen height.
 //
 // Colours: ground #0C0F13 (hornero-signal-night role `ground`).
 
