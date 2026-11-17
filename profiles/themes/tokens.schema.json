@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://hornero.os/config/tokens.schema.json",
   "title": "HorneroOS Hornero Signal theme (schema v2)",
-  "description": "A Hornero Signal theme pack: the RFC 0001 §3.1 colour roles in `palette`, a 16-colour ANSI `terminal` palette and apply metadata (GTK/icon theme, wallpaper). Contrast rules (WCAG AA text 4.5:1 on sunken/base/panel/raised, on*-pairs 4.5:1, ruleStrong 3:1 on base/panel/lifted) are enforced by scripts/check-contrast.py, which shares lib/hornero/signal_theme.py with every generator.",
-  "version": "2.0.0",
+  "description": "A Hornero Signal theme pack: the RFC 0001 §3.1 colour roles in `palette`, a 16-colour ANSI `terminal` palette and apply metadata (GTK/icon theme, wallpaper). Contrast rules (WCAG AA text 4.5:1 on sunken/base/panel/raised, on*-pairs 4.5:1, ruleStrong 3:1 on base/panel/lifted) are enforced by scripts/check-contrast.py, which shares lib/hornero/signal_theme.py with every generator. Additive in 2.1.0: `collection: user` (saved Chromatic palettes) and an optional `chromatic` provenance object. The live scheme document is described by scheme.schema.json; the gate table lives in contrast-gates.json.",
+  "version": "2.1.0",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -46,7 +46,8 @@
     "collection": {
       "enum": [
         "hornero-signal",
-        "hornero-originals"
+        "hornero-originals",
+        "user"
       ]
     },
     "collectionOrder": {
@@ -235,12 +236,109 @@
         "$ref": "#/$defs/hexColor"
       },
       "description": "ANSI colours 0-15 (term0…term15); background is palette.base, foreground palette.ink."
+    },
+    "chromatic": {
+      "$ref": "#/$defs/chromaticSaved"
     }
   },
   "$defs": {
     "hexColor": {
       "type": "string",
       "pattern": "^#[0-9A-F]{6}$"
+    },
+    "chromaticRequest": {
+      "type": "object",
+      "description": "Request that produced the palette (RFC 0002 §8.3 keys). Open-ended on purpose: unknown keys are ignored by readers.",
+      "additionalProperties": true
+    },
+    "chromaticSaved": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Provenance of a saved Chromatic palette (RFC 0002 §8.2). Informational: the palette itself is authoritative.",
+      "required": [
+        "engine",
+        "algorithm",
+        "request"
+      ],
+      "properties": {
+        "engine": {
+          "type": "string",
+          "minLength": 1
+        },
+        "algorithm": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "request": {
+          "$ref": "#/$defs/chromaticRequest"
+        },
+        "seeds": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/hexColor"
+          }
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "fingerprint": {
+          "$ref": "#/$defs/sha256OrNull"
+        },
+        "sourceKey": {
+          "$ref": "#/$defs/sha256OrNull"
+        },
+        "resolved": {
+          "$ref": "#/$defs/chromaticResolved"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "sha256OrNull": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "chromaticResolved": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "variant",
+        "contrast"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "dark",
+            "light"
+          ]
+        },
+        "variant": {
+          "enum": [
+            "balanced",
+            "vibrant",
+            "expressive",
+            "faithful",
+            "muted",
+            "monochrome",
+            "high-contrast",
+            "neon"
+          ]
+        },
+        "contrast": {
+          "enum": [
+            "standard",
+            "boosted",
+            "maximum"
+          ]
+        }
+      }
     }
   }
 }

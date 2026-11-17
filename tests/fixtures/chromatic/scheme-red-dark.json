@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "id": "hornero-chromatic",
+  "mode": "dark",
+  "palette": {
+    "ground": "#140D0C",
+    "sunken": "#191110",
+    "base": "#1E1413",
+    "panel": "#241A18",
+    "raised": "#2E2120",
+    "lifted": "#392B2A",
+    "rule": "#3C2E2D",
+    "ruleStrong": "#887675",
+    "ink": "#DCE9EB",
+    "inkMuted": "#A6ACAC",
+    "inkFaint": "#74797A",
+    "signal": "#FF8EB7",
+    "cue": "#00D2CA",
+    "phosphor": "#98CF8B",
+    "alert": "#ED7668",
+    "signalWell": "#3E212B",
+    "onSignalWell": "#FFD4E1",
+    "onSignal": "#1C0C11",
+    "cueWell": "#0B3230",
+    "onCueWell": "#ADF0EB",
+    "onCue": "#011614",
+    "phosphorWell": "#22301F",
+    "onPhosphorWell": "#CFEBC8",
+    "onPhosphor": "#0A1508",
+    "alertWell": "#40221E",
+    "onAlertWell": "#FFD6D0",
+    "onAlert": "#1D0C0A",
+    "inverse": "#DCE9EB",
+    "onInverse": "#241A18",
+    "inverseSignal": "#8F4460",
+    "scrim": "#000000",
+    "shadow": "#000000",
+    "focus": "#00D2CA",
+    "glow": "#FFABC7"
+  },
+  "terminal": [
+    "#2B2120",
+    "#FF9083",
+    "#82CA72",
+    "#E8A63D",
+    "#90B3FF",
+    "#EB90D7",
+    "#00D1B8",
+    "#B6C8CA",
+    "#7A6A69",
+    "#FFC4BB",
+    "#AAE89D",
+    "#FFCA7F",
+    "#C0D4FF",
+    "#FFBBEF",
+    "#6EEED7",
+    "#E7F1F2"
+  ],
+  "chromatic": {
+    "version": 1,
+    "engine": "1.0.0",
+    "algorithm": 1,
+    "fingerprint": "sha256:0000000000000000000000000000000000000000000000000000000000000001",
+    "request": {
+      "source": "seed",
+      "variant": "balanced",
+      "mode": "dark",
+      "contrast": "standard",
+      "surfaceDepth": "standard",
+      "chroma": 1.0,
+      "hueShift": 0
+    },
+    "resolved": {
+      "mode": "dark",
+      "variant": "balanced",
+      "contrast": "standard"
+    },
+    "seeds": [
+      "#FF8EB7"
+    ],
+    "sourceKey": null
+  },
+  "minSurfaceAlpha": {
+    "sunken": 0.8,
+    "base": 0.82,
+    "panel": 0.86,
+    "raised": 0.86,
+    "lifted": 0.88
+  },
+  "clearInk": {
+    "light": {
+      "ink": "#10131A",
+      "inkMuted": "#2A2F3A",
+      "signal": "#7A2447",
+      "alert": "#9A2418",
+      "halo": "#F5F2EE"
+    },
+    "dark": {
+      "ink": "#F4F7FA",
+      "inkMuted": "#C9D0D8",
+      "signal": "#FFA0C4",
+      "alert": "#FF9083",
+      "halo": "#0A0C10"
+    }
+  }
+}
