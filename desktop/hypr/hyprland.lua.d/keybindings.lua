@@ -276,4 +276,4 @@ hl.bind("SUPER + G", hl.dsp.group.toggle())
 hl.bind("SUPER + period", hl.dsp.group.next())
 hl.bind("SUPER + comma", hl.dsp.group.prev())
 -- Lock group
-hl.bind("SUPER + SHIFT + O", hl.dsp.group.lock_active())
+hl.bind("SUPER + SHIFT + O", hl.dsp.group.lock())

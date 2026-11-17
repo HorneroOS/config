@@ -55,12 +55,14 @@ hl.config({
 		mouse_move_enables_dpms = true,
 		key_press_enables_dpms = true,
 		always_follow_on_dnd = true,
-		layers_hog_keyboard_focus = true,
 		animate_manual_resizes = true,
 		animate_mouse_windowdragging = true,
 		disable_autoreload = false,
 		initial_workspace_tracking = 1,
 		middle_click_paste = true,
+	},
+	layers = {
+		layers_hog_keyboard_focus = true,
 	},
 	xwayland = {
 		force_zero_scaling = true,
