@@ -136,15 +136,16 @@
   "bar": {
     "persistent": true,
     "showOnHover": true,
+    "clearStyle": "auto",
     "dragThreshold": 20,
     "perScreen": [],
     "bars": [
       {
-        "edge": "left",
-        "style": "attached",
+        "edge": "top",
+        "style": "inset",
         "reserve": true,
-        "margin": 8,
-        "thickness": 40,
+        "margin": 6,
+        "thickness": 36,
         "density": "values",
         "backdrop": "solid",
         "groups": {
@@ -155,21 +156,48 @@
               "options": {}
             },
             {
-              "id": "workspaces",
+              "id": "quickActions",
               "enabled": true,
-              "options": {}
+              "options": {
+                "actions": [
+                  "screenshot",
+                  "layoutPicker",
+                  "settings"
+                ]
+              }
+            },
+            {
+              "id": "audioSlider",
+              "enabled": true,
+              "options": {
+                "showValue": true
+              }
+            },
+            {
+              "id": "brightnessSlider",
+              "enabled": true,
+              "options": {
+                "showValue": true
+              }
             }
           ],
           "center": [
             {
-              "id": "activeWindow",
+              "id": "clock",
+              "enabled": true,
+              "options": {
+                "showDate": true
+              }
+            },
+            {
+              "id": "weather",
               "enabled": true,
               "options": {}
             }
           ],
           "end": [
             {
-              "id": "clock",
+              "id": "modeIndicator",
               "enabled": true,
               "options": {}
             },
@@ -185,10 +213,53 @@
             },
             {
               "id": "extensions",
-              "enabled": true
+              "enabled": true,
+              "options": {}
             },
             {
               "id": "power",
+              "enabled": true,
+              "options": {}
+            }
+          ]
+        }
+      },
+      {
+        "edge": "bottom",
+        "style": "attached",
+        "reserve": true,
+        "margin": 8,
+        "thickness": 30,
+        "density": "values",
+        "backdrop": "solid",
+        "groups": {
+          "start": [
+            {
+              "id": "workspaces",
+              "enabled": true,
+              "options": {}
+            }
+          ],
+          "center": [
+            {
+              "id": "media",
+              "enabled": true,
+              "options": {}
+            }
+          ],
+          "end": [
+            {
+              "id": "kbLayout",
+              "enabled": true,
+              "options": {}
+            },
+            {
+              "id": "resources",
+              "enabled": true,
+              "options": {}
+            },
+            {
+              "id": "battery",
               "enabled": true,
               "options": {}
             }
@@ -239,13 +310,13 @@
       "hiddenIcons": []
     },
     "status": {
-      "showAudio": false,
+      "showAudio": true,
       "showMicrophone": false,
       "showKbLayout": false,
       "showNetwork": true,
       "showWifi": true,
       "showBluetooth": true,
-      "showBattery": true,
+      "showBattery": false,
       "showLockStatus": true
     },
     "clock": {
@@ -254,7 +325,7 @@
       "background": false
     },
     "sizes": {
-      "innerWidth": 40,
+      "innerWidth": 32,
       "windowPreviewSize": 400,
       "trayMenuWidth": 300,
       "batteryWidth": 250,
@@ -319,7 +390,7 @@
   "launcher": {
     "enabled": true,
     "showOnHover": false,
-    "maxShown": 7,
+    "maxShown": 8,
     "maxWallpapers": 9,
     "specialPrefix": "@",
     "actionPrefix": ">",
@@ -334,8 +405,8 @@
       "wallpapers": false
     },
     "sizes": {
-      "itemWidth": 600,
-      "itemHeight": 57,
+      "itemWidth": 640,
+      "itemHeight": 44,
       "wallpaperWidth": 280,
       "wallpaperHeight": 200
     },
@@ -697,6 +768,7 @@
   "plugins": {
     "settings": {},
     "desktopWidgetSlots": {},
+    "desktopWidgets": {},
     "dashboardLayout": {},
     "safeMode": false
   },

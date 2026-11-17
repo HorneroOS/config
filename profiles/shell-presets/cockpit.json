@@ -11,7 +11,7 @@
       {
         "edge": "top",
         "style": "inset",
-        "margin": 8,
+        "margin": 6,
         "groups": {
           "start": [
             {
@@ -59,7 +59,7 @@
           ],
           "end": [
             {
-              "id": "battery",
+              "id": "modeIndicator",
               "enabled": true
             },
             {
@@ -81,14 +81,14 @@
           ]
         },
         "reserve": true,
-        "thickness": 40,
+        "thickness": 36,
         "density": "values",
         "backdrop": "solid"
       },
       {
         "edge": "bottom",
         "style": "attached",
-        "thickness": 32,
+        "thickness": 30,
         "groups": {
           "start": [
             {
@@ -109,6 +109,10 @@
             },
             {
               "id": "resources",
+              "enabled": true
+            },
+            {
+              "id": "battery",
               "enabled": true
             }
           ]
