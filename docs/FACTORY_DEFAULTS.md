@@ -35,7 +35,7 @@ ships; it does not install btop or Cava.
 | Kitty palette | `desktop/kitty/<theme-id>.conf` for every theme (generated); `kitty.conf` includes `hornero-signal-night.conf` | `{config}/kitty/…` → `/etc/xdg/kitty/…` |
 | Alacritty (optional) | `desktop/alacritty/alacritty.toml` imports `hornero-signal-night.toml` then the applied theme's `hornero-colors.toml` | `{config}/alacritty/…` → `/etc/alacritty/…` |
 | Ghostty (optional) | `desktop/ghostty/config.ghostty` selects `Hornero Dynamic`; the package seeds new homes and installs a Signal Night system theme fallback | `{config}/ghostty/…`; `/etc/skel/.config/ghostty/…`; `/usr/share/ghostty/themes/…` |
-| Qt6 style/fonts/palette | `desktop/qt6ct/qt6ct.conf` (Fusion, IBM Plex, Signal Night scheme) + generated `colors/<theme-id>.conf` + the `QT_QPA_PLATFORMTHEME=qt6ct` pin | `{config}/qt6ct/…` → `/etc/xdg/qt6ct/…` |
+| Qt6 style/fonts/palette | `desktop/qt6ct/qt6ct.conf` (Fusion, IBM Plex, Signal Night scheme) + generated `colors/<theme-id>.conf`; `desktop/qt5ct/` for Qt5; the `QT_QPA_PLATFORMTHEME=qt6ct:qt5ct` pin; the live palette is applied by `horneroctl appearance sync-qt` (docs/QT_DECISION.md) | `{config}/qt6ct/…` → `/etc/xdg/qt6ct/…` |
 | Theme recipes + factory record | `profiles/themes/*` (schema v2) + `profiles/factory.json` | `{data}/hornero/…` → `/usr/share/hornero/…` |
 | GTK theme/icons/font/dark preference | `desktop/gtk/settings.ini` (generated: `Hornero-Signal`, `Papirus-Dark`, `IBM Plex Sans 11`) + Signal Night libadwaita recolour | `{config}/gtk-{3,4}.0/…` → `/etc/xdg/gtk-{3,4}.0/…` |
 | Lock fallback | `desktop/hypr/hyprlock.conf` (generated; Signal Night variables, matte ground, Plex) | `{config}/hypr/hyprlock.conf` |
@@ -68,7 +68,7 @@ and refuses restructured files instead of guessing.
 - Hornero GTK styles — generated `Hornero-Signal`, `Hornero-Signal-Day`,
   `Hornero-Signal-Contrast` and one tree per Hornero Original. GTK 2 remains
   on its toolkit default because Hornero ships GTK 3 and GTK 4 trees only.
-- `extra/qt6ct` — reader for the shipped Qt6 platform-theme default.
+- `extra/qt6ct` — reader for the shipped Qt6 platform-theme default (`qt5ct` optional for Qt5 apps).
 
 ## Day, High Contrast and other themes
 

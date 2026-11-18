@@ -87,9 +87,10 @@
     }
   ],
   "qt": {
-    "platformTheme": "qt6ct",
+    "platformTheme": "qt6ct:qt5ct",
     "config": "{config}/qt6ct/qt6ct.conf",
-    "note": "Fusion + IBM Plex; per-theme colour schemes generated from schema-v2 roles, see docs/QT_DECISION.md."
+    "config5": "{config}/qt5ct/qt5ct.conf",
+    "note": "Fusion + IBM Plex; horneroctl appearance sync-qt renders the live palette into qt6ct/qt5ct and owns only custom_palette + color_scheme_path (opt out: appearance set-qt <toolkit>=off); see docs/QT_DECISION.md."
   },
   "gtk": {
     "theme": "Hornero-Signal",

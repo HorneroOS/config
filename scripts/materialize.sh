@@ -66,7 +66,10 @@ install_dir "desktop/niri" "$CONFIG_HOME/niri"
 install_file "desktop/xdg-desktop-portal/niri-portals.conf" "$CONFIG_HOME/xdg-desktop-portal/niri-portals.conf"
 install_dir "desktop/kitty" "$CONFIG_HOME/kitty"
 install_file "desktop/xfce4/helpers.rc" "$CONFIG_HOME/xfce4/helpers.rc"
-install_dir "desktop/qt6ct" "$CONFIG_HOME/qt6ct"
+# preserve: never overwrite a user-edited qt6ct/qt5ct.conf; horneroctl owns the
+# palette keys (docs/QT_DECISION.md).
+install_dir "desktop/qt6ct" "$CONFIG_HOME/qt6ct" preserve
+install_dir "desktop/qt5ct" "$CONFIG_HOME/qt5ct" preserve
 install_file "desktop/gtk/settings.ini" "$CONFIG_HOME/gtk-3.0/settings.ini"
 install_file "desktop/gtk/settings.ini" "$CONFIG_HOME/gtk-4.0/settings.ini"
 # Factory default is hornero-signal-night (see profiles/factory.json):

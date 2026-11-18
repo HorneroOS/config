@@ -204,6 +204,13 @@ _hornero_appearance_sync_recolor() {
 # rewrite). Graceful no-op when the scheme is absent (uncurated theme).
 _hornero_appearance_sync_qt() {
 	local theme_id="${1:-}"
+	# horneroctl owns the Qt consumer (live palette rendered into qt6ct/qt5ct,
+	# stale-config migration with backup, per-toolkit opt-out). The script
+	# below is only the fallback when horneroctl is not installed.
+	if command -v horneroctl > /dev/null 2>&1 \
+		&& horneroctl appearance sync-qt --yes > /dev/null 2>&1; then
+		return 0
+	fi
 	local qt_dir="${XDG_CONFIG_HOME:-$HOME/.config}/qt6ct"
 	local scheme="$qt_dir/colors/${theme_id}.conf"
 	local conf="$qt_dir/qt6ct.conf"
