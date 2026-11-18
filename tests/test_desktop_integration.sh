@@ -70,9 +70,18 @@ grep -q "Papirus-Dark" "$TMP_HOME/.config/qt6ct/qt6ct.conf" \
 grep -q "^general=IBM Plex Sans," "$TMP_HOME/.config/qt6ct/qt6ct.conf" \
   && grep -q "^fixed=IBM Plex Mono," "$TMP_HOME/.config/qt6ct/qt6ct.conf" \
   || fail "qt6ct.conf fonts are not IBM Plex"
-grep -q '"QT_QPA_PLATFORMTHEME", "qt6ct"' \
+grep -q '"QT_QPA_PLATFORMTHEME", "qt6ct:qt5ct"' \
   "$TMP_HOME/.config/hypr/hyprland.lua.d/environment.lua" \
-  || fail "hypr environment no longer pins qt6ct platformtheme"
+  || fail "hypr environment no longer pins the qt6ct:qt5ct platformtheme list"
+[[ -f "$TMP_HOME/.config/qt5ct/qt5ct.conf" ]] \
+  || fail "qt5ct.conf not materialized"
+grep -q "^custom_palette=true" "$TMP_HOME/.config/qt5ct/qt5ct.conf" \
+  || fail "qt5ct.conf does not enable the Signal palette"
+# Upgrade safety: re-materializing must not clobber a user-edited qt6ct.conf.
+printf '[Appearance]\nstyle=Breeze\n' >"$TMP_HOME/.config/qt6ct/qt6ct.conf"
+bash "$REPO_ROOT/scripts/materialize.sh" --dest "$TMP_HOME" >/dev/null 2>&1 || true
+grep -q "^style=Breeze" "$TMP_HOME/.config/qt6ct/qt6ct.conf" \
+  || fail "materialize overwrote a user-edited qt6ct.conf"
 [[ -f "$REPO_ROOT/docs/QT_DECISION.md" ]] \
   || fail "docs/QT_DECISION.md missing"
 if find "$TMP_HOME" -iname "*kvantum*" | grep -q .; then
@@ -87,6 +96,11 @@ for _qt in "$REPO_ROOT"/desktop/qt6ct/colors/*.conf; do
     grep -q "^$_key=" "$TMP_HOME/.config/qt6ct/colors/$_qt" \
       || fail "qt6ct colors/$_qt missing $_key"
   done
+done
+for _qt in "$REPO_ROOT"/desktop/qt5ct/colors/*.conf; do
+  _qt="$(basename "$_qt")"
+  [[ "$(grep '^active_colors=' "$REPO_ROOT/desktop/qt5ct/colors/$_qt" | tr -cd ',' | wc -c)" -eq 20 ]] \
+    || fail "qt5ct colors/$_qt is not 21 QPalette roles"
 done
 python3 "$REPO_ROOT/scripts/generate-appearance.py" --check >/dev/null \
   || fail "generated qt6ct/kitty/GTK files drift from the themes"

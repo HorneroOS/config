@@ -82,6 +82,15 @@ class SignalRenderTests(unittest.TestCase):
         self.assertEqual(active[sr.QT_ROLES.index("Highlight")], "#ff" + p["cue"][1:].lower())
         self.assertEqual(active[sr.QT_ROLES.index("Accent")], "#ff" + p["signal"][1:].lower())
 
+        # Qt 5 has no Accent role: 21 roles, otherwise identical to Qt 6.
+        qt5 = sr.render_qt5ct(theme)
+        for key in ("active_colors", "inactive_colors", "disabled_colors"):
+            row5 = re.search(rf"^{key}=(.*)$", qt5, re.M).group(1).split(", ")
+            row6 = re.search(rf"^{key}=(.*)$", qt, re.M).group(1).split(", ")
+            self.assertEqual(len(row5), 21)
+            self.assertEqual(row5, row6[:21])
+        self.assertIn("qt5ct colour scheme", qt5)
+
         block = sr.gtk_palette_block(theme)
         for role in st.ROLES:
             self.assertIn(p[role], block)

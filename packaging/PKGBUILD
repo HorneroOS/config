@@ -40,6 +40,7 @@ optdepends=(
   'copyq: clipboard defaults under /etc/xdg/copyq'
   'handlr: default-application handler under /etc/xdg/handlr'
   'qt6ct: Qt6 platform-theme defaults under /etc/xdg/qt6ct'
+  'qt5ct: Qt5 platform-theme defaults under /etc/xdg/qt5ct'
   'bluez: Bluetooth daemon (factory main.conf template under /usr/share/hornero/bluetooth)'
   'bluez-utils: bluetoothctl for Bluetooth diagnostics'
   'wireplumber: Bluetooth audio policy under /etc/wireplumber/wireplumber.conf.d'

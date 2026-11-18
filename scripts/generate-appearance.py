@@ -8,6 +8,7 @@ lib/hornero/signal_render.py:
 
   desktop/kitty/<id>.conf                     every theme
   desktop/qt6ct/colors/<id>.conf              every theme
+  desktop/qt5ct/colors/<id>.conf              every theme (Qt 5: 21 roles)
   desktop/gtk-theme/<gtkTheme>/               every Hornero collection theme
       index.theme, gtk-3.0/gtk.css, gtk-4.0/gtk.css, gtk-4.0/recolor.css
   desktop/alacritty/<id>.toml                 factory night + day
@@ -203,6 +204,7 @@ def expected_files(themes: dict[str, dict]) -> dict[Path, str]:
     for theme_id, doc in themes.items():
         out[ROOT / "desktop/kitty" / f"{theme_id}.conf"] = sr.render_kitty(doc)
         out[ROOT / "desktop/qt6ct/colors" / f"{theme_id}.conf"] = sr.render_qt6ct(doc)
+        out[ROOT / "desktop/qt5ct/colors" / f"{theme_id}.conf"] = sr.render_qt5ct(doc)
     for tree, doc in gtk_owners(themes).items():
         base = ROOT / "desktop/gtk-theme" / tree
         css = sr.render_gtk_css(doc, widget_css, tree)
@@ -229,6 +231,7 @@ def stale_files(expected: dict[Path, str]) -> list[Path]:
     families = [
         *(ROOT / "desktop/kitty").glob("*.conf"),
         *(ROOT / "desktop/qt6ct/colors").glob("*.conf"),
+        *(ROOT / "desktop/qt5ct/colors").glob("*.conf"),
         *(ROOT / "desktop/alacritty").glob("*.toml"),
         *(p for p in (ROOT / "desktop/gtk-theme").glob("Hornero-*/**/*") if p.is_file()),
     ]

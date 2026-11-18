@@ -199,8 +199,11 @@ def _argb(hex_color: str, alpha: int = 0xFF) -> str:
     return f"#{alpha:02x}{hex_color.lstrip('#').lower()}"
 
 
-def render_qt6ct(theme: dict) -> str:
-    """Selection is the celeste cue; Accent (checked/primary) is the signal."""
+def render_qt6ct(theme: dict, toolkit: str = "qt6ct") -> str:
+    """Selection is the celeste cue; Accent (checked/primary) is the signal.
+
+    ``toolkit="qt5ct"`` drops the Qt 6.6+ Accent role (Qt 5 has 21 roles).
+    """
     dark = theme["mode"] == "dark"
     p = lambda role: _p(theme, role)  # noqa: E731
     active = {
@@ -233,11 +236,13 @@ def render_qt6ct(theme: dict) -> str:
     disabled["Highlight"] = p("cueWell")
     disabled["Accent"] = p("signalWell")
 
+    roles = QT_ROLES if toolkit == "qt6ct" else QT_ROLES[:-1]
+
     def row(values: dict) -> str:
-        return ", ".join(_argb(values[r]) for r in QT_ROLES)
+        return ", ".join(_argb(values[r]) for r in roles)
 
     lines = [
-        f"; qt6ct colour scheme for {theme['id']} — GENERATED from schema-v2 roles",
+        f"; {toolkit} colour scheme for {theme['id']} — GENERATED from schema-v2 roles",
         "; (lib/hornero/signal_render.py via scripts/generate-appearance.py).",
         f"; Default wallpaper: {theme.get('defaultWallpaper', '')}.",
         "; Roles follow QPalette::ColorRole order. Selection = cue, Accent = signal.",
@@ -247,6 +252,10 @@ def render_qt6ct(theme: dict) -> str:
         f"disabled_colors={row(disabled)}",
     ]
     return "\n".join(lines) + "\n"
+
+
+def render_qt5ct(theme: dict) -> str:
+    return render_qt6ct(theme, "qt5ct")
 
 
 # --- GTK ------------------------------------------------------------------------
