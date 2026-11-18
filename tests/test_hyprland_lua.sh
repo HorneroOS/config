@@ -3,7 +3,8 @@
 #
 # The legacy hyprland.conf + hyprland.conf.d tree is retired: every Lua
 # file must parse with luac, the bind/window-rule/autostart inventories
-# must match the frozen legacy counts (145 binds, 44 window rules,
+# must match the frozen legacy counts (145 binds minus the SUPER + L
+# focus-right duplicate = 144, 44 window rules,
 # 20 autostart commands, 24 environment values), and no shipped Lua
 # file may reference a removed .conf or .sh path.
 set -euo pipefail
@@ -41,8 +42,30 @@ echo "TEST-PASS: every dofile module in hyprland.lua resolves"
 
 # Parity inventories (frozen from the retired hyprlang tree).
 binds=$(grep -c 'hl\.bind' "$HYPR/hyprland.lua.d/keybindings.lua")
-[[ "$binds" -eq 145 ]] || fail "bind parity: expected 145 hl.bind, got $binds"
-echo "TEST-PASS: bind parity 145/145"
+# 145 frozen from the retired tree, minus the SUPER + L focus-right bind
+# that doubled the lock bind on the same combo (both fired).
+[[ "$binds" -eq 144 ]] || fail "bind parity: expected 144 hl.bind, got $binds"
+echo "TEST-PASS: bind parity 144/144"
+
+# No global combo is bound twice: Hyprland fires every bind on a combo,
+# so a duplicate silently runs two actions (SUPER + L used to lock AND
+# move focus). Submap blocks are separate scopes and are skipped.
+dups=$(python3 - "$HYPR/hyprland.lua.d/keybindings.lua" <<'PY'
+import collections, re, sys
+text = open(sys.argv[1], encoding="utf-8").read()
+text = re.sub(r"(?ms)^hl\.define_submap\(.*?^end\)", "", text)
+text = "\n".join(line for line in text.splitlines() if not line.lstrip().startswith("--"))
+aliases = {"CONTROL": "CTRL", "MOD4": "SUPER", "META": "SUPER", "WIN": "SUPER", "MOD1": "ALT"}
+def canon(combo):
+    parts = [p.strip() for p in combo.split("+") if p.strip()]
+    mods = sorted({aliases.get(p.upper(), p.upper()) for p in parts[:-1]})
+    return " + ".join(mods + [parts[-1].lower()])
+counts = collections.Counter(canon(c) for c in re.findall(r'hl\.bind\(\s*"([^"]+)"', text))
+print(" ".join(sorted(c for c, n in counts.items() if n > 1)))
+PY
+)
+[[ -z "$dups" ]] || fail "global combo bound more than once: $dups"
+echo "TEST-PASS: every global combo has exactly one bind"
 
 rules=$(grep -c 'hl\.window_rule' "$HYPR/hyprland.lua.d/window-rules.lua")
 # 44 frozen from the retired tree + ghostty-opacity (all supported terminals).
