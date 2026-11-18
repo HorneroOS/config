@@ -93,7 +93,9 @@ hl.bind("SUPER + right", hl.dsp.focus({ direction = "right" }))
 hl.bind("SUPER + up", hl.dsp.focus({ direction = "up" }))
 hl.bind("SUPER + down", hl.dsp.focus({ direction = "down" }))
 hl.bind("SUPER + H", hl.dsp.focus({ direction = "left" }))
-hl.bind("SUPER + L", hl.dsp.focus({ direction = "right" }))
+-- SUPER + L locks the session (Essential Applications, as in Niri and
+-- the docs); focus right is SUPER + right. Every global combo has one
+-- bind (tests/test_hyprland_lua.sh fails on a combo bound twice).
 hl.bind("SUPER + K", hl.dsp.focus({ direction = "up" }))
 hl.bind("SUPER + J", hl.dsp.focus({ direction = "down" }))
 -- ============================================================================
