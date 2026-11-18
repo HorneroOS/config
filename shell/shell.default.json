@@ -3,6 +3,7 @@
     "theme": "hornero-signal-night",
     "highContrast": false,
     "reducedMotion": false,
+    "cozyChips": true,
     "rounding": {
       "scale": 1
     },
@@ -29,12 +30,14 @@
       "mediaGifSpeedAdjustment": 300,
       "sessionGifSpeed": 0.7,
       "curveStyle": "smooth",
+      "trailRatio": 1.6,
       "durations": {
         "scale": 1
       }
     },
     "glow": {
-      "intensity": 1
+      "intensity": 1,
+      "limit": 3
     },
     "atmosphere": {
       "enabled": true,
@@ -77,6 +80,14 @@
         "light": "hornero-signal-day"
       },
       "transition": "smooth"
+    },
+    "accent": {
+      "color": "",
+      "perMode": {
+        "dark": "",
+        "light": ""
+      },
+      "perExperience": {}
     }
   },
   "general": {
@@ -145,6 +156,7 @@
   "background": {
     "enabled": true,
     "wallpaperEnabled": true,
+    "wallpaperFit": "crop",
     "desktopClock": {
       "enabled": false,
       "scale": 1.0,
@@ -330,12 +342,17 @@
     },
     "workspaces": {
       "shown": 5,
-      "maxWindowIcons": 5,
+      "maxWindowIcons": 3,
+      "glyphScale": 85,
       "activeIndicator": true,
       "occupiedBg": true,
       "showWindows": true,
       "showWindowsOnSpecialWorkspaces": true,
-      "activeTrail": false,
+      "activeTrail": true,
+      "trailRatio": 1.6,
+      "showUnoccupied": true,
+      "gapBreaks": true,
+      "activeInset": 4,
       "perMonitorWorkspaces": true,
       "label": "",
       "occupiedLabel": "",
@@ -358,7 +375,10 @@
       "recolour": true,
       "compact": false,
       "iconSubs": [],
-      "hiddenIcons": []
+      "hiddenIcons": [],
+      "itemMaxWidth": 160,
+      "sectionBudget": 18,
+      "islandBudget": 40
     },
     "status": {
       "showAudio": true,
@@ -377,6 +397,7 @@
     },
     "sizes": {
       "innerWidth": 24,
+      "islandInset": 4,
       "windowPreviewSize": 400,
       "trayMenuWidth": 300,
       "batteryWidth": 250,
@@ -395,13 +416,17 @@
   "border": {
     "frameEnabled": true,
     "thickness": 10,
-    "rounding": 25
+    "rounding": 25,
+    "edgeWidth": 1
   },
   "dashboard": {
     "enabled": true,
     "showOnHover": true,
+    "composition": "console",
     "mediaUpdateInterval": 500,
     "resourceUpdateInterval": 1000,
+    "sensorUpdateInterval": 2000,
+    "diskUpdateInterval": 30000,
     "dragThreshold": 50,
     "performance": {
       "showBattery": true,
@@ -419,6 +444,12 @@
       "maxAppIcons": 4,
       "previewHeight": 200,
       "enableWindowActions": true
+    },
+    "media": {
+      "spectrum": true,
+      "peakHold": true,
+      "bands": 12,
+      "javi": true
     },
     "sizes": {
       "tabIndicatorHeight": 3,
@@ -441,13 +472,16 @@
       "heightMult": 0.7,
       "ratio": 1.7777777777777777
     },
+    "undoSeconds": 10,
     "appearanceOpenSections": [
       "themes"
-    ]
+    ],
+    "appearanceHoverPreview": true
   },
   "launcher": {
     "enabled": true,
     "showOnHover": false,
+    "align": "center",
     "maxShown": 8,
     "maxWallpapers": 9,
     "specialPrefix": "@",
@@ -695,6 +729,7 @@
   },
   "notifs": {
     "expire": true,
+    "align": "right",
     "defaultExpireTimeout": 5000,
     "clearThreshold": 0.3,
     "expandThreshold": 20,
@@ -710,6 +745,7 @@
   "osd": {
     "enabled": true,
     "hideDelay": 2000,
+    "align": "center",
     "enableBrightness": true,
     "enableMicrophone": false,
     "sizes": {
@@ -826,6 +862,8 @@
   },
   "plugins": {
     "settings": {},
+    "instances": {},
+    "quickTiles": [],
     "desktopWidgetSlots": {},
     "desktopWidgets": {},
     "dashboardLayout": {},
@@ -839,5 +877,19 @@
       "fullscreenGaming": false,
       "gamePatterns": []
     }
+  },
+  "sounds": {
+    "enabled": false,
+    "volume": 0.5,
+    "theme": "freedesktop",
+    "alwaysChime": false,
+    "events": {
+      "notification": true,
+      "battery": true,
+      "charger": true
+    }
+  },
+  "layouts": {
+    "overrides": {}
   }
 }
