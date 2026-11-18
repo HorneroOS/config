@@ -238,5 +238,17 @@ if raw.define_submap then
 end
 M._wrapped_bind = wrapped_bind
 
+-- Rebind capture: while the overlay records a new combo it parks the
+-- compositor in this submap, where no global bind fires, so even taken
+-- combos reach the overlay. Escape always leaves it (non-consuming, so
+-- the overlay sees Escape too); the shell also resets it on every exit
+-- and after a 15 s timeout.
+M.capture_submap = "hornero_capture"
+if raw.define_submap and hl.dsp and hl.dsp.submap then
+	pcall(raw.define_submap, M.capture_submap, function()
+		raw.bind("escape", hl.dsp.submap("reset"), { non_consuming = true })
+	end)
+end
+
 hornero_keybinds = M
 return M
