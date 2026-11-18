@@ -102,10 +102,23 @@ Chromatic and by `appearance sync`, and by the QS-down shell fallback in
 - leaves a user's own palette alone (reported as a doctor warning) unless
   they opt in with `appearance set-qt <toolkit>=force`.
 
-Per-toolkit policy (`state.json`: `qt6ctConsumer`, `qt5ctConsumer`):
+KDE Frameworks apps (Dolphin, Kate, Okular) are a second consumer: they
+draw views and windows from KColorScheme, which outside Plasma uses the
+scheme named by `kdeglobals` `[UiSettings] ColorScheme` and otherwise falls
+back to Breeze Light. With only a dark qt6ct palette Dolphin rendered light
+backgrounds with light text (verified with the real Dolphin 26.08 on the
+reference host, rendered on Qt's VNC platform). So `sync-qt` also renders
+`~/.local/share/color-schemes/HorneroSignal.colors` from the live roles
+(views on `sunken`, windows on `base`, buttons on `raised`, selection on
+`cue`) and manages that one kdeglobals key; other kdeglobals groups survive,
+an unset/stale kdeglobals is backed up first, and a scheme the user picked
+(for example BreezeDark) is kept unless forced.
+
+Per-toolkit policy (`state.json`: `qt6ctConsumer`, `qt5ctConsumer`,
+`kdeConsumer`):
 `follow` (default), `force`, `off` (never touch that toolkit's files). Set
 with `horneroctl appearance set-qt qt6ct=off --yes`.
-`horneroctl appearance doctor` reports `qt-qt6ct`, `qt-qt5ct`,
+`horneroctl appearance doctor` reports `qt-qt6ct`, `qt-qt5ct`, `qt-kde`,
 `qt-platformtheme` and `qt-kvantum` honestly (missing config, stale config,
 drift from the live theme, user palette, opt-out, plugin not installed,
 env list lacking a toolkit).
