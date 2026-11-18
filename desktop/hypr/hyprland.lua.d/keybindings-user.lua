@@ -1,8 +1,9 @@
 -- User Keybinding Overrides
 --
--- Managed by `horneroctl hardware keyboard rebind` (shell#236) — edit
--- through the Control Center Keybindings pane or that command, not by
--- hand, so overrides stay parseable and resettable. Loaded after
--- keybindings.lua, so its hl.unbind/hl.bind pairs win. The factory
--- file carries no binds of its own; `rebind reset` empties it again.
+-- Yours to edit: add hl.unbind/hl.bind pairs here. Loaded after
+-- keybindings.lua, so its pairs win. Hornero never rewrites this file:
+-- rebinds made from the keybinding overlay (SUPER + /), the Control
+-- Center Keybinds pane or `horneroctl hardware keyboard rebind` live in
+-- the generated ~/.config/hypr/hornero-keybinds.lua instead, and
+-- keybindings-overlay.lua applies them on top of this file too.
 -- luacheck: globals hl
