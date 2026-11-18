@@ -88,6 +88,8 @@ jobs:
         run: sudo apt-get install -y -qq lua5.4
       - name: Hyprland Lua-only migration (luac, parity, no legacy refs)
         run: tests/test_hyprland_lua.sh
+      - name: Managed keybinding overlay (remap loader contract)
+        run: tests/test_keybindings_overlay.sh
       - name: Hornero switcher theme adapter
         run: tests/test_snappy_switcher_helper.sh
       - name: YAML lint
