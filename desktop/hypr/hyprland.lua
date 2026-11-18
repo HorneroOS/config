@@ -19,6 +19,8 @@ dofile(here .. "environment.lua")
 dofile(here .. "input.lua")
 dofile(here .. "gestures.lua")
 dofile(here .. "layout.lua")
+-- Managed rebinds (hornero-keybinds.lua) wrap hl.bind before any bind loads.
+dofile(here .. "keybindings-overlay.lua")
 hornero_helpers = dofile(here .. "helpers.lua")
 dofile(here .. "keybindings.lua")
 dofile(here .. "keybindings-user.lua")

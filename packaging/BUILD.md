@@ -62,7 +62,7 @@ pacman metadata dotfiles `.PKGINFO`/`.BUILDINFO`/`.MTREE`).
 /etc/xdg/handlr/handlr.toml
 /etc/xdg/hypr/hypridle.conf
 /etc/xdg/hypr/hyprland.lua
-/etc/xdg/hypr/hyprland.lua.d/*.lua (monitors, autostart, environment, input, gestures, layout, helpers, keybindings, keybindings-user, window-rules, window-rules-user, animations + 5 profiles, smart-colors, signal-day, plugins, static)
+/etc/xdg/hypr/hyprland.lua.d/*.lua (monitors, autostart, environment, input, gestures, layout, helpers, keybindings-overlay, keybindings, keybindings-user, window-rules, window-rules-user, animations + 5 profiles, smart-colors, signal-day, plugins, static)
 /etc/xdg/hypr/hyprlock.conf
 /etc/xdg/kitty/kitty.conf
 /etc/xdg/Thunar/accels.scm
