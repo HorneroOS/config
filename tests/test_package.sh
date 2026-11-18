@@ -112,6 +112,10 @@ cmp -s "$REPO_ROOT/shell/shell.default.json" "$ROOT/etc/xdg/hornero/shell.json" 
   && pass "factory shell.json matches vendored default" || fail "factory shell.json differs"
 python3 -c "import json; json.load(open('$ROOT/etc/xdg/hornero/shell.json'))" \
   && pass "factory shell.json parses" || fail "factory shell.json parses"
+cmp -s "$REPO_ROOT/shell/shell-migrations.json" "$ROOT/usr/share/hornero/shell-migrations.json" \
+  && pass "shell.json migration table installed" || fail "shell.json migration table missing or different"
+cmp -s "$REPO_ROOT/shell/shell-migrations.schema.json" "$ROOT/usr/share/hornero/shell-migrations.schema.json" \
+  && pass "shell.json migration schema installed" || fail "shell.json migration schema missing or different"
 diff -r "$STAGE/.local/lib/hornero" "$ROOT/usr/share/hornero/lib/hornero" >/dev/null 2>&1 \
   && pass "lib/hornero payload" || fail "lib/hornero payload"
 diff -r "$STAGE/.local/share/hornero/themes" "$ROOT/usr/share/hornero/themes" >/dev/null 2>&1 \

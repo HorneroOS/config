@@ -1,0 +1,10 @@
+{
+  "utilities": {
+    "toasts": {
+      "gameModeChanged": true
+    }
+  },
+  "experience": {
+    "toasts": false
+  }
+}

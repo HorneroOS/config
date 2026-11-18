@@ -1,0 +1,132 @@
+{
+  "schema": "hornero/shell-migrations@1",
+  "schemaVersion": 5,
+  "description": "Ordered, idempotent migrations for keys in the user shell.json ($XDG_CONFIG_HOME/hornero/shell.json). Applied by `horneroctl update plan --apply` before the new shell reads the file, so a renamed key never drops its value. Every op is reported to the user; nothing is removed silently.",
+  "userData": [
+    "bar.bars",
+    "bar.perScreen",
+    "bar.excludedScreens",
+    "general.apps",
+    "launcher.favouriteApps",
+    "launcher.hiddenApps",
+    "session.commands",
+    "layouts",
+    "paths",
+    "plugins"
+  ],
+  "migrations": [
+    {
+      "version": 1,
+      "id": "signal-theme-and-fonts",
+      "since": "shell#475 (Hornero Signal foundation)",
+      "summary": "Material-era theme ids and fonts map to their Hornero Signal equivalents.",
+      "ops": [
+        {
+          "op": "map-value",
+          "path": "appearance.theme",
+          "map": {
+            "hornero-dark": "hornero-signal-night",
+            "hornero-light": "hornero-signal-day",
+            "hornero-199x": "hornero-signal-night",
+            "neon-city": "hornero-signal-night",
+            "vapor-dreams": "hornero-signal-night",
+            "soft-morning": "hornero-signal-day",
+            "warm-sunset": "hornero-signal-day"
+          }
+        },
+        {
+          "op": "map-value",
+          "path": "appearance.font.family.sans",
+          "map": {
+            "Rubik": "IBM Plex Sans"
+          }
+        },
+        {
+          "op": "map-value",
+          "path": "appearance.font.family.mono",
+          "map": {
+            "CaskaydiaCove NF": "IBM Plex Mono"
+          }
+        }
+      ]
+    },
+    {
+      "version": 2,
+      "id": "experience-toasts",
+      "since": "shell#503 (experience modes)",
+      "summary": "The Gaming Focus toast switch moved from utilities to experience.",
+      "ops": [
+        {
+          "op": "rename",
+          "from": "utilities.toasts.gameModeChanged",
+          "to": "experience.toasts"
+        }
+      ]
+    },
+    {
+      "version": 3,
+      "id": "signal-retired-keys",
+      "since": "shell#475 (Hornero Signal foundation)",
+      "summary": "Settings with no Signal equivalent are retired; their old values stay in the update report and the pre-update backup.",
+      "ops": [
+        {
+          "op": "remove",
+          "path": "appearance.anim.curves",
+          "replacedBy": "appearance.anim.curveStyle",
+          "reason": "Custom Bezier curves became named motion styles (smooth, lively, calm); pick one in Appearance > Look."
+        },
+        {
+          "op": "remove",
+          "path": "appearance.font.family.material",
+          "reason": "The old icon font is retired; Hornero Glyphs are built into the shell and need no font setting."
+        },
+        {
+          "op": "remove",
+          "path": "appearance.font.family.clock",
+          "replacedBy": "appearance.font.family.display",
+          "reason": "The clock uses the display typeface now; set it in Appearance > Fonts."
+        },
+        {
+          "op": "remove",
+          "path": "launcher.useFuzzy.schemes",
+          "reason": "The launcher scheme picker was replaced by Chromatic themes."
+        },
+        {
+          "op": "remove",
+          "path": "launcher.useFuzzy.variants",
+          "reason": "The launcher variant picker was replaced by Chromatic themes."
+        }
+      ]
+    },
+    {
+      "version": 4,
+      "id": "cc-open-sections",
+      "since": "shell#519",
+      "summary": "Appearance section disclosure got a new key so Themes opens by default on upgraded configs.",
+      "ops": [
+        {
+          "op": "remove",
+          "path": "controlCenter.appearanceExpandedSections",
+          "replacedBy": "controlCenter.appearanceOpenSections",
+          "reason": "Which Appearance sections start open is remembered under a new key; the old list is not carried over on purpose so Themes opens again."
+        }
+      ]
+    },
+    {
+      "version": 5,
+      "id": "routine-toasts-quiet",
+      "since": "shell visual audit VA-15",
+      "summary": "The 'Config loaded' and 'Num lock' toasts fired on every boot; they are switched off once. Turn them back on in Notifications at any time.",
+      "ops": [
+        {
+          "op": "set-once",
+          "marker": "utilities.toasts.routineQuiet",
+          "set": {
+            "utilities.toasts.configLoaded": false,
+            "utilities.toasts.numLockChanged": false
+          }
+        }
+      ]
+    }
+  ]
+}

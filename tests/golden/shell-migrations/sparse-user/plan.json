@@ -1,0 +1,816 @@
+{
+  "schema": "hornero/update-plan@1",
+  "schemaVersion": {
+    "table": 5
+  },
+  "summary": {
+    "kept": 2,
+    "defaultsChanging": 14,
+    "migrated": 2,
+    "removed": 0,
+    "conflicts": 0,
+    "newSettings": 48,
+    "lost": 0
+  },
+  "kept": [
+    {
+      "path": "appearance.rounding.scale",
+      "value": 1.3,
+      "oldDefault": 1,
+      "newDefault": 1,
+      "defaultChanged": false,
+      "userData": false
+    },
+    {
+      "path": "bar.persistent",
+      "value": false,
+      "oldDefault": true,
+      "newDefault": true,
+      "defaultChanged": false,
+      "userData": false
+    }
+  ],
+  "defaultsChanging": [
+    {
+      "path": "bar.bars",
+      "before": [
+        {
+          "edge": "left",
+          "style": "attached",
+          "reserve": true,
+          "margin": 8,
+          "thickness": 40,
+          "density": "values",
+          "backdrop": "solid",
+          "groups": {
+            "start": [
+              {
+                "id": "logo",
+                "enabled": true,
+                "options": {}
+              },
+              {
+                "id": "workspaces",
+                "enabled": true,
+                "options": {}
+              }
+            ],
+            "center": [
+              {
+                "id": "activeWindow",
+                "enabled": true,
+                "options": {}
+              }
+            ],
+            "end": [
+              {
+                "id": "clock",
+                "enabled": true,
+                "options": {}
+              },
+              {
+                "id": "statusIcons",
+                "enabled": true,
+                "options": {}
+              },
+              {
+                "id": "tray",
+                "enabled": true,
+                "options": {}
+              },
+              {
+                "id": "extensions",
+                "enabled": true
+              },
+              {
+                "id": "power",
+                "enabled": true,
+                "options": {}
+              }
+            ]
+          }
+        }
+      ],
+      "after": [
+        {
+          "edge": "top",
+          "style": "inset",
+          "reserve": true,
+          "margin": 18,
+          "thickness": 42,
+          "density": "values",
+          "backdrop": "solid",
+          "groups": {
+            "start": [
+              {
+                "id": "logo",
+                "enabled": true,
+                "options": {}
+              },
+              {
+                "id": "quickActions",
+                "enabled": true,
+                "options": {
+                  "actions": [
+                    "screenshot",
+                    "layoutPicker",
+                    "settings"
+                  ]
+                }
+              },
+              {
+                "id": "audioSlider",
+                "enabled": true,
+                "options": {
+                  "showValue": true
+                }
+              },
+              {
+                "id": "brightnessSlider",
+                "enabled": true,
+                "options": {
+                  "showValue": true
+                }
+              }
+            ],
+            "center": [
+              {
+                "id": "clock",
+                "enabled": true,
+                "options": {
+                  "showDate": true
+                }
+              },
+              {
+                "id": "weather",
+                "enabled": true,
+                "options": {}
+              }
+            ],
+            "end": [
+              {
+                "id": "modeIndicator",
+                "enabled": true,
+                "options": {}
+              },
+              {
+                "id": "statusIcons",
+                "enabled": true,
+                "options": {}
+              },
+              {
+                "id": "tray",
+                "enabled": true,
+                "options": {}
+              },
+              {
+                "id": "extensions",
+                "enabled": true,
+                "options": {}
+              },
+              {
+                "id": "power",
+                "enabled": true,
+                "options": {}
+              }
+            ]
+          },
+          "radius": 11
+        },
+        {
+          "edge": "bottom",
+          "style": "attached",
+          "reserve": true,
+          "margin": 0,
+          "thickness": 28,
+          "density": "values",
+          "backdrop": "solid",
+          "groups": {
+            "start": [
+              {
+                "id": "workspaces",
+                "enabled": true,
+                "options": {}
+              }
+            ],
+            "center": [
+              {
+                "id": "media",
+                "enabled": true,
+                "options": {}
+              }
+            ],
+            "end": [
+              {
+                "id": "kbLayout",
+                "enabled": true,
+                "options": {}
+              },
+              {
+                "id": "resources",
+                "enabled": true,
+                "options": {}
+              },
+              {
+                "id": "battery",
+                "enabled": true,
+                "options": {}
+              }
+            ]
+          }
+        }
+      ],
+      "pinned": false
+    },
+    {
+      "path": "bar.extensions.recolour",
+      "before": false,
+      "after": true,
+      "pinned": false
+    },
+    {
+      "path": "bar.sizes.innerWidth",
+      "before": 40,
+      "after": 24,
+      "pinned": false
+    },
+    {
+      "path": "bar.status.showAudio",
+      "before": false,
+      "after": true,
+      "pinned": false
+    },
+    {
+      "path": "bar.status.showBattery",
+      "before": true,
+      "after": false,
+      "pinned": false
+    },
+    {
+      "path": "bar.tray.recolour",
+      "before": false,
+      "after": true,
+      "pinned": false
+    },
+    {
+      "path": "general.battery.warnLevels",
+      "before": [
+        {
+          "level": 20,
+          "title": "Low battery",
+          "message": "You might want to plug in a charger",
+          "icon": "battery_android_frame_2"
+        },
+        {
+          "level": 10,
+          "title": "Did you see the previous message?",
+          "message": "You should probably plug in a charger <b>now</b>",
+          "icon": "battery_android_frame_1"
+        },
+        {
+          "level": 5,
+          "title": "Critical battery level",
+          "message": "PLUG THE CHARGER RIGHT NOW!!",
+          "icon": "battery_android_alert",
+          "critical": true
+        }
+      ],
+      "after": [
+        {
+          "level": 20,
+          "title": "Low battery",
+          "message": "You might want to plug in a charger",
+          "icon": "battery-2"
+        },
+        {
+          "level": 10,
+          "title": "Did you see the previous message?",
+          "message": "You should probably plug in a charger <b>now</b>",
+          "icon": "battery-1"
+        },
+        {
+          "level": 5,
+          "title": "Critical battery level",
+          "message": "PLUG THE CHARGER RIGHT NOW!!",
+          "icon": "battery-exclamation",
+          "critical": true
+        }
+      ],
+      "pinned": false
+    },
+    {
+      "path": "launcher.actions",
+      "before": [
+        {
+          "name": "Calculator",
+          "icon": "calculate",
+          "description": "Do simple math equations (powered by Qalc)",
+          "command": [
+            "autocomplete",
+            "calc"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Scheme",
+          "icon": "palette",
+          "description": "Change the current colour scheme",
+          "command": [
+            "autocomplete",
+            "scheme"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Wallpaper",
+          "icon": "image",
+          "description": "Change the current wallpaper",
+          "command": [
+            "autocomplete",
+            "wallpaper"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Variant",
+          "icon": "colors",
+          "description": "Change the current scheme variant",
+          "command": [
+            "autocomplete",
+            "variant"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Themes",
+          "icon": "style",
+          "description": "Apply a desktop theme pack",
+          "command": [
+            "autocomplete",
+            "theme"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Layout",
+          "icon": "dashboard_customize",
+          "description": "Change the shell bar layout",
+          "command": [
+            "layoutpicker"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Transparency",
+          "icon": "opacity",
+          "description": "Change shell transparency",
+          "command": [
+            "autocomplete",
+            "transparency"
+          ],
+          "enabled": false,
+          "dangerous": false
+        },
+        {
+          "name": "Random",
+          "icon": "casino",
+          "description": "Switch to a random wallpaper",
+          "command": [
+            "sh",
+            "-c",
+            "f=\"$(find -L \"$HOME/Pictures/Wallpapers\" -type f | shuf -n 1)\"; [ -n \"$f\" ] && horneroctl wallpaper set --yes \"$f\""
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Light",
+          "icon": "light_mode",
+          "description": "Change the scheme to light mode",
+          "command": [
+            "setMode",
+            "light"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Dark",
+          "icon": "dark_mode",
+          "description": "Change the scheme to dark mode",
+          "command": [
+            "setMode",
+            "dark"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Shutdown",
+          "icon": "power_settings_new",
+          "description": "Shutdown the system",
+          "command": [
+            "systemctl",
+            "poweroff"
+          ],
+          "enabled": true,
+          "dangerous": true
+        },
+        {
+          "name": "Reboot",
+          "icon": "cached",
+          "description": "Reboot the system",
+          "command": [
+            "systemctl",
+            "reboot"
+          ],
+          "enabled": true,
+          "dangerous": true
+        },
+        {
+          "name": "Logout",
+          "icon": "exit_to_app",
+          "description": "Log out of the current session",
+          "command": [
+            "loginctl",
+            "terminate-user",
+            ""
+          ],
+          "enabled": true,
+          "dangerous": true
+        },
+        {
+          "name": "Lock",
+          "icon": "lock",
+          "description": "Lock the current session",
+          "command": [
+            "loginctl",
+            "lock-session"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Sleep",
+          "icon": "bedtime",
+          "description": "Suspend then hibernate",
+          "command": [
+            "systemctl",
+            "suspend-then-hibernate"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Settings",
+          "icon": "settings",
+          "description": "Configure the shell",
+          "command": [
+            "horneroctl",
+            "config",
+            "gui"
+          ],
+          "enabled": true,
+          "dangerous": false
+        }
+      ],
+      "after": [
+        {
+          "name": "Calculator",
+          "icon": "calculator",
+          "description": "Do simple math equations (powered by Qalc)",
+          "command": [
+            "autocomplete",
+            "calc"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Wallpaper",
+          "icon": "photo",
+          "description": "Change the current wallpaper",
+          "command": [
+            "autocomplete",
+            "wallpaper"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Themes",
+          "icon": "brush",
+          "description": "Apply a desktop theme pack",
+          "command": [
+            "autocomplete",
+            "theme"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Layout",
+          "icon": "layout-dashboard",
+          "description": "Change the shell bar layout",
+          "command": [
+            "layoutpicker"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Transparency",
+          "icon": "opacity",
+          "description": "Change shell transparency",
+          "command": [
+            "autocomplete",
+            "transparency"
+          ],
+          "enabled": false,
+          "dangerous": false
+        },
+        {
+          "name": "Random",
+          "icon": "dice-5",
+          "description": "Switch to a random wallpaper",
+          "command": [
+            "sh",
+            "-c",
+            "f=\"$(find -L \"$HOME/Pictures/Wallpapers\" -type f | shuf -n 1)\"; [ -n \"$f\" ] && horneroctl wallpaper set --yes \"$f\""
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Light",
+          "icon": "sun",
+          "description": "Switch to Hornero Signal Day",
+          "command": [
+            "theme",
+            "hornero-signal-day"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Dark",
+          "icon": "moon",
+          "description": "Switch to Hornero Signal Night",
+          "command": [
+            "theme",
+            "hornero-signal-night"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Shutdown",
+          "icon": "power",
+          "description": "Shutdown the system",
+          "command": [
+            "systemctl",
+            "poweroff"
+          ],
+          "enabled": true,
+          "dangerous": true
+        },
+        {
+          "name": "Reboot",
+          "icon": "refresh",
+          "description": "Reboot the system",
+          "command": [
+            "systemctl",
+            "reboot"
+          ],
+          "enabled": true,
+          "dangerous": true
+        },
+        {
+          "name": "Logout",
+          "icon": "logout",
+          "description": "Log out of the current session",
+          "command": [
+            "loginctl",
+            "terminate-user",
+            ""
+          ],
+          "enabled": true,
+          "dangerous": true
+        },
+        {
+          "name": "Lock",
+          "icon": "lock",
+          "description": "Lock the current session",
+          "command": [
+            "loginctl",
+            "lock-session"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Sleep",
+          "icon": "moon-stars",
+          "description": "Suspend then hibernate",
+          "command": [
+            "systemctl",
+            "suspend-then-hibernate"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Settings",
+          "icon": "settings",
+          "description": "Configure the shell",
+          "command": [
+            "horneroctl",
+            "config",
+            "gui"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Focus mode",
+          "icon": "circle-dot",
+          "description": "Experience: maximum space, quiet motion, notifications held",
+          "command": [
+            "mode",
+            "focus"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Everyday mode",
+          "icon": "layout-dashboard",
+          "description": "Experience: the balanced default",
+          "command": [
+            "mode",
+            "everyday"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Signal mode",
+          "icon": "wave-sine",
+          "description": "Experience: immersive instruments, labelled telemetry and glow",
+          "command": [
+            "mode",
+            "signal"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Gaming mode",
+          "icon": "device-gamepad-2",
+          "description": "Experience: no motion, queued notifications, paused telemetry",
+          "command": [
+            "mode",
+            "gaming"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Studio mode",
+          "icon": "wave-square",
+          "description": "Experience: audio first, stable canvas",
+          "command": [
+            "mode",
+            "studio"
+          ],
+          "enabled": true,
+          "dangerous": false
+        },
+        {
+          "name": "Revert mode",
+          "icon": "history",
+          "description": "Experience: go back to the previous mode",
+          "command": [
+            "mode",
+            "revert"
+          ],
+          "enabled": true,
+          "dangerous": false
+        }
+      ],
+      "pinned": false
+    },
+    {
+      "path": "launcher.maxShown",
+      "before": 7,
+      "after": 8,
+      "pinned": false
+    },
+    {
+      "path": "launcher.sizes.itemHeight",
+      "before": 57,
+      "after": 44,
+      "pinned": false
+    },
+    {
+      "path": "launcher.sizes.itemWidth",
+      "before": 600,
+      "after": 640,
+      "pinned": false
+    },
+    {
+      "path": "session.icons.hibernate",
+      "before": "downloading",
+      "after": "zzz",
+      "pinned": false
+    },
+    {
+      "path": "session.icons.reboot",
+      "before": "cached",
+      "after": "refresh",
+      "pinned": false
+    },
+    {
+      "path": "session.icons.shutdown",
+      "before": "power_settings_new",
+      "after": "power",
+      "pinned": false
+    }
+  ],
+  "migrated": [
+    {
+      "migration": "routine-toasts-quiet",
+      "version": 5,
+      "op": "set-once",
+      "path": "utilities.toasts.configLoaded",
+      "before": null,
+      "after": false
+    },
+    {
+      "migration": "routine-toasts-quiet",
+      "version": 5,
+      "op": "set-once",
+      "path": "utilities.toasts.numLockChanged",
+      "before": null,
+      "after": false
+    }
+  ],
+  "removed": [],
+  "conflicts": [],
+  "newSettings": [
+    "appearance.anim.curveStyle",
+    "appearance.atmosphere.enabled",
+    "appearance.atmosphere.grain",
+    "appearance.atmosphere.innerLight",
+    "appearance.atmosphere.lamp",
+    "appearance.atmosphere.mascot",
+    "appearance.atmosphere.plateTracking",
+    "appearance.atmosphere.scanlines",
+    "appearance.atmosphere.tone",
+    "appearance.atmosphere.vignette",
+    "appearance.atmosphere.warmth",
+    "appearance.chromatic.chroma",
+    "appearance.chromatic.contrast",
+    "appearance.chromatic.fallback.dark",
+    "appearance.chromatic.fallback.light",
+    "appearance.chromatic.follow",
+    "appearance.chromatic.hueShift",
+    "appearance.chromatic.mode",
+    "appearance.chromatic.perMode.dark.variant",
+    "appearance.chromatic.perMode.light.variant",
+    "appearance.chromatic.seeds",
+    "appearance.chromatic.source",
+    "appearance.chromatic.surfaceDepth",
+    "appearance.chromatic.transition",
+    "appearance.chromatic.variant",
+    "appearance.font.family.display",
+    "appearance.font.weight.shift",
+    "appearance.glow.intensity",
+    "appearance.reducedMotion",
+    "bar.clearInk.outline",
+    "bar.clearInk.polarity",
+    "bar.clearInk.strength",
+    "bar.clearStyle",
+    "bar.mark",
+    "bar.sizes.autoDensity",
+    "bar.sizes.contentScale",
+    "bar.sizes.densityScale",
+    "bar.sizes.iconScale",
+    "bar.sizes.itemSpacing",
+    "bar.sizes.textScale",
+    "bar.sizes.textWeight",
+    "bar.typeface",
+    "controlCenter.appearanceOpenSections",
+    "experience.auto.fullscreenGaming",
+    "experience.auto.gamePatterns",
+    "experience.deck",
+    "experience.modes",
+    "plugins.desktopWidgets"
+  ]
+}

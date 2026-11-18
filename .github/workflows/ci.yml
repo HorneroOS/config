@@ -62,6 +62,8 @@ jobs:
         run: tests/test_shell_default_sync.sh
       - name: Layout presets match the pinned HorneroOS/shell source
         run: tests/test_shell_presets_sync.sh
+      - name: shell.json migrations (schema, golden cases, zero lost overrides)
+        run: python3 tests/test_shell_migrations.py
       - name: Materialization into temp HOME
         run: tests/test_materialize.sh
       - name: Signal fastfetch defaults

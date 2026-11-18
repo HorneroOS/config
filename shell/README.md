@@ -34,6 +34,15 @@ update `shell_sha=` in the same commit. `PKGBUILD` fails the build if
 the file is missing; `tests/test_package.sh` asserts the installed
 `/etc/xdg/hornero/shell.json` is byte-identical to this copy.
 
+## shell.json migrations (`shell-migrations.json`)
+
+Renamed, reshaped or retired `shell.json` keys are recorded in
+`shell/shell-migrations.json` (`hornero/shell-migrations@1`, schema in
+`shell/shell-migrations.schema.json`), installed at
+`/usr/share/hornero/shell-migrations.json`. `horneroctl update plan` applies
+it so a rename never drops a user value. Ops, versioning and the golden
+cases are documented in `docs/SHELL_MIGRATIONS.md`.
+
 `scripts/materialize.sh` deliberately does **not** install a user-root
 `~/.config/hornero/shell.json`: the user file is created by the shell
 runtime on first launch (the shell writes `{}` when absent).
