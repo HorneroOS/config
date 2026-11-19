@@ -13,4 +13,3 @@ The CC BY images are attributed above; their attribution, source, license and mo
 ## Owner-curated collection (2026-11-19)
 
 The shipped set is the owner's definitive 57-file selection, catalogued in `wallpaper-collection.json` with content-derived names and per-file SHA-256. **54 of those files have license `unknown` — `owner-curated 2026-11-19, license unverified`. No license, author, or permission is claimed or inferred for them**; they ship only under that explicit note, and flagged items (visible trademarks, artist signatures, large text) are recorded per file in the collection catalogue. Only the three CC BY 2.0 photographs above carry a verified redistribution license.
-
