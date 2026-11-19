@@ -165,6 +165,51 @@ local function registry_key(submap, combo)
 	return (submap or "") .. "|" .. (M.canonical(combo) or tostring(combo))
 end
 
+-- SUPER-hold key badges (HorneroOS/shell#701): the shell shows key
+-- badges while bare SUPER is held. Detection must never consume or
+-- delay a real shortcut, so every bind here is a non-consuming
+-- `global` bind the shell listens to (hornero:superHold*):
+--   arm       Super_L/R pressed (ignore_mods: any SUPER press)
+--   release   bare SUPER released (Hyprland only fires a modifier
+--             release bind when no other key intervened)
+--   interrupt a twin next to every global SUPER combo, added by
+--             wrapped_bind below, so a combo cancels the badges.
+-- Hyprland fires every bind on a combo and non_consuming passes the
+-- keypress on, so the twin cannot shadow the real bind. The shell
+-- hides these three names from its bind list.
+M.super_hold = {
+	arm = "hornero:superHoldArm",
+	release = "hornero:superHoldRelease",
+	interrupt = "hornero:superHoldInterrupt",
+}
+M._super_interrupts = {}
+
+-- super_combo_key returns the lower-cased key when `combo` (already in
+-- use for a global bind) carries SUPER plus a non-Super key.
+local function super_combo_key(combo)
+	local canon = M.canonical(combo)
+	if not canon then
+		return nil
+	end
+	local parts = {}
+	for token in canon:gmatch("[^+]+") do
+		parts[#parts + 1] = trim(token)
+	end
+	if #parts < 2 then
+		return nil
+	end
+	local key = parts[#parts]
+	if key == "super_l" or key == "super_r" then
+		return nil
+	end
+	for i = 1, #parts - 1 do
+		if parts[i] == "SUPER" then
+			return key
+		end
+	end
+	return nil
+end
+
 local function wrapped_bind(combo, dispatcher, opts, ...)
 	local ok, target, remapped = pcall(M.translate, combo)
 	if not ok then
@@ -180,7 +225,17 @@ local function wrapped_bind(combo, dispatcher, opts, ...)
 		submap = current_submap,
 		dispatcher = dispatcher,
 	}
-	return raw.bind(target, dispatcher, opts, ...)
+	local result = raw.bind(target, dispatcher, opts, ...)
+	-- Badge interrupt twin (#701): same combo, non-consuming, once per
+	-- combo. Registered on the translated target, so rebinds move it.
+	if current_submap == "" and hl.dsp and hl.dsp.global and super_combo_key(target) then
+		local id = registry_key("", target)
+		if not M._super_interrupts[id] then
+			M._super_interrupts[id] = true
+			pcall(raw.bind, target, hl.dsp.global(M.super_hold.interrupt), { non_consuming = true })
+		end
+	end
+	return result
 end
 
 local function wrapped_unbind(combo, ...)
@@ -192,6 +247,9 @@ local function wrapped_unbind(combo, ...)
 		return nil
 	end
 	M.binds[registry_key(current_submap, target)] = nil
+	-- raw.unbind removes every bind on the combo, the badge twin
+	-- included; forget it so a later bind re-registers the twin.
+	M._super_interrupts[registry_key("", target)] = nil
 	return raw.unbind(target, ...)
 end
 
@@ -248,6 +306,18 @@ if raw.define_submap and hl.dsp and hl.dsp.submap then
 	pcall(raw.define_submap, M.capture_submap, function()
 		raw.bind("escape", hl.dsp.submap("reset"), { non_consuming = true })
 	end)
+end
+
+-- Bare-Super detection for the hold badges (#701). Registered with
+-- raw.bind so the rebind overlay never remaps them (they also carry
+-- no entry in M.binds, so `hornero_keybinds.run` cannot fire them).
+-- The shell alone decides whether badges are enabled; with them off
+-- these binds fire into a no-op.
+if hl.dsp and hl.dsp.global then
+	for _, key in ipairs({ "Super_L", "Super_R" }) do
+		pcall(raw.bind, key, hl.dsp.global(M.super_hold.arm), { ignore_mods = true, non_consuming = true })
+		pcall(raw.bind, "SUPER + " .. key, hl.dsp.global(M.super_hold.release), { release = true })
+	end
 end
 
 hornero_keybinds = M
