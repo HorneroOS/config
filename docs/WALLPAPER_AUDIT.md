@@ -1,13 +1,13 @@
 # HorneroOS wallpaper and visual-asset audit
 
-Audit date: 2026-10-11. This report covers wallpaper files and wallpaper-like previews across the HorneroOS organization, plus the pinned optional media source used by the personal dotfiles setup. The machine-readable inventories are `profiles/themes/organization-wallpaper-inventory.json` and `profiles/themes/dotfiles-wallpaper-audit.json`.
+Audit date: 2026-10-11; superseded for the shipped set by the owner curation of 2026-11-19 (see `profiles/themes/wallpaper-collection.json` and DECISIONS.md). Rows below describing the old nine-photo set are historical. This report covers wallpaper files and wallpaper-like previews across the HorneroOS organization, plus the pinned optional media source used by the personal dotfiles setup. The machine-readable inventories are `profiles/themes/organization-wallpaper-inventory.json` and `profiles/themes/dotfiles-wallpaper-audit.json`.
 
 ## Product wallpaper sources
 
 | Repository | Paths reviewed | Classification | Product status |
 | --- | --- | --- | --- |
 | `HorneroOS/config` | `assets/brand/wallpaper/` | Hornero-authored procedural SVG sources and package-rendered raster outputs | MIT; flagship defaults |
-| `HorneroOS/config` | `assets/wallpapers/argentina/` | Six genuine, source-verified photographs | CC BY 2.0 or CC BY-SA 4.0; defaults shipped in `hornero-config` |
+| `HorneroOS/config` | `assets/wallpapers/<wallpaperDir>/` | 57-file owner-curated collection (2026-11-19); 3 CC BY 2.0 photographs verified, 54 license unknown with explicit unverified note | defaults shipped in `hornero-config` |
 | `HorneroOS/config` | `profiles/themes/*` and `wallpapers.manifest.json` | Twenty theme-to-wallpaper references | Six photo defaults, two procedural flagship defaults; remaining media optional |
 | `HorneroOS/website` | `assets/screenshots/theme-wallpapers/` | Fifteen theme visual previews; six replaced with licensed photographs in this change | Website imagery; origin/license of other previews is recorded as unverified, not inferred |
 | `HorneroOS/website` | `public/wallpapers/argentina/` | 720px and 1280px WebP derivatives of the six approved package photographs | Website-only optimized previews; captions expose attribution and license |
