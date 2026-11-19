@@ -60,8 +60,8 @@ for tid in $OFFICIAL_IDS; do
   wall="$(python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/$tid/theme.json'))['defaultWallpaper'])")"
   wdir="$(python3 -c "import json;print(json.load(open('$REPO_ROOT/profiles/themes/$tid/theme.json'))['wallpaperDir'])")"
   if [[ "$wall" == *.jpg ]]; then
-    # Photo-led flagships ship the licensed photograph, not a render.
-    [[ -f "$REPO_ROOT/assets/wallpapers/argentina/$wall" ]] \
+    # Photo-led flagships ship the photograph, not a render.
+    [[ -f "$REPO_ROOT/assets/wallpapers/$wdir/$wall" ]] \
       && pass "photo default $wall" || fail "photo default missing: $wall"
     continue
   fi

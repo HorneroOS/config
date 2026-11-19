@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "auditDate": "2026-10-11",
+  "auditDate": "2026-11-19",
   "scope": "Wallpaper payloads and wallpaper-like previews found in HorneroOS repositories and the pinned dotfiles wallpaper source. Screenshots, Companion illustrations, greeter scenes and conceptual art are tracked separately as related visual assets.",
   "repositoryPins": {
     "HorneroOS/config": "branch under review; based on 9b78c16dc4f105c2c027bb7e3e7f6ed8b838a09c",
@@ -9,164 +9,172 @@
   },
   "themeDefaults": [
     {
+      "themeId": "hornero-signal-night",
+      "defaultWallpaper": "hornero-signal-night-01.png",
+      "wallpaperDir": "hornero-signal-night",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/hornero-signal-night/hornero-signal-night-01.png",
+      "websitePreview": false
+    },
+    {
+      "themeId": "hornero-signal-day",
+      "defaultWallpaper": "hornero-signal-day-01.png",
+      "wallpaperDir": "hornero-signal-day",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/hornero-signal-day/hornero-signal-day-01.png",
+      "websitePreview": false
+    },
+    {
+      "themeId": "hornero-signal-contrast",
+      "defaultWallpaper": "hornero-signal-night-01.png",
+      "wallpaperDir": "hornero-signal-night",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/hornero-signal-night/hornero-signal-night-01.png",
+      "websitePreview": false
+    },
+    {
+      "themeId": "hornero-signal-dusk",
+      "defaultWallpaper": "hornero-signal-night-01.png",
+      "wallpaperDir": "hornero-signal-night",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/hornero-signal-night/hornero-signal-night-01.png",
+      "websitePreview": false
+    },
+    {
       "themeId": "catppuccin-latte",
-      "defaultWallpaper": "catppuccin-latte-01.png",
+      "defaultWallpaper": "cherry-blossom-blue-sky.jpg",
       "wallpaperDir": "catppuccin-latte",
-      "bundledProductDefault": false,
-      "distributionPath": null,
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/catppuccin-latte/cherry-blossom-blue-sky.jpg",
       "websitePreview": false
     },
     {
       "themeId": "catppuccin-mocha",
-      "defaultWallpaper": "catppuccin-mauve-02.png",
+      "defaultWallpaper": "vaporwave-room-prism.jpg",
       "wallpaperDir": "catppuccin-mocha",
-      "bundledProductDefault": false,
-      "distributionPath": null,
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/catppuccin-mocha/vaporwave-room-prism.jpg",
       "websitePreview": false
     },
     {
       "themeId": "everforest",
-      "defaultWallpaper": "everforest-deep-01.png",
+      "defaultWallpaper": "pine-river-red-peaks.jpg",
       "wallpaperDir": "everforest",
-      "bundledProductDefault": false,
-      "distributionPath": null,
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/everforest/pine-river-red-peaks.jpg",
       "websitePreview": false
     },
     {
       "themeId": "gruvbox",
-      "defaultWallpaper": "gruvbox-anime-01.jpg",
+      "defaultWallpaper": "sunflowers-cumulus-teal-sky.jpg",
       "wallpaperDir": "gruvbox",
-      "bundledProductDefault": false,
-      "distributionPath": null,
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/gruvbox/sunflowers-cumulus-teal-sky.jpg",
       "websitePreview": true
     },
     {
       "themeId": "landscape",
-      "defaultWallpaper": "landscape-01.jpg",
+      "defaultWallpaper": "lakeside-cabin-pine-island.jpg",
       "wallpaperDir": "landscape",
-      "bundledProductDefault": false,
-      "distributionPath": null,
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/landscape/lakeside-cabin-pine-island.jpg",
       "websitePreview": true
     },
     {
       "themeId": "monochrome",
-      "defaultWallpaper": "mono-curated-1.jpg",
+      "defaultWallpaper": "tiny-earth-starfield.jpg",
       "wallpaperDir": "monochrome",
-      "bundledProductDefault": false,
-      "distributionPath": null,
-      "websitePreview": true
-    },
-    {
-      "themeId": "neon-city",
-      "defaultWallpaper": "neon-city-01.jpg",
-      "wallpaperDir": "neon-city",
-      "bundledProductDefault": false,
-      "distributionPath": null,
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/monochrome/tiny-earth-starfield.jpg",
       "websitePreview": true
     },
     {
       "themeId": "nord-dreams",
-      "defaultWallpaper": "nord-aurora-01.png",
+      "defaultWallpaper": "snowy-summit-cloud-sunrise.png",
       "wallpaperDir": "nord-dreams",
-      "bundledProductDefault": false,
-      "distributionPath": null,
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/nord-dreams/snowy-summit-cloud-sunrise.png",
       "websitePreview": false
     },
     {
       "themeId": "rose-pine",
-      "defaultWallpaper": "rose-pine-dawn-01.png",
+      "defaultWallpaper": "island-lake-purple-sunset.jpg",
       "wallpaperDir": "rose-pine",
-      "bundledProductDefault": false,
-      "distributionPath": null,
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/rose-pine/island-lake-purple-sunset.jpg",
       "websitePreview": false
     },
     {
-      "themeId": "soft-morning",
-      "defaultWallpaper": "morning-lake-2.jpg",
-      "wallpaperDir": "soft-morning",
-      "bundledProductDefault": false,
-      "distributionPath": null,
-      "websitePreview": true
-    },
-    {
-      "themeId": "vapor-dreams",
-      "defaultWallpaper": "vapor-dreams-01.jpg",
-      "wallpaperDir": "vapor-dreams",
-      "bundledProductDefault": false,
-      "distributionPath": null,
-      "websitePreview": true
-    },
-    {
-      "themeId": "warm-sunset",
-      "defaultWallpaper": "warm-sunset-05.jpg",
-      "wallpaperDir": "warm-sunset",
-      "bundledProductDefault": false,
-      "distributionPath": null,
-      "websitePreview": true
-    },
-    {
-      "themeId": "hornero-dark",
-      "defaultWallpaper": "hornero-dark-01.png",
-      "wallpaperDir": "hornero-dark",
-      "bundledProductDefault": true,
-      "distributionPath": "/usr/share/hornero/wallpapers/hornero-dark/hornero-dark-01.png",
-      "websitePreview": true
-    },
-    {
-      "themeId": "hornero-light",
-      "defaultWallpaper": "hornero-light-01.png",
-      "wallpaperDir": "hornero-light",
-      "bundledProductDefault": true,
-      "distributionPath": "/usr/share/hornero/wallpapers/hornero-light/hornero-light-01.png",
-      "websitePreview": true
-    },
-    {
       "themeId": "pampa",
-      "defaultWallpaper": "pampa-01.jpg",
+      "defaultWallpaper": "aerial-wetland-channels.jpg",
       "wallpaperDir": "pampa",
       "bundledProductDefault": true,
-      "distributionPath": "/usr/share/hornero/wallpapers/pampa/pampa-01.jpg",
+      "distributionPath": "/usr/share/hornero/wallpapers/pampa/aerial-wetland-channels.jpg",
       "websitePreview": true
     },
     {
       "themeId": "patagonia",
-      "defaultWallpaper": "patagonia-glacier-01.jpg",
+      "defaultWallpaper": "glacier-lake-sunset-range.jpg",
       "wallpaperDir": "patagonia",
       "bundledProductDefault": true,
-      "distributionPath": "/usr/share/hornero/wallpapers/patagonia/patagonia-glacier-01.jpg",
+      "distributionPath": "/usr/share/hornero/wallpapers/patagonia/glacier-lake-sunset-range.jpg",
       "websitePreview": true
     },
     {
       "themeId": "fin-del-mundo",
-      "defaultWallpaper": "beagle-blue-hour-01.jpg",
+      "defaultWallpaper": "beagle-channel-ship-dusk.jpg",
       "wallpaperDir": "fin-del-mundo",
       "bundledProductDefault": true,
-      "distributionPath": "/usr/share/hornero/wallpapers/fin-del-mundo/beagle-blue-hour-01.jpg",
+      "distributionPath": "/usr/share/hornero/wallpapers/fin-del-mundo/beagle-channel-ship-dusk.jpg",
       "websitePreview": true
     },
     {
       "themeId": "quebrada",
-      "defaultWallpaper": "quebrada-mineral-01.jpg",
+      "defaultWallpaper": "rainbow-desert-mountains.jpg",
       "wallpaperDir": "quebrada",
       "bundledProductDefault": true,
-      "distributionPath": "/usr/share/hornero/wallpapers/quebrada/quebrada-mineral-01.jpg",
+      "distributionPath": "/usr/share/hornero/wallpapers/quebrada/rainbow-desert-mountains.jpg",
       "websitePreview": true
     },
     {
       "themeId": "ibera",
-      "defaultWallpaper": "ibera-mist-01.jpg",
+      "defaultWallpaper": "wetland-lagoon-sunrise.jpg",
       "wallpaperDir": "ibera",
       "bundledProductDefault": true,
-      "distributionPath": "/usr/share/hornero/wallpapers/ibera/ibera-mist-01.jpg",
+      "distributionPath": "/usr/share/hornero/wallpapers/ibera/wetland-lagoon-sunrise.jpg",
       "websitePreview": true
     },
     {
       "themeId": "buenos-aires-nocturno",
-      "defaultWallpaper": "buenos-aires-nocturno-01.jpg",
+      "defaultWallpaper": "buenos-aires-skyline-night.jpg",
       "wallpaperDir": "buenos-aires-nocturno",
       "bundledProductDefault": true,
-      "distributionPath": "/usr/share/hornero/wallpapers/buenos-aires-nocturno/buenos-aires-nocturno-01.jpg",
+      "distributionPath": "/usr/share/hornero/wallpapers/buenos-aires-nocturno/buenos-aires-skyline-night.jpg",
       "websitePreview": true
+    },
+    {
+      "themeId": "cuyo",
+      "defaultWallpaper": "jagged-snow-peaks-autumn-tree.png",
+      "wallpaperDir": "cuyo",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/cuyo/jagged-snow-peaks-autumn-tree.png",
+      "websitePreview": false
+    },
+    {
+      "themeId": "iguazu",
+      "defaultWallpaper": "misty-green-hills-sunrise.jpg",
+      "wallpaperDir": "iguazu",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/iguazu/misty-green-hills-sunrise.jpg",
+      "websitePreview": false
+    },
+    {
+      "themeId": "sierras",
+      "defaultWallpaper": "condorito-sierra-panorama.jpg",
+      "wallpaperDir": "sierras",
+      "bundledProductDefault": true,
+      "distributionPath": "/usr/share/hornero/wallpapers/sierras/condorito-sierra-panorama.jpg",
+      "websitePreview": false
     }
   ],
   "productWallpaperAssets": [
@@ -204,25 +212,759 @@
     },
     {
       "repository": "HorneroOS/config",
-      "path": "assets/wallpapers/argentina/buenos-aires-nocturno-01.jpg",
+      "path": "assets/wallpapers/anime/retro-window-portrait-collage.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 424175,
+      "sha256": "7a1e8389c80587b8e26bff830c27c7279ea5977e8de00459cef71d293c9e70b2",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/photo-nature/southern-channel-dusk-tree.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "format": "JPEG",
+      "bytes": 596905,
+      "sha256": "54badd4376fcff1401b6388288f4968445610dfb68e7ca8939fa61fa07f86330",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/photo-city/rainy-avenue-night-lights.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "format": "JPEG",
+      "bytes": 421325,
+      "sha256": "f8614f3a103bd45c7f3609c7ec46300fb141d6b71bb0cc25f0338dfec36ce222",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/catppuccin-latte/cherry-blossom-blue-sky.jpg",
       "role": "distributed theme default wallpaper",
-      "themeId": "buenos-aires-nocturno",
+      "themeId": "catppuccin-latte",
+      "dimensions": {
+        "width": 1920,
+        "height": 1272
+      },
+      "format": "JPEG",
+      "bytes": 225923,
+      "sha256": "3b1594119c93f8408836d96683fde7d1aed81cfae1991995ec441aa19fcc66db",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/anime/butterfly-girl-flower-field.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
       "dimensions": {
         "width": 2560,
         "height": 1440
       },
       "format": "JPEG",
-      "bytes": 717969,
-      "sha256": "23c3e25e8a27abc15b5613ce9fa6d8fc7c55b3570eec8a05202928a3b3929e8f",
-      "origin": "photograph",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Buenos_Aires_at_night.jpg",
-      "photographer": "Luis Argerich",
-      "license": "CC BY 2.0",
-      "rightsStatus": "verified; attribution/license distributed with package"
+      "bytes": 461400,
+      "sha256": "2baa244b1b3fe0ffc2185cbb20666e157f07b30b036ed3f6b689e5d16582d540",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
     },
     {
       "repository": "HorneroOS/config",
-      "path": "assets/wallpapers/argentina/beagle-blue-hour-01.jpg",
+      "path": "assets/wallpapers/anime/kimono-girls-sakura-umbrellas.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 436745,
+      "sha256": "bd3feca2a3599ee7290c0e80075c5131a75e1fadb8182c32722c0ac99b46f91d",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/gruvbox/hooded-smoker-neon-rain.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 2560,
+        "height": 1434
+      },
+      "format": "JPEG",
+      "bytes": 262896,
+      "sha256": "6f6dfabb799f6b5eb0086b7158505591fd55381e91d069cd52d43356d735686e",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/anime/elf-girl-floating-water.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 2560,
+        "height": 1286
+      },
+      "format": "JPEG",
+      "bytes": 885744,
+      "sha256": "c07fd41283f324b252986b7f3a3b05857fe31c4dd1c843432cb17423eed0dd00",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/gruvbox/sunflowers-cumulus-teal-sky.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "gruvbox",
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 319368,
+      "sha256": "e253ba1efa7c233216df3571357bfd81ec65247fde3714c16637da18128f1cfa",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/anime/girl-among-grounded-rockets.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 691294,
+      "sha256": "2d6c3d1fa4460f42a9ae3c08892abe74e970433a7bff8c9b660631b800726b72",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/minimal-graphic/snowy-plum-branch-ink.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 1101331,
+      "sha256": "c4c5a8e8db8212d6b015feb3b8109485bb2add0a1dbd95da1e854dadcea3cb5c",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/minimal-graphic/great-wave-sunset-emblem.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 2559,
+        "height": 1439
+      },
+      "format": "JPEG",
+      "bytes": 179982,
+      "sha256": "2dd73e632fe06bf171d36749c997d251f6813cef133d64544e4abde8818bf24c",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/monochrome/tiny-earth-starfield.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "monochrome",
+      "dimensions": {
+        "width": 2560,
+        "height": 1600
+      },
+      "format": "JPEG",
+      "bytes": 50406,
+      "sha256": "3ac6949b5932192e4fc0ade51d88f09375f0ad0f38b1ac0353f200199eddd520",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/cyberpunk/retro-computer-desk-pile.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 560823,
+      "sha256": "928a720035579dbc31136b46fbfdfd53fcfe733ee4408434aedda1fa22bdf232",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/ibera/wetland-lagoon-sunrise.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "ibera",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "format": "JPEG",
+      "bytes": 329318,
+      "sha256": "df0c08efc4c6ced75af44fbd1045014e80c474d7e9a44b6cb5292d84c4ee6a16",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/landscape/lakeside-cabin-pine-island.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "landscape",
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 1007882,
+      "sha256": "86c84259a0cf999f186949a1b64cbe143940651d8b7795f2844bc85308401860",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/everforest/pine-river-red-peaks.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "everforest",
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 914350,
+      "sha256": "9c68a5f659fbde9a4b4065c8385c904d96263b96c4465809e21a99deffd03059",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/cozy/meadow-bicycle-rocket-launch.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 312069,
+      "sha256": "40ccae70dc332626059f49fea24cf75b68236cd9ca22f52a8b9abbdd453fc016",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/pixel-art/jagged-peak-sunset-lake.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 810411,
+      "sha256": "be9fbf9c6119ac430f52fa3adeeee055dc8855877529a9862e138939f26f11a8",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/pixel-art/pastel-hill-floating-island.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 418861,
+      "sha256": "fa486a6344d48167c520f0fcc437b0e7c61caafc81539b9057b83c0e0562994b",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/photo-nature/peaks-above-cloud-sea.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1280
+      },
+      "format": "JPEG",
+      "bytes": 324827,
+      "sha256": "a933925ed20286df82b5e112d1b3dde563d0a8b1d921b83876350ff4c083f79c",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/iguazu/misty-green-hills-sunrise.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "iguazu",
+      "dimensions": {
+        "width": 1920,
+        "height": 1144
+      },
+      "format": "JPEG",
+      "bytes": 399751,
+      "sha256": "b92dcb1537dbe47388cb98dedaff605d6109403e45b15833c6aa840789439c7e",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/anime/glitch-anime-scanlines.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 444200,
+      "sha256": "2906f759e3d1c409dfa0e1f9ee50aa1849c53527d49d3945a6540a451ad2c4c4",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/cyberpunk/neon-train-tower-district.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 981499,
+      "sha256": "986f9776926cd977965c600554ca7740f9d9f23ce3c41baca85d6459c3d5ab59",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/cyberpunk/neon-train-tower-district-4k.png",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 3840,
+        "height": 2160
+      },
+      "format": "PNG",
+      "bytes": 13605698,
+      "sha256": "f625d6808f5cd5418e9d60a165017939e24243087fc029b8e9a41f71cea4797f",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/patagonia/glacier-lake-sunset-range.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "patagonia",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "format": "JPEG",
+      "bytes": 488197,
+      "sha256": "0a9da4efca0b0d5129872de2eeed44a9fc4bc48913731d0b62f97ac15155f706",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/quebrada/rainbow-desert-mountains.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "quebrada",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "format": "JPEG",
+      "bytes": 450723,
+      "sha256": "5f2e400084a9283c4c196a0a93bc6aa0850c5859d7cbfbff9dbf718b16cf87fc",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/photo-city/rooftops-crescent-pink-dusk.png",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1400,
+        "height": 1057
+      },
+      "format": "PNG",
+      "bytes": 488767,
+      "sha256": "4d54e42a6745da8eadd35e1586dfc657b1f65b5717fb97c8d0593b54d2db8bce",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/catppuccin-mocha/vaporwave-room-prism.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "catppuccin-mocha",
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 535612,
+      "sha256": "c39b089e740bd1d11add83412f51cd3514954d92b55627518651739fcc24f810",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/space/astronaut-station-moon.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 191016,
+      "sha256": "4971b0bbbcee2b9ee467ea3f1a3ae51c8f4bbd560ae803ae9313615b964fc3f7",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/space/astronaut-glowing-jellyfish.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 194718,
+      "sha256": "6fd5035e7eedc4d1644a6f7aee894e79ecf860ada35c119409ee9c59e3f4043b",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/anime/neon-triangle-anime-profile.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 299399,
+      "sha256": "bf7f6939b1c90e7543fc0ae34fcc4807e7120267d90a191b9fd42cc4c059def0",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/pixel-art/pixel-detective-pink-blinds.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 428341,
+      "sha256": "a9dd8f7d3860350bd9f84f429a84635811b1bfee78513ee96155baeb1b2fb7f7",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/abstract/vaporwave-room-prism-alt.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 628477,
+      "sha256": "f8fc0852b3e6c89c4245a779f9dcb53ce65804042d315299a2ae54ad948120f8",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/cozy/desert-highway-station-wagon.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 373702,
+      "sha256": "f623efaa9424c6d97fb690d23aeef471e7d925eb40bcc31dc4a72a3d41251165",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/photo-city/konbini-street-pink-grade.png",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "PNG",
+      "bytes": 4837208,
+      "sha256": "90674024e7538e784c779fcbcce5a3e538c011bbf5f176ef6895e68a6ad44660",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/cyberpunk/synthwave-sun-wireframe-grid.png",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "PNG",
+      "bytes": 3531239,
+      "sha256": "12ca8db2e4d49ce5e35273319ad3953bbe2bcd6ab0c8575bfebf47ad9125bd18",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/abstract/windows95-vaporwave-collage.png",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "PNG",
+      "bytes": 2203285,
+      "sha256": "de96df8f11266a4d5eaeb6dc2be131565ead402139e83825f1d48e5ab90d5bce",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/abstract/windows95-vaporwave-drinks.png",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "PNG",
+      "bytes": 3943998,
+      "sha256": "bde09276628a717d57665ebdb27d295382a4d71a46afc6d1b13864921ba84213",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/anime/green-duotone-anime-double.png",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "PNG",
+      "bytes": 1221981,
+      "sha256": "79aced224e3d7abf7c87a9555e7feba4e66ab471554189fe6823dc61409ca80b",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/cozy/lighthouse-island-red-sunset.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "JPEG",
+      "bytes": 558107,
+      "sha256": "a1b1a75dd4a25a1951a893d35d832c1899a18474792bc138f7994d5953378450",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/pixel-art/pine-lake-sunset-pixel.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 981997,
+      "sha256": "f2250d9ace728cd7c573ae79f0e4a1172fa6a3d73812bf2ea33165b9dec506f6",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/rose-pine/island-lake-purple-sunset.jpg",
+      "role": "distributed theme default wallpaper",
+      "themeId": "rose-pine",
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 774347,
+      "sha256": "2dd81a18f252969366a906e097c7d638db3ef37877f83e26254d1fdb1c28f4b9",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/pixel-art/forest-cabins-lake-sunset.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 2560,
+        "height": 1440
+      },
+      "format": "JPEG",
+      "bytes": 856275,
+      "sha256": "45f225bf628b1fbfb9ed38720a407a3645f1303039582090bfd1342cd2c25f84",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/hornero-signal-day/signal-grid-day.png",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "PNG",
+      "bytes": 21817,
+      "sha256": "8ee2cddfe1e484680bb3fa727bb7de205728ec2d65caa6838db7a20e6f9f8c95",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/hornero-signal-night/signal-grid-night.png",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "PNG",
+      "bytes": 21881,
+      "sha256": "6d864861821d8fb0ac6c2ef51e98896ccc23d193217d81ae1abaca8c1d5cf6f5",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/photo-nature/southern-channel-dusk-tree-alt.jpg",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "format": "JPEG",
+      "bytes": 624628,
+      "sha256": "53b7757b823464d9a612da93fb8961c39e82a7abbc4ddb000758350886141a96",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/fin-del-mundo/beagle-channel-ship-dusk.jpg",
       "role": "distributed theme default wallpaper",
       "themeId": "fin-del-mundo",
       "dimensions": {
@@ -232,33 +974,29 @@
       "format": "JPEG",
       "bytes": 764651,
       "sha256": "e6b75ce325cd5a09e9958de4ac98efad9e52cbf4ac69b63b3782a091677180ed",
-      "origin": "photograph",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Beagle_Channel_-m.jpg",
-      "photographer": "RAYANDBEE",
+      "origin": "owner-curated 2026-11-19",
       "license": "CC BY 2.0",
       "rightsStatus": "verified; attribution/license distributed with package"
     },
     {
       "repository": "HorneroOS/config",
-      "path": "assets/wallpapers/argentina/ibera-mist-01.jpg",
+      "path": "assets/wallpapers/buenos-aires-nocturno/buenos-aires-skyline-night.jpg",
       "role": "distributed theme default wallpaper",
-      "themeId": "ibera",
+      "themeId": "buenos-aires-nocturno",
       "dimensions": {
         "width": 2560,
         "height": 1440
       },
       "format": "JPEG",
-      "bytes": 1277017,
-      "sha256": "c88d85e91ddd01cafa4080d9875a076445d9d3dc53861f58aef251e539f69e12",
-      "origin": "photograph",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Esteros_del_Ibera,_Corrientes,_Argentina,_Jan._2011_-_Flickr_-_PhillipC_(1).jpg",
-      "photographer": "Phillip Capper",
+      "bytes": 717969,
+      "sha256": "23c3e25e8a27abc15b5613ce9fa6d8fc7c55b3570eec8a05202928a3b3929e8f",
+      "origin": "owner-curated 2026-11-19",
       "license": "CC BY 2.0",
       "rightsStatus": "verified; attribution/license distributed with package"
     },
     {
       "repository": "HorneroOS/config",
-      "path": "assets/wallpapers/argentina/pampa-01.jpg",
+      "path": "assets/wallpapers/pampa/aerial-wetland-channels.jpg",
       "role": "distributed theme default wallpaper",
       "themeId": "pampa",
       "dimensions": {
@@ -268,47 +1006,121 @@
       "format": "JPEG",
       "bytes": 1248087,
       "sha256": "8fd7f360b7b93e27dc9b913b726ecf807f4a7a3740e6d3b598be846f4c0e07be",
-      "origin": "photograph",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Drone_Laguna_de_rocha.jpg",
-      "photographer": "Alejandro Barrios",
-      "license": "CC BY-SA 4.0",
-      "rightsStatus": "verified; attribution/license distributed with package"
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
     },
     {
       "repository": "HorneroOS/config",
-      "path": "assets/wallpapers/argentina/patagonia-glacier-01.jpg",
+      "path": "assets/wallpapers/sierras/condorito-sierra-panorama.jpg",
       "role": "distributed theme default wallpaper",
-      "themeId": "patagonia",
+      "themeId": "sierras",
       "dimensions": {
         "width": 2560,
         "height": 1440
       },
       "format": "JPEG",
-      "bytes": 1424243,
-      "sha256": "e953280a8b244ba919a48963f3ce3d33dcf914978d4e89de666ac54f06b5fc63",
-      "origin": "photograph",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Perito_Moreno_Glacier_Panorama.jpg",
-      "photographer": "ThartmannWiki",
-      "license": "CC BY-SA 4.0",
+      "bytes": 588769,
+      "sha256": "2a41b3e5e67165231c644185049da1271fef7e5a8d5d084356d9b792644de2cd",
+      "origin": "owner-curated 2026-11-19",
+      "license": "CC BY 2.0",
       "rightsStatus": "verified; attribution/license distributed with package"
     },
     {
       "repository": "HorneroOS/config",
-      "path": "assets/wallpapers/argentina/quebrada-mineral-01.jpg",
-      "role": "distributed theme default wallpaper",
-      "themeId": "quebrada",
+      "path": "assets/wallpapers/photo-nature/wetland-lagoon-sunrise-web.webp",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
       "dimensions": {
-        "width": 2560,
-        "height": 1440
+        "width": 1440,
+        "height": 810
       },
-      "format": "JPEG",
-      "bytes": 1473209,
-      "sha256": "a7dad540050984ff2b8f6849b12c8792f67d245d05190ea2e0d559368808f637",
-      "origin": "photograph",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Serran%C3%ADa_de_Hornocal_03.jpg",
-      "photographer": "Bernard Gagnon",
-      "license": "CC BY-SA 4.0",
-      "rightsStatus": "verified; attribution/license distributed with package"
+      "format": "WEBP",
+      "bytes": 133566,
+      "sha256": "c3a8691d80c033bae44dcd206ee8185284467d1284a1d4f0553dc56b729b4296",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/cozy/lakeside-cabin-pine-island-web.webp",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1440,
+        "height": 810
+      },
+      "format": "WEBP",
+      "bytes": 289136,
+      "sha256": "c484f5647dc16727f301edc36395af1afb614d52fc8c65e2f4c75fe87967d676",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/pixel-art/future-street-underpass-dusk.gif",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 3600,
+        "height": 1800
+      },
+      "format": "GIF",
+      "bytes": 13287234,
+      "sha256": "230805721d870f6abd78d53718a4ee91041a37244bbe3992aa1e8dda1261d55e",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/nord-dreams/snowy-summit-cloud-sunrise.png",
+      "role": "distributed theme default wallpaper",
+      "themeId": "nord-dreams",
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "PNG",
+      "bytes": 3330787,
+      "sha256": "108dfe85532f10f170e3d499c038304b11120dcff68e2f00feebebbdee017783",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/cuyo/jagged-snow-peaks-autumn-tree.png",
+      "role": "distributed theme default wallpaper",
+      "themeId": "cuyo",
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "PNG",
+      "bytes": 4145305,
+      "sha256": "a200d29a21e151bc21fbdb7bcf6732931fe784ff76b2eaa90ad126624060a0f3",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
+    },
+    {
+      "repository": "HorneroOS/config",
+      "path": "assets/wallpapers/anime/neon-triangle-anime-profile-alt.png",
+      "role": "distributed owner-curated collection wallpaper",
+      "themeId": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "format": "PNG",
+      "bytes": 3025444,
+      "sha256": "fbde2113cdba394547fb1466df09f22c42bfec8c645c42ba80f17c6dbc17cdb2",
+      "origin": "owner-curated 2026-11-19",
+      "license": "unknown",
+      "rightsStatus": "owner-curated 2026-11-19, license unverified"
     }
   ],
   "websiteWallpaperPreviews": [
@@ -609,7 +1421,7 @@
       "format": "WEBP",
       "bytes": 35100,
       "sha256": "e9a5615fe291baf562ee103e7f0e0383e90e3c102a4f16b8bbf78c65960c78b9",
-      "sourceAsset": "assets/wallpapers/argentina/buenos-aires-nocturno-01.jpg",
+      "sourceAsset": "assets/wallpapers/buenos-aires-nocturno/buenos-aires-skyline-night.jpg",
       "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
     },
     {
@@ -624,7 +1436,7 @@
       "format": "WEBP",
       "bytes": 92472,
       "sha256": "cf36d2111a9c55d24c1f4590846980bce37712e1fba71acf1ee887c1ada55cef",
-      "sourceAsset": "assets/wallpapers/argentina/buenos-aires-nocturno-01.jpg",
+      "sourceAsset": "assets/wallpapers/buenos-aires-nocturno/buenos-aires-skyline-night.jpg",
       "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
     },
     {
@@ -639,7 +1451,7 @@
       "format": "WEBP",
       "bytes": 20698,
       "sha256": "f90bedb256caf498cb6191cbe1bf53fd65d04aeb3b3ab5a3ebd5acc5ccf9c7d8",
-      "sourceAsset": "assets/wallpapers/argentina/beagle-blue-hour-01.jpg",
+      "sourceAsset": "assets/wallpapers/fin-del-mundo/beagle-channel-ship-dusk.jpg",
       "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
     },
     {
@@ -654,7 +1466,7 @@
       "format": "WEBP",
       "bytes": 55808,
       "sha256": "d1cf15c7802393c78ca571144c37d65179a66b6eea8d74c6b7e9cc07c810cc3a",
-      "sourceAsset": "assets/wallpapers/argentina/beagle-blue-hour-01.jpg",
+      "sourceAsset": "assets/wallpapers/fin-del-mundo/beagle-channel-ship-dusk.jpg",
       "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
     },
     {
@@ -669,8 +1481,9 @@
       "format": "WEBP",
       "bytes": 88268,
       "sha256": "1872f0ced2b16e4da4680fc97c3dc9e7e4e052104f4c50f3046a1fc75370ca72",
-      "sourceAsset": "assets/wallpapers/argentina/ibera-mist-01.jpg",
-      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+      "sourceAsset": null,
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery",
+      "sourceAssetNote": "config source photo removed from shipped set by owner curation 2026-11-19; website preview needs its own PR"
     },
     {
       "repository": "HorneroOS/website",
@@ -684,8 +1497,9 @@
       "format": "WEBP",
       "bytes": 243076,
       "sha256": "84f7c7b68deeade009b8002384187b464d737fe686657986afe2fcd09218c4e5",
-      "sourceAsset": "assets/wallpapers/argentina/ibera-mist-01.jpg",
-      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+      "sourceAsset": null,
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery",
+      "sourceAssetNote": "config source photo removed from shipped set by owner curation 2026-11-19; website preview needs its own PR"
     },
     {
       "repository": "HorneroOS/website",
@@ -699,8 +1513,9 @@
       "format": "WEBP",
       "bytes": 53166,
       "sha256": "c5d42388c1febcd6be29185e6c59bf5be0b3f62b208919c154ff50d00a5a63c3",
-      "sourceAsset": "assets/wallpapers/argentina/pampa-01.jpg",
-      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+      "sourceAsset": null,
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery",
+      "sourceAssetNote": "config source photo removed from shipped set by owner curation 2026-11-19; website preview needs its own PR"
     },
     {
       "repository": "HorneroOS/website",
@@ -714,8 +1529,9 @@
       "format": "WEBP",
       "bytes": 171210,
       "sha256": "0afec05752e0344a5d789b93275404bc9690e4fe68424a8fc380c507df6f9cd8",
-      "sourceAsset": "assets/wallpapers/argentina/pampa-01.jpg",
-      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+      "sourceAsset": null,
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery",
+      "sourceAssetNote": "config source photo removed from shipped set by owner curation 2026-11-19; website preview needs its own PR"
     },
     {
       "repository": "HorneroOS/website",
@@ -729,8 +1545,9 @@
       "format": "WEBP",
       "bytes": 71582,
       "sha256": "8f6c8688585dcd5f5ae0f2c39591b0afa9651d88d23d0fa83abf798fe32756da",
-      "sourceAsset": "assets/wallpapers/argentina/patagonia-glacier-01.jpg",
-      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+      "sourceAsset": null,
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery",
+      "sourceAssetNote": "config source photo removed from shipped set by owner curation 2026-11-19; website preview needs its own PR"
     },
     {
       "repository": "HorneroOS/website",
@@ -744,8 +1561,9 @@
       "format": "WEBP",
       "bytes": 209444,
       "sha256": "5dbee218882fab51e6c0f918d516dae71c094898f21ee0891f964c69951e2c2f",
-      "sourceAsset": "assets/wallpapers/argentina/patagonia-glacier-01.jpg",
-      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+      "sourceAsset": null,
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery",
+      "sourceAssetNote": "config source photo removed from shipped set by owner curation 2026-11-19; website preview needs its own PR"
     },
     {
       "repository": "HorneroOS/website",
@@ -759,8 +1577,9 @@
       "format": "WEBP",
       "bytes": 67632,
       "sha256": "42346329897a34970d45d7fa129654acad6bfd2b49543ed184f35c8729ff6059",
-      "sourceAsset": "assets/wallpapers/argentina/quebrada-mineral-01.jpg",
-      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+      "sourceAsset": null,
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery",
+      "sourceAssetNote": "config source photo removed from shipped set by owner curation 2026-11-19; website preview needs its own PR"
     },
     {
       "repository": "HorneroOS/website",
@@ -774,8 +1593,9 @@
       "format": "WEBP",
       "bytes": 225792,
       "sha256": "7b863451b12d8b69cf013f26a5d630175143b09ad67ecac7df4bee6e01512e7b",
-      "sourceAsset": "assets/wallpapers/argentina/quebrada-mineral-01.jpg",
-      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery"
+      "sourceAsset": null,
+      "rightsStatus": "derivative of licensed source photo; source credit shown alongside in gallery",
+      "sourceAssetNote": "config source photo removed from shipped set by owner curation 2026-11-19; website preview needs its own PR"
     }
   ],
   "dotfilesWallpaperInventory": "dotfiles-wallpaper-audit.json",
@@ -821,7 +1641,7 @@
       "classification": "concept illustration, not a product wallpaper or documentary photo"
     }
   ],
-  "policy": "Unknown provenance or redistribution terms do not establish permission. Do not infer AI generation from visual style alone.",
+  "policy": "Unknown provenance or redistribution terms do not establish permission. Do not infer AI generation from visual style alone. Owner-curated collection 2026-11-19: license=unknown remains unknown with note 'owner-curated 2026-11-19, license unverified'; no license is inferred.",
   "websiteSourcePhotoCopies": [
     {
       "repository": "HorneroOS/website",
@@ -831,7 +1651,8 @@
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Perito_Moreno_Glacier_Panorama.jpg",
       "photographer": "ThartmannWiki",
       "license": "CC BY-SA 4.0",
-      "sha256": "2fbfd75b5a2c69918c65d4ab1612c56daadff53e1bff11b40c9c46387753a14b"
+      "sha256": "2fbfd75b5a2c69918c65d4ab1612c56daadff53e1bff11b40c9c46387753a14b",
+      "configStatus": "website-repo copy; no longer shipped in config since owner curation 2026-11-19"
     },
     {
       "repository": "HorneroOS/website",
@@ -841,7 +1662,8 @@
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Beagle_Channel_-m.jpg",
       "photographer": "RAYANDBEE",
       "license": "CC BY 2.0",
-      "sha256": "ac6160e5701a16469482a63fa7b85d56a1650ed4bc6dee298b4740af402c393a"
+      "sha256": "ac6160e5701a16469482a63fa7b85d56a1650ed4bc6dee298b4740af402c393a",
+      "configStatus": "website-repo copy; still shipped in config under new name (see wallpaper-collection.json)"
     }
   ]
 }

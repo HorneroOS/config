@@ -1,6 +1,6 @@
 {
-  "provenance": "HorneroOS/config profiles/themes plus licensed assets in assets/wallpapers/argentina/",
-  "note": "Theme metadata is shipped with the config package. Procedural Hornero Signal wallpapers and the nine attributed Argentina photo defaults ship under /usr/share/hornero/wallpapers/<wallpaperDir>/. Optional user collections remain in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/. If a referenced optional image is absent, the theme remains available and the Shell explains that wallpaper media is missing.",
+  "provenance": "HorneroOS/config profiles/themes plus owner-curated assets in assets/wallpapers/<wallpaperDir>/ (wallpaper-collection.json) and licensed photos in wallpaper-provenance.json",
+  "note": "Theme metadata ships with the config package. Procedural Hornero Signal wallpapers and the 57-file owner-curated collection (2026-11-19) ship under /usr/share/hornero/wallpapers/<wallpaperDir>/; category directories without a theme appear in the Shell wallpaper picker. 54 files are license: unknown ('owner-curated 2026-11-19, license unverified'); 3 photographs are CC BY 2.0 with attribution in WALLPAPER-CREDITS.md. Optional user collections remain in ~/Pictures/Wallpapers/<wallpaperDir>/ or ~/.local/share/hornero/wallpapers/<wallpaperDir>/.",
   "themes": [
     {
       "id": "hornero-signal-night",
@@ -24,87 +24,87 @@
     },
     {
       "id": "catppuccin-latte",
-      "defaultWallpaper": "catppuccin-latte-01.png",
+      "defaultWallpaper": "cherry-blossom-blue-sky.jpg",
       "wallpaperDir": "catppuccin-latte"
     },
     {
       "id": "catppuccin-mocha",
-      "defaultWallpaper": "catppuccin-mauve-02.png",
+      "defaultWallpaper": "vaporwave-room-prism.jpg",
       "wallpaperDir": "catppuccin-mocha"
     },
     {
       "id": "everforest",
-      "defaultWallpaper": "everforest-deep-01.png",
+      "defaultWallpaper": "pine-river-red-peaks.jpg",
       "wallpaperDir": "everforest"
     },
     {
       "id": "gruvbox",
-      "defaultWallpaper": "gruvbox-anime-01.jpg",
+      "defaultWallpaper": "sunflowers-cumulus-teal-sky.jpg",
       "wallpaperDir": "gruvbox"
     },
     {
       "id": "landscape",
-      "defaultWallpaper": "landscape-01.jpg",
+      "defaultWallpaper": "lakeside-cabin-pine-island.jpg",
       "wallpaperDir": "landscape"
     },
     {
       "id": "monochrome",
-      "defaultWallpaper": "mono-curated-1.jpg",
+      "defaultWallpaper": "tiny-earth-starfield.jpg",
       "wallpaperDir": "monochrome"
     },
     {
       "id": "nord-dreams",
-      "defaultWallpaper": "nord-aurora-01.png",
+      "defaultWallpaper": "snowy-summit-cloud-sunrise.png",
       "wallpaperDir": "nord-dreams"
     },
     {
       "id": "rose-pine",
-      "defaultWallpaper": "rose-pine-dawn-01.png",
+      "defaultWallpaper": "island-lake-purple-sunset.jpg",
       "wallpaperDir": "rose-pine"
     },
     {
       "id": "pampa",
-      "defaultWallpaper": "pampa-01.jpg",
+      "defaultWallpaper": "aerial-wetland-channels.jpg",
       "wallpaperDir": "pampa"
     },
     {
       "id": "patagonia",
-      "defaultWallpaper": "patagonia-glacier-01.jpg",
+      "defaultWallpaper": "glacier-lake-sunset-range.jpg",
       "wallpaperDir": "patagonia"
     },
     {
       "id": "fin-del-mundo",
-      "defaultWallpaper": "beagle-blue-hour-01.jpg",
+      "defaultWallpaper": "beagle-channel-ship-dusk.jpg",
       "wallpaperDir": "fin-del-mundo"
     },
     {
       "id": "quebrada",
-      "defaultWallpaper": "quebrada-mineral-01.jpg",
+      "defaultWallpaper": "rainbow-desert-mountains.jpg",
       "wallpaperDir": "quebrada"
     },
     {
       "id": "ibera",
-      "defaultWallpaper": "ibera-mist-01.jpg",
+      "defaultWallpaper": "wetland-lagoon-sunrise.jpg",
       "wallpaperDir": "ibera"
     },
     {
       "id": "buenos-aires-nocturno",
-      "defaultWallpaper": "buenos-aires-nocturno-01.jpg",
+      "defaultWallpaper": "buenos-aires-skyline-night.jpg",
       "wallpaperDir": "buenos-aires-nocturno"
     },
     {
       "id": "cuyo",
-      "defaultWallpaper": "cuyo-aconcagua-01.jpg",
+      "defaultWallpaper": "jagged-snow-peaks-autumn-tree.png",
       "wallpaperDir": "cuyo"
     },
     {
       "id": "iguazu",
-      "defaultWallpaper": "iguazu-falls-01.jpg",
+      "defaultWallpaper": "misty-green-hills-sunrise.jpg",
       "wallpaperDir": "iguazu"
     },
     {
       "id": "sierras",
-      "defaultWallpaper": "sierras-condorito-01.jpg",
+      "defaultWallpaper": "condorito-sierra-panorama.jpg",
       "wallpaperDir": "sierras"
     }
   ]

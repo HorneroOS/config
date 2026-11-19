@@ -28,7 +28,7 @@
         "signal": "#F0A832",
         "cue": "#86C2EC"
       },
-      "defaultWallpaper": "buenos-aires-nocturno-01.jpg",
+      "defaultWallpaper": "buenos-aires-skyline-night.jpg",
       "wallpaperDir": "buenos-aires-nocturno"
     },
     {
@@ -53,7 +53,7 @@
         "signal": "#B24608",
         "cue": "#177283"
       },
-      "defaultWallpaper": "catppuccin-latte-01.png",
+      "defaultWallpaper": "cherry-blossom-blue-sky.jpg",
       "wallpaperDir": "catppuccin-latte"
     },
     {
@@ -78,7 +78,7 @@
         "signal": "#FAB387",
         "cue": "#89DCEB"
       },
-      "defaultWallpaper": "catppuccin-mauve-02.png",
+      "defaultWallpaper": "vaporwave-room-prism.jpg",
       "wallpaperDir": "catppuccin-mocha"
     },
     {
@@ -106,7 +106,7 @@
         "signal": "#8F4A1A",
         "cue": "#1C638D"
       },
-      "defaultWallpaper": "cuyo-aconcagua-01.jpg",
+      "defaultWallpaper": "jagged-snow-peaks-autumn-tree.png",
       "wallpaperDir": "cuyo"
     },
     {
@@ -132,7 +132,7 @@
         "signal": "#EAA688",
         "cue": "#88C0B8"
       },
-      "defaultWallpaper": "everforest-deep-01.png",
+      "defaultWallpaper": "pine-river-red-peaks.jpg",
       "wallpaperDir": "everforest"
     },
     {
@@ -159,7 +159,7 @@
         "signal": "#E0905A",
         "cue": "#7FC4C9"
       },
-      "defaultWallpaper": "beagle-blue-hour-01.jpg",
+      "defaultWallpaper": "beagle-channel-ship-dusk.jpg",
       "wallpaperDir": "fin-del-mundo"
     },
     {
@@ -185,7 +185,7 @@
         "signal": "#FE811B",
         "cue": "#8CAB9F"
       },
-      "defaultWallpaper": "gruvbox-anime-01.jpg",
+      "defaultWallpaper": "sunflowers-cumulus-teal-sky.jpg",
       "wallpaperDir": "gruvbox"
     },
     {
@@ -325,7 +325,7 @@
         "signal": "#E3A548",
         "cue": "#7FC6DD"
       },
-      "defaultWallpaper": "ibera-mist-01.jpg",
+      "defaultWallpaper": "wetland-lagoon-sunrise.jpg",
       "wallpaperDir": "ibera"
     },
     {
@@ -353,7 +353,7 @@
         "signal": "#E5A23F",
         "cue": "#7DCBE6"
       },
-      "defaultWallpaper": "iguazu-falls-01.jpg",
+      "defaultWallpaper": "misty-green-hills-sunrise.jpg",
       "wallpaperDir": "iguazu"
     },
     {
@@ -379,7 +379,7 @@
         "signal": "#E9A04C",
         "cue": "#82BEE6"
       },
-      "defaultWallpaper": "landscape-01.jpg",
+      "defaultWallpaper": "lakeside-cabin-pine-island.jpg",
       "wallpaperDir": "landscape"
     },
     {
@@ -405,7 +405,7 @@
         "signal": "#F0F0F0",
         "cue": "#C8C8C8"
       },
-      "defaultWallpaper": "mono-curated-1.jpg",
+      "defaultWallpaper": "tiny-earth-starfield.jpg",
       "wallpaperDir": "monochrome"
     },
     {
@@ -430,7 +430,7 @@
         "signal": "#DBA391",
         "cue": "#88C0D0"
       },
-      "defaultWallpaper": "nord-aurora-01.png",
+      "defaultWallpaper": "snowy-summit-cloud-sunrise.png",
       "wallpaperDir": "nord-dreams"
     },
     {
@@ -458,7 +458,7 @@
         "signal": "#E2A841",
         "cue": "#86C3E0"
       },
-      "defaultWallpaper": "pampa-01.jpg",
+      "defaultWallpaper": "aerial-wetland-channels.jpg",
       "wallpaperDir": "pampa"
     },
     {
@@ -486,7 +486,7 @@
         "signal": "#E8A04A",
         "cue": "#8FD0E8"
       },
-      "defaultWallpaper": "patagonia-glacier-01.jpg",
+      "defaultWallpaper": "glacier-lake-sunset-range.jpg",
       "wallpaperDir": "patagonia"
     },
     {
@@ -514,7 +514,7 @@
         "signal": "#8F4911",
         "cue": "#1D6189"
       },
-      "defaultWallpaper": "quebrada-mineral-01.jpg",
+      "defaultWallpaper": "rainbow-desert-mountains.jpg",
       "wallpaperDir": "quebrada"
     },
     {
@@ -539,7 +539,7 @@
         "signal": "#F6C177",
         "cue": "#9CCFD8"
       },
-      "defaultWallpaper": "rose-pine-dawn-01.png",
+      "defaultWallpaper": "island-lake-purple-sunset.jpg",
       "wallpaperDir": "rose-pine"
     },
     {
@@ -566,7 +566,7 @@
         "signal": "#815100",
         "cue": "#1D6189"
       },
-      "defaultWallpaper": "sierras-condorito-01.jpg",
+      "defaultWallpaper": "condorito-sierra-panorama.jpg",
       "wallpaperDir": "sierras"
     }
   ]

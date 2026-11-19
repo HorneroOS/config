@@ -9,7 +9,10 @@ pkgrel=1
 pkgdesc="HorneroOS curated desktop defaults: Hornero Signal themes, compositor, terminal, GTK/Qt, fonts, XDG handlers"
 arch=('any')
 url="https://github.com/HorneroOS/config"
-license=('MIT' 'CC-BY-2.0' 'CC-BY-SA-4.0')
+license=('MIT' 'CC-BY-2.0' 'LicenseRef-owner-curated-unverified')
+# LicenseRef-owner-curated-unverified: 54 owner-curated wallpapers ship with
+# license unknown / unverified (see wallpaper-collection.json); only the
+# three CC-BY-2.0 photographs in wallpaper-provenance.json are verified.
 # python: lib/hornero/signal_theme.py + signal_render.py render every native
 # theme format from the schema-v2 roles at apply time (stdlib only).
 # ttf-ibm-plex: RFC 0001 §3.3 families (IBM Plex Sans / Mono / Sans Condensed)
@@ -353,6 +356,8 @@ package() {
     "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
   install -Dm644 "$repo_root/profiles/themes/wallpaper-provenance.json" \
     "$pkgdir/usr/share/hornero/wallpapers/wallpaper-provenance.json"
+  install -Dm644 "$repo_root/profiles/themes/wallpaper-collection.json" \
+    "$pkgdir/usr/share/hornero/wallpapers/wallpaper-collection.json"
   install -Dm644 "$repo_root/profiles/themes/WALLPAPER-CREDITS.md" \
     "$pkgdir/usr/share/licenses/$pkgname/WALLPAPER-CREDITS.md"
 }
