@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/HorneroOS/config/shell/shell-migrations.schema.json",
+  "title": "Hornero shell.json migration table",
+  "description": "hornero/shell-migrations@1. Ordered, idempotent migrations for user shell.json keys. Paths are dotted (`a.b.c`).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "schemaVersion", "migrations"],
+  "properties": {
+    "schema": {"const": "hornero/shell-migrations@1"},
+    "schemaVersion": {"type": "integer", "minimum": 0, "description": "Equals the highest migration version."},
+    "description": {"type": "string"},
+    "userData": {
+      "description": "Path prefixes that hold the user's data (bars, app lists, layouts, plugins). A plan never moves them to a new default on its own, even when they still equal the old default.",
+      "type": "array",
+      "items": {"$ref": "#/$defs/path"},
+      "uniqueItems": true
+    },
+    "migrations": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/migration"}
+    }
+  },
+  "$defs": {
+    "path": {"type": "string", "pattern": "^[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*$"},
+    "migration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "id", "summary", "ops"],
+      "properties": {
+        "version": {"type": "integer", "minimum": 1},
+        "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+        "since": {"type": "string"},
+        "summary": {"type": "string", "minLength": 1},
+        "ops": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/op"}}
+      }
+    },
+    "op": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "from", "to"],
+          "properties": {
+            "op": {"const": "rename"},
+            "from": {"$ref": "#/$defs/path"},
+            "to": {"$ref": "#/$defs/path"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "path", "map"],
+          "properties": {
+            "op": {"const": "map-value"},
+            "path": {"$ref": "#/$defs/path"},
+            "map": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string"}}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "path", "reason"],
+          "properties": {
+            "op": {"const": "remove"},
+            "path": {"$ref": "#/$defs/path"},
+            "replacedBy": {"$ref": "#/$defs/path"},
+            "reason": {"type": "string", "minLength": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "marker", "set"],
+          "properties": {
+            "op": {"const": "set-once"},
+            "marker": {"$ref": "#/$defs/path"},
+            "set": {"type": "object", "minProperties": 1}
+          }
+        }
+      ]
+    }
+  }
+}

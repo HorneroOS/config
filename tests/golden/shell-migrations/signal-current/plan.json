@@ -1,0 +1,38 @@
+{
+  "schema": "hornero/update-plan@1",
+  "schemaVersion": {
+    "table": 5
+  },
+  "summary": {
+    "kept": 2,
+    "defaultsChanging": 0,
+    "migrated": 0,
+    "removed": 0,
+    "conflicts": 0,
+    "newSettings": 0,
+    "lost": 0
+  },
+  "kept": [
+    {
+      "path": "appearance.glow.intensity",
+      "value": 0.6,
+      "oldDefault": 1,
+      "newDefault": 1,
+      "defaultChanged": false,
+      "userData": false
+    },
+    {
+      "path": "bar.persistent",
+      "value": false,
+      "oldDefault": true,
+      "newDefault": true,
+      "defaultChanged": false,
+      "userData": false
+    }
+  ],
+  "defaultsChanging": [],
+  "migrated": [],
+  "removed": [],
+  "conflicts": [],
+  "newSettings": []
+}

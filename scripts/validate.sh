@@ -290,10 +290,13 @@ fi
 # --- Hornero Signal: no Material / M3 machinery in shipped first-party files -----
 # Historical records (DECISIONS changelog, wallpaper audits), the tests that
 # assert these names are rejected, and the byte-synced HorneroOS/shell
-# payload (owned and scanned upstream) are exempt.
+# payload (owned and scanned upstream) are exempt. The shell.json migration
+# golden cases are such a record: they pin the pre-Signal v1.2.79 factory
+# file byte-exact, because migrating its retired values is what they test.
 if material_hits="$(cd "$REPO_ROOT" && git grep -n -I -i -E \
     'materialyoucolor|material[ _-]?symbols|material ?you|material design|\bm3[a-z_]*\b|schemeType|tonal-spot|surfaceContainer|onSurfaceVariant' \
     -- . ':!docs/DECISIONS.md' ':!profiles/themes/dotfiles-wallpaper-audit.json' \
+    ':!tests/golden/shell-migrations' \
     ':!profiles/themes/organization-wallpaper-inventory.json' ':!profiles/themes/wallpaper-candidates.json' \
     ':!shell/shell.default.json' ':!profiles/shell-presets' ':!scripts/validate.sh' \
     ':!tests/test_contrast.sh' ':!tests/test_catalogue.sh' ':!tests/test_desktop_integration.sh' \

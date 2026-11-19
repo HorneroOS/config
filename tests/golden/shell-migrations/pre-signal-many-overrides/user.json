@@ -1,0 +1,739 @@
+{
+  "appearance": {
+    "font": {
+      "family": {
+        "material": "Material Symbols Rounded",
+        "sans": "Inter",
+        "mono": "CaskaydiaCove NF",
+        "clock": "Bebas Neue"
+      },
+      "size": {
+        "scale": 1.1
+      }
+    },
+    "anim": {
+      "mediaGifSpeedAdjustment": 300,
+      "sessionGifSpeed": 0.7,
+      "curves": {
+        "emphasized": [
+          0.05,
+          0,
+          0.13333333333333333,
+          0.06,
+          0.16666666666666666,
+          0.4,
+          0.20833333333333334,
+          0.82,
+          0.25,
+          1,
+          1,
+          1
+        ],
+        "emphasizedAccel": [
+          0.3,
+          0,
+          0.8,
+          0.15,
+          1,
+          1
+        ],
+        "emphasizedDecel": [
+          0.05,
+          0.7,
+          0.1,
+          1,
+          1,
+          1
+        ],
+        "standardAccel": [
+          0.3,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "standardDecel": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        "expressiveFastSpatial": [
+          0.42,
+          1.67,
+          0.21,
+          0.9,
+          1,
+          1
+        ],
+        "expressiveDefaultSpatial": [
+          0.38,
+          1.21,
+          0.22,
+          1,
+          1,
+          1
+        ],
+        "standard": [
+          0.3,
+          0,
+          0,
+          1,
+          1,
+          1
+        ]
+      },
+      "durations": {
+        "scale": 0.8
+      }
+    },
+    "transparency": {
+      "layers": 0.4,
+      "elements": {},
+      "enabled": true,
+      "base": 0.7
+    },
+    "theme": "neon-city",
+    "highContrast": true,
+    "rounding": {
+      "scale": 1.4
+    },
+    "spacing": {
+      "scale": 1.2
+    },
+    "padding": {
+      "scale": 0.9
+    }
+  },
+  "general": {
+    "logo": "",
+    "apps": {
+      "terminal": [
+        "kitty"
+      ],
+      "audio": [
+        "pavucontrol"
+      ],
+      "playback": [
+        "mpv"
+      ],
+      "explorer": [
+        "thunar"
+      ]
+    },
+    "idle": {
+      "lockBeforeSleep": true,
+      "timeouts": [
+        {
+          "timeout": 180,
+          "idleAction": "lock"
+        },
+        {
+          "timeout": 300,
+          "idleAction": "dpms off",
+          "returnAction": "dpms on"
+        },
+        {
+          "timeout": 600,
+          "idleAction": [
+            "systemctl",
+            "suspend-then-hibernate"
+          ]
+        }
+      ],
+      "inhibitWhenAudio": false
+    },
+    "battery": {
+      "warnLevels": [
+        {
+          "level": 20,
+          "title": "Low battery",
+          "message": "You might want to plug in a charger",
+          "icon": "battery_android_frame_2"
+        },
+        {
+          "level": 10,
+          "title": "Did you see the previous message?",
+          "message": "You should probably plug in a charger <b>now</b>",
+          "icon": "battery_android_frame_1"
+        },
+        {
+          "level": 5,
+          "title": "Critical battery level",
+          "message": "PLUG THE CHARGER RIGHT NOW!!",
+          "icon": "battery_android_alert",
+          "critical": true
+        }
+      ],
+      "criticalLevel": 5
+    }
+  },
+  "background": {
+    "enabled": true,
+    "wallpaperEnabled": true,
+    "desktopClock": {
+      "invertColors": false,
+      "background": {
+        "enabled": false,
+        "opacity": 0.7,
+        "blur": true
+      },
+      "shadow": {
+        "enabled": true,
+        "opacity": 0.7,
+        "blur": 0.4
+      },
+      "enabled": true,
+      "position": "top-left",
+      "scale": 1.5
+    },
+    "visualiser": {
+      "autoHide": true,
+      "blur": false,
+      "rounding": 1,
+      "spacing": 1,
+      "enabled": true
+    },
+    "video": {
+      "enabled": true,
+      "pauseOnFullscreen": true,
+      "batteryLimitEnabled": false,
+      "pauseOnGameMode": true,
+      "batteryLimit": 35
+    }
+  },
+  "bar": {
+    "dragThreshold": 20,
+    "perScreen": [],
+    "bars": [
+      {
+        "edge": "left",
+        "style": "attached",
+        "reserve": true,
+        "margin": 8,
+        "thickness": 40,
+        "density": "values",
+        "backdrop": "solid",
+        "groups": {
+          "start": [
+            {
+              "id": "logo",
+              "enabled": true,
+              "options": {}
+            },
+            {
+              "id": "workspaces",
+              "enabled": true,
+              "options": {}
+            }
+          ],
+          "center": [
+            {
+              "id": "activeWindow",
+              "enabled": true,
+              "options": {}
+            }
+          ],
+          "end": [
+            {
+              "id": "clock",
+              "enabled": true,
+              "options": {}
+            },
+            {
+              "id": "statusIcons",
+              "enabled": true,
+              "options": {}
+            },
+            {
+              "id": "tray",
+              "enabled": true,
+              "options": {}
+            },
+            {
+              "id": "extensions",
+              "enabled": true
+            },
+            {
+              "id": "power",
+              "enabled": true,
+              "options": {}
+            }
+          ]
+        }
+      }
+    ],
+    "scrollActions": {
+      "workspaces": true,
+      "volume": true,
+      "brightness": true
+    },
+    "popouts": {
+      "activeWindow": true,
+      "tray": true,
+      "statusIcons": true
+    },
+    "workspaces": {
+      "maxWindowIcons": 5,
+      "activeIndicator": true,
+      "occupiedBg": true,
+      "showWindows": true,
+      "showWindowsOnSpecialWorkspaces": true,
+      "perMonitorWorkspaces": true,
+      "label": "",
+      "occupiedLabel": "",
+      "activeLabel": "",
+      "capitalisation": "preserve",
+      "specialWorkspaceIcons": [],
+      "shown": 8,
+      "activeTrail": true
+    },
+    "activeWindow": {
+      "inverted": false
+    },
+    "tray": {
+      "background": false,
+      "recolour": false,
+      "iconSubs": [],
+      "hiddenIcons": [],
+      "compact": true
+    },
+    "extensions": {
+      "background": false,
+      "recolour": false,
+      "compact": false,
+      "iconSubs": [],
+      "hiddenIcons": []
+    },
+    "status": {
+      "showKbLayout": false,
+      "showNetwork": true,
+      "showWifi": true,
+      "showBluetooth": true,
+      "showLockStatus": true,
+      "showMicrophone": true,
+      "showBattery": false,
+      "showAudio": true
+    },
+    "clock": {
+      "showIcon": true,
+      "background": false,
+      "showDate": true
+    },
+    "sizes": {
+      "windowPreviewSize": 400,
+      "trayMenuWidth": 300,
+      "batteryWidth": 250,
+      "networkWidth": 320,
+      "kbLayoutWidth": 320,
+      "innerWidth": 32
+    },
+    "excludedScreens": [],
+    "persistent": false,
+    "showOnHover": false,
+    "legacyPill": true
+  },
+  "border": {
+    "frameEnabled": true,
+    "thickness": 6,
+    "rounding": 18
+  },
+  "dashboard": {
+    "enabled": true,
+    "resourceUpdateInterval": 1000,
+    "dragThreshold": 50,
+    "performance": {
+      "showBattery": true,
+      "showCpu": true,
+      "showMemory": true,
+      "showStorage": true,
+      "showNetwork": true,
+      "showGpu": false
+    },
+    "workspaces": {
+      "showLivePreview": true,
+      "showSpecialWorkspaces": true,
+      "showWindowBadges": true,
+      "showMonitorBadge": true,
+      "enableWindowActions": true,
+      "maxAppIcons": 6,
+      "previewHeight": 240
+    },
+    "sizes": {
+      "tabIndicatorHeight": 3,
+      "tabIndicatorSpacing": 5,
+      "infoWidth": 200,
+      "infoIconSize": 25,
+      "dateTimeWidth": 110,
+      "mediaWidth": 200,
+      "mediaProgressSweep": 180,
+      "mediaProgressThickness": 8,
+      "resourceProgessThickness": 10,
+      "mediaCoverArtSize": 150,
+      "mediaVisualiserSize": 80,
+      "resourceSize": 200,
+      "weatherWidth": 300
+    },
+    "showOnHover": false,
+    "mediaUpdateInterval": 1000
+  },
+  "controlCenter": {
+    "sizes": {
+      "ratio": 1.7777777777777777,
+      "heightMult": 0.8
+    },
+    "appearanceExpandedSections": [
+      "themes",
+      "fonts"
+    ]
+  },
+  "launcher": {
+    "enabled": true,
+    "showOnHover": false,
+    "specialPrefix": "@",
+    "actionPrefix": ">",
+    "enableDangerousActions": false,
+    "dragThreshold": 50,
+    "hiddenApps": [],
+    "useFuzzy": {
+      "actions": false,
+      "variants": false,
+      "wallpapers": false,
+      "apps": true,
+      "schemes": true
+    },
+    "sizes": {
+      "itemWidth": 600,
+      "itemHeight": 57,
+      "wallpaperHeight": 200,
+      "wallpaperWidth": 320
+    },
+    "actions": [
+      {
+        "name": "Calculator",
+        "icon": "calculate",
+        "description": "Do simple math equations (powered by Qalc)",
+        "command": [
+          "autocomplete",
+          "calc"
+        ],
+        "enabled": true,
+        "dangerous": false
+      },
+      {
+        "name": "Scheme",
+        "icon": "palette",
+        "description": "Change the current colour scheme",
+        "command": [
+          "autocomplete",
+          "scheme"
+        ],
+        "enabled": true,
+        "dangerous": false
+      },
+      {
+        "name": "Wallpaper",
+        "icon": "image",
+        "description": "Change the current wallpaper",
+        "command": [
+          "autocomplete",
+          "wallpaper"
+        ],
+        "enabled": true,
+        "dangerous": false
+      },
+      {
+        "name": "Variant",
+        "icon": "colors",
+        "description": "Change the current scheme variant",
+        "command": [
+          "autocomplete",
+          "variant"
+        ],
+        "enabled": true,
+        "dangerous": false
+      },
+      {
+        "name": "Themes",
+        "icon": "style",
+        "description": "Apply a desktop theme pack",
+        "command": [
+          "autocomplete",
+          "theme"
+        ],
+        "enabled": true,
+        "dangerous": false
+      },
+      {
+        "name": "Layout",
+        "icon": "dashboard_customize",
+        "description": "Change the shell bar layout",
+        "command": [
+          "layoutpicker"
+        ],
+        "enabled": true,
+        "dangerous": false
+      },
+      {
+        "name": "Transparency",
+        "icon": "opacity",
+        "description": "Change shell transparency",
+        "command": [
+          "autocomplete",
+          "transparency"
+        ],
+        "enabled": false,
+        "dangerous": false
+      },
+      {
+        "name": "Random",
+        "icon": "casino",
+        "description": "Switch to a random wallpaper",
+        "command": [
+          "sh",
+          "-c",
+          "f=\"$(find -L \"$HOME/Pictures/Wallpapers\" -type f | shuf -n 1)\"; [ -n \"$f\" ] && horneroctl wallpaper set --yes \"$f\""
+        ],
+        "enabled": true,
+        "dangerous": false
+      },
+      {
+        "name": "Light",
+        "icon": "light_mode",
+        "description": "Change the scheme to light mode",
+        "command": [
+          "setMode",
+          "light"
+        ],
+        "enabled": true,
+        "dangerous": false
+      },
+      {
+        "name": "Dark",
+        "icon": "dark_mode",
+        "description": "Change the scheme to dark mode",
+        "command": [
+          "setMode",
+          "dark"
+        ],
+        "enabled": true,
+        "dangerous": false
+      },
+      {
+        "name": "Shutdown",
+        "icon": "power_settings_new",
+        "description": "Shutdown the system",
+        "command": [
+          "systemctl",
+          "poweroff"
+        ],
+        "enabled": true,
+        "dangerous": true
+      },
+      {
+        "name": "Reboot",
+        "icon": "cached",
+        "description": "Reboot the system",
+        "command": [
+          "systemctl",
+          "reboot"
+        ],
+        "enabled": true,
+        "dangerous": true
+      },
+      {
+        "name": "Logout",
+        "icon": "exit_to_app",
+        "description": "Log out of the current session",
+        "command": [
+          "loginctl",
+          "terminate-user",
+          ""
+        ],
+        "enabled": true,
+        "dangerous": true
+      },
+      {
+        "name": "Lock",
+        "icon": "lock",
+        "description": "Lock the current session",
+        "command": [
+          "loginctl",
+          "lock-session"
+        ],
+        "enabled": true,
+        "dangerous": false
+      },
+      {
+        "name": "Sleep",
+        "icon": "bedtime",
+        "description": "Suspend then hibernate",
+        "command": [
+          "systemctl",
+          "suspend-then-hibernate"
+        ],
+        "enabled": true,
+        "dangerous": false
+      },
+      {
+        "name": "Settings",
+        "icon": "settings",
+        "description": "Configure the shell",
+        "command": [
+          "horneroctl",
+          "config",
+          "gui"
+        ],
+        "enabled": true,
+        "dangerous": false
+      }
+    ],
+    "maxShown": 10,
+    "maxWallpapers": 12,
+    "vimKeybinds": true,
+    "favouriteApps": [
+      "org.mozilla.firefox",
+      "foot"
+    ]
+  },
+  "notifs": {
+    "expire": true,
+    "clearThreshold": 0.3,
+    "expandThreshold": 20,
+    "sizes": {
+      "image": 41,
+      "badge": 20,
+      "width": 440
+    },
+    "defaultExpireTimeout": 8000,
+    "actionOnClick": true,
+    "openExpanded": true,
+    "groupPreviewNum": 5
+  },
+  "osd": {
+    "enabled": true,
+    "enableBrightness": true,
+    "sizes": {
+      "sliderWidth": 30,
+      "sliderHeight": 180
+    },
+    "hideDelay": 1500,
+    "enableMicrophone": true
+  },
+  "session": {
+    "enabled": true,
+    "dragThreshold": 30,
+    "icons": {
+      "logout": "logout",
+      "shutdown": "power_settings_new",
+      "hibernate": "downloading",
+      "reboot": "cached"
+    },
+    "commands": {
+      "logout": [
+        "loginctl",
+        "terminate-user",
+        ""
+      ],
+      "shutdown": [
+        "systemctl",
+        "poweroff"
+      ],
+      "hibernate": [
+        "systemctl",
+        "hibernate"
+      ],
+      "reboot": [
+        "systemctl",
+        "reboot"
+      ]
+    },
+    "vimKeybinds": true,
+    "sizes": {
+      "button": 96
+    }
+  },
+  "winfo": {
+    "sizes": {
+      "heightMult": 0.7,
+      "detailsWidth": 500
+    }
+  },
+  "lock": {
+    "recolourLogo": false,
+    "enableFprint": true,
+    "sizes": {
+      "heightMult": 0.7,
+      "ratio": 1.7777777777777777,
+      "centerWidth": 640
+    },
+    "hideNotifs": false,
+    "maxFprintTries": 5
+  },
+  "utilities": {
+    "enabled": true,
+    "sizes": {
+      "width": 430,
+      "toastWidth": 430
+    },
+    "toasts": {
+      "configLoaded": true,
+      "chargingChanged": true,
+      "dndChanged": true,
+      "audioOutputChanged": true,
+      "audioInputChanged": true,
+      "capsLockChanged": true,
+      "numLockChanged": true,
+      "kbLayoutChanged": true,
+      "kbLimit": true,
+      "vpnChanged": true,
+      "nowPlaying": true,
+      "gameModeChanged": false
+    },
+    "vpn": {
+      "enabled": false,
+      "provider": [
+        "netbird"
+      ]
+    },
+    "maxToasts": 3
+  },
+  "sidebar": {
+    "enabled": true,
+    "dragThreshold": 60,
+    "sizes": {
+      "width": 480
+    }
+  },
+  "services": {
+    "weatherLocation": "",
+    "useFahrenheitPerformance": false,
+    "gpuType": "",
+    "visualiserBars": 45,
+    "brightnessIncrement": 0.1,
+    "maxVolume": 1.0,
+    "smartScheme": true,
+    "playerAliases": [
+      {
+        "from": "com.github.th_ch.youtube_music",
+        "to": "YT Music"
+      }
+    ],
+    "useFahrenheit": true,
+    "audioIncrement": 0.05,
+    "defaultPlayer": "mpv"
+  },
+  "paths": {
+    "sessionGif": "root:/assets/kurukuru.gif",
+    "mediaGif": "root:/assets/bongocat.gif"
+  },
+  "plugins": {
+    "settings": {},
+    "desktopWidgetSlots": {},
+    "dashboardLayout": {},
+    "safeMode": false
+  }
+}

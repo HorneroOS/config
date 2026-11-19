@@ -250,6 +250,12 @@ package() {
   fi
   install -Dm644 "$repo_root/shell/shell.default.json" \
     "$pkgdir/etc/xdg/hornero/shell.json"
+  # shell.json key migrations (hornero/shell-migrations@1), read by
+  # `horneroctl update plan` so renamed settings never drop user values.
+  install -Dm644 "$repo_root/shell/shell-migrations.json" \
+    "$pkgdir/usr/share/hornero/shell-migrations.json"
+  install -Dm644 "$repo_root/shell/shell-migrations.schema.json" \
+    "$pkgdir/usr/share/hornero/shell-migrations.schema.json"
 
   # Implementation libraries, CLI adapters, and theme recipes.
   # Stage the canonical Hornero data and configuration paths.
