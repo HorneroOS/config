@@ -1,5 +1,8 @@
 # HorneroOS config
 
+[![config-ci](https://github.com/HorneroOS/config/actions/workflows/ci.yml/badge.svg)](https://github.com/HorneroOS/config/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Curated, reusable desktop defaults for the HorneroOS workstation family
 (Desktop, Studio, Gaming): compositor, terminal, GTK, Qt, fonts, and common
 desktop applications — plus the
@@ -7,6 +10,20 @@ desktop applications — plus the
 token schema, theme packs, brand assets, and the helper libraries that apply
 them. Extracted (never moved) from the generic
 parts of [ulises-jeremias/dotfiles](https://github.com/ulises-jeremias/dotfiles).
+
+<p align="center">
+  <img src="https://www.horneroos.com/captures/cap-cc-01.png" alt="Control Center Appearance pane wearing Hornero Signal Night: theme and wallpaper toggles, live preview, checked contrast ratios" width="960">
+  <br>
+  <sub>Every setting in one Control Center — Appearance wearing Signal
+  Night. Real capture — maintainer machine, staged demo content; shown
+  values are that machine's, not requirements.</sub>
+</p>
+
+See also: [HorneroOS/shell](https://github.com/HorneroOS/shell) ·
+[HorneroOS/hornero](https://github.com/HorneroOS/hornero) ·
+[Website](https://horneroos.com/) · [Docs](https://horneroos.com/docs/) ·
+[Themes](https://horneroos.com/themes/) ·
+[Layouts](https://horneroos.com/layouts/)
 
 ## What this repo owns
 
