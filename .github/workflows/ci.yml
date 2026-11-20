@@ -56,6 +56,8 @@ jobs:
         run: tests/test_gtk_settings_generation.sh
       - name: CLI flags without which
         run: tests/test_cli_flags.sh
+      - name: Installer appearance first-login consumer
+        run: tests/test_installer_appearance.sh
       - name: GTK state keeps no shell mode
         run: tests/test_gtk_state.sh
       - name: Factory shell default matches HorneroOS/shell

@@ -21,6 +21,15 @@ HORNERO_SCHEME_STATE_FILE="${HORNERO_SCHEME_STATE_FILE:-$HORNERO_STATE_DIR/schem
 HORNERO_SIGNAL_SCHEME="${HORNERO_SIGNAL_SCHEME:-$HORNERO_STATE_DIR/signal/scheme.json}"
 HORNERO_WALLPAPER_POINTER="${HORNERO_WALLPAPER_POINTER:-$HORNERO_STATE_DIR/wallpaper/path}"
 HORNERO_HYPRLOCK_COLORS="${HORNERO_HYPRLOCK_COLORS:-$HORNERO_CACHE_DIR/smart-colors/colors-hyprlock.conf}"
+# Installer appearance consumer (first login only). The installer seeds
+# ~/.config/hornero/appearance.json once (schemaVersion 1: theme +
+# shellPreset); the marker below records that this consumer already ran
+# for that exact seed, so later user changes are never overwritten.
+HORNERO_INSTALLER_APPEARANCE_FILE="${HORNERO_INSTALLER_APPEARANCE_FILE:-${XDG_CONFIG_HOME:-$HOME/.config}/hornero/appearance.json}"
+HORNERO_INSTALLER_APPLIED_FILE="${HORNERO_INSTALLER_APPLIED_FILE:-$HORNERO_STATE_DIR/appearance/installer-applied.json}"
+HORNERO_SHELL_PRESETS_DIR="${HORNERO_SHELL_PRESETS_DIR:-$_HORNERO_DATA_BASE/hornero/shell-presets}"
+HORNERO_SYSTEM_SHELL_PRESETS_DIR="${HORNERO_SYSTEM_SHELL_PRESETS_DIR:-/usr/share/hornero/shell-presets}"
+HORNERO_SHELL_PRESET_POINTER="${HORNERO_SHELL_PRESET_POINTER:-$HORNERO_STATE_DIR/current-shell-preset}"
 
 _appearance_resolve_state_file() { printf '%s\n' "$HORNERO_SCHEME_STATE_FILE"; }
 _appearance_resolve_scheme_file() { printf '%s\n' "$HORNERO_SIGNAL_SCHEME"; }
@@ -276,6 +285,117 @@ cmd_sync() {
 	fi
 }
 
+# First-login consumer for the installer-seeded appearance.json. Applies
+# the seeded theme (validated against the installed themes) and shell
+# preset (validated against the shipped preset catalogue, applied through
+# horneroctl, the same applier the shell itself uses) exactly once: the
+# consumed marker makes every later run a no-op, and a live scheme or
+# preset pointer that already names something else is treated as a later
+# user choice and never overwritten. Invalid or unknown values fail
+# closed (no marker, nonzero exit) so nothing half-applies silently.
+cmd_apply_installer_appearance() {
+	local file="$HORNERO_INSTALLER_APPEARANCE_FILE"
+	[[ -f $file ]] || return 0
+	local parsed theme preset
+	if ! parsed="$(python3 - "$file" <<'PY'
+import json, sys
+try:
+    with open(sys.argv[1], encoding="utf-8") as fh:
+        data = json.load(fh)
+except Exception as exc:
+    print(f"installer appearance: cannot parse {sys.argv[1]}: {exc}", file=sys.stderr)
+    raise SystemExit(1)
+if not isinstance(data, dict) or data.get("schemaVersion") != 1:
+    print("installer appearance: unsupported schemaVersion (expected 1)", file=sys.stderr)
+    raise SystemExit(1)
+theme = data.get("theme")
+if not isinstance(theme, str) or not theme:
+    print("installer appearance: missing theme", file=sys.stderr)
+    raise SystemExit(1)
+preset = data.get("shellPreset") or ""
+if not isinstance(preset, str):
+    print("installer appearance: shellPreset must be a string", file=sys.stderr)
+    raise SystemExit(1)
+print(f"{theme}\t{preset}")
+PY
+)"; then
+		return 1
+	fi
+	theme="${parsed%%$'\t'*}"
+	preset="${parsed#*$'\t'}"
+	[[ $preset != "$theme" ]] || preset=""
+
+	[[ -f $HORNERO_THEMES_DIR/$theme/theme.json ]] || {
+		echo "installer appearance: unknown theme: $theme" >&2
+		return 1
+	}
+	if [[ -n $preset ]]; then
+		if [[ ! -f $HORNERO_SHELL_PRESETS_DIR/$preset.json \
+			&& ! -f $HORNERO_SYSTEM_SHELL_PRESETS_DIR/$preset.json ]]; then
+			echo "installer appearance: unknown shell preset: $preset" >&2
+			return 1
+		fi
+		command -v "${HORNEROCTL_BIN:-horneroctl}" >/dev/null 2>&1 || {
+			echo "installer appearance: horneroctl not found; cannot apply preset $preset" >&2
+			return 1
+		}
+	fi
+
+	local seed_sha
+	seed_sha="$(python3 -c 'import hashlib,sys; print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$file")"
+	if [[ -f $HORNERO_INSTALLER_APPLIED_FILE ]]; then
+		echo "installer appearance: already consumed; leaving current appearance untouched"
+		return 0
+	fi
+
+	local theme_applied=false preset_applied=false
+	local current_theme=""
+	current_theme="$(_appearance_scheme_field "$(_appearance_resolve_scheme_file)" id)"
+	if [[ -n $current_theme && $current_theme != "$theme" ]]; then
+		echo "installer appearance: live theme is $current_theme; not overwriting with seeded $theme"
+	elif (cmd_theme_apply "$theme"); then
+		theme_applied=true
+	else
+		echo "installer appearance: failed to apply theme $theme" >&2
+		return 1
+	fi
+
+	if [[ -n $preset ]]; then
+		local current_preset=""
+		if [[ -f $HORNERO_SHELL_PRESET_POINTER ]]; then
+			current_preset="$(head -n1 "$HORNERO_SHELL_PRESET_POINTER" | tr -d '[:space:]' || true)"
+		fi
+		if [[ -n $current_preset && $current_preset != "$preset" ]]; then
+			echo "installer appearance: active preset is $current_preset; not overwriting with seeded $preset"
+		elif "${HORNEROCTL_BIN:-horneroctl}" shell preset apply "$preset" --yes; then
+			preset_applied=true
+		else
+			echo "installer appearance: failed to apply preset $preset" >&2
+			return 1
+		fi
+	fi
+
+	mkdir -p "$(dirname "$HORNERO_INSTALLER_APPLIED_FILE")"
+	python3 - "$HORNERO_INSTALLER_APPLIED_FILE" "$seed_sha" "$theme" "$preset" \
+		"$theme_applied" "$preset_applied" <<'PY'
+import json, sys
+path, sha, theme, preset, theme_applied, preset_applied = sys.argv[1:7]
+record = {
+    "schemaVersion": 1,
+    "seedSha256": sha,
+    "theme": theme,
+    "shellPreset": preset,
+    "themeApplied": theme_applied == "true",
+    "presetApplied": preset_applied == "true",
+}
+with open(path, "w", encoding="utf-8") as fh:
+    json.dump(record, fh, indent=2, sort_keys=True)
+    fh.write("\n")
+PY
+	echo "installer appearance: applied seeded theme=$theme preset=${preset:-none} (themeApplied=$theme_applied presetApplied=$preset_applied)"
+	return 0
+}
+
 cmd_doctor() {
 	local ok=0 scheme pointer_val="" resolved="" hyprlock_conf hyprlock_bytes=0
 	scheme="$(_appearance_resolve_scheme_file)"
@@ -334,6 +454,7 @@ set-gtk-color-scheme) cmd_set_gtk_color_scheme "${1:-}" ;;
 set-icons) cmd_set_icons "${1:-}" ;;
 sync) cmd_sync ;;
 doctor) cmd_doctor ;;
+apply-installer-appearance | --apply-installer-appearance) cmd_apply_installer_appearance ;;
 *)
 	cat <<'EOF' >&2
 Usage: hornero-appearance <command> [args]
@@ -347,6 +468,10 @@ Commands:
   set-icons <theme>
   sync
   doctor
+  apply-installer-appearance
+      First login only: apply the installer-seeded
+      ~/.config/hornero/appearance.json (theme + shellPreset) once;
+      later runs and later user changes are left untouched.
 EOF
 	exit 1
 	;;
