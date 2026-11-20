@@ -539,29 +539,6 @@
       "curationStatus": "historically-shipped"
     },
     {
-      "id": "neon-train-tower-district",
-      "file": "assets/wallpapers/cyberpunk/neon-train-tower-district.jpg",
-      "installDir": "cyberpunk",
-      "sourceFile": "dotfiles-neon-city-01.jpg",
-      "sourceSha256": "986f9776926cd977965c600554ca7740f9d9f23ce3c41baca85d6459c3d5ab59",
-      "sha256": "986f9776926cd977965c600554ca7740f9d9f23ce3c41baca85d6459c3d5ab59",
-      "bytes": 981499,
-      "dimensions": {
-        "width": 2560,
-        "height": 1440
-      },
-      "format": "JPEG",
-      "animated": false,
-      "category": "cyberpunk",
-      "palette": "neon multicolor oscuro",
-      "flags": "DUP version png 4K; carteleria",
-      "license": "unknown",
-      "attribution": null,
-      "themeId": null,
-      "note": "owner-curated 2026-11-19, license unverified",
-      "curationStatus": "historically-shipped"
-    },
-    {
       "id": "neon-train-tower-district-4k",
       "file": "assets/wallpapers/cyberpunk/neon-train-tower-district-4k.png",
       "installDir": "cyberpunk",
@@ -762,29 +739,6 @@
       "category": "pixel-art",
       "palette": "violeta/rosa oscuro",
       "flags": "cigarrillo",
-      "license": "unknown",
-      "attribution": null,
-      "themeId": null,
-      "note": "owner-curated 2026-11-19, license unverified",
-      "curationStatus": "historically-shipped"
-    },
-    {
-      "id": "vaporwave-room-prism-alt",
-      "file": "assets/wallpapers/abstract/vaporwave-room-prism-alt.jpg",
-      "installDir": "abstract",
-      "sourceFile": "dotfiles-vapor-dreams-02-2.jpg",
-      "sourceSha256": "f8fc0852b3e6c89c4245a779f9dcb53ce65804042d315299a2ae54ad948120f8",
-      "sha256": "f8fc0852b3e6c89c4245a779f9dcb53ce65804042d315299a2ae54ad948120f8",
-      "bytes": 628477,
-      "dimensions": {
-        "width": 1920,
-        "height": 1080
-      },
-      "format": "JPEG",
-      "animated": false,
-      "category": "abstract",
-      "palette": "rosa/cian pastel claro",
-      "flags": "DUP retro-glitch-studio; TEXT pantalla",
       "license": "unknown",
       "attribution": null,
       "themeId": null,
@@ -1068,29 +1022,6 @@
       "curationStatus": "currently-shipped"
     },
     {
-      "id": "southern-channel-dusk-tree-alt",
-      "file": "assets/wallpapers/photo-nature/southern-channel-dusk-tree-alt.jpg",
-      "installDir": "photo-nature",
-      "sourceFile": "hornero-original-beagle-blue-hour-01-2.jpg",
-      "sourceSha256": "53b7757b823464d9a612da93fb8961c39e82a7abbc4ddb000758350886141a96",
-      "sha256": "53b7757b823464d9a612da93fb8961c39e82a7abbc4ddb000758350886141a96",
-      "bytes": 624628,
-      "dimensions": {
-        "width": 1672,
-        "height": 941
-      },
-      "format": "JPEG",
-      "animated": false,
-      "category": "photo-nature",
-      "palette": "azul/ocre oscuro",
-      "flags": "<1920; DUP dotfiles-beagle",
-      "license": "unknown",
-      "attribution": null,
-      "themeId": null,
-      "note": "owner-curated 2026-11-19, license unverified",
-      "curationStatus": "historically-shipped"
-    },
-    {
       "id": "beagle-channel-ship-dusk",
       "file": "assets/wallpapers/fin-del-mundo/beagle-channel-ship-dusk.jpg",
       "installDir": "fin-del-mundo",
@@ -1183,52 +1114,6 @@
       "curationStatus": "currently-shipped"
     },
     {
-      "id": "wetland-lagoon-sunrise-web",
-      "file": "assets/wallpapers/photo-nature/wetland-lagoon-sunrise-web.webp",
-      "installDir": "photo-nature",
-      "sourceFile": "hornero-website-ibera-2.webp",
-      "sourceSha256": "c3a8691d80c033bae44dcd206ee8185284467d1284a1d4f0553dc56b729b4296",
-      "sha256": "c3a8691d80c033bae44dcd206ee8185284467d1284a1d4f0553dc56b729b4296",
-      "bytes": 133566,
-      "dimensions": {
-        "width": 1440,
-        "height": 810
-      },
-      "format": "WEBP",
-      "animated": false,
-      "category": "photo-nature",
-      "palette": "azul/dorado oscuro",
-      "flags": "<1920 (1440); DUP dotfiles-ibera-mist-01",
-      "license": "unknown",
-      "attribution": null,
-      "themeId": null,
-      "note": "owner-curated 2026-11-19, license unverified",
-      "curationStatus": "historically-shipped"
-    },
-    {
-      "id": "lakeside-cabin-pine-island-web",
-      "file": "assets/wallpapers/cozy/lakeside-cabin-pine-island-web.webp",
-      "installDir": "cozy",
-      "sourceFile": "hornero-website-landscape.webp",
-      "sourceSha256": "c484f5647dc16727f301edc36395af1afb614d52fc8c65e2f4c75fe87967d676",
-      "sha256": "c484f5647dc16727f301edc36395af1afb614d52fc8c65e2f4c75fe87967d676",
-      "bytes": 289136,
-      "dimensions": {
-        "width": 1440,
-        "height": 810
-      },
-      "format": "WEBP",
-      "animated": false,
-      "category": "cozy",
-      "palette": "verde/turquesa claro",
-      "flags": "<1920 (1440); DUP dotfiles-landscape-01",
-      "license": "unknown",
-      "attribution": null,
-      "themeId": null,
-      "note": "owner-curated 2026-11-19, license unverified",
-      "curationStatus": "currently-shipped"
-    },
-    {
       "id": "future-street-underpass-dusk",
       "file": "assets/wallpapers/pixel-art/future-street-underpass-dusk.gif",
       "installDir": "pixel-art",
@@ -1294,29 +1179,6 @@
       "license": "unknown",
       "attribution": null,
       "themeId": "cuyo",
-      "note": "owner-curated 2026-11-19, license unverified",
-      "curationStatus": "personal"
-    },
-    {
-      "id": "neon-triangle-anime-profile-alt",
-      "file": "assets/wallpapers/anime/neon-triangle-anime-profile-alt.png",
-      "installDir": "anime",
-      "sourceFile": "personal-wallhaven-je9lmw_1920x1080.png",
-      "sourceSha256": "fbde2113cdba394547fb1466df09f22c42bfec8c645c42ba80f17c6dbc17cdb2",
-      "sha256": "fbde2113cdba394547fb1466df09f22c42bfec8c645c42ba80f17c6dbc17cdb2",
-      "bytes": 3025444,
-      "dimensions": {
-        "width": 1920,
-        "height": 1080
-      },
-      "format": "PNG",
-      "animated": false,
-      "category": "anime",
-      "palette": "violeta/cian neon oscuro",
-      "flags": "DUP synthwave-anime-neon-frame",
-      "license": "unknown",
-      "attribution": null,
-      "themeId": null,
       "note": "owner-curated 2026-11-19, license unverified",
       "curationStatus": "personal"
     }
