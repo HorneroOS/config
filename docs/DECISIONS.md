@@ -389,6 +389,37 @@ theme, Chromatic, build) from local state files. No Nerd Font glyphs, no
 network, no hostname by default. Details: `docs/FASTFETCH.md`; gate:
 `tests/test_fastfetch.sh`.
 
+## Installer appearance consumer (new authorship)
+
+* **Contract in**: the installer (HorneroOS/installer
+  `configure-user-defaults.py`) seeds `~/.config/hornero/appearance.json`
+  once at install time (`schemaVersion: 1`, `theme`, `shellPreset`;
+  today only `hornero-signal-night` + `cockpit` can reach a plan) and
+  never overwrites it. Until this change nothing read that file.
+* **Consumer**: `hornero-appearance apply-installer-appearance` in
+  `bin/hornero-appearance`, invoked from the Hyprland autostart
+  (`desktop/hypr/hyprland.lua.d/autostart.lua`) right before the shell
+  starts, so it runs at first login and is a cheap no-op afterwards.
+* **Semantics**: the theme is validated against the installed themes
+  (`$HORNERO_THEMES_DIR/<id>/theme.json`, i.e. this repo's
+  `profiles/themes/`) and applied through the normal theme-apply path;
+  the preset is validated against the shipped layout catalogue
+  (`profiles/shell-presets/`, user data dir first, then
+  `/usr/share/hornero/shell-presets`) and applied through
+  `horneroctl shell preset apply <name> --yes`, the same applier the
+  shell's own preset flow uses. A consumed marker
+  (`$XDG_STATE_HOME/hornero/appearance/installer-applied.json`, with the
+  seed's SHA-256) makes consumption exactly-once: later user theme or
+  preset changes are never overwritten, and a live scheme or preset
+  pointer that already names something else counts as a user choice and
+  is left alone. Unknown themes/presets, malformed or foreign-schema
+  seeds and a missing `horneroctl` fail closed (nonzero, no marker,
+  nothing applied). Gate: `tests/test_installer_appearance.sh`. A real
+  first-login desktop run (VM) remains the acceptance gate for the
+  applied result; with today's installer values (Signal Night +
+  Cockpit, the factory defaults) applying the seed changes nothing
+  visible.
+
 ## Boot experience (GRUB + Plymouth themes)
 
 * **Where**: `desktop/boot/` (sources), `scripts/render-boot-assets.sh`,

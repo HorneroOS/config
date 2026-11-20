@@ -73,9 +73,11 @@ rules=$(grep -c 'hl\.window_rule' "$HYPR/hyprland.lua.d/window-rules.lua")
 echo "TEST-PASS: window-rule parity 45/45"
 
 execs=$(grep -c 'hl\.exec_cmd' "$HYPR/hyprland.lua.d/autostart.lua")
-# 20 frozen from the retired tree + hornero-gtk-theme ensure (first-session GTK theme).
-[[ "$execs" -eq 21 ]] || fail "autostart parity: expected 21, got $execs"
-echo "TEST-PASS: autostart parity 21/21"
+# 20 frozen from the retired tree + hornero-gtk-theme ensure (first-session
+# GTK theme) + hornero-appearance apply-installer-appearance (first-login
+# consumer for the installer-seeded appearance.json; no-op afterwards).
+[[ "$execs" -eq 22 ]] || fail "autostart parity: expected 22, got $execs"
+echo "TEST-PASS: autostart parity 22/22"
 
 envs=$(grep -cE '\{ "[A-Z_]+",' "$HYPR/hyprland.lua.d/environment.lua")
 [[ "$envs" -ge 20 ]] || fail "environment parity: expected >=20 static entries, got $envs"
