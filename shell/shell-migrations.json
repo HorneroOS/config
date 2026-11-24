@@ -1,6 +1,6 @@
 {
   "schema": "hornero/shell-migrations@1",
-  "schemaVersion": 5,
+  "schemaVersion": 6,
   "description": "Ordered, idempotent migrations for keys in the user shell.json ($XDG_CONFIG_HOME/hornero/shell.json). Applied by `horneroctl update plan --apply` before the new shell reads the file, so a renamed key never drops its value. Every op is reported to the user; nothing is removed silently.",
   "userData": [
     "bar.bars",
@@ -125,6 +125,19 @@
             "utilities.toasts.configLoaded": false,
             "utilities.toasts.numLockChanged": false
           }
+        }
+      ]
+    },
+    {
+      "version": 6,
+      "id": "lock-recolour-logo-retired",
+      "since": "shell#720 (Control Center audit)",
+      "summary": "The lock 'Recolour the logo' option had no effect: no lock surface renders a logo. The retired key is removed from user configs.",
+      "ops": [
+        {
+          "op": "remove",
+          "path": "lock.recolourLogo",
+          "reason": "No lock surface renders a logo to recolour; the setting never changed anything."
         }
       ]
     }
