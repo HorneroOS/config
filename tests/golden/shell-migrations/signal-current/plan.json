@@ -1,15 +1,15 @@
 {
   "schema": "hornero/update-plan@1",
   "schemaVersion": {
-    "table": 5
+    "table": 6
   },
   "summary": {
     "kept": 2,
     "defaultsChanging": 0,
     "migrated": 0,
-    "removed": 0,
+    "removed": 1,
     "conflicts": 0,
-    "newSettings": 0,
+    "newSettings": 1,
     "lost": 0
   },
   "kept": [
@@ -32,7 +32,18 @@
   ],
   "defaultsChanging": [],
   "migrated": [],
-  "removed": [],
+  "removed": [
+    {
+      "migration": "lock-recolour-logo-retired",
+      "version": 6,
+      "op": "remove",
+      "path": "lock.recolourLogo",
+      "value": false,
+      "reason": "No lock surface renders a logo to recolour; the setting never changed anything."
+    }
+  ],
   "conflicts": [],
-  "newSettings": []
+  "newSettings": [
+    "lock.recolourLogo"
+  ]
 }

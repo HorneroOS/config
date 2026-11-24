@@ -1,7 +1,7 @@
 {
   "schema": "hornero/update-plan@1",
   "schemaVersion": {
-    "table": 5
+    "table": 6
   },
   "summary": {
     "kept": 2,
@@ -9,7 +9,7 @@
     "migrated": 2,
     "removed": 0,
     "conflicts": 0,
-    "newSettings": 48,
+    "newSettings": 49,
     "lost": 0
   },
   "kept": [
@@ -811,6 +811,7 @@
     "experience.auto.gamePatterns",
     "experience.deck",
     "experience.modes",
+    "lock.recolourLogo",
     "plugins.desktopWidgets"
   ]
 }

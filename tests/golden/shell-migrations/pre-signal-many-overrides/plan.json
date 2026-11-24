@@ -1,15 +1,15 @@
 {
   "schema": "hornero/update-plan@1",
   "schemaVersion": {
-    "table": 5
+    "table": 6
   },
   "summary": {
     "kept": 64,
     "defaultsChanging": 9,
     "migrated": 5,
-    "removed": 7,
+    "removed": 8,
     "conflicts": 0,
-    "newSettings": 48,
+    "newSettings": 49,
     "lost": 0
   },
   "kept": [
@@ -1439,6 +1439,14 @@
       "replacedBy": "controlCenter.appearanceOpenSections"
     },
     {
+      "migration": "lock-recolour-logo-retired",
+      "version": 6,
+      "op": "remove",
+      "path": "lock.recolourLogo",
+      "value": false,
+      "reason": "No lock surface renders a logo to recolour; the setting never changed anything."
+    },
+    {
       "path": "bar.legacyPill",
       "value": true,
       "reason": "Not a setting in this HorneroOS version; the shell ignores it. The value is kept in this report and in the pre-update backup."
@@ -1493,6 +1501,7 @@
     "experience.auto.gamePatterns",
     "experience.deck",
     "experience.modes",
+    "lock.recolourLogo",
     "plugins.desktopWidgets"
   ]
 }
