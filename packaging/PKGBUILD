@@ -351,6 +351,12 @@ package() {
     -type f -exec chmod 644 {} +
   chmod 755 "$pkgdir"/usr/share/hornero/bin/hornero-*
 
+  # Packaged user seeding for install-on-Arch adoption: seeds only
+  # files missing from an existing account (never overwrites), which
+  # is what horneroctl config materialize resolves on packaged installs.
+  install -Dm755 "$repo_root/scripts/seed-user.sh" \
+    "$pkgdir/usr/share/hornero/seed-user.sh"
+
   # Ship the license alongside the payload for offline inspection.
   install -Dm644 "$repo_root/LICENSE" \
     "$pkgdir/usr/share/licenses/$pkgname/LICENSE"

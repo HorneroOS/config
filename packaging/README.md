@@ -83,6 +83,7 @@ so the temp-HOME test is unaffected):
 ```sh
 scripts/validate.sh
 tests/test_materialize.sh
+tests/test_seed_user.sh
 pre-commit run --all-files
 ```
 
