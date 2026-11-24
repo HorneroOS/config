@@ -626,7 +626,6 @@
     }
   },
   "lock": {
-    "recolourLogo": false,
     "enableFprint": true,
     "sizes": {
       "heightMult": 0.7,

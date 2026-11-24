@@ -623,7 +623,6 @@
     }
   },
   "lock": {
-    "recolourLogo": false,
     "hideNotifs": true,
     "enableFprint": true,
     "maxFprintTries": 3,

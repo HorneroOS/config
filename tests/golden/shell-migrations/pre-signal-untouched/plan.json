@@ -1,15 +1,15 @@
 {
   "schema": "hornero/update-plan@1",
   "schemaVersion": {
-    "table": 5
+    "table": 6
   },
   "summary": {
     "kept": 1,
     "defaultsChanging": 13,
     "migrated": 6,
-    "removed": 6,
+    "removed": 7,
     "conflicts": 0,
-    "newSettings": 48,
+    "newSettings": 49,
     "lost": 0
   },
   "kept": [
@@ -961,6 +961,14 @@
       ],
       "reason": "Which Appearance sections start open is remembered under a new key; the old list is not carried over on purpose so Themes opens again.",
       "replacedBy": "controlCenter.appearanceOpenSections"
+    },
+    {
+      "migration": "lock-recolour-logo-retired",
+      "version": 6,
+      "op": "remove",
+      "path": "lock.recolourLogo",
+      "value": false,
+      "reason": "No lock surface renders a logo to recolour; the setting never changed anything."
     }
   ],
   "conflicts": [],
@@ -1012,6 +1020,7 @@
     "experience.auto.gamePatterns",
     "experience.deck",
     "experience.modes",
+    "lock.recolourLogo",
     "plugins.desktopWidgets"
   ]
 }
