@@ -61,7 +61,8 @@ update_snappy_theme_name() {
 	local theme_name="$1"
 	local temp_file
 
-	temp_file="$(mktemp)"
+	temp_file="$(mktemp "${SNAPPY_CONFIG_DIR}/.config.ini.tmp.XXXXXX")"
+	trap 'rm -f "${temp_file:-}"' RETURN
 
 	awk -v theme_name="$theme_name" '
     BEGIN {

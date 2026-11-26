@@ -4,10 +4,12 @@
 
 hl.config({
 	input = {
-		kb_layout = "us,latam",
-		kb_variant = "",
+		-- Inherit XKB layout/options from the session locale/environment when set;
+		-- users can override via `horneroctl hardware keyboard layout` or monitors-user/input overrides.
+		kb_layout = os.getenv("XKB_DEFAULT_LAYOUT") or "us",
+		kb_variant = os.getenv("XKB_DEFAULT_VARIANT") or "",
 		kb_model = "",
-		kb_options = "grp:alt_shift_toggle",
+		kb_options = os.getenv("XKB_DEFAULT_OPTIONS") or "",
 		kb_rules = "",
 		follow_mouse = 1,
 		repeat_rate = 50,
@@ -27,7 +29,9 @@ hl.config({
 		},
 	},
 	cursor = {
-		no_hardware_cursors = 1,
+		-- Do not force no_hardware_cursors globally; hardware cursors work on
+		-- modern Intel/AMD/NVIDIA drivers and avoid software-cursor latency.
+		-- Set no_hardware_cursors = 1 only in a VM or on an affected GPU.
 		no_break_fs_vrr = 0,
 		min_refresh_rate = 24,
 		hotspot_padding = 1,

@@ -32,8 +32,13 @@ if (( $+commands[hornero-fetch] && $+commands[fastfetch] )); then
     if (( $# == 0 )) && [[ "${HORNERO_FETCH-}" != 0 ]]; then command hornero-fetch; else command fastfetch "$@"; fi
   }
 fi
-# Optional integrations activate only when installed.
-command -v direnv >/dev/null && eval "$(direnv hook zsh)"
-command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+# Optional modern CLI ergonomics activate only when installed.
+command -v eza >/dev/null 2>&1 && alias ls='eza --group-directories-first' ll='eza -la --group-directories-first'
+command -v bat >/dev/null 2>&1 && alias cat='bat --paging=never'
+command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh 2>/dev/null || true)"
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
+command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 [[ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 [[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "name": "niri",
+  "template": "colors-niri.kdl.tmpl",
+  "output": "${XDG_CONFIG_HOME}/niri/colors-niri.kdl",
+  "when": "chromatic",
+  "requires": "${XDG_CONFIG_HOME}/niri"
+}

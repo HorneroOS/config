@@ -67,8 +67,8 @@ previews, or Hyprland window geometry picker. See
 
 Curated from generic dotfiles material: Hyprland, Niri, Kitty, Alacritty,
 Ghostty, GTK 2/3, Qt6ct, fontconfig, fastfetch, btop, cava, Thunar, CopyQ,
-handlr, git-minus-identity, 20 Hornero Signal theme packs (schema v2: the
-Signal Night/Day/High Contrast flagships, nine Hornero Originals and eight
+handlr, git-minus-identity, 21 Hornero Signal theme packs (schema v2: the
+Signal Night/Day/High Contrast flagships, ten Hornero Originals and eight
 community ports), `lib/hornero`
 implementation libraries and the `hornero-gtk-theme`-family CLI adapters.
 See `docs/DECISIONS.md` for the full copied / excluded-as-personal /
@@ -80,7 +80,9 @@ libadwaita, Qt6ct, Kitty, Alacritty, Ghostty, btop, Cava, Hyprland borders,
 hyprlock) is generated from the applied theme's Hornero Signal roles
 (`profiles/themes/tokens.schema.json`, schema v2), so terminal work, system
 monitoring, and audio visualization share the active desktop look.
-Wallpapers never recolour the UI. Factory default: Hornero Signal Night in
+In Signal mode, wallpapers do not recolour the UI; opt-in wallpaper-derived
+recolouring is provided by Hornero Chromatic (RFC 0002) via first-party
+templates under `share/hornero/chromatic/templates/`. Factory default: Hornero Signal Night in
 the Cockpit layout, set in IBM Plex (`ttf-ibm-plex`, a hard package
 dependency alongside `bash`, `git`, `polkit-gnome` and `python`).
 Optional non-terminal palette integrations are recorded
@@ -94,7 +96,7 @@ avoid the 100 ms polling cost of its inherited workstation setting.
 ```text
 desktop/    per-application defaults      -> ~/.config/<app>, ~/.gtkrc-2.0
 xdg/        git (no identity) + handlr    -> ~/.config/git, ~/.config/handlr
-profiles/   base desktop profile + 20 theme packs -> ~/.local/share/hornero/…
+profiles/   base desktop profile + 21 theme packs -> ~/.local/share/hornero/…
 shell/      stub note (interactive shell deferred)
 lib/hornero/   appearance/GTK/wallpaper implementation libs -> ~/.local/lib/hornero
 bin/        hornero-gtk-theme-family CLIs    -> ~/.local/bin

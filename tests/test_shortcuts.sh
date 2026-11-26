@@ -12,22 +12,6 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TMP_HOME="$(mktemp -d)"
 trap 'rm -rf "$TMP_HOME"' EXIT
 
-# Curated ids referenced by the Welcome Center (shell modules/welcome).
-# Format: one id per line; the check requires a global (submap="") entry.
-CURATED_IDS="exec-launcher
-ipc-dashboard-toggle
-scrolloverview-overview:toggle
-app-terminalemulator
-exec-terminal-file
-workspace:1
-movetoworkspace:1
-togglespecialworkspace:magic
-exec-screenshooter
-exec-clipboard
-exec-power-menu
-ipc-lock-lock
-exec-keyboard-help"
-
 OUT="$TMP_HOME/shortcuts.json"
 "$REPO_ROOT/scripts/generate-shortcuts.py" --root "$REPO_ROOT" --out "$OUT" >/dev/null
 

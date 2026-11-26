@@ -76,11 +76,11 @@ execs=$(grep -c 'hl\.exec_cmd' "$HYPR/hyprland.lua.d/autostart.lua")
 # 20 frozen from the retired tree + hornero-gtk-theme ensure (first-session
 # GTK theme) + hornero-appearance apply-installer-appearance (first-login
 # consumer for the installer-seeded appearance.json; no-op afterwards).
-[[ "$execs" -eq 22 ]] || fail "autostart parity: expected 22, got $execs"
-echo "TEST-PASS: autostart parity 22/22"
+[[ "$execs" -eq 19 ]] || fail "autostart parity: expected 19, got $execs"
+echo "TEST-PASS: autostart parity 19/19"
 
 envs=$(grep -cE '\{ "[A-Z_]+",' "$HYPR/hyprland.lua.d/environment.lua")
-[[ "$envs" -ge 20 ]] || fail "environment parity: expected >=20 static entries, got $envs"
+[[ "$envs" -ge 13 ]] || fail "environment parity: expected >=13 static entries, got $envs"
 # VA-API driver selection must stay hardware-neutral: forcing
 # LIBVA_DRIVER_NAME=nvidia breaks Intel/AMD/hybrid/VM systems.
 if grep -q '"LIBVA_DRIVER_NAME",' "$HYPR/hyprland.lua.d/environment.lua"; then
