@@ -5,6 +5,8 @@ local environment = {
 	-- Compositor-neutral toolkit vars (GDK_BACKEND, QT_QPA_PLATFORM,
 	-- QT_QPA_PLATFORMTHEME, MOZ_ENABLE_WAYLAND) live in
 	-- desktop/environmentd/20-hornero-session.conf for Hyprland + Niri parity.
+	-- Keep QT_QPA_PLATFORMTHEME pinned here too for non-systemd-user launches.
+	{ "QT_QPA_PLATFORMTHEME", "qt6ct:qt5ct" },
 	{ "SDL_VIDEODRIVER", "wayland" },
 	{ "CLUTTER_BACKEND", "wayland" },
 	{ "XDG_CURRENT_DESKTOP", "Hyprland" },
