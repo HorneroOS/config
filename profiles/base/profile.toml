@@ -119,6 +119,11 @@ source = "desktop/environmentd"
 target = "{config}/environment.d"
 description = "Factory editor contract and session environment baseline for all session types."
 
+[modules.systemd-user]
+source = "desktop/systemd/user"
+target = "{config}/systemd/user"
+description = "Systemd user resource isolation slices (app-models, app-agents) and local AI service drop-ins."
+
 [modules.handlr]
 source = "xdg/handlr"
 target = "{config}/handlr"

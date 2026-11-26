@@ -1,0 +1,16 @@
+# HorneroOS: resource isolation slice for coding agent sandboxes and
+# autonomous background workers so they stay responsive without starving
+# the interactive compositor or terminal.
+[Unit]
+Description=Coding Agents Slice
+Documentation=man:systemd.slice(5) man:systemd.resource-control(5)
+
+[Slice]
+Slice=app.slice
+CPUAccounting=true
+CPUWeight=50
+IOAccounting=true
+IOWeight=50
+MemoryAccounting=true
+ManagedOOMSwap=kill
+ManagedOOMMemoryPressure=kill

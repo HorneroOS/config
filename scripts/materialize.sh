@@ -107,6 +107,9 @@ install_dir "desktop/bluetooth" "$CONFIG_HOME/hornero/bluetooth" preserve
 install_dir "desktop/studio-audio" "$CONFIG_HOME/hornero/studio-audio"
 install_dir "desktop/studio-presets" "$CONFIG_HOME/hornero/studio-presets"
 install_dir "desktop/studio-storage" "$CONFIG_HOME/hornero/studio-storage"
+# Systemd user resource isolation slices (app-models.slice, app-agents.slice)
+# and local LLM drop-ins (ollama, llama-server@).
+install_dir "desktop/systemd/user" "$CONFIG_HOME/systemd/user"
 
 # --- factory shell baseline (seeded once, never overwritten) -------------
 if [[ $DRY_RUN -eq 1 ]]; then

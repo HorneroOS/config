@@ -1,0 +1,16 @@
+# HorneroOS: resource isolation slice for local LLM inference daemons
+# (Ollama, llama-server, etc.) so heavy model loads never freeze the
+# interactive desktop while retaining systemd-oomd protection.
+[Unit]
+Description=Local AI Models Slice
+Documentation=man:systemd.slice(5) man:systemd.resource-control(5)
+
+[Slice]
+Slice=app.slice
+CPUAccounting=true
+CPUWeight=20
+IOAccounting=true
+IOWeight=20
+MemoryAccounting=true
+ManagedOOMSwap=kill
+ManagedOOMMemoryPressure=kill
