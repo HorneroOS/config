@@ -68,6 +68,8 @@ jobs:
         run: python3 tests/test_shell_migrations.py
       - name: Materialization into temp HOME
         run: tests/test_materialize.sh
+      - name: Systemd user resource isolation slices (app-models, app-agents)
+        run: python3 tests/test_systemd_slices.py
       - name: Packaged user seeding is missing-only
         run: tests/test_seed_user.sh
       - name: Signal fastfetch defaults
