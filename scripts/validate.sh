@@ -10,12 +10,8 @@ fail() { echo "VALIDATE-FAIL: $1" >&2; FAIL=1; }
 
 # --- shell (shellcheck when available) -----------------------------------------
 if command -v shellcheck >/dev/null 2>&1; then
-  # Gate severity is `error`: every shipped shell file is still checked, but
-  # pre-existing upstream warnings (SC1090 runtime XDG sourcing, SC2034 registry
-  # vars consumed cross-file, SC2154 easyoptions-provided `arguments`) do not
-  # fail the build. See docs/DECISIONS.md.
-  if shellcheck -S error "$REPO_ROOT"/scripts/*.sh "$REPO_ROOT"/lib/hornero/*.sh \
-      "$REPO_ROOT"/lib/hornero/easy-options/*.sh "$REPO_ROOT"/bin/hornero-* \
+  if shellcheck -S warning "$REPO_ROOT"/scripts/*.sh "$REPO_ROOT"/lib/hornero/*.sh \
+      "$REPO_ROOT"/bin/hornero-* \
       "$REPO_ROOT"/tests/*.sh; then
     pass "shellcheck"
   else

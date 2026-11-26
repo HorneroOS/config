@@ -264,7 +264,7 @@ package() {
   # Stage the canonical Hornero data and configuration paths.
   mkdir -p "$pkgdir/usr/share/hornero/lib"
   cp -a "$stage/.local/lib/hornero" "$pkgdir/usr/share/hornero/lib/hornero"
-  cp -a "$stage/.local/bin"/hornero-* "$pkgdir/usr/share/hornero/bin/"
+  cp -aL "$stage/.local/bin"/hornero-* "$pkgdir/usr/share/hornero/bin/"
   mkdir -p "$pkgdir/usr/share/hornero/themes"
   cp -a "$stage/.local/share/hornero/themes/." "$pkgdir/usr/share/hornero/themes/"
   # Hornero Chromatic: first-party app templates rendered by horneroctl

@@ -7,7 +7,7 @@
 ## Copyright (C) 2019-2025 Ulises Jeremias Cornejo Fandos
 ## Licensed under MIT.
 ##
-## Documentation: https://hornero-os.vercel.app/docs/
+## Documentation: https://horneroos.com/docs/
 ##
 ## Enhanced night mode toggle with multiple backend support and better features
 ## Now detects state from running processes instead of external state files
@@ -65,13 +65,12 @@ is_night_mode_active() {
     current_gamma=$(xrandr --verbose 2>/dev/null | grep -m1 "Gamma:" | awk '{print $2}')
     # If any gamma channel is significantly different from 1.0, consider it night mode
     if [[ -n $current_gamma ]]; then
-      local red_gamma blue_gamma
-      red_gamma=$(echo "$current_gamma" | cut -d: -f1)
+      local blue_gamma
       blue_gamma=$(echo "$current_gamma" | cut -d: -f3)
 
       # If blue gamma is higher than red (warm temperature), it's night mode
       # Use awk for floating point comparison
-      if awk "BEGIN {exit !($blue_gamma > 1.2)}" 2>/dev/null; then
+      if awk -v bg="$blue_gamma" 'BEGIN {exit !(bg > 1.2)}' 2>/dev/null; then
         return 0
       fi
     fi

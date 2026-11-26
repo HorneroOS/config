@@ -118,14 +118,14 @@ _hornero_appearance_resolve_theme_wallpaper() {
 		}
 	fi
 
-	for base in "$HORNERO_PICTURES_WALLPAPERS/$wallpaper_dir" "$HORNERO_WALLPAPERS_DIR/$wallpaper_dir" "$HORNERO_WALLPAPERS_DIR/$wallpaper_dir"; do
+	for base in "$HORNERO_PICTURES_WALLPAPERS/$wallpaper_dir" "$HORNERO_WALLPAPERS_DIR/$wallpaper_dir"; do
 		if [[ -n $default_name && -f $base/$default_name ]]; then
 			readlink -f "$base/$default_name"
 			return 0
 		fi
 	done
 
-	for base in "$HORNERO_PICTURES_WALLPAPERS/$wallpaper_dir" "$HORNERO_WALLPAPERS_DIR/$wallpaper_dir" "$HORNERO_WALLPAPERS_DIR/$wallpaper_dir"; do
+	for base in "$HORNERO_PICTURES_WALLPAPERS/$wallpaper_dir" "$HORNERO_WALLPAPERS_DIR/$wallpaper_dir"; do
 		[[ -d $base ]] || continue
 		candidate="$(
 			find -L "$base" -maxdepth 1 \( -type f -o -type l \) \

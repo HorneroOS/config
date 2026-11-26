@@ -71,11 +71,33 @@ run() { # run <description> <cmd...>
   if [[ $DRY -eq 1 ]]; then say "would: $*"; else "$@"; fi
 }
 
+_TMP_FILES=()
+cleanup_tmps() {
+  local f
+  for f in "${_TMP_FILES[@]}"; do
+    rm -f "$f"
+  done
+}
+trap cleanup_tmps EXIT
+
+mktemp_beside() {
+  local target="$1" tmp
+  tmp="$(mktemp "$(dirname "$target")/.$(basename "$target").tmp.XXXXXX")"
+  _TMP_FILES+=("$tmp")
+  printf '%s' "$tmp"
+}
+
+atomic_replace() {
+  local tmp="$1" target="$2"
+  chmod --reference="$target" "$tmp" 2>/dev/null || true
+  mv -f "$tmp" "$target"
+}
+
 # Replace or append a KEY=VALUE line tagged with the marker. Idempotent.
 set_kv() { # set_kv <file> <key> <value>
   local file="$1" key="$2" value="$3" tmp
   if [[ $DRY -eq 1 ]]; then say "would set $key=$value in ${file#"$ROOT"}"; return 0; fi
-  tmp="$(mktemp)"
+  tmp="$(mktemp_beside "$file")"
   if grep -qE "^${key}=.*${MARK}\$" "$file"; then
     # Already ours: rewrite in place so repeated applies keep line order.
     awk -v k="$key" -v line="${key}=${value} ${MARK}" -v m="$MARK" \
@@ -85,27 +107,33 @@ set_kv() { # set_kv <file> <key> <value>
     grep -v -E "^${key}=" "$file" > "$tmp" || true
     printf '%s=%s %s\n' "$key" "$value" "$MARK" >> "$tmp"
   fi
-  cat "$tmp" > "$file"; rm -f "$tmp"
+  atomic_replace "$tmp" "$file"
 }
 
 unset_kv() { # remove lines this tool added
   local file="$1" key="$2" tmp
   [[ -f $file ]] || return 0
   if [[ $DRY -eq 1 ]]; then say "would remove $key from ${file#"$ROOT"}"; return 0; fi
-  tmp="$(mktemp)"
+  tmp="$(mktemp_beside "$file")"
   grep -v -E "^${key}=.*${MARK}\$" "$file" > "$tmp" || true
-  cat "$tmp" > "$file"; rm -f "$tmp"
+  atomic_replace "$tmp" "$file"
 }
 
 cmdline_has() { grep -E '^GRUB_CMDLINE_LINUX_DEFAULT=' "$GRUB_DEFAULT_FILE" | grep -qw "$1"; }
 
 cmdline_edit() { # cmdline_edit add|del <word>
-  local mode="$1" word="$2"
+  local mode="$1" word="$2" tmp
   if [[ $DRY -eq 1 ]]; then say "would $mode kernel parameter '$word'"; return 0; fi
   if [[ $mode == add ]]; then
-    cmdline_has "$word" || sed -i -E "/^GRUB_CMDLINE_LINUX_DEFAULT=/ { s/([\"'])\$/ ${word}\1/; s/=([\"']) /=\1/ }" "$GRUB_DEFAULT_FILE"
+    if ! cmdline_has "$word"; then
+      tmp="$(mktemp_beside "$GRUB_DEFAULT_FILE")"
+      sed -E "/^GRUB_CMDLINE_LINUX_DEFAULT=/ { s/([\"'])\$/ ${word}\1/; s/=([\"']) /=\1/ }" "$GRUB_DEFAULT_FILE" > "$tmp"
+      atomic_replace "$tmp" "$GRUB_DEFAULT_FILE"
+    fi
   else
-    sed -i -E "/^GRUB_CMDLINE_LINUX_DEFAULT=/ s/(^|[\" ])${word}( |[\"'])/\1\2/; /^GRUB_CMDLINE_LINUX_DEFAULT=/ s/  +/ /g; /^GRUB_CMDLINE_LINUX_DEFAULT=/ s/=([\"']) /=\1/; /^GRUB_CMDLINE_LINUX_DEFAULT=/ s/ ([\"'])\$/\1/" "$GRUB_DEFAULT_FILE"
+    tmp="$(mktemp_beside "$GRUB_DEFAULT_FILE")"
+    sed -E "/^GRUB_CMDLINE_LINUX_DEFAULT=/ s/(^|[\" ])${word}( |[\"'])/\1\2/; /^GRUB_CMDLINE_LINUX_DEFAULT=/ s/  +/ /g; /^GRUB_CMDLINE_LINUX_DEFAULT=/ s/=([\"']) /=\1/; /^GRUB_CMDLINE_LINUX_DEFAULT=/ s/ ([\"'])\$/\1/" "$GRUB_DEFAULT_FILE" > "$tmp"
+    atomic_replace "$tmp" "$GRUB_DEFAULT_FILE"
   fi
 }
 
@@ -176,7 +204,12 @@ ply_apply() {
   if ! grep -qE '^HOOKS=.*\bplymouth\b' "$MKINIT_CONF"; then
     [[ -f $MKINIT_CONF.hornero-bak || $DRY -eq 1 ]] || cp "$MKINIT_CONF" "$MKINIT_CONF.hornero-bak"
     if [[ $DRY -eq 1 ]]; then say "would insert 'plymouth' after udev/systemd in HOOKS"
-    else sed -i -E '/^HOOKS=/ s/\b(udev|systemd)\b/\1 plymouth/' "$MKINIT_CONF"; fi
+    else
+      local tmp
+      tmp="$(mktemp_beside "$MKINIT_CONF")"
+      sed -E '/^HOOKS=/ s/\b(udev|systemd)\b/\1 plymouth/' "$MKINIT_CONF" > "$tmp"
+      atomic_replace "$tmp" "$MKINIT_CONF"
+    fi
   fi
   run mkdir -p "$(dirname "$PLY_CONF")"
   if [[ $DRY -eq 1 ]]; then say "would write Theme=$THEME to ${PLY_CONF#"$ROOT"}"
@@ -195,7 +228,12 @@ ply_apply() {
 ply_remove() {
   if [[ -f $MKINIT_CONF ]] && grep -qE '^HOOKS=.*\bplymouth\b' "$MKINIT_CONF"; then
     if [[ $DRY -eq 1 ]]; then say "would remove 'plymouth' from HOOKS"
-    else sed -i -E '/^HOOKS=/ s/ ?\bplymouth\b//' "$MKINIT_CONF"; fi
+    else
+      local tmp
+      tmp="$(mktemp_beside "$MKINIT_CONF")"
+      sed -E '/^HOOKS=/ s/ ?\bplymouth\b//' "$MKINIT_CONF" > "$tmp"
+      atomic_replace "$tmp" "$MKINIT_CONF"
+    fi
   fi
   if grep -qE '^Theme=hornero-signal$' "$PLY_CONF" 2>/dev/null; then run rm -f "$PLY_CONF"; fi
   if grub_present && cmdline_has splash; then cmdline_edit del splash; fi

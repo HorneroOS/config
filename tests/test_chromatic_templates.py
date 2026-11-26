@@ -30,7 +30,7 @@ GOLDEN = ROOT / "tests" / "golden" / "chromatic"
 THEMES = ROOT / "profiles" / "themes"
 SCHEMES = {"night": "hornero-signal-night", "day": "hornero-signal-day"}
 OUTPUT_RE = re.compile(r"^(\$\{XDG_CONFIG_HOME\}|\$\{XDG_CACHE_HOME\}|\$\{XDG_DATA_HOME\}|~)/")
-EXPECTED = {"gtk3", "gtk4", "qt6ct", "qt5ct", "kitty", "foot", "fuzzel", "nvim", "zed"}
+EXPECTED = {"gtk3", "gtk4", "qt6ct", "qt5ct", "kitty", "foot", "fuzzel", "niri", "nvim", "zed"}
 
 
 def scheme(key: str) -> dict:

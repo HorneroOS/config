@@ -43,7 +43,17 @@ install_dir() {
     # must not overwrite user-edited copies (new files still arrive).
     cp -rn "$REPO_ROOT/$src/." "$dest/"
   else
-    cp -r "$REPO_ROOT/$src/." "$dest/"
+    # Copy managed files while never overwriting existing *-user.* override files.
+    local entry rel target
+    while IFS= read -r -d '' entry; do
+      rel="${entry#"$REPO_ROOT/$src"/}"
+      target="$dest/$rel"
+      if [[ "$(basename "$target")" == *-user.* && -e "$target" ]]; then
+        continue
+      fi
+      mkdir -p "$(dirname "$target")"
+      cp "$entry" "$target"
+    done < <(find "$REPO_ROOT/$src" -type f -print0 | sort -z)
   fi
   find "$dest" -type d -exec chmod 755 {} +
   find "$dest" -type f -exec chmod 644 {} +
@@ -64,6 +74,7 @@ install_file() {
 install_dir "desktop/hypr" "$CONFIG_HOME/hypr"
 install_dir "desktop/niri" "$CONFIG_HOME/niri"
 install_file "desktop/xdg-desktop-portal/niri-portals.conf" "$CONFIG_HOME/xdg-desktop-portal/niri-portals.conf"
+install_file "desktop/xdg-desktop-portal/hyprland-portals.conf" "$CONFIG_HOME/xdg-desktop-portal/hyprland-portals.conf"
 install_dir "desktop/kitty" "$CONFIG_HOME/kitty"
 install_file "desktop/xfce4/helpers.rc" "$CONFIG_HOME/xfce4/helpers.rc"
 # preserve: never overwrite a user-edited qt6ct/qt5ct.conf; horneroctl owns the
@@ -116,12 +127,12 @@ install_dir "xdg/git" "$CONFIG_HOME/git"
 # --- implementation libs + CLI adapters ---------------------------------------
 install_dir "lib/hornero" "$LIB_DIR"
 if [[ $DRY_RUN -eq 1 ]]; then
-  echo "would install bin/hornero-* -> $BIN_DIR/"
+  echo "would symlink bin/hornero-* -> $BIN_DIR/"
 else
   mkdir -p "$BIN_DIR"
   for cli in "$REPO_ROOT"/bin/hornero-*; do
-    cp "$cli" "$BIN_DIR/$(basename "$cli")"
-    chmod 755 "$BIN_DIR/$(basename "$cli")"
+    chmod 755 "$cli"
+    ln -sfn "$cli" "$BIN_DIR/$(basename "$cli")"
   done
 fi
 

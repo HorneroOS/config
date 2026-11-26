@@ -101,11 +101,6 @@
   # tag
   t = tag -n                        # show tags with <n> lines of each tag message
 
-  # svn helpers
-  svnr = svn rebase
-  svnd = svn dcommit
-  svnl = svn log --oneline --show-commit
-
   # checkout remote head, via https://twitter.com/jnesselr/status/1334586152691625985
   cdef = "!f() { git checkout $(git originhead ${1:-origin}); } ; f"
   originhead = "!f() { git remote show ${1:-origin} | grep 'HEAD branch' | cut -d ' ' -f5; } ; f"
@@ -117,18 +112,9 @@
   prompt = false
   keepBackup = false
   writeToTemp = true
-
-[mergetool "vimdiff"]
-  cmd = "vim -c 'Gvdiffsplit!' $MERGED"     # use fugitive.vim for 3-way merge
-[mergetool "gvimdiff"]
-  cmd = "gvim -c 'Gvdiffsplit!' $MERGED"     # use fugitive.vim for 3-way merge
-[mergetool "mvimdiff"]
-  cmd = "mvim -c 'Gvdiffsplit!' $MERGED"     # use fugitive.vim for 3-way merge
 [merge]
   summary = true
   verbosity = 1
-  tool = vimdiff
-  guitool = gvimdiff
 [apply]
   whitespace = nowarn
 [branch]
@@ -149,9 +135,6 @@
   # instead of a/b/c/d as prefixes for patches
   mnemonicprefix = true
   algorithm = patience
-  compactionHeuristic = true
-[diff "spaceman-diff"]
-  command = spaceman-diff
 [rerere]
   # Remember my merges
   # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/

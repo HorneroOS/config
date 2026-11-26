@@ -2,8 +2,11 @@
 -- luacheck: globals hl
 
 local environment = {
-	{ "GDK_BACKEND", "wayland,x11" },
-	{ "QT_QPA_PLATFORM", "wayland;xcb" },
+	-- Compositor-neutral toolkit vars (GDK_BACKEND, QT_QPA_PLATFORM,
+	-- QT_QPA_PLATFORMTHEME, MOZ_ENABLE_WAYLAND) live in
+	-- desktop/environmentd/20-hornero-session.conf for Hyprland + Niri parity.
+	-- Keep QT_QPA_PLATFORMTHEME pinned here too for non-systemd-user launches.
+	{ "QT_QPA_PLATFORMTHEME", "qt6ct:qt5ct" },
 	{ "SDL_VIDEODRIVER", "wayland" },
 	{ "CLUTTER_BACKEND", "wayland" },
 	{ "XDG_CURRENT_DESKTOP", "Hyprland" },
@@ -14,11 +17,6 @@ local environment = {
 	{ "KDE_SESSION_VERSION", "" },
 	{ "QT_AUTO_SCREEN_SCALE_FACTOR", "1" },
 	{ "QT_WAYLAND_DISABLE_WINDOWDECORATION", "1" },
-	{ "QT_QPA_PLATFORMTHEME", "qt6ct:qt5ct" },
-	{ "GTK_IM_MODULE", "ibus" },
-	{ "QT_IM_MODULE", "ibus" },
-	{ "XMODIFIERS", "@im=ibus" },
-	{ "MOZ_ENABLE_WAYLAND", "1" },
 	{ "XCURSOR_SIZE", "24" },
 	{ "XCURSOR_THEME", "elementary" },
 	{ "_JAVA_AWT_WM_NONREPARENTING", "1" },
