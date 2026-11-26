@@ -33,6 +33,7 @@ OUTPUT_RE = re.compile(r"^(\$\{XDG_CONFIG_HOME\}|\$\{XDG_CACHE_HOME\}|\$\{XDG_DA
 EXPECTED = {
     "gtk3", "gtk4", "qt6ct", "qt5ct", "kitty", "foot", "fuzzel",
     "niri", "nvim", "zed", "alacritty", "ghostty", "vscode", "firefox",
+    "wezterm", "tmux", "zellij", "btop", "starship", "rofi",
 }
 
 
@@ -159,6 +160,9 @@ class Golden(unittest.TestCase):
         self.assertEqual(vscode_day["type"], "light")
         alacritty = tomllib.loads((GOLDEN / "alacritty.night.golden").read_text(encoding="utf-8"))
         self.assertIn("primary", alacritty["colors"])
+        starship = tomllib.loads((GOLDEN / "starship.night.golden").read_text(encoding="utf-8"))
+        self.assertEqual(starship["palette"], "hornero_signal")
+        self.assertIn("signal", starship["palettes"]["hornero_signal"])
         qt = (GOLDEN / "qt6ct.night.golden").read_text(encoding="utf-8")
         for line in qt.splitlines():
             if line.startswith(("active_colors=", "inactive_colors=", "disabled_colors=")):

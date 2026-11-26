@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "name": "wezterm",
+  "template": "wezterm.lua.tmpl",
+  "output": "${XDG_CONFIG_HOME}/wezterm/colors/hornero-signal.lua",
+  "when": "chromatic",
+  "requires": "${XDG_CONFIG_HOME}/wezterm"
+}

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "name": "zellij",
+  "template": "zellij.kdl.tmpl",
+  "output": "${XDG_CONFIG_HOME}/zellij/themes/hornero-signal.kdl",
+  "when": "chromatic",
+  "requires": "${XDG_CONFIG_HOME}/zellij"
+}

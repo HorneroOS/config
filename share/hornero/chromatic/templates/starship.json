@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "name": "starship",
+  "template": "starship.toml.tmpl",
+  "output": "${XDG_CONFIG_HOME}/starship/hornero-signal.toml",
+  "when": "chromatic",
+  "requires": "${XDG_CONFIG_HOME}/starship"
+}
