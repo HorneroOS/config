@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "name": "vscode",
+  "template": "hornero-signal-color-theme.json.tmpl",
+  "output": "${XDG_CONFIG_HOME}/Code/User/themes/hornero-signal-color-theme.json",
+  "when": "chromatic",
+  "requires": "${XDG_CONFIG_HOME}/Code/User"
+}

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "name": "firefox",
+  "template": "userChrome-colors.css.tmpl",
+  "output": "${XDG_CONFIG_HOME}/hornero/firefox/userChrome-colors.css",
+  "when": "chromatic",
+  "requires": "~/.mozilla/firefox"
+}

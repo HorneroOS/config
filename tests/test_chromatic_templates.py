@@ -30,7 +30,10 @@ GOLDEN = ROOT / "tests" / "golden" / "chromatic"
 THEMES = ROOT / "profiles" / "themes"
 SCHEMES = {"night": "hornero-signal-night", "day": "hornero-signal-day"}
 OUTPUT_RE = re.compile(r"^(\$\{XDG_CONFIG_HOME\}|\$\{XDG_CACHE_HOME\}|\$\{XDG_DATA_HOME\}|~)/")
-EXPECTED = {"gtk3", "gtk4", "qt6ct", "qt5ct", "kitty", "foot", "fuzzel", "niri", "nvim", "zed"}
+EXPECTED = {
+    "gtk3", "gtk4", "qt6ct", "qt5ct", "kitty", "foot", "fuzzel",
+    "niri", "nvim", "zed", "alacritty", "ghostty", "vscode", "firefox",
+}
 
 
 def scheme(key: str) -> dict:
@@ -145,9 +148,17 @@ class Golden(unittest.TestCase):
             self.assertEqual(literal, [], f"{m['name']} hard-codes colours")
 
     def test_modes_differ_and_structured_outputs_parse(self) -> None:
+        import tomllib
+
         zed = json.loads((GOLDEN / "zed.night.golden").read_text(encoding="utf-8"))
         self.assertEqual(zed["themes"][0]["appearance"], "dark")
         self.assertEqual(json.loads((GOLDEN / "zed.day.golden").read_text())["themes"][0]["appearance"], "light")
+        vscode_night = json.loads((GOLDEN / "vscode.night.golden").read_text(encoding="utf-8"))
+        vscode_day = json.loads((GOLDEN / "vscode.day.golden").read_text(encoding="utf-8"))
+        self.assertEqual(vscode_night["type"], "dark")
+        self.assertEqual(vscode_day["type"], "light")
+        alacritty = tomllib.loads((GOLDEN / "alacritty.night.golden").read_text(encoding="utf-8"))
+        self.assertIn("primary", alacritty["colors"])
         qt = (GOLDEN / "qt6ct.night.golden").read_text(encoding="utf-8")
         for line in qt.splitlines():
             if line.startswith(("active_colors=", "inactive_colors=", "disabled_colors=")):

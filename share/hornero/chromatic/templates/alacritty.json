@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "name": "alacritty",
+  "template": "hornero-colors.toml.tmpl",
+  "output": "${XDG_CONFIG_HOME}/alacritty/hornero-colors.toml",
+  "when": "chromatic",
+  "requires": "${XDG_CONFIG_HOME}/alacritty"
+}
