@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "name": "tmux",
+  "template": "tmux.conf.tmpl",
+  "output": "${XDG_CONFIG_HOME}/tmux/hornero-signal.conf",
+  "when": "chromatic",
+  "requires": "${XDG_CONFIG_HOME}/tmux"
+}

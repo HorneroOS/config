@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "name": "rofi",
+  "template": "rofi.rasi.tmpl",
+  "output": "${XDG_CONFIG_HOME}/rofi/hornero-signal.rasi",
+  "when": "chromatic",
+  "requires": "${XDG_CONFIG_HOME}/rofi"
+}
