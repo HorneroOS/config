@@ -449,3 +449,16 @@ network, no hostname by default. Details: `docs/FASTFETCH.md`; gate:
   - User override hooks (`monitors-user.lua`, `keybindings-user.lua`, `window-rules-user.lua`) use `load_user(mod)`: always load from `user_dir` first, falling back to `factory_dir` if absent (or skipping cleanly if absent in both).
   - Power users who want to pin a local copy of a factory module replace its `load_factory("...")` call with `load_user("...")` in `~/.config/hypr/hyprland.lua`.
 * **Existing-user migration and preservation**: `lib/hornero/refresh-hypr-entrypoint.py` supports both new-style (`local user_dir =`, `load_factory`/`load_user`) and legacy (`local here =`, `dofile(here .. ...)`) entrypoints additively without clobbering local edits. `scripts/materialize.sh` marks `desktop/niri`, `desktop/kitty`, and `desktop/copyq/copyq.conf` with `preserve` (alongside existing `*-user.*` and `qt*ct`/`wireplumber`/`bluetooth` preservation) so re-materializing never overwrites user edits while staging into an empty `PKGBUILD` directory stays byte-identical. Gate: `tests/test_hyprland_lua.sh`, `tests/test_hypr_entrypoint_refresh.py`, `tests/test_materialize.sh`.
+
+## Hornero Chromatic app templates expansion (HorneroOS/config#140)
+
+* **Coverage**: Expanded first-party templates under `share/hornero/chromatic/templates/` to 23 manifests, adding:
+  - `nvim-colorscheme` (`hornero-chromatic.lua.tmpl` -> `${XDG_CONFIG_HOME}/nvim/colors/hornero-chromatic.lua`): full `:colorscheme hornero-chromatic` UI, syntax, diff, diagnostic, LSP, and Treesitter highlight groups alongside the existing `nvim` data module (`lua/hornero_chromatic.lua`).
+  - `helix` (`helix.toml.tmpl` -> `${XDG_CONFIG_HOME}/helix/themes/hornero-chromatic.toml`): full Helix UI, diagnostic, diff, syntax, and `[palette]` definitions.
+  - `delta` (`hornero-chromatic.gitconfig.tmpl` -> `${XDG_CONFIG_HOME}/git/hornero-chromatic.gitconfig`): `[delta "hornero-chromatic"]` feature block (mode-aware `dark`/`light` via `{{#dark}}`/`{{#light}}`) plus `[color "diff"]`, `[color "branch"]`, and `[color "status"]` stanzas.
+  - Existing `zed` (`zed/themes/hornero-chromatic.json`) and `foot` (`foot/hornero-chromatic.ini`) templates remain in place and now have explicit `configparser`/mode checks alongside `nvim-colorscheme` (`luac -p`), `helix` (`tomllib.loads` + palette ref verification), and `delta` (`git config --file ... --list`) in `tests/test_chromatic_templates.py`.
+
+## Wallpaper license provenance & size budget audit (HorneroOS/config#182)
+
+* **Audit tooling**: `scripts/validate-wallpapers.py` gains non-breaking `--audit-licenses`, `--json`, `--max-unverified-bytes`, and `--max-file-bytes` flags (tested in `tests/test_validate_wallpapers.py`). Default `scripts/validate.sh` invocation is unchanged.
+* **Baseline inventory**: Separates the 3 verified CC BY 2.0 photographs (`1.98 MiB`) and 2 first-party MIT procedural SVG wallpapers (`assets/brand/wallpaper/`, `16.1 KiB`) from the 48 `license=unknown` legacy assets (`66.38 MiB`, 11 of which exceed `1.00 MiB` and account for `50.03 MiB`), giving CC0 replacement PRs a mechanical tracker and optional size-budget gate.

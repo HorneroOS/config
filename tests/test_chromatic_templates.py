@@ -11,10 +11,14 @@ CHROMATIC_UPDATE_GOLDEN=1.
 
 from __future__ import annotations
 
+import configparser
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -32,8 +36,9 @@ SCHEMES = {"night": "hornero-signal-night", "day": "hornero-signal-day"}
 OUTPUT_RE = re.compile(r"^(\$\{XDG_CONFIG_HOME\}|\$\{XDG_CACHE_HOME\}|\$\{XDG_DATA_HOME\}|~)/")
 EXPECTED = {
     "gtk3", "gtk4", "qt6ct", "qt5ct", "kitty", "foot", "fuzzel",
-    "niri", "nvim", "zed", "alacritty", "ghostty", "vscode", "firefox",
-    "wezterm", "tmux", "zellij", "btop", "starship", "rofi",
+    "niri", "nvim", "nvim-colorscheme", "zed", "alacritty", "ghostty",
+    "vscode", "firefox", "wezterm", "tmux", "zellij", "btop",
+    "starship", "rofi", "helix", "delta",
 }
 
 
@@ -151,18 +156,93 @@ class Golden(unittest.TestCase):
     def test_modes_differ_and_structured_outputs_parse(self) -> None:
         import tomllib
 
-        zed = json.loads((GOLDEN / "zed.night.golden").read_text(encoding="utf-8"))
+        zed_night_text = (GOLDEN / "zed.night.golden").read_text(encoding="utf-8")
+        zed_day_text = (GOLDEN / "zed.day.golden").read_text(encoding="utf-8")
+        zed = json.loads(zed_night_text)
         self.assertEqual(zed["themes"][0]["appearance"], "dark")
-        self.assertEqual(json.loads((GOLDEN / "zed.day.golden").read_text())["themes"][0]["appearance"], "light")
+        self.assertEqual(json.loads(zed_day_text)["themes"][0]["appearance"], "light")
+        self.assertNotEqual(zed_night_text, zed_day_text)
+
         vscode_night = json.loads((GOLDEN / "vscode.night.golden").read_text(encoding="utf-8"))
         vscode_day = json.loads((GOLDEN / "vscode.day.golden").read_text(encoding="utf-8"))
         self.assertEqual(vscode_night["type"], "dark")
         self.assertEqual(vscode_day["type"], "light")
+
         alacritty = tomllib.loads((GOLDEN / "alacritty.night.golden").read_text(encoding="utf-8"))
         self.assertIn("primary", alacritty["colors"])
         starship = tomllib.loads((GOLDEN / "starship.night.golden").read_text(encoding="utf-8"))
         self.assertEqual(starship["palette"], "hornero_signal")
         self.assertIn("signal", starship["palettes"]["hornero_signal"])
+
+        # Foot INI terminal colors
+        for mode in ("night", "day"):
+            cp = configparser.ConfigParser(strict=True)
+            cp.read_string((GOLDEN / f"foot.{mode}.golden").read_text(encoding="utf-8"))
+            self.assertIn("colors", cp)
+            self.assertRegex(cp["colors"]["background"], r"^[0-9A-Fa-f]{6}$")
+            self.assertRegex(cp["colors"]["foreground"], r"^[0-9A-Fa-f]{6}$")
+            for idx in range(8):
+                self.assertRegex(cp["colors"][f"regular{idx}"], r"^[0-9A-Fa-f]{6}$")
+                self.assertRegex(cp["colors"][f"bright{idx}"], r"^[0-9A-Fa-f]{6}$")
+        self.assertNotEqual(
+            (GOLDEN / "foot.night.golden").read_text(encoding="utf-8"),
+            (GOLDEN / "foot.day.golden").read_text(encoding="utf-8"),
+        )
+
+        # Helix TOML theme
+        helix_night_text = (GOLDEN / "helix.night.golden").read_text(encoding="utf-8")
+        helix_day_text = (GOLDEN / "helix.day.golden").read_text(encoding="utf-8")
+        self.assertNotEqual(helix_night_text, helix_day_text)
+        for mode, text in (("night", helix_night_text), ("day", helix_day_text)):
+            helix = tomllib.loads(text)
+            self.assertIn("ui.background", helix, mode)
+            palette = helix["palette"]
+            for role, hex_val in palette.items():
+                self.assertRegex(hex_val, r"^#[0-9A-Fa-f]{6}$", f"helix.{mode} palette.{role}")
+            for scope, val in helix.items():
+                if scope == "palette":
+                    continue
+                if isinstance(val, str):
+                    self.assertIn(val, palette, f"helix.{mode} {scope} -> {val}")
+                elif isinstance(val, dict):
+                    for key in ("fg", "bg"):
+                        if key in val:
+                            self.assertIn(val[key], palette, f"helix.{mode} {scope}.{key} -> {val[key]}")
+                    if isinstance(val.get("underline"), dict) and "color" in val["underline"]:
+                        self.assertIn(val["underline"]["color"], palette, f"helix.{mode} {scope}.underline.color")
+
+        # Neovim Lua palette + colorscheme highlight scheme
+        nvim_cs_night = (GOLDEN / "nvim-colorscheme.night.golden").read_text(encoding="utf-8")
+        nvim_cs_day = (GOLDEN / "nvim-colorscheme.day.golden").read_text(encoding="utf-8")
+        self.assertIn('vim.o.background = "dark"', nvim_cs_night)
+        self.assertIn('vim.o.background = "light"', nvim_cs_day)
+        self.assertIn('vim.g.colors_name = "hornero-chromatic"', nvim_cs_night)
+        self.assertIn("vim.api.nvim_set_hl(0, group, spec)", nvim_cs_night)
+        self.assertNotEqual(nvim_cs_night, nvim_cs_day)
+        luac = shutil.which("luac")
+        if luac:
+            for name in ("nvim.night.golden", "nvim.day.golden",
+                         "nvim-colorscheme.night.golden", "nvim-colorscheme.day.golden"):
+                res = subprocess.run([luac, "-p", str(GOLDEN / name)], capture_output=True, text=True)
+                self.assertEqual(res.returncode, 0, f"luac -p failed for {name}: {res.stderr}")
+
+        # delta / git diff gitconfig
+        delta_night_text = (GOLDEN / "delta.night.golden").read_text(encoding="utf-8")
+        delta_day_text = (GOLDEN / "delta.day.golden").read_text(encoding="utf-8")
+        self.assertNotEqual(delta_night_text, delta_day_text)
+        for mode, expected_dark in (("night", "true"), ("day", "false")):
+            res = subprocess.run(
+                ["git", "config", "--file", str(GOLDEN / f"delta.{mode}.golden"), "--list"],
+                capture_output=True, text=True,
+            )
+            self.assertEqual(res.returncode, 0, f"git config failed for delta.{mode}: {res.stderr}")
+            kv = dict(line.split("=", 1) for line in res.stdout.splitlines() if "=" in line)
+            self.assertEqual(kv.get("delta.hornero-chromatic.dark"), expected_dark)
+            self.assertIn("delta.hornero-chromatic.plus-style", kv)
+            self.assertIn("delta.hornero-chromatic.minus-style", kv)
+            self.assertIn("color.diff.old", kv)
+            self.assertIn("color.diff.new", kv)
+
         qt = (GOLDEN / "qt6ct.night.golden").read_text(encoding="utf-8")
         for line in qt.splitlines():
             if line.startswith(("active_colors=", "inactive_colors=", "disabled_colors=")):
