@@ -46,13 +46,20 @@ ships; it does not install btop or Cava.
 | XDG defaults | `desktop/xdg/mimeapps.list` (Thunar for directories) + `user-dirs.dirs` | `{config}/mimeapps.list`, `{config}/user-dirs.dirs` |
 | Monitor overrides | `desktop/hypr/hyprland.lua.d/monitors-user.lua`, loaded after the generic `monitors.lua` fallback | `{config}/hypr/hyprland.lua.d/monitors-user.lua` |
 
-Existing users keep a skel-seeded entrypoint, so new factory `dofile`
-lines never reach them on package upgrade alone.
-`lib/hornero/refresh-hypr-entrypoint.py` closes that gap additively: it
+Hyprland's entrypoint separates packaged factory modules from user
+override hooks (`HorneroOS/config#184`): factory modules load from
+`/etc/xdg/hypr/hyprland.lua.d/` when installed (falling back per-file
+to `~/.config/hypr/hyprland.lua.d/` for non-packaged/hermetic runs) so
+`pacman` upgrades reach existing users even when stale skel copies
+remain in `~/.config/hypr/hyprland.lua.d/`, while `monitors-user.lua`,
+`keybindings-user.lua`, and `window-rules-user.lua` always load from
+the user's directory first. For newly added factory module lines,
+`lib/hornero/refresh-hypr-entrypoint.py` closes the gap additively: it
 inserts only the factory module lines a user `hyprland.lua` is
 missing (dry-run diff by default, `--apply` writes with a
 `.pre-refresh` backup), preserves every existing line byte-for-byte,
-and refuses restructured files instead of guessing.
+supports both `load_factory`/`load_user` and legacy `dofile(here .. ...)`
+entrypoints, and refuses restructured files instead of guessing.
 
 ## Fonts and icon packages (Arch)
 

@@ -60,9 +60,12 @@ install_dir() {
 }
 
 install_file() {
-  local src="$1" dest="$2"
+  local src="$1" dest="$2" mode="${3:-}"
   if [[ $DRY_RUN -eq 1 ]]; then
     echo "would install file $src -> $dest"
+    return
+  fi
+  if [[ "$mode" == "preserve" && -e "$dest" ]]; then
     return
   fi
   mkdir -p "$(dirname "$dest")"
@@ -72,10 +75,12 @@ install_file() {
 
 # --- desktop defaults -> ~/.config -------------------------------------------
 install_dir "desktop/hypr" "$CONFIG_HOME/hypr"
-install_dir "desktop/niri" "$CONFIG_HOME/niri"
+# preserve: user-editable compositor and terminal configs; re-running
+# materialize into a real HOME seeds missing files without clobbering edits.
+install_dir "desktop/niri" "$CONFIG_HOME/niri" preserve
 install_file "desktop/xdg-desktop-portal/niri-portals.conf" "$CONFIG_HOME/xdg-desktop-portal/niri-portals.conf"
 install_file "desktop/xdg-desktop-portal/hyprland-portals.conf" "$CONFIG_HOME/xdg-desktop-portal/hyprland-portals.conf"
-install_dir "desktop/kitty" "$CONFIG_HOME/kitty"
+install_dir "desktop/kitty" "$CONFIG_HOME/kitty" preserve
 install_file "desktop/xfce4/helpers.rc" "$CONFIG_HOME/xfce4/helpers.rc"
 # preserve: never overwrite a user-edited qt6ct/qt5ct.conf; horneroctl owns the
 # palette keys (docs/QT_DECISION.md).
@@ -93,7 +98,7 @@ install_dir "desktop/fastfetch" "$CONFIG_HOME/fastfetch"
 install_dir "desktop/btop" "$CONFIG_HOME/btop"
 install_dir "desktop/cava" "$CONFIG_HOME/cava"
 install_dir "desktop/thunar" "$CONFIG_HOME/Thunar"
-install_file "desktop/copyq/copyq.conf" "$CONFIG_HOME/copyq/copyq.conf"
+install_file "desktop/copyq/copyq.conf" "$CONFIG_HOME/copyq/copyq.conf" preserve
 install_dir "desktop/alacritty" "$CONFIG_HOME/alacritty"
 install_dir "desktop/ghostty" "$CONFIG_HOME/ghostty"
 # Studio audio policy: Balanced (no override) is active; Low Latency and

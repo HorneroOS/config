@@ -57,7 +57,7 @@ with tempfile.TemporaryDirectory() as td:
     r = run(FACTORY, target, "--apply")
     check("apply exits 0", r.returncode == 0, r.stderr)
     out = target.read_text()
-    check("apply inserts monitors-user", 'dofile(here .. "monitors-user.lua")' in out)
+    check("apply inserts monitors-user", 'load_user("monitors-user.lua")' in out)
     check(
         "factory order kept",
         out.index('"monitors.lua"') < out.index('"monitors-user.lua"') < out.index('"autostart.lua"'),
@@ -78,6 +78,25 @@ with tempfile.TemporaryDirectory() as td:
         "diff is exactly one inserted line",
         len(out.splitlines()) == len(stale.splitlines()) + 1,
     )
+
+    # Legacy pre-config#184 entrypoint (`local here =` + `dofile(here .. ...)`)
+    # still refreshes additively with valid legacy syntax.
+    legacy = tmp / "legacy.lua"
+    legacy.write_text(
+        'local here = debug.getinfo(1, "S").source:match("^@(.*)/[^/]*$") .. "/hyprland.lua.d/"\n'
+        'dofile(here .. "monitors.lua")\n'
+        'dofile(here .. "autostart.lua")\n'
+        '-- legacy local tweak\n'
+    )
+    r = run(FACTORY, legacy, "--apply")
+    check("legacy apply exits 0", r.returncode == 0, r.stderr)
+    legacy_out = legacy.read_text()
+    check("legacy inserts dofile monitors-user", 'dofile(here .. "monitors-user.lua")' in legacy_out)
+    check(
+        "legacy factory order kept",
+        legacy_out.index('"monitors.lua"') < legacy_out.index('"monitors-user.lua"') < legacy_out.index('"autostart.lua"'),
+    )
+    check("legacy user edit preserved", "-- legacy local tweak" in legacy_out)
 
     # Restructured target: refused, untouched.
     bad = tmp / "bad.lua"

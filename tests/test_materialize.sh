@@ -233,8 +233,12 @@ else
   exit 1
 fi
 
-# Bluetooth/WirePlumber user copies are seeded once, never overwritten
-printf '# user edit\n' >> "$TMP_HOME/.config/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf"
+# Bluetooth/WirePlumber and user-editable configs are seeded once, never overwritten
+printf '%s\n' '# user edit' >> "$TMP_HOME/.config/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf"
+printf '%s\n' '-- user monitor edit' >> "$TMP_HOME/.config/hypr/hyprland.lua.d/monitors-user.lua"
+printf '%s\n' '// user niri edit' >> "$TMP_HOME/.config/niri/config.kdl"
+printf '%s\n' '# user kitty edit' >> "$TMP_HOME/.config/kitty/kitty.conf"
+printf '%s\n' '; user copyq edit' >> "$TMP_HOME/.config/copyq/copyq.conf"
 bash "$REPO_ROOT/scripts/materialize.sh" --dest "$TMP_HOME" >/dev/null
 if grep -q '# user edit' "$TMP_HOME/.config/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf"; then
   echo "TEST-PASS: user-edited WirePlumber Bluetooth policy kept on rerun"
@@ -242,6 +246,20 @@ else
   echo "TEST-FAIL: materialize overwrote user-edited WirePlumber Bluetooth policy" >&2
   exit 1
 fi
+for preserved in \
+  ".config/hypr/hyprland.lua.d/monitors-user.lua:user monitor edit" \
+  ".config/niri/config.kdl:user niri edit" \
+  ".config/kitty/kitty.conf:user kitty edit" \
+  ".config/copyq/copyq.conf:user copyq edit"; do
+  rel="${preserved%%:*}"
+  marker="${preserved#*:}"
+  if grep -q "$marker" "$TMP_HOME/$rel"; then
+    echo "TEST-PASS: user-edited $rel kept on rerun"
+  else
+    echo "TEST-FAIL: materialize overwrote user-edited $rel" >&2
+    exit 1
+  fi
+done
 
 # repo-level validation still green
 "$REPO_ROOT/scripts/validate.sh"

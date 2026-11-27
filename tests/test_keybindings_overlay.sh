@@ -27,7 +27,7 @@ HORNERO_KEYBINDS_OVERLAY_FILE="$SCRATCH/hornero-keybinds.lua" \
   "$LUA_BIN" "$REPO_ROOT/tests/keybindings_overlay_spec.lua" "$REPO_ROOT" "$SCRATCH"
 
 # The overlay loads after layout.lua and before helpers/keybindings.
-order=$(grep -nE 'dofile\(here \.\. "(keybindings-overlay|keybindings|keybindings-user)\.lua"\)|helpers\.lua' "$HYPR/hyprland.lua" | cut -d: -f1 | tr '\n' ' ')
+order=$(grep -nE '(load_factory|load_user)\("(keybindings-overlay|keybindings|keybindings-user)\.lua"\)|helpers\.lua' "$HYPR/hyprland.lua" | cut -d: -f1 | tr '\n' ' ')
 read -r overlay helpers keys user <<<"$order"
 [[ -n "${user:-}" && "$overlay" -lt "$helpers" && "$helpers" -lt "$keys" && "$keys" -lt "$user" ]] \
   || fail "hyprland.lua must load keybindings-overlay.lua before helpers.lua and keybindings.lua (lines: $order)"

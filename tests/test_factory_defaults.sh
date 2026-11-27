@@ -60,7 +60,7 @@ grep -qx 'XDG_DOCUMENTS_DIR="$HOME/Documents"' "$CFG/user-dirs.dirs" \
 pass "xdg defaults (mimeapps + user-dirs, browser deferred)"
 
 # Hyprland: user monitor overrides load after the generic fallback.
-grep -q 'dofile(here .. "monitors-user.lua")' "$CFG/hypr/hyprland.lua" \
+grep -q 'load_user("monitors-user.lua")' "$CFG/hypr/hyprland.lua" \
   || fail "hyprland.lua does not load monitors-user.lua"
 [[ -f "$CFG/hypr/hyprland.lua.d/monitors-user.lua" ]] \
   || fail "monitors-user.lua not materialized"
