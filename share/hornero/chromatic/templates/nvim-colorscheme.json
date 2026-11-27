@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "name": "nvim-colorscheme",
+  "template": "hornero-chromatic.lua.tmpl",
+  "output": "${XDG_CONFIG_HOME}/nvim/colors/hornero-chromatic.lua",
+  "when": "chromatic",
+  "requires": "${XDG_CONFIG_HOME}/nvim"
+}
