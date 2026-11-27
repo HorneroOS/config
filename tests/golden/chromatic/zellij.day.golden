@@ -2,16 +2,16 @@
 // Palette hornero-signal-day (light)
 themes {
     hornero-signal {
-        fg "#1B1E22"
-        bg "#F2EEE5"
-        black "#1B1E22"
-        red "#A8341C"
-        green "#256A3B"
-        yellow "#8F4B00"
-        blue "#1A5F88"
-        magenta "#8A3A85"
-        cyan "#126B69"
-        white "#857F73"
-        orange "#8F4B00"
+        fg "#283344"
+        bg "#EEF2F7"
+        black "#283344"
+        red "#9C293E"
+        green "#1E6448"
+        yellow "#864700"
+        blue "#145D86"
+        magenta "#6A3FA0"
+        cyan "#11666E"
+        white "#505E70"
+        orange "#864700"
     }
 }

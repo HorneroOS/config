@@ -32,7 +32,7 @@ pass "live Signal scheme lands at the contract path"
   || fail "hyprlock-theme exits 0 on the live Signal scheme"
 OUT="$XDG_CACHE_HOME/hornero/smart-colors/colors-hyprlock.conf"
 [[ -f $OUT ]] || fail "hyprlock-theme writes canonical hornero output"
-grep -q '^\$hs_signal = rgba(f2a33aff)$' "$OUT" \
+grep -q '^\$hs_signal = rgba(f2ac52ff)$' "$OUT" \
   || fail "hyprlock-theme output carries the scheme's signal role"
 # The sourced override holds variables only; widgets (and the deliberate
 # absence of a dead $DATE/cmd[] label) live in desktop/hypr/hyprlock.conf.

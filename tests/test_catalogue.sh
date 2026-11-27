@@ -54,10 +54,10 @@ assert [entries[i]["collectionOrder"] for i in
         ("hornero-signal-night", "hornero-signal-day", "hornero-signal-contrast", "hornero-signal-dusk")] == [1, 2, 3, 4]
 originals = {
     "patagonia", "quebrada", "ibera", "fin-del-mundo", "buenos-aires-nocturno",
-    "pampa", "cuyo", "iguazu", "sierras",
+    "pampa", "cuyo", "iguazu", "sierras", "jacaranda", "glaciar", "ceibo",
 }
 assert {i for i, e in entries.items() if e["collection"] == "hornero-originals"} == originals
-assert sorted(entries[i]["collectionOrder"] for i in originals) == list(range(1, 10))
+assert sorted(entries[i]["collectionOrder"] for i in originals) == list(range(1, 13))
 assert {entries[i]["mode"] for i in originals} == {"light", "dark"}
 removed = {"hornero-dark", "hornero-light", "hornero-199x", "neon-city",
            "vapor-dreams", "soft-morning", "warm-sunset"}
