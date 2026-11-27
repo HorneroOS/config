@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-Glaciar
+Comment=Hornero Signal GTK theme generated from glaciar
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-Glaciar
+MetacityTheme=Hornero-Glaciar
+IconTheme=Papirus
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:

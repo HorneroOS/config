@@ -1,33 +1,33 @@
 # Hornero Signal palette for hornero-signal-night — GENERATED from schema-v2 roles
 # (lib/hornero/signal_render.py); do not hand-edit.
 [colors.primary]
-background = "#13171D"
-foreground = "#ECE6DA"
+background = "#141B24"
+foreground = "#E6EBF1"
 
 [colors.cursor]
-cursor = "#F2A33A"
-text = "#1A1205"
+cursor = "#F2AC52"
+text = "#1E1304"
 
 [colors.selection]
-background = "#16303F"
-text = "#CDE8F8"
+background = "#163345"
+text = "#D6EFFC"
 
 [colors.normal]
-black = "#1F252E"
-red = "#F0705A"
-green = "#8BD49A"
-yellow = "#F2A33A"
-blue = "#7EC1EA"
-magenta = "#D49AD8"
-cyan = "#6FCFC4"
-white = "#C9C4B8"
+black = "#24303D"
+red = "#FF8494"
+green = "#8DDBAF"
+yellow = "#F2AC52"
+blue = "#8BCEF0"
+magenta = "#C9A5F5"
+cyan = "#76D8CE"
+white = "#C5D0DC"
 
 [colors.bright]
-black = "#66707B"
-red = "#FF9C88"
-green = "#B4EBC0"
-yellow = "#FFC77A"
-blue = "#AEDBF6"
-magenta = "#EAC0EC"
-cyan = "#A2E6DD"
-white = "#ECE6DA"
+black = "#8393A6"
+red = "#FFA6B2"
+green = "#B2EBC9"
+yellow = "#FFC87D"
+blue = "#B2E0F8"
+magenta = "#DEC4FA"
+cyan = "#A3EAE2"
+white = "#E6EBF1"

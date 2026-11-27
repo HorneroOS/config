@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Hornero-Ceibo
+Comment=Hornero Signal GTK theme generated from ceibo
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Hornero-Ceibo
+MetacityTheme=Hornero-Ceibo
+IconTheme=Papirus
+CursorTheme=elementary
+ButtonLayout=close,minimize,maximize:

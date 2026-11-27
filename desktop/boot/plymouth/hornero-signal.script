@@ -8,10 +8,10 @@
 // (plymouth's own label plugin ships with the plymouth initcpio hook as usual).
 // Assets are authored at 2x and scaled to the screen height.
 //
-// Colours: ground #0C0F13 (hornero-signal-night role `ground`).
+// Colours: ground #0C1016 (hornero-signal-night role `ground`).
 
-Window.SetBackgroundTopColor(0.047, 0.059, 0.075);
-Window.SetBackgroundBottomColor(0.047, 0.059, 0.075);
+Window.SetBackgroundTopColor(0.047, 0.063, 0.086);
+Window.SetBackgroundBottomColor(0.047, 0.063, 0.086);
 
 SEGMENTS = 24;
 MAX_BULLETS = 32;

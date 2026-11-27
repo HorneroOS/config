@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
   <title>GRUB background</title>
-  <rect width="1920" height="1080" fill="#0C0F13"/>
-  <g stroke="#F2A33A" fill="none">
+  <rect width="1920" height="1080" fill="#0C1016"/>
+  <g stroke="#F2AC52" fill="none">
     <line x1="1080" y1="1080" x2="2160" y2="0" stroke-width="3"/>
     <line x1="1128" y1="1080" x2="2208" y2="0" stroke-width="1" opacity="0.6"/>
     <line x1="1152" y1="1080" x2="2232" y2="0" stroke-width="1" opacity="0.6"/>
   </g>
-  <g stroke="#7EC1EA" stroke-width="1.5" opacity="0.8" fill="none">
+  <g stroke="#8BCEF0" stroke-width="1.5" opacity="0.8" fill="none">
     <circle cx="1824" cy="96" r="14"/><line x1="1802" y1="96" x2="1846" y2="96"/><line x1="1824" y1="74" x2="1824" y2="118"/>
   </g>
 </svg>

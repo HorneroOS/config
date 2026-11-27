@@ -1,0 +1,35 @@
+/* Hornero-Glaciar libadwaita recolouring — GENERATED from schema-v2 roles of
+ * profiles/themes/glaciar/theme.json (scripts/generate-appearance.py).
+ * Installed as ~/.config/gtk-4.0/gtk.css; public named colours only. */
+@define-color accent_bg_color #0E5D7E;
+@define-color accent_fg_color #FFFFFF;
+@define-color accent_color #0E5D7E;
+@define-color destructive_bg_color #A32D3F;
+@define-color destructive_fg_color #FFFFFF;
+@define-color destructive_color #A32D3F;
+@define-color success_bg_color #1B6649;
+@define-color success_fg_color #FFFFFF;
+@define-color success_color #1B6649;
+@define-color warning_bg_color #0E5D7E;
+@define-color warning_fg_color #FFFFFF;
+@define-color warning_color #0E5D7E;
+@define-color error_bg_color #A32D3F;
+@define-color error_fg_color #FFFFFF;
+@define-color error_color #A32D3F;
+@define-color window_bg_color #EEF5FA;
+@define-color window_fg_color #1F3240;
+@define-color view_bg_color #F5FAFD;
+@define-color view_fg_color #1F3240;
+@define-color headerbar_bg_color #EEF5FA;
+@define-color headerbar_fg_color #1F3240;
+@define-color headerbar_border_color #CBE0EC;
+@define-color sidebar_bg_color #DAE7F0;
+@define-color sidebar_fg_color #1F3240;
+@define-color card_bg_color #F5FAFD;
+@define-color card_fg_color #1F3240;
+@define-color dialog_bg_color #F5FAFD;
+@define-color dialog_fg_color #1F3240;
+@define-color popover_bg_color #F5FAFD;
+@define-color popover_fg_color #1F3240;
+@define-color thumbnail_bg_color #FCFEFF;
+@define-color thumbnail_fg_color #1F3240;

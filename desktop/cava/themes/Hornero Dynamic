@@ -1,11 +1,11 @@
 # Hornero Signal palette for hornero-signal-night — GENERATED from schema-v2 roles
 # (lib/hornero/signal_render.py); do not hand-edit.
 [color]
-background = '#13171D'
-foreground = '#ECE6DA'
+background = '#141B24'
+foreground = '#E6EBF1'
 gradient = 1
 gradient_count = 4
-gradient_color_1 = '#8BD49A'
-gradient_color_2 = '#7EC1EA'
-gradient_color_3 = '#F2A33A'
-gradient_color_4 = '#F0705A'
+gradient_color_1 = '#8DDBAF'
+gradient_color_2 = '#8BCEF0'
+gradient_color_3 = '#F2AC52'
+gradient_color_4 = '#FF8494'

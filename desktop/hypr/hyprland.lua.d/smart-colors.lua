@@ -6,23 +6,23 @@
 local factory = {
 	general = {
 		col = {
-			active_border = "rgba(f2a33aee)",
-			inactive_border = "rgba(2c333ccc)",
+			active_border = "rgba(f2ac52ee)",
+			inactive_border = "rgba(2d3b4bcc)",
 		},
 	},
 	group = {
 		col = {
-			border_active = "rgba(f2a33aee)",
-			border_inactive = "rgba(707a85aa)",
-			border_locked_active = "rgba(7ec1eaee)",
-			border_locked_inactive = "rgba(16303faa)",
+			border_active = "rgba(f2ac52ee)",
+			border_inactive = "rgba(8393a6aa)",
+			border_locked_active = "rgba(8bcef0ee)",
+			border_locked_inactive = "rgba(163345aa)",
 		},
 		groupbar = {
 			col = {
-				active = "rgba(f2a33aee)",
-				inactive = "rgba(1f252eee)",
-				locked_active = "rgba(7ec1eaee)",
-				locked_inactive = "rgba(16303fee)",
+				active = "rgba(f2ac52ee)",
+				inactive = "rgba(24303dee)",
+				locked_active = "rgba(8bcef0ee)",
+				locked_inactive = "rgba(163345ee)",
 			},
 		},
 	},
