@@ -21,6 +21,16 @@ Original masters are intentionally not checked into Git. Fetch each original fro
 
 This yields 2560×1440 derivatives for the licensed tier. Website previews are separate smaller files derived from these packaged derivatives; the website never needs to serve original masters. Run `python3 scripts/validate-wallpapers.py` after changing the manifest, images, or theme references. The validation checks paths, IDs, sizes, checksums, theme references, and license/attribution fields. `scripts/materialize.sh --dest <temporary-home>` checks the package-only mapping without writing to a real user home.
 
+## License provenance & size budget audit
+
+Use `scripts/validate-wallpapers.py --audit-licenses` (and `--json` for machine-readable output) to inspect the split between verified licensed photos, first-party MIT procedural SVG wallpapers, and unverified legacy collection files with exact byte totals:
+
+- **Verified licensed tier**: 3 CC BY 2.0 photographs (`1.98 MiB` / `2,071,389 B`, 5.88% by count, 2.89% by size).
+- **First-party procedural originals**: 2 MIT SVG wallpapers in `assets/brand/wallpaper/` (`16.1 KiB` / `16,474 B`).
+- **Unverified legacy collection**: 48 `license=unknown` files (`66.38 MiB` / `69,599,707 B`, 94.12% by count, 97.11% by size; 11 files over `1.00 MiB` account for `50.03 MiB`).
+
+Optional enforcement flags `--max-unverified-bytes N` and `--max-file-bytes N` allow CI or replacement PRs to gate total unverified footprint and per-file size budgets mechanically without altering the default `scripts/validate.sh` run.
+
 ## Collection audit
 
 `profiles/themes/dotfiles-wallpaper-audit.json` records every wallpaper file found under the pinned dotfiles media root, including file path, commit, dimensions, format, checksum, folder/theme association, provenance classification and Hornero redistribution status. Five regional images explicitly documented as generated and one stylized image with unverified provenance were replaced in the product catalog. Other optional non-Argentina illustrations and uncertain images remain untouched in dotfiles; they are neither promoted nor bundled by HorneroOS/config. Text files with `.png` names are identified as placeholders, not images.
