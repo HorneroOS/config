@@ -1,11 +1,11 @@
 # Hornero Signal - GRUB theme (HorneroOS/config desktop/boot/grub).
-# Colours are the hornero-signal-night roles (RFC 0001): ground #0C0F13,
-# ink #ECE6DA, inkMuted #A8ABAD, raised #1F252E, signal #F2A33A.
+# Colours are the hornero-signal-night roles (RFC 0001): ground #0C1016,
+# ink #E6EBF1, inkMuted #A9B7C6, raised #24303D, signal #F2AC52.
 # Layout is proportional; fonts are IBM Plex pf2 files in this directory.
 # No animation, no blur: GRUB draws static frames. The pf2 fonts are loaded by
 # grub-mkconfig (00_header emits loadfont for every *.pf2 beside the theme).
 
-desktop-color: "#0C0F13"
+desktop-color: "#0C1016"
 desktop-image: "background.png"
 desktop-image-scale-method: "crop"
 title-text: ""
@@ -34,9 +34,9 @@ terminal-border: "0"
     width = 46%
     height = 54%
     item_font = "IBM Plex Sans Regular 18"
-    item_color = "#A8ABAD"
+    item_color = "#A9B7C6"
     selected_item_font = "IBM Plex Sans Regular 18"
-    selected_item_color = "#ECE6DA"
+    selected_item_color = "#E6EBF1"
     item_height = 44
     item_padding = 16
     item_spacing = 6
@@ -55,7 +55,7 @@ terminal-border: "0"
     height = 20
     text = "AUTO BOOT IN %d S"
     font = "IBM Plex Mono Medium Regular 14"
-    color = "#A8ABAD"
+    color = "#A9B7C6"
     align = "left"
 }
 
@@ -66,6 +66,6 @@ terminal-border: "0"
     height = 20
     text = "UP/DOWN SELECT  ·  ENTER BOOT  ·  E EDIT  ·  C COMMAND LINE"
     font = "IBM Plex Mono Medium Regular 14"
-    color = "#A8ABAD"
+    color = "#A9B7C6"
     align = "left"
 }

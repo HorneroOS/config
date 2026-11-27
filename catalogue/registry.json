@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "source": "profiles/themes",
-  "count": 21,
+  "count": 24,
   "entries": [
     {
       "id": "buenos-aires-nocturno",
@@ -22,8 +22,8 @@
       "collectionOrder": 5,
       "gtkTheme": "Hornero-Nocturno",
       "swatch": {
-        "base": "#16161C",
-        "panel": "#1C1C23",
+        "base": "#161622",
+        "panel": "#1D1D2A",
         "ink": "#EDE7DF",
         "signal": "#F0A832",
         "cue": "#86C2EC"
@@ -50,8 +50,8 @@
         "base": "#EFF1F5",
         "panel": "#F4F5F8",
         "ink": "#4C4F69",
-        "signal": "#B24608",
-        "cue": "#177283"
+        "signal": "#AC4000",
+        "cue": "#0B6C7D"
       },
       "defaultWallpaper": "cherry-blossom-blue-sky.jpg",
       "wallpaperDir": "catppuccin-latte"
@@ -82,6 +82,34 @@
       "wallpaperDir": "catppuccin-mocha"
     },
     {
+      "id": "ceibo",
+      "name": "Ceibo",
+      "description": "National blossom in daylight: clean neutral porcelain surfaces, deep plum-slate ink, coral-rose signal and botanical mint",
+      "tags": [
+        "argentina",
+        "ceibo",
+        "coral",
+        "rose",
+        "mint",
+        "botanical",
+        "light"
+      ],
+      "mode": "light",
+      "version": "",
+      "collection": "hornero-originals",
+      "collectionOrder": 12,
+      "gtkTheme": "Hornero-Ceibo",
+      "swatch": {
+        "base": "#F4F2F6",
+        "panel": "#F9F8FA",
+        "ink": "#2E2630",
+        "signal": "#9E2A48",
+        "cue": "#185E85"
+      },
+      "defaultWallpaper": "hornero-signal-day-01.png",
+      "wallpaperDir": "hornero-signal-day"
+    },
+    {
       "id": "cuyo",
       "name": "Cuyo",
       "description": "Aconcagua snow and stone: cool mineral paper, a sun-on-rock sienna signal and a thin-air celeste cue",
@@ -100,11 +128,11 @@
       "collectionOrder": 7,
       "gtkTheme": "Hornero-Cuyo",
       "swatch": {
-        "base": "#EEEFEE",
-        "panel": "#F4F5F4",
-        "ink": "#1C1F22",
-        "signal": "#8F4A1A",
-        "cue": "#1C638D"
+        "base": "#EAE7E1",
+        "panel": "#F2EFEB",
+        "ink": "#23201C",
+        "signal": "#8E4919",
+        "cue": "#1A618B"
       },
       "defaultWallpaper": "jagged-snow-peaks-autumn-tree.png",
       "wallpaperDir": "cuyo"
@@ -163,6 +191,34 @@
       "wallpaperDir": "fin-del-mundo"
     },
     {
+      "id": "glaciar",
+      "name": "Glaciar",
+      "description": "Patagonian glacier ice: cool ice-white ceramic panels, deep fjord-slate ink, celeste and turquoise-mint accents",
+      "tags": [
+        "argentina",
+        "patagonia",
+        "glaciar",
+        "ice",
+        "celeste",
+        "turquoise",
+        "light"
+      ],
+      "mode": "light",
+      "version": "",
+      "collection": "hornero-originals",
+      "collectionOrder": 11,
+      "gtkTheme": "Hornero-Glaciar",
+      "swatch": {
+        "base": "#EEF5FA",
+        "panel": "#F5FAFD",
+        "ink": "#1F3240",
+        "signal": "#0E5D7E",
+        "cue": "#0F6466"
+      },
+      "defaultWallpaper": "hornero-signal-day-01.png",
+      "wallpaperDir": "hornero-signal-day"
+    },
+    {
       "id": "gruvbox",
       "name": "Gruvbox",
       "description": "Gruvbox dark ported to Signal roles: warm retro surfaces, orange signal and aqua-blue cue, normals lifted for AA",
@@ -218,12 +274,13 @@
     {
       "id": "hornero-signal-day",
       "name": "Hornero Signal Day",
-      "description": "Warm technical-drawing paper with ink-black text, a burnt-amber live signal and a deep celeste focus cue",
+      "description": "Flagship Light: white ceramic and pale aluminum instrument panels, dark slate ink, amber live signal and celeste focus cue",
       "tags": [
         "hornero",
         "signal",
         "flagship",
-        "paper",
+        "ceramic",
+        "aluminum",
         "amber",
         "celeste",
         "light"
@@ -234,11 +291,11 @@
       "collectionOrder": 2,
       "gtkTheme": "Hornero-Signal-Day",
       "swatch": {
-        "base": "#F2EEE5",
-        "panel": "#F7F4EE",
-        "ink": "#1B1E22",
-        "signal": "#8F4B00",
-        "cue": "#1A5F88"
+        "base": "#EEF2F7",
+        "panel": "#F5F8FC",
+        "ink": "#283344",
+        "signal": "#864700",
+        "cue": "#145D86"
       },
       "defaultWallpaper": "hornero-signal-day-01.png",
       "wallpaperDir": "hornero-signal-day"
@@ -275,7 +332,7 @@
     {
       "id": "hornero-signal-night",
       "name": "Hornero Signal Night",
-      "description": "Factory default: cool graphite instrument panels with warm phosphor-cream ink, an amber live signal and a celeste focus cue",
+      "description": "Factory default: cool blue-hour graphite instrument panels, crisp off-white ink, amber live signal and celeste focus cue",
       "tags": [
         "hornero",
         "signal",
@@ -291,11 +348,11 @@
       "collectionOrder": 1,
       "gtkTheme": "Hornero-Signal",
       "swatch": {
-        "base": "#13171D",
-        "panel": "#181D24",
-        "ink": "#ECE6DA",
-        "signal": "#F2A33A",
-        "cue": "#7EC1EA"
+        "base": "#141B24",
+        "panel": "#1B2430",
+        "ink": "#E6EBF1",
+        "signal": "#F2AC52",
+        "cue": "#8BCEF0"
       },
       "defaultWallpaper": "hornero-signal-night-01.png",
       "wallpaperDir": "hornero-signal-night"
@@ -319,8 +376,8 @@
       "collectionOrder": 3,
       "gtkTheme": "Hornero-Ibera",
       "swatch": {
-        "base": "#121A17",
-        "panel": "#17211D",
+        "base": "#111A11",
+        "panel": "#172118",
         "ink": "#E7ECE1",
         "signal": "#E3A548",
         "cue": "#7FC6DD"
@@ -355,6 +412,34 @@
       },
       "defaultWallpaper": "misty-green-hills-sunrise.jpg",
       "wallpaperDir": "iguazu"
+    },
+    {
+      "id": "jacaranda",
+      "name": "Jacarandá",
+      "description": "Buenos Aires spring in bloom: cool porcelain-lavender ceramic panels, deep indigo-slate ink, lavender-rose and celeste accents",
+      "tags": [
+        "argentina",
+        "buenos-aires",
+        "jacaranda",
+        "lavender",
+        "rose",
+        "celeste",
+        "light"
+      ],
+      "mode": "light",
+      "version": "",
+      "collection": "hornero-originals",
+      "collectionOrder": 10,
+      "gtkTheme": "Hornero-Jacaranda",
+      "swatch": {
+        "base": "#F3F0F9",
+        "panel": "#F8F6FC",
+        "ink": "#2B2640",
+        "signal": "#6538A6",
+        "cue": "#185E8A"
+      },
+      "defaultWallpaper": "hornero-signal-day-01.png",
+      "wallpaperDir": "hornero-signal-day"
     },
     {
       "id": "landscape",

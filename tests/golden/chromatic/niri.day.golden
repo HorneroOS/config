@@ -2,16 +2,16 @@
 // Palette hornero-signal-day (light)
 layout {
     focus-ring {
-        active-color "#8F4B00"
-        inactive-color "#D3CCBD"
-        urgent-color "#A8341C"
+        active-color "#864700"
+        inactive-color "#D2DAE6"
+        urgent-color "#9C293E"
     }
     border {
-        active-color "#8F4B00"
-        inactive-color "#D3CCBD"
-        urgent-color "#A8341C"
+        active-color "#864700"
+        inactive-color "#D2DAE6"
+        urgent-color "#9C293E"
     }
     shadow {
-        color "rgba(230, 225, 213, 0.45)"
+        color "rgba(232, 237, 244, 0.45)"
     }
 }

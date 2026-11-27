@@ -2,16 +2,16 @@
 // Palette hornero-signal-night (dark)
 layout {
     focus-ring {
-        active-color "#F2A33A"
-        inactive-color "#2C333C"
-        urgent-color "#F0705A"
+        active-color "#F2AC52"
+        inactive-color "#2D3B4B"
+        urgent-color "#FF8494"
     }
     border {
-        active-color "#F2A33A"
-        inactive-color "#2C333C"
-        urgent-color "#F0705A"
+        active-color "#F2AC52"
+        inactive-color "#2D3B4B"
+        urgent-color "#FF8494"
     }
     shadow {
-        color "rgba(12, 15, 19, 0.45)"
+        color "rgba(12, 16, 22, 0.45)"
     }
 }

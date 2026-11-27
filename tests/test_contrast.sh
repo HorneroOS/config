@@ -38,7 +38,7 @@ assert broken(lambda d: d.update(schemaVersion=1)), "schema v1 accepted"
 PY
 pass "validator rejects missing roles, M3 fields, bad hex, low contrast, short terminals"
 
-# Flagship hex values are the RFC 0001 §3.2 contract (with amendment 2) the shell embeds; they
+# Flagship hex values are the RFC 0001 §3.2 contract (with amendment 3) the shell embeds; they
 # must stay byte-identical (the High Contrast anchors are pinned too).
 python3 - "$REPO_ROOT/profiles/themes" <<'PY' || fail "flagship palettes drift from RFC 0001 §3.2"
 import json, sys
@@ -47,24 +47,24 @@ night = json.load(open(f"{base}/hornero-signal-night/theme.json"))
 day = json.load(open(f"{base}/hornero-signal-day/theme.json"))
 hc = json.load(open(f"{base}/hornero-signal-contrast/theme.json"))
 rfc = {
- "ground": ("#0C0F13", "#E6E1D5"), "sunken": ("#101419", "#DCD6C8"),
- "base": ("#13171D", "#F2EEE5"), "panel": ("#181D24", "#F7F4EE"),
- "raised": ("#1F252E", "#FBF9F5"), "lifted": ("#283039", "#FFFFFF"),
- "ink": ("#ECE6DA", "#1B1E22"), "inkMuted": ("#A8ABAD", "#4E545B"),
- "inkFaint": ("#737980", "#7A8086"), "rule": ("#2C333C", "#D3CCBD"),
- "ruleStrong": ("#707A85", "#736D62"), "focus": ("#7EC1EA", "#1A5F88"),
- "signal": ("#F2A33A", "#8F4B00"), "onSignal": ("#1A1205", "#FFFFFF"),
- "signalWell": ("#3A2A12", "#F6DDB8"), "onSignalWell": ("#FFD9A3", "#3D2200"),
- "cue": ("#7EC1EA", "#1A5F88"), "onCue": ("#06151F", "#FFFFFF"),
- "cueWell": ("#16303F", "#D3E7F3"), "onCueWell": ("#CDE8F8", "#0B2E44"),
- "phosphor": ("#8BD49A", "#256A3B"), "onPhosphor": ("#07170C", "#FFFFFF"),
- "phosphorWell": ("#173222", "#D5EBD9"), "onPhosphorWell": ("#CDEFD4", "#0E2E17"),
- "alert": ("#F0705A", "#A8341C"), "onAlert": ("#1E0905", "#FFFFFF"),
- "alertWell": ("#3D1A14", "#F7D7D0"), "onAlertWell": ("#FFD3CA", "#4A1209"),
- "inverse": ("#ECE6DA", "#1B1E22"), "onInverse": ("#181D24", "#F2EEE5"),
- "inverseSignal": ("#8A5200", "#F2A33A"), "scrim": ("#000000", "#000000"),
+ "ground": ("#0C1016", "#E8EDF4"), "sunken": ("#10151C", "#E0E6EF"),
+ "base": ("#141B24", "#EEF2F7"), "panel": ("#1B2430", "#F5F8FC"),
+ "raised": ("#24303D", "#FCFCFE"), "lifted": ("#2C3947", "#FFFFFF"),
+ "ink": ("#E6EBF1", "#283344"), "inkMuted": ("#A9B7C6", "#505E70"),
+ "inkFaint": ("#8999AB", "#606D80"), "rule": ("#2D3B4B", "#D2DAE6"),
+ "ruleStrong": ("#8393A6", "#7A8798"), "focus": ("#8BCEF0", "#145D86"),
+ "signal": ("#F2AC52", "#864700"), "onSignal": ("#1E1304", "#FFFFFF"),
+ "signalWell": ("#3D2B12", "#FCE9C8"), "onSignalWell": ("#FFE0B0", "#432300"),
+ "cue": ("#8BCEF0", "#145D86"), "onCue": ("#071A26", "#FFFFFF"),
+ "cueWell": ("#163345", "#D8EEF9"), "onCueWell": ("#D6EFFC", "#0B334B"),
+ "phosphor": ("#8DDBAF", "#1E6448"), "onPhosphor": ("#071D12", "#FFFFFF"),
+ "phosphorWell": ("#153425", "#D6F4E8"), "onPhosphorWell": ("#D1F5E0", "#0E3425"),
+ "alert": ("#FF8494", "#9C293E"), "onAlert": ("#24070C", "#FFFFFF"),
+ "alertWell": ("#421922", "#FADDE4"), "onAlertWell": ("#FFD6DC", "#4E111E"),
+ "inverse": ("#E6EBF1", "#283344"), "onInverse": ("#1B2430", "#F5F8FC"),
+ "inverseSignal": ("#864700", "#F2AC52"), "scrim": ("#000000", "#000000"),
  "shadow": ("#000000", "#000000"),
- "glow": ("#FFB650", "#8F4B00"),
+ "glow": ("#FFC06B", "#864700"),
 }
 for role, (n, d) in rfc.items():
     assert night["palette"][role] == n, (role, night["palette"][role], n)
@@ -74,7 +74,7 @@ p = hc["palette"]
 assert (p["ground"], p["ink"], p["signal"], p["cue"], p["ruleStrong"]) == (
     "#000000", "#FFFFFF", "#FFC247", "#8FD3FF", "#FFFFFF")
 PY
-pass "Signal Night/Day match RFC 0001 §3.2 + amendment 2 byte-for-byte; High Contrast anchors pinned"
+pass "Signal Night/Day match RFC 0001 §3.2 + amendment 3 byte-for-byte; High Contrast anchors pinned"
 
 # The JSON Schema file describes the same contract as the validator.
 python3 - "$REPO_ROOT" <<'PY' || fail "tokens.schema.json drifts from signal_theme.py"

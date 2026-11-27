@@ -24,9 +24,9 @@ FF = ROOT / "desktop" / "fastfetch"
 ART = FF / "art"
 
 # Signal Night ANSI values, for the image logo only.
-SVG_HEX = {"31": "#F0705A", "32": "#8BD49A", "33": "#F2A33A", "34": "#7EC1EA",
-           "35": "#D49AD8", "36": "#6FCFC4", "37": "#C9C4B8", "90": "#66707B",
-           "93": "#FFC77A"}
+SVG_HEX = {"31": "#FF8494", "32": "#8DDBAF", "33": "#F2AC52", "34": "#8BCEF0",
+           "35": "#C9A5F5", "36": "#76D8CE", "37": "#C5D0DC", "90": "#8393A6",
+           "93": "#FFC87D"}
 
 
 def load(path):

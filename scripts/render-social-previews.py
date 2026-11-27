@@ -28,10 +28,10 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 BRAND = REPO / "assets" / "brand"
 
-# Signal Night roles (RFC 0001 section 3.2).
-GROUND, BASE, PANEL = "#0C0F13", "#13171D", "#181D24"
-INK, INK_MUTED, RULE, RULE_STRONG = "#ECE6DA", "#A8ABAD", "#2C333C", "#707A85"
-SIGNAL = "#F2A33A"
+# Signal Night roles (RFC 0001 section 3.2, Amendment 3).
+GROUND, BASE, PANEL = "#0C1016", "#141B24", "#1B2430"
+INK, INK_MUTED, RULE, RULE_STRONG = "#E6EBF1", "#A9B7C6", "#2D3B4B", "#8393A6"
+SIGNAL = "#F2AC52"
 
 CARDS = [
     # (file stem, eyebrow, title, tagline lines)
