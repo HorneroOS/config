@@ -202,12 +202,18 @@ for f in "$REPO_ROOT"/desktop/hypr/hyprland.lua "$REPO_ROOT"/desktop/hypr/hyprla
     HYPR_FAIL=1; FAIL=1
   fi
 done
+HYPR_MOD_COUNT=0
 while IFS= read -r mod; do
+  HYPR_MOD_COUNT=$((HYPR_MOD_COUNT + 1))
   if [[ ! -e "$REPO_ROOT/desktop/hypr/hyprland.lua.d/$mod" ]]; then
     echo "VALIDATE-FAIL: hyprland.lua loads missing module: $mod" >&2
     HYPR_FAIL=1; FAIL=1
   fi
-done < <(grep -oE 'dofile\(here \.\. "[^"]+"\)' "$REPO_ROOT/desktop/hypr/hyprland.lua" | sed -E 's/.*here \.\. "//; s/"\)//')
+done < <(grep -oE '(load_factory|load_user)\("[^"]+\.lua"\)|dofile\(here \.\. "[^"]+\.lua"\)' "$REPO_ROOT/desktop/hypr/hyprland.lua" | sed -E 's/.*"([^"]+)".*/\1/')
+if [[ $HYPR_MOD_COUNT -lt 17 ]]; then
+  echo "VALIDATE-FAIL: hyprland.lua resolved only $HYPR_MOD_COUNT modules (expected >= 17)" >&2
+  HYPR_FAIL=1; FAIL=1
+fi
 [[ $HYPR_FAIL -eq 0 ]] && pass "hypr sanity (Lua-only, luac -p, modules resolve, no legacy refs)"
 
 # --- Niri config ---------------------------------------------------------------

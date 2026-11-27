@@ -2,17 +2,18 @@
 """Additively refresh a user Hyprland entrypoint from the factory one.
 
 Existing users keep a skel-seeded ~/.config/hypr/hyprland.lua, so
-packaged entrypoint changes (new dofile module lines such as
-monitors-user.lua) never reach them (HorneroOS/config#124). This tool
-inserts only the factory `dofile(here .. "...")` lines the user file
-is missing, in factory order, at the position of their factory
-neighbours. It never deletes, reorders, or rewrites any existing
-line, and never touches *-user.lua overrides.
+packaged entrypoint changes (new factory module lines such as
+monitors-user.lua) never reach them (HorneroOS/config#124, #184). This
+tool inserts only the factory module load lines (`load_factory("...")`,
+`load_user("...")`, or legacy `dofile(here .. "...")`) the user file is
+missing, in factory order, at the position of their factory neighbours.
+It never deletes, reorders, or rewrites any existing line, and never
+touches *-user.lua overrides.
 
 Default is a dry-run that prints a unified diff; --apply writes
 atomically and keeps a `<file>.pre-refresh` backup of the original.
 Refuses (exit 1) when the target is missing or restructured (no
-`local here =` anchor), instead of guessing.
+`local user_dir =` or legacy `local here =` anchor), instead of guessing.
 """
 
 import argparse
@@ -22,31 +23,70 @@ import shutil
 import sys
 from pathlib import Path
 
-DOFILE_RE = re.compile(r'^dofile\(here \.\. "([^"]+)"\)\s*$')
+LOADER_RE = re.compile(
+    r'^(?P<assign>[A-Za-z_][A-Za-z0-9_]*\s*=\s*)?'
+    r'(?:dofile\(here \.\. "(?P<legacy>[^"]+)"\)'
+    r'|(?P<fn>load_factory|load_user)\("(?P<mod>[^"]+)"\))\s*$'
+)
+
+
+def parse_loader(line):
+    """Return (module_name, assign_prefix, stripped_line) or None."""
+    stripped = line.strip()
+    m = LOADER_RE.match(stripped)
+    if not m:
+        return None
+    mod = m.group("mod") or m.group("legacy")
+    assign = m.group("assign") or ""
+    return mod, assign, stripped
+
+
+def factory_entries(lines):
+    entries = []
+    for line in lines:
+        parsed = parse_loader(line)
+        if parsed is not None:
+            entries.append(parsed)
+    return entries
 
 
 def factory_modules(lines):
-    return [m.group(1) for line in lines if (m := DOFILE_RE.match(line.strip()))]
+    return [mod for mod, _, _ in factory_entries(lines)]
+
+
+def target_style(lines):
+    if any(line.startswith("local user_dir =") for line in lines):
+        return "factory"
+    if any(line.startswith("local here =") for line in lines):
+        return "legacy"
+    return None
 
 
 def refresh(factory_lines, target_lines):
-    """Return the target lines with missing factory dofiles inserted."""
-    factory = factory_modules(factory_lines)
+    """Return the target lines with missing factory loaders inserted."""
+    entries = factory_entries(factory_lines)
+    factory = [mod for mod, _, _ in entries]
+    entry_by_mod = {mod: (assign, stripped) for mod, assign, stripped in entries}
     present = set(factory_modules(target_lines))
     missing = [mod for mod in factory if mod not in present]
     if not missing:
         return target_lines, []
+    style = target_style(target_lines) or "factory"
     out = list(target_lines)
     for mod in missing:
-        line = f'dofile(here .. "{mod}")'
+        assign, factory_line = entry_by_mod[mod]
+        if style == "legacy":
+            line = f'{assign}dofile(here .. "{mod}")'
+        else:
+            line = factory_line
         idx = factory.index(mod)
         # Anchor after the nearest factory predecessor already present,
         # else before the nearest present successor, else append.
         anchor = None
         for prev in reversed(factory[:idx]):
             for i, existing in enumerate(out):
-                m = DOFILE_RE.match(existing.strip())
-                if m and m.group(1) == prev:
+                parsed = parse_loader(existing)
+                if parsed and parsed[0] == prev:
                     anchor = i + 1
                     break
             if anchor is not None:
@@ -54,8 +94,8 @@ def refresh(factory_lines, target_lines):
         if anchor is None:
             for nxt in factory[idx + 1:]:
                 for i, existing in enumerate(out):
-                    m = DOFILE_RE.match(existing.strip())
-                    if m and m.group(1) == nxt:
+                    parsed = parse_loader(existing)
+                    if parsed and parsed[0] == nxt:
                         anchor = i
                         break
                 if anchor is not None:
@@ -91,9 +131,9 @@ def main(argv=None):
         return 1
 
     target_lines = target_path.read_text(encoding="utf-8").splitlines()
-    if not any(line.startswith("local here =") for line in target_lines):
+    if target_style(target_lines) is None:
         print(
-            "error: target has no `local here =` anchor; it looks restructured. "
+            "error: target has no `local user_dir =` or `local here =` anchor; it looks restructured. "
             "Refusing to guess — reconcile it manually against the factory entrypoint.",
             file=sys.stderr,
         )
