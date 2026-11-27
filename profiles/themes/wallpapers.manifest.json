@@ -106,6 +106,21 @@
       "id": "sierras",
       "defaultWallpaper": "condorito-sierra-panorama.jpg",
       "wallpaperDir": "sierras"
+    },
+    {
+      "id": "jacaranda",
+      "defaultWallpaper": "hornero-signal-day-01.png",
+      "wallpaperDir": "hornero-signal-day"
+    },
+    {
+      "id": "glaciar",
+      "defaultWallpaper": "hornero-signal-day-01.png",
+      "wallpaperDir": "hornero-signal-day"
+    },
+    {
+      "id": "ceibo",
+      "defaultWallpaper": "hornero-signal-day-01.png",
+      "wallpaperDir": "hornero-signal-day"
     }
   ]
 }
