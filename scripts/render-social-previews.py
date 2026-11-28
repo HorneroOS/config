@@ -52,7 +52,7 @@ CARDS = [
     ("plugins", "PLUGINS · PLUGINKIT", "Hornero Plugins",
      ["First-party extensions, curated catalogue,", "templates and validation."]),
     ("installer", "INSTALLER · CALAMARES", "Hornero Installer",
-     ["Provisional Calamares installer and", "Archiso profile."]),
+     ["Calamares installer and", "Archiso live profile."]),
     ("greeter", "GREETER · SDDM", "Hornero Greeter",
      ["The SDDM login screen and its", "session integration."]),
 ]

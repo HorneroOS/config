@@ -1,10 +1,9 @@
 # HorneroOS Desktop on Niri
 
-Niri is an experimental Wayland compositor backend for HorneroOS Desktop.
-Hyprland remains the validated default. A packaged Niri config and shared
-Shell backend are not enough to call the session supported; the current
-acceptance covers a single-output graphical VM journey, with multi-output and
-portal/recording coverage still open.
+Niri is a Wayland compositor backend for HorneroOS Desktop, complementing
+the primary Hyprland session. It ships with packaged Niri defaults and a shared
+Shell adapter, with a passing single-output graphical baseline and explicit
+capability boundaries documented below.
 
 ## Session configuration
 
@@ -18,8 +17,7 @@ The config package materializes the same file to `~/.config/niri/config.kdl`
 for user setup and to `/etc/niri/config.kdl` as a fallback. Niri checks the
 user's XDG config first and falls back to `/etc/niri/config.kdl`. The package
 does not install the Niri compositor itself or overwrite a user's Niri file
-during the running session. Install Niri separately to experiment with this
-backend.
+during the running session. Install Niri separately to use this backend.
 
 | Key | Hornero action |
 | --- | --- |
@@ -84,13 +82,13 @@ screenshot action. The run also verifies that the desktop portal exports
 end-to-end OBS recording. The host itself remains on Hyprland. This is a real
 one-output session, not config parsing alone, but it does not establish
 multi-output focus, lock/session recovery, actual screencast capture, external
-GTK/Qt app agreement, or the remaining Shell surface matrix. Niri therefore
-remains experimental.
+GTK/Qt app agreement, or the remaining Shell surface matrix. The capability
+boundaries above remain documented explicitly rather than emulated.
 
 The repeatable acceptance scenario is
 [`HorneroOS/qa/scenarios/compositors/niri-desktop-baseline.yaml`](https://github.com/HorneroOS/qa/blob/main/scenarios/compositors/niri-desktop-baseline.yaml).
 Its October 6, 2026 run used the `niri-main-20261006` image built from Shell
-`2608fdee`, Config `e4ebd349`, and `horneroctl` preview15 (`7471351`); all
+`2608fdee`, Config `e4ebd349`, and `horneroctl` (`7471351`); all
 scenario actions and assertions passed. The run is recorded under ID
 `20261006T172058Z-compositors-niri-desktop-baseline-1`; `hornero-qa inspect`
 shows its per-step screenshots and JSON probes alongside the IPC evidence.

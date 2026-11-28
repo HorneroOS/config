@@ -34,6 +34,6 @@
   <text x="86" y="96" font-family="IBM Plex Mono, monospace" font-size="20" letter-spacing="2.4" fill="#A9B7C6">INSTALLER · CALAMARES</text>
   <text x="72" y="320" font-family="IBM Plex Sans Condensed, sans-serif" font-size="96" font-weight="600" fill="#E6EBF1">Hornero Installer</text>
   <rect x="72" y="352" width="96" height="4" fill="#F2AC52"/>
-  <text x="72" y="430" font-family="IBM Plex Sans, sans-serif" font-size="28" fill="#A9B7C6">Provisional Calamares installer and</text><text x="72" y="470" font-family="IBM Plex Sans, sans-serif" font-size="28" fill="#A9B7C6">Archiso profile.</text>
+  <text x="72" y="430" font-family="IBM Plex Sans, sans-serif" font-size="28" fill="#A9B7C6">Calamares installer and</text><text x="72" y="470" font-family="IBM Plex Sans, sans-serif" font-size="28" fill="#A9B7C6">Archiso live profile.</text>
   <text x="72" y="568" font-family="IBM Plex Mono, monospace" font-size="18" letter-spacing="2.4" fill="#8393A6">HORNEROOS.COM</text>
 </svg>

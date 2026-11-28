@@ -7,7 +7,7 @@ everything coloured with terminal palette **roles**, never RGB.
 
 ```
  [hornero]   ▌ HORNERO OS  rolling / config 0.3.21
-             EDITION  Desktop (preview)
+             EDITION  Desktop
              MODE     signal / cockpit
              THEME    hornero-signal-night (dark)
              CHROMA   wallpaper / vibrant
