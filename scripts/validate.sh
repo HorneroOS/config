@@ -21,6 +21,17 @@ else
   echo "VALIDATE-SKIP: shellcheck not installed" >&2
 fi
 
+# --- desktop entries (desktop-file-validate when available) --------------------
+if command -v desktop-file-validate >/dev/null 2>&1; then
+  if desktop-file-validate "$REPO_ROOT"/share/applications/*.desktop; then
+    pass "desktop-file-validate"
+  else
+    fail "desktop-file-validate"
+  fi
+else
+  echo "VALIDATE-SKIP: desktop-file-validate not installed" >&2
+fi
+
 # --- Ghostty native parser (optional on non-Arch hosts) -------------------------
 if command -v ghostty >/dev/null 2>&1; then
   if bash "$REPO_ROOT/scripts/validate-ghostty-config.sh"; then
@@ -53,8 +64,8 @@ root = Path(sys.argv[1])
 errors = []
 def err(msg): errors.append(msg)
 
-# JSON: theme packs + manifest (strict)
-for f in sorted((root/"profiles"/"themes").rglob("*.json")):
+# JSON: theme packs + manifest + Hornero Apps policy (strict)
+for f in sorted((root/"profiles"/"themes").rglob("*.json")) + [root/"desktop"/"hornero-apps"/"policy.json"]:
     try: json.loads(f.read_text())
     except Exception as e: err(f"{f}: {e}")
 # theme.json: schema v2 (structure + contrast) is gated by check-contrast.py
@@ -102,12 +113,24 @@ for line_no, line in enumerate(ghostty_theme.read_text().splitlines(), 1):
     if stripped.startswith("palette = "): palette_entries += 1
 if palette_entries != 16: err(f"{ghostty_theme}: expected 16 palette entries, got {palette_entries}")
 
-# INI with sections: gtk settings, thunar renamerc, copyq
+# INI with sections: gtk settings, thunar renamerc, copyq, xdg-desktop-portal, systemd unit, desktop entries
 for f in (root/"desktop"/"gtk"/"settings.ini",
           root/"desktop"/"thunar"/"renamerc",
           root/"desktop"/"copyq"/"copyq.conf"):
     try:
         cp = configparser.ConfigParser(strict=True)
+        cp.read_string(f.read_text())
+        if not cp.sections(): err(f"{f}: no sections parsed")
+    except Exception as e: err(f"{f}: {e}")
+
+for f in (root/"desktop"/"xdg-desktop-portal"/"hyprland-portals.conf",
+          root/"desktop"/"xdg-desktop-portal"/"niri-portals.conf",
+          root/"desktop"/"systemd"/"user"/"hornero-flathub-setup.service",
+          root/"share"/"applications"/"hornero-apps.desktop",
+          root/"share"/"applications"/"hornero-appimage-import.desktop"):
+    try:
+        cp = configparser.ConfigParser(strict=True, interpolation=None)
+        cp.optionxform = str
         cp.read_string(f.read_text())
         if not cp.sections(): err(f"{f}: no sections parsed")
     except Exception as e: err(f"{f}: {e}")

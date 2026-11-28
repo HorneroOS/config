@@ -112,6 +112,8 @@ install_dir "desktop/bluetooth" "$CONFIG_HOME/hornero/bluetooth" preserve
 install_dir "desktop/studio-audio" "$CONFIG_HOME/hornero/studio-audio"
 install_dir "desktop/studio-presets" "$CONFIG_HOME/hornero/studio-presets"
 install_dir "desktop/studio-storage" "$CONFIG_HOME/hornero/studio-storage"
+# Hornero Apps trust policy (preserve user edits after initial seeding).
+install_file "desktop/hornero-apps/policy.json" "$CONFIG_HOME/hornero/apps/policy.json" preserve
 # Systemd user resource isolation slices (app-models.slice, app-agents.slice)
 # and local LLM drop-ins (ollama, llama-server@).
 install_dir "desktop/systemd/user" "$CONFIG_HOME/systemd/user"
@@ -151,6 +153,9 @@ install_dir "profiles/themes" "$DATA_HOME/hornero/themes"
 # --- Hornero Chromatic app templates (rendered by horneroctl) -------------------
 # Manifests + *.tmpl for GTK 3/4, qt5ct/qt6ct, kitty, foot, fuzzel, neovim, zed.
 install_dir "share/hornero/chromatic" "$DATA_HOME/hornero/chromatic"
+
+# --- Hornero Apps desktop entries -> ~/.local/share/applications ----------------
+install_dir "share/applications" "$DATA_HOME/applications"
 
 # --- machine-readable shortcut manifest -> canonical hornero/* --------------
 # Generated from the authoritative keybindings.lua (never hand-edited):

@@ -45,6 +45,13 @@ for entry in "$STAGE"/.config/*; do
         && [[ $(readlink "$ROOT/etc/systemd/user/$unit") == /dev/null ]] \
         || fail "systemd user-unit mask $unit installed at /etc/systemd/user"
     done
+    cmp -s "$STAGE/.config/systemd/user/hornero-flathub-setup.service" \
+      "$ROOT/etc/systemd/user/hornero-flathub-setup.service" \
+      && pass "hornero-flathub-setup.service installed at /etc/systemd/user" \
+      || fail "hornero-flathub-setup.service missing or differs"
+    [[ -L "$ROOT/etc/systemd/user/default.target.wants/hornero-flathub-setup.service" ]] \
+      && pass "hornero-flathub-setup.service enabled in /etc/systemd/user/default.target.wants" \
+      || fail "hornero-flathub-setup.service not enabled in default.target.wants"
     continue
   fi
   [[ "$base" == niri ]] && continue
@@ -61,6 +68,22 @@ cmp -s "$STAGE/.config/xdg-desktop-portal/niri-portals.conf" \
   "$ROOT/etc/xdg/xdg-desktop-portal/niri-portals.conf" \
   && pass "Niri portal selection packages as an XDG default" \
   || fail "Niri portal selection package path/content"
+cmp -s "$STAGE/.config/xdg-desktop-portal/hyprland-portals.conf" \
+  "$ROOT/etc/xdg/xdg-desktop-portal/hyprland-portals.conf" \
+  && pass "Hyprland portal selection packages as an XDG default" \
+  || fail "Hyprland portal selection package path/content"
+cmp -s "$REPO_ROOT/desktop/hornero-apps/policy.json" \
+  "$ROOT/etc/xdg/hornero/apps/policy.json" \
+  && cmp -s "$REPO_ROOT/desktop/hornero-apps/policy.json" \
+    "$ROOT/usr/share/hornero/apps/policy.json" \
+  && pass "Hornero Apps trust policy ships at XDG and share paths" \
+  || fail "Hornero Apps trust policy missing or differs"
+for desktop_file in hornero-apps.desktop hornero-appimage-import.desktop; do
+  cmp -s "$REPO_ROOT/share/applications/$desktop_file" \
+    "$ROOT/usr/share/applications/$desktop_file" \
+    && pass "desktop entry $desktop_file ships under /usr/share/applications" \
+    || fail "desktop entry $desktop_file missing or differs"
+done
 # /etc/xdg/hornero/shell.json is sourced from shell/shell.default.json (not
 # the staged HOME) and asserted separately below, so the hornero dir is
 # excluded here; materialize.sh never stages .config/hornero/*.
@@ -199,6 +222,7 @@ fi
   && pass "file perms 644/755" || fail "file perms 644/755"
 [[ -x "$ROOT/usr/share/hornero/bin/hornero-gtk-theme" ]] \
   && [[ -x "$ROOT/usr/share/hornero/bin/hornero-snappy-switcher" ]] \
+  && [[ -x "$ROOT/usr/share/hornero/bin/hornero-flathub-ensure" ]] \
   && pass "executables preserved" || fail "executables preserved"
 
 # --- installed tree carries no identity or secrets ------------------------------

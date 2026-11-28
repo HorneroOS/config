@@ -1,0 +1,14 @@
+# HorneroOS: one-shot user-scope Flathub bootstrap on first online session.
+# Never blocks login; skips cleanly when flatpak is absent or already configured.
+[Unit]
+Description=HorneroOS User Flathub Remote Bootstrap
+Documentation=https://github.com/HorneroOS/config
+After=network-online.target
+ConditionPathExists=!%S/hornero/flathub-bootstrapped
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'if command -v hornero-flathub-ensure >/dev/null 2>&1; then exec hornero-flathub-ensure; elif [ -x "%h/.local/bin/hornero-flathub-ensure" ]; then exec "%h/.local/bin/hornero-flathub-ensure"; elif [ -x /usr/share/hornero/bin/hornero-flathub-ensure ]; then exec /usr/share/hornero/bin/hornero-flathub-ensure; fi'
+
+[Install]
+WantedBy=default.target

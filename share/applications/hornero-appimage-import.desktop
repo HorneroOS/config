@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Import AppImage (Hornero Apps)
+Name[es]=Importar AppImage (Hornero Apps)
+GenericName=AppImage Importer
+GenericName[es]=Importador de AppImage
+Comment=Inspect, verify, and integrate an AppImage into your user applications
+Comment[es]=Inspeccioná, verificá e integrá un AppImage en tus aplicaciones de usuario
+Exec=horneroctl store appimage import %f --gui
+Icon=application-x-executable
+Terminal=false
+NoDisplay=false
+MimeType=application/vnd.appimage;application/x-iso9660-appimage;
+Categories=Utility;

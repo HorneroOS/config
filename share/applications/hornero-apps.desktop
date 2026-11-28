@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Hornero Apps
+GenericName=Software Center
+GenericName[es]=Centro de aplicaciones
+Comment=Discover, install, and manage applications on HorneroOS
+Comment[es]=Descubrí, instalá y gestioná aplicaciones en HorneroOS
+Exec=horneroctl store gui
+Icon=system-software-install
+Terminal=false
+Categories=System;PackageManager;
+Keywords=apps;store;software;install;flatpak;appimage;webapp;
+StartupNotify=true

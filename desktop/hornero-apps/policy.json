@@ -1,0 +1,18 @@
+{
+  "apiVersion": "hornero.os/v1",
+  "kind": "SoftwarePolicy",
+  "allowedSources": [
+    "arch_official",
+    "hornero_official",
+    "flathub_verified",
+    "flathub_community",
+    "vendor_official",
+    "appimage",
+    "webapp"
+  ],
+  "aurPolicy": "explicit_opt_in",
+  "proprietaryPolicy": "explicit_consent",
+  "flatpakDefaultScope": "user",
+  "verifiedOnly": false,
+  "openSourceOnly": false
+}
