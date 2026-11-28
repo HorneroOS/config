@@ -34,6 +34,7 @@ fi
 echo "TEST-PASS: Hyprland defaults use packaged Quickshell module paths"
 check ".config/niri/config.kdl"
 check ".config/xdg-desktop-portal/niri-portals.conf"
+check ".config/xdg-desktop-portal/hyprland-portals.conf"
 grep -q '^default=gtk;$' "$TMP_HOME/.config/xdg-desktop-portal/niri-portals.conf"
 grep -q '^org.freedesktop.impl.portal.FileChooser=gtk;$' "$TMP_HOME/.config/xdg-desktop-portal/niri-portals.conf"
 grep -q '^org.freedesktop.impl.portal.Screencast=gnome;$' "$TMP_HOME/.config/xdg-desktop-portal/niri-portals.conf"
@@ -53,8 +54,12 @@ check ".config/hornero/studio-audio/advanced.conf"
 check ".config/hornero/studio-presets/presets.json"
 check ".config/hornero/studio-presets/obs-studio/basic.ini"
 check ".config/hornero/studio-storage/storage-policy.json"
+check ".config/hornero/apps/policy.json"
+check ".local/share/applications/hornero-apps.desktop"
+check ".local/share/applications/hornero-appimage-import.desktop"
 check ".config/systemd/user/app-models.slice"
 check ".config/systemd/user/app-agents.slice"
+check ".config/systemd/user/hornero-flathub-setup.service"
 check ".config/systemd/user/ollama.service.d/10-hornero.conf"
 check ".config/systemd/user/llama-server@.service.d/10-hornero.conf"
 check ".config/kitty/kitty.conf"
@@ -87,6 +92,7 @@ check ".local/bin/hornero-appearance"
 check ".local/bin/hornero-night-mode"
 check ".local/bin/hornero-wallpaper-set"
 check ".local/bin/hornero-wallpaper-current"
+check ".local/bin/hornero-flathub-ensure"
 for photo in \
   buenos-aires-nocturno/buenos-aires-skyline-night.jpg \
   fin-del-mundo/beagle-channel-ship-dusk.jpg \
@@ -193,6 +199,7 @@ echo "TEST-PASS: no identity in installed git config"
 for f in "$TMP_HOME/.local/bin/hornero-gtk-theme" "$TMP_HOME/.local/bin/hornero-hyprlock-theme" \
          "$TMP_HOME/.local/bin/hornero-appearance" \
          "$TMP_HOME/.local/bin/hornero-night-mode" \
+         "$TMP_HOME/.local/bin/hornero-flathub-ensure" \
          "$TMP_HOME/.local/bin/hornero-wallpaper-set" "$TMP_HOME/.local/bin/hornero-wallpaper-current"; do
   if [[ -x $f ]]; then
     echo "TEST-PASS: executable $f"
@@ -239,6 +246,7 @@ printf '%s\n' '-- user monitor edit' >> "$TMP_HOME/.config/hypr/hyprland.lua.d/m
 printf '%s\n' '// user niri edit' >> "$TMP_HOME/.config/niri/config.kdl"
 printf '%s\n' '# user kitty edit' >> "$TMP_HOME/.config/kitty/kitty.conf"
 printf '%s\n' '; user copyq edit' >> "$TMP_HOME/.config/copyq/copyq.conf"
+printf '%s\n' '{"verifiedOnly": true}' > "$TMP_HOME/.config/hornero/apps/policy.json"
 bash "$REPO_ROOT/scripts/materialize.sh" --dest "$TMP_HOME" >/dev/null
 if grep -q '# user edit' "$TMP_HOME/.config/wireplumber/wireplumber.conf.d/51-hornero-bluetooth.conf"; then
   echo "TEST-PASS: user-edited WirePlumber Bluetooth policy kept on rerun"
@@ -250,7 +258,8 @@ for preserved in \
   ".config/hypr/hyprland.lua.d/monitors-user.lua:user monitor edit" \
   ".config/niri/config.kdl:user niri edit" \
   ".config/kitty/kitty.conf:user kitty edit" \
-  ".config/copyq/copyq.conf:user copyq edit"; do
+  ".config/copyq/copyq.conf:user copyq edit" \
+  ".config/hornero/apps/policy.json:verifiedOnly"; do
   rel="${preserved%%:*}"
   marker="${preserved#*:}"
   if grep -q "$marker" "$TMP_HOME/$rel"; then

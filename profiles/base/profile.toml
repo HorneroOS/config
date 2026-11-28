@@ -21,6 +21,11 @@ source = "desktop/xdg-desktop-portal/niri-portals.conf"
 target = "{config}/xdg-desktop-portal/niri-portals.conf"
 description = "Use GTK for fallback and file chooser portals and GNOME for Niri screencasting."
 
+[modules.hyprland-portals]
+source = "desktop/xdg-desktop-portal/hyprland-portals.conf"
+target = "{config}/xdg-desktop-portal/hyprland-portals.conf"
+description = "Hyprland portal selection covering ScreenCast, Screenshot, GlobalShortcuts, FileChooser, OpenURI, Notification, and Settings."
+
 [modules.kitty]
 source = "desktop/kitty"
 target = "{config}/kitty"
@@ -69,6 +74,16 @@ description = "Opt-in Studio application preset templates (data only; never appl
 source = "desktop/studio-storage"
 target = "{config}/hornero/studio-storage"
 description = "Studio storage policy defaults (user-owned vs regenerable locations)."
+
+[modules.hornero-apps-policy]
+source = "desktop/hornero-apps/policy.json"
+target = "{config}/hornero/apps/policy.json"
+description = "Default Hornero Apps software trust policy baseline."
+
+[modules.hornero-apps-desktop]
+source = "share/applications"
+target = "{data}/applications"
+description = "Hornero Apps launcher and AppImage importer desktop entries."
 
 [modules.qt6ct]
 source = "desktop/qt6ct"

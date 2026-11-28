@@ -1,0 +1,106 @@
+#!/usr/bin/env bash
+# hornero-flathub-ensure - idempotent user-scope Flathub bootstrap for HorneroOS.
+#
+# Usage: hornero-flathub-ensure [--quiet]
+#
+# - Exits 0 cleanly if `flatpak` is not installed.
+# - Checks both system and user Flatpak remotes so Flathub is never duplicated.
+# - Adds Flathub at user scope (--user --if-not-exists) when missing.
+# - Optionally refreshes AppStream metadata when network is reachable.
+# - Never fails boot/login when offline; writes the state stamp only once
+#   Flathub is confirmed configured.
+set -euo pipefail
+
+FLATHUB_REMOTE_NAME="flathub"
+FLATHUB_REPO_URL="https://dl.flathub.org/repo/flathub.flatpakrepo"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/hornero"
+STAMP_FILE="$STATE_DIR/flathub-bootstrapped"
+QUIET=0
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -q|--quiet) QUIET=1; shift ;;
+    -h|--help)
+      sed -n '2,12p' "${BASH_SOURCE[0]}"
+      exit 0
+      ;;
+    *)
+      echo "hornero-flathub-ensure: unknown argument: $1" >&2
+      exit 2
+      ;;
+  esac
+done
+
+info() {
+  if [[ $QUIET -eq 0 ]]; then
+    printf 'hornero-flathub-ensure: %s\n' "$*"
+  fi
+}
+
+run_timed() {
+  local seconds="$1"
+  shift
+  if command -v timeout >/dev/null 2>&1; then
+    timeout "$seconds" "$@"
+  else
+    "$@"
+  fi
+}
+
+has_flathub_remote() {
+  if flatpak remotes --system --columns=name 2>/dev/null | grep -qx "$FLATHUB_REMOTE_NAME"; then
+    return 0
+  fi
+  if flatpak remotes --user --columns=name 2>/dev/null | grep -qx "$FLATHUB_REMOTE_NAME"; then
+    return 0
+  fi
+  return 1
+}
+
+network_reachable() {
+  if [[ "${HORNERO_FLATHUB_OFFLINE:-0}" == "1" ]]; then
+    return 1
+  fi
+  if [[ "${HORNERO_FLATHUB_ONLINE:-0}" == "1" ]]; then
+    return 0
+  fi
+  if command -v curl >/dev/null 2>&1; then
+    curl -fsSI --connect-timeout 3 --max-time 5 "$FLATHUB_REPO_URL" >/dev/null 2>&1
+    return $?
+  fi
+  if command -v getent >/dev/null 2>&1; then
+    getent hosts dl.flathub.org >/dev/null 2>&1
+    return $?
+  fi
+  return 0
+}
+
+write_stamp() {
+  mkdir -p "$STATE_DIR"
+  date -u +%Y-%m-%dT%H:%M:%SZ > "$STAMP_FILE"
+}
+
+if ! command -v flatpak >/dev/null 2>&1; then
+  info "flatpak is not installed; skipping Flathub bootstrap"
+  exit 0
+fi
+
+added_now=0
+if has_flathub_remote; then
+  info "flathub remote already configured"
+else
+  if run_timed 15 flatpak remote-add --user --if-not-exists "$FLATHUB_REMOTE_NAME" "$FLATHUB_REPO_URL"; then
+    added_now=1
+    info "configured user-scope flathub remote"
+  else
+    info "unable to reach Flathub (offline?); deferring bootstrap"
+    exit 0
+  fi
+fi
+
+if [[ $added_now -eq 1 ]] || network_reachable; then
+  run_timed 30 flatpak update --appstream --noninteractive >/dev/null 2>&1 || true
+fi
+
+write_stamp
+exit 0

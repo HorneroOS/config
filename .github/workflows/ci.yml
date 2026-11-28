@@ -70,6 +70,8 @@ jobs:
         run: tests/test_materialize.sh
       - name: Systemd user resource isolation slices (app-models, app-agents)
         run: python3 tests/test_systemd_slices.py
+      - name: Hornero Apps runtime config (Flathub, portals, desktop entries, trust policy, PKGBUILD)
+        run: python3 tests/test_hornero_apps_config.py
       - name: Packaged user seeding is missing-only
         run: tests/test_seed_user.sh
       - name: Signal fastfetch defaults
